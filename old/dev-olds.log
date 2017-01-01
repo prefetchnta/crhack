@@ -1,0 +1,472 @@
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-10-22
+        ==========
+        fix: <总体> 开始全面翻新源代码和修正问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-10-21
+        ==========
+        new: <总体> 系统重装 SVN 出错全部重新提交
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-10-12
+        ==========
+        fix: <CrTest.c> 去除合并文件的去除头部代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-10-10
+        ==========
+        fix: <CrTest.c> 增加显示字符常量大小的功能
+                        修正合并文件的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-10-09
+        ==========
+        add: <crGraph2.*> 增加图片读取函数指针类型
+                          增加多类型文件读取函数
+        add: <crFile.*> 增加文件数据替换函数
+        add: <crMemory.*> 增加内存数据替换函数
+        add: <CrTest.c> 增加 .CA? 文件合并命令行
+                        优化图形读取处的代码
+        fix: <crDiskOT.c> 优化一处数据类型
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-10-07
+        ==========
+        add: <CrTest.c> 增加正则表达式查找命令行
+        add: <CrHack.*> 增加返回编译器版本的函数
+        add: <crString.h crL3rd.h crStrBase.inl> 增加 StrCmpN?() 函数
+        fix: <LzFindMt.c LzmaEnc.h Threads.c> 增强 LZMA SDK 的可移植性
+        fix: <zconf.h zutil.h> 增强 ZLIB SDK 的可移植性 (去除16位相关代码)
+        new: <pcre*.*(a) ucp.h(a) config.h(a) crConfPCRE.h(a) crParser.h(m)
+              crRegex.c(a) core.mak(m)> 加入 PCRE 函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-10-06
+        ==========
+        fix: <总体> 消除 BDS2006 下的字符警告
+        fix: <crFile.h crBMP.c crDDS.c crPCX.c crPNG.c crTGA.c>
+              修正一个严重的问题
+
+        2009-10-05
+        ==========
+        add: <crString.h> 增加一种 slash 字符
+        fix: <总体> 去除一些重复的头文件包含
+                    修正一些出错时可能的内存泄漏
+        fix: <crStrPath.inl> 提高几个函数的可移植性
+        new: <head.txt(a)> 增加头文件嵌套列表
+
+        2009-10-03
+        ==========
+        fix: <总体> 代码整理
+        add: <crDefs.h> 增加一些有用的宏
+        add: <CrHack.c> 增加 char 类型是否有符号检查
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-30
+        ==========
+        fix: <crMemory.h> 修正一个严重的低级错误
+        fix: <crStrBase.inl crStrXML.inl> 修正若干小 BUG
+        fix: <aDAS_cfg.h aDAS_drv.c> 优化采集线程的驱动查找
+        fix: <crMisc.h> 去除 BCC32 下的一个警告
+        fix: <crDefs.h> 修正 inline 函数在低版本 BCC32 下的错误
+        fix: <crDefs.h crString?.c *.inl> _AS() _WS() _X() 宏改名
+        add: <CrHack.c> 增加文件/内存大小类型配置检查
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-29
+        ==========
+        fix: <aDAS_cfg.c> 修正一个极其严重的 BUG
+        fix: <crStrXML.inl> 关闭封闭标签的节点数据
+                            修正一个出错释放的 BUG
+        fix: <crMultiByte.c> 优化 StrFormat() 函数
+        fix: <crConf.h crDefs.h crThreadWin.c> 支持 BDS2006/BDS2007 的修改
+        new: <port.c(a)> 增加一个简单的编译器移植检测文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-28
+        ==========
+        fix: <aDAS*.*> 更新一些出错提示
+        fix: <*.mak> 增加漏掉的外部库选项
+        fix: <aDAS_sav.c> 修正可能的字节顺序错误
+        add: <aDAS_drv.c> 完成驱动模块
+        add: <crDefs.h> 增加字符串型的 slash 宏
+        add: <aDAS.*> 增加系统的总开关函数
+        add: <crMisc.*> 增加随机数最大值的宏
+        new: <aDAS_demo.inl(a) aDAS_drv.c(m)> 增加内部的演示驱动
+        new: <aDAS_test.c(a) adas.*.mak(m)> 增加 aDAS 测试命令行工具
+        (<aDAS_test.c> 保存线程上尚有 BUG 存在)
+
+        2009-09-27
+        ==========
+        fix: <aDAS_sav.*> 修正结构体名的错误
+        fix: <aDAS_cfg.c> 修正两个重名检测的错误
+        add: <crConf.h crDefs.h> 增加没有 signed 时的开关
+        new: <port.txt(a)> 增加移植说明文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-25
+        ==========
+        fix: <CrTest.c> 修正无法编译的错误
+                        修正一个读野指针的 BUG
+        fix: <crLZO.c dlmalloc.c> 消除 GCC 编译下的警告
+        fix: <crThreadWin.c> 修正一个多编译器的问题
+        add: <CrHack.c> 增加宽字符配置的检查
+        add: <crConf.h> 增加低版本 GCC 的过滤
+        add: <crDefs.h> 增加 noinline/forceinline/align/noreturn 的支持
+        add: <crConf.h crDefs.h crBMP.c crDDS.c crPCX.c crPNG.c crTGA.c>
+              增加结构体对齐填充的相关设置
+        new: <build.bat(a)> 增加 Windows 平台下全部编译的批处理
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-24
+        ==========
+        fix: <总体> 修正 MinGW 编译下的一些警告
+        fix: <dlmalloc.c LzFindMt.c> 修正 MinGW 下的几个警告
+        fix: <core.mak> 调整 aPLib/JCALG1 的库文件选项
+        fix: <crDefs.h> 修正 GCC 下 inline 的问题
+        add: <crDefs.h> CR_I64 增加 MinGW 的支持
+        add: <gcc.mak *.gcc.mak> 增加生成导入库选项
+        (<CrTest.c> MinGW 编译暂时没有通过)
+
+        2009-09-23
+        ==========
+        fix: <crBMP.c> 优化一处代码
+        fix: <crGraph2.c> 修正一处错误
+        fix: <crDDS.c crPCX.c crPNG.c> 精简一处代码
+        fix: <aDAS_sav.c> 优化日期比较
+        fix: <crArray.*> 修正 GCC 编译下的变量名错误
+        fix: <crFile.h> 修正 GCC 编译下的 typedef 问题
+        fix: <*.mak> 删除所有汇编相关的命令行
+        fix: <crConf.h crDefs.h> 修正 GCC 编译时的警告
+        fix: <crMsgWin.c> 修正 MinGW 缺少常数宏的问题
+        fix: <crConf.h> 修正 MinGW 缺少结构体的问题
+        add: <CrTest.c> 增加 wchar_t 相关信息的输出
+        new: <aDAS_drv.*(a) adas.mak(m)> 增加 aDAS 相关模块
+        new: <gcc.mak(a) *.gcc.mak(a) *.bat(m)> 增加 GCC 编译器的 Makefile
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-22
+        ==========
+        add: <crFile.h crFileWin.c> 增加 FileRename?() 函数
+        fix: <crGraph2.h crPixels.* crDDS.c> 提高 ImageSet() 函数的安全性
+        new: <aDAS_sav.*(a) adas.mak(m)> 增加 aDAS 相关模块
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-21
+        ==========
+        add: <crFile.h crBMP.c> 增加两个简化宏
+        add: <CrTest.c> 增加 BMP/DDS/PCX/PNG/TGA 图片转 RAW 格式命令行
+        fix: <crErrs.h> 去除 GCC 编译时的错误
+        fix: <crFile.h crDatIO.* crMemIN.c crMemOT.c crDiskIN.c crDiskOT.c>
+              更新某些函数的错误返回机制
+        new: <crDDS.c(a) crPCX.c(a) crPNG.c(a) crTGA.c(a) crGraph2.h(m)
+              core.mak(m)> 增加简易的 DDS/PCX/PNG/TGA 图片格式支持库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-20
+        ==========
+        fix: <aDAS_cfg.c> 补全三处错误处理
+        fix: <CrTest.c aDAS_cfg.c> 精简一些代码
+        fix: <crPixels.c> 修正两处对齐的错误
+        add: <crConf.h crDefs.h> 增加不支持 volatile 关键字的选项
+        new: <crBMP.c(a) crGraph2.h(m) core.mak(m)>
+              增加简易的 BMP 图片格式支持库 (只支持部分格式)
+
+        2009-09-19
+        ==========
+        fix: <aDAS_cfg.c> 补全三处错误处理
+        add: <crMisc.h> 增加几个快速几何计算函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-18
+        ==========
+        add: <crThread.h crThreadWin.c> 取消一些函数的返回值
+                                        增加多线程锁相关操作
+        add: <crConf.h 总体> 增加 _CR_OS_MSWIN_ 宏 (包含 NT 和 CE)
+        fix: <crConfDL.h> 优化多线程锁函数
+        fix: <CrHack.c crMemory.c crMemStd.c crMemWin.c> 更新多线程锁的方式
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-17
+        ==========
+        fix: <总体> 精简一些代码
+        fix: <crThreadWin.c> 优化原子算术运算
+        fix: <crStrBase.inl> 优化一些字符串函数
+        fix: <CrHack.*> 移除编译器版本函数
+        fix: <cr*IN.c> 修正文件读取接口潜在的问题
+        fix: <crDefs.h CrTest.c> 更改 CR_SIZE 和 CR_FSIZE 的名称
+        add: <crLogs.h crMsgWin.c> 增加 SetQuit() 函数
+        add: <crConf.h crFileStd.c> 增加 _CR_NO_STDIO64_ 开关
+        new: <crErrs.h(a) 总体(m)> 增加多语言的出错提示字符串
+        new: <总体> 使用中文简体重新编译生成
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-16
+        ==========
+        fix: <总体> 更新错误返回系统
+        fix: test.bmp 移动到 tools 目录
+        fix: <crFile.h crMemIN.c crMemOT.c ...>
+              精简文件读写接口, 更新文件偏移类型
+        add: <crMemory.h> 增加字符串分配函数
+        add: <crConf.h crDefs.h> 增加关闭错误信息的选项
+        add: <crDefs.h> 增加文件偏移加法的溢出判断
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-15
+        ==========
+        fix: <总体> 代码整编
+        fix: <*.mak *.bat> 加强 make 系统的独立性
+        add: <crConf.h> 增加是否支持内存映射文件的选项
+        add: <crDefs.h> 增加 fsize_hi() 函数
+        new: <crFileIN.c(a) core,mak(m)> 完成文件读写接口
+
+        2009-09-14
+        ==========
+        add: <CrHack.h> 增加平台相关头文件
+        add: <crFile.h> 增加通用文件属性宏映射
+        add: <crDefs.h> 增加虚函数调用前缀宏
+        add: <crDefs.h CrHack.c> 增加检查错误的函数
+        add: <crConf.h CrHack.c> 增加编译器版本名称预定义宏
+        fix: <crMsgWin.c> 优化字符属性合成函数
+        fix: <crArray.* crCurtain.*> 增加成员变量的安全性
+        fix: <crFile.h> 更新抽象类的实现方式
+                        修正写入函数的错误返回值
+        new: <crMemOT.c(a) crDiskOT.c(a) core.mak(m)>
+              增加几个文件写入接口实现
+        new: <crMemIN.c(a) crDiskIN.c(a) crPageINWin.c(a) core.mak(m)>
+              增加几个文件读取接口实现
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-13
+        ==========
+        add: <crString?.c> 移入字符类型代码
+        add: <crLogs.h crMsgWin.c CrHack.c> 增加 CUI 的输出控制功能
+        fix: <CrTest.c> 修正一个转换问题
+        fix: <crStrINI.inl crStrXml.inl> 增加跳过转移字符的代码
+        fix: <crString.h crCType.inl crCType.h(a) core.mak(m)>
+              增加宽字符版本的字符类型函数
+        fix: <crMemory.h ccrString.h crCType.inl> 移出/入 isbreak() 函数
+        fix: <总体 crL3rd.h> 更新使用字符类型函数的相关函数
+        fix: <CrTest.c> 更新 CUI 彩色显示代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-12
+        ==========
+        add: <aDAS_cfg.c> 完成配置文件保存功能
+        add: <crMisc.h crMisc.c CrHack.c> 增加伪随机发生器
+        add: <crDefs.h> 增加换行字符的定义
+        add: <crFile.h> 增加文件写入字符串的函数
+        add: <cl71.mak cl90.mak core.*.mak> 增加外部库的选项
+        add: <crParser.h crStrINI.inl crStrXML.inl>
+              增加两个检查字符串是否合法的函数
+        add: <crFile.h> 增加通用文件读写接口相关内容
+        fix: <总体> 使用新的字符类型函数优化代码
+        fix: <总体> 消除冗余的头文件
+        fix: <crL3rd.h> 消除警告移除的代码
+        fix: <crMultiByte.c> 增加 StrFormat() 函数的功能与性能
+        fix: <bcc.mak> 修正一个导入库的错误
+        new: <crQSort.inl(a) crMisc.c(m)> 增加平台无关的快速排序算法
+        new: <adas*.mak(a) *.bat(m)> 增加 aDAS 系统的 Makefile
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-11
+        ==========
+        add: <crZLib.c> 移入自己添加的函数声明
+        add: <crConf.h> 增加几种架构的预定义
+        add: <crDefs.h> 增加 noinline 的相关定义
+        add: <crMemory.h> 增加 strnlen?() 函数
+        add: <crL3rd.h> 增加新增相关函数的映射
+        new: 加入第三方库的未修改代码
+        new: <crCType.c(a) crString.h(m) core.mak(m)> 增加字符类型函数库
+        new: <crCRC7.c(a) crHash.h(m) core.mak(m) CrTest.c(m)>
+              增加 CRC-7 哈希函数库
+        new: <snprintf.*(a) crConfSNP.h(a) core.mak(m)> 加入 snprintf v2.2
+
+        2009-09-10
+        ==========
+        add: <CrTest.c> 增加文件列表命令行
+        add: <crDefs.h> 增加文件大小 printf() 整数宽度符
+        add: <crConf.h> 增加使用何种核心库的选项
+        add: <crString.h crMultiByte.c> 增加 StrFormat() 函数
+        fix: <crArray.h crCurtain.h> 给返回类型的宏加上括号
+        fix: <crMemory.c> 内存重分配增加出错处理
+        fix: <crStrParse.inl> 删除 StrSplitText() 初始的 reserve 代码
+        fix: <crArray.c> 修正一个 reserve 的严重 BUG
+        new: <crMisc.h(m) crMisc.c(a) core.mak(m)> 增加杂项函数库
+        new: <aDAS*.h(a) aDAS*.c(a)> 开始 aDAS 模块的开发
+
+        2009-09-09
+        ==========
+        add: <CrTest.c> 启动时增加显示两行字符
+        add: <crString.h crStrPath.inl> 增加路径添加函数
+        add: <crFile.h crFileWin.c> 增加目录文件搜索函数
+                                    增加目录选择窗口 (Windows Only)
+        fix: <crMD5.c> 修正一个宏的 BUG
+        fix: <jcalg1_bc.lib> 修正入口点覆盖和 align 16 填充错误的 BUG
+        fix: <crLZSS.c> 修正可能的断流问题
+        fix: <crLZARI.c crLZHUF.c> 恢复到以前的代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-08
+        ==========
+        add: <crDefs.h> 增加 __ftol() 函数
+        fix: <crFile*.c> 修正几个表达式
+        fix: <*.mak *.bat> 核心库文件名加上 Core
+        fix: <crLZARI.c crLZHUF.c> 增加解码函数的安全性
+        fix: <CrTest.c> 修正几个64位数显示的错误
+        fix: <crFileWin.c> 去除一处警告
+        fix: <vc71.bat vc90.bat> 改用 DMC 的 implib.exe
+        fix: <总体> 更新若干函数参数作用符
+        new: <crHalf.c(a) crMisc.h(m) core.mak(m)> 增加16位浮点数函数库
+        new: <crClipper.c(a) crGraph2.h(m) core.mak(m)> 增加二维剪裁函数库
+        new: <crBitFont.c(a) crGraph2.h(m) core.mak(m)> 增加点阵图形函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-07
+        ==========
+        fix: <总体> 删除几条空行
+        fix: <crLZW.c> 把结构体从栈放到堆上
+        fix: <crMemory.h> 修正一个宏的错误
+        fix: <bzlib*.*> 移出自己修改的代码
+        fix: <bz_no_stdio.c core.mak> 移除 bz_no_stdio.c 更名 crConfBZ2.h
+        fix: <crFile.*> 修正 LoadFileAsBinary?() 返回大小的类型
+        fix: <crLZSS.c> 修正一个源缓冲区溢出的 BUG
+        fix: <crLZARI.c crLZHUF.c> 修正解码可能出现断流的问题
+        fix: <crFileWin.c> 修正 CR_FILE_AW 打开时的 BUG
+        add: <CrTest.c> 增加编码解码的命令行, 增加数据串哈希的命令行
+                        增加出错信息的返回
+        add: <crDefs.h> 增加 printf() 平台相关整数的宽度符号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-05
+        ==========
+        add: <总体> 增加若干分割注释
+        add: <crDateTime.c> 完成日期时间的代码
+        add: <core.mak> 将 crAdler32.c 加入列表
+        new: <crEncode.h(a) 老版本所有代码(a) CrHack.h(m) core.mak(m)>
+              增加编码解码函数库
+
+        2009-09-04
+        ==========
+        add: <crThread.h> 增加模块区分注释
+        add: <bcc.mak> 增加输出动态库的导入库的选项
+        add: <vc71.bat vc90.bat> 增加生成 BCC 使用的导入库的命令
+        add: <crMemory.h> 增加时间分割符宏
+        fix: <crDefs.h CrTest.c> float 类型修正
+        fix: <crStrXML.inl> 修正几个出错提示的错误
+        fix: <crCurtain.c> 修正删除成员时可能的内存泄漏
+        new: <crMisc.h(a) CrHack.h(m)> 增加杂项函数库头文件
+        new: <crTimerWin.c(a) crHookCOM.c(a) core.mak(m)>
+              增加定时器函数库和函数钩子函数库
+        new: <crDateTime.h(a) crDateTime.c(a) CrHack.h(m) core.mak(m)>
+              增加日期时间函数库
+        new: <tools\*.exe> 增加一些用的到的工具
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-03
+        ==========
+        add: <crDefs.h> 增加 CR_SLASH 宏
+        add: <crL3rd.h> 增加两个字符串函数的重映射
+        add: <vc71.bat vc90.bat> 增加删除 exp 文件的命令
+        fix: <总体> 整理代码
+        fix: <crDefs.h CrHack.c> SetCrError() 的 l3rd 改为 int64u 型
+        fix: <crDefs.h> 优化 cut_mul() 函数
+        fix: <crPixels.c> 修正一处提示错误
+        fix: <crThreadWin.c> 删除异常处理代码
+        fix: <crMemory.h> 增加 strlen?() 到 LIBC 的映射
+        fix: <crGraph2.c> 增加漏掉的位图自释放代码
+        new: <crParser.h(a) crStrINI.inl(a) crStrXML.inl(a) crStringA.c(m)
+              crStringW.c(m) CrHack.h(m)> 增加 INI/XML 解析函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-02
+        ==========
+        add: <crMemory.h> 增加几个字符判断宏和函数
+        add: <CrTest.c> 增加文本文件编码格式转换功能
+                        增加功能选择时的退出和重复功能
+        fix: <crCrypto.h> 对齐一处格式
+        fix: <crFileStd.c> 删除一处 goto 指令
+                           精简一处逻辑代码
+        fix: <crFileWin.c> 交换两条语句的顺序
+                           更新使用 isslash() 宏
+        fix: <crString.h> 修改一处变量类型
+        fix: <crCurtain.c> 删除一处出错警告
+        fix: <crUnicode.c> 给 TextToUtf*() 开封
+        fix: <clear.bat> 改删除所有文件为删除库和可执行文件
+        new: <crStrBase.inl(a) crStrCnvt.inl(a) crStrParse.inl(a)
+              crStrPath.inl(a) crStringA.c(a) crStringW.c(a) core.mak(m)>
+              增加字符串工具函数模板库
+        new: <crMultiByte.c(a) core.mak(m)> 增加 multibyte 编码转换函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-09-01
+        ==========
+        add: <crPixels.h> 增加若干转换函数的返回值
+        fix: <crFile.c> 调整两句语句的顺序
+        fix: <crPixels.h> 修正两处代码格式问题
+        fix: <crConf.h> 修正一处宏名称的书写错误
+        fix: <crThreadWin.c> 精简一处逻辑代码
+        new: <crPlugin.h(a) crPluginWin.c(a) CrHack.h(m) core.mak(m)>
+              增加插件操作函数库
+        new: <crGraph2.*(a) CrHack.h(m) core.mak(m)> 增加位图操作函数库
+        new: <crPixels.c(a) core.mak(m)> 补完像素操作函数库
+        new: <crString.h(a) crUnicode.c(a) CrHack.h(m) core.mak(m)>
+              增加字符串操作函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-08-31
+        ==========
+        add: <crMemory.h> 增加 struct_zero() 宏
+        add: <crFileWin.c> 增加 _CR_FILE64_ 宏的判断
+        add: <crThread*.* crMemory.c> 增加临界区相关函数
+        add: <crConf.h> 增加缺省哈希表大小的配置
+        add: <CrTest.c> 增加除法常数表计算功能
+        fix: <crEndian.h> 修正一处函数注释的错误
+        fix: <crFileStd.c> 修正 FileBUFSeek() 返回值判断的 BUG
+        fix: <crFileStd.c> 过滤 FileBUFOpen?() BCC32 下大于 2GB 文件的情况
+        fix: <crLogs.h crMsgWin.c> MsgLine?() 函数改为 MsgAskU?() 函数
+        new: <crArray.*(a) CrHack.h(m) core.mak(m)> 增加可生长数组对象
+        new: <crCrypto.h(a) crAnubis.c(a) crArc4.c(a) crBlowfish.c(a)
+              crTea.c(a) CrHack.h(m) core.mak(m)> 老版本的加密解密函数库
+        new: <crCurtain.*(a) CrHack.h(m) core.mak(m)> 增加窗帘哈希表对象
+        new: <crPixels.h(a) CrHack.h(m)> 增加像素操作函数库
+        new: <HaSHer.txt(a)> 开始使用 HaSHer 工具生成文件指纹
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        2009-08-31
+        ==========
+        new: <总体> 第一次提交代码 (crAdler32.c 未加入编译列表)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

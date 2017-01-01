@@ -1,0 +1,76 @@
+/*****************************************************************************/
+/*                                                  ###                      */
+/*       #####          ###    ###                  ###  CREATE: 2010-08-10  */
+/*     #######          ###    ###      [KRNL]      ###  ~~~~~~~~~~~~~~~~~~  */
+/*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
+/*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
+/*   ###       ### ###  ###    ###    ####    ####  ###   ##  +-----------+  */
+/*  ####       ######## ##########  #######  ###### ###  ###  |  A NEW C  |  */
+/*  ###        ######## ########## ########  ###### ### ###   | FRAMEWORK |  */
+/*  ###     ## #### ### ########## ###  ### ###     ######    |  FOR ALL  |  */
+/*  ####   ### ###  ### ###    ### ###  ### ###     ######    | PLATFORMS |  */
+/*  ########## ###      ###    ### ######## ####### #######   |  AND ALL  |  */
+/*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
+/*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
+/*  =======================================================================  */
+/*  >>>>>>>>>>>>>>>> CrHack RAMTRON FM24CXX 驱动函数库模板 <<<<<<<<<<<<<<<<  */
+/*  =======================================================================  */
+/*****************************************************************************/
+
+#if     defined(_CR_USE_FM24C04_)
+
+    #undef  _I2C_PAGE_
+    #define _I2C_SIZE_          512
+    #define e24cxx_read     fm24c04_read
+    #define e24cxx_write    fm24c04_write
+
+#elif   defined(_CR_USE_FM24C16_)
+
+    #undef  _I2C_PAGE_
+    #define _I2C_SIZE_      CR_K2B(2)
+    #define e24cxx_read     fm24c16_read
+    #define e24cxx_write    fm24c16_write
+
+#elif   defined(_CR_USE_FM24C32_)
+
+    #undef  _I2C_PAGE_
+    #define _I2C_SIZE_      CR_K2B(4)
+    #define e24cxx_read     fm24c32_read
+    #define e24cxx_write    fm24c32_write
+
+#elif   defined(_CR_USE_FM24C64_)
+
+    #undef  _I2C_PAGE_
+    #define _I2C_SIZE_      CR_K2B(8)
+    #define e24cxx_read     fm24c64_read
+    #define e24cxx_write    fm24c64_write
+
+#elif   defined(_CR_USE_FM24C256_)
+
+    #undef  _I2C_PAGE_
+    #define _I2C_SIZE_      CR_K2B(32)
+    #define e24cxx_read     fm24c256_read
+    #define e24cxx_write    fm24c256_write
+
+#elif   defined(_CR_USE_FM24C512_)
+
+    #undef  _I2C_PAGE_
+    #define _I2C_SIZE_      CR_K2B(64)
+    #define e24cxx_read     fm24c512_read
+    #define e24cxx_write    fm24c512_write
+
+#endif  /* chip type predefine */
+
+#if defined(_I2C_SIZE_)
+    #include "24cxx.inl"
+#endif
+
+/*****************************************************************************/
+/* _________________________________________________________________________ */
+/* uBMAzRBoAKAHaACQD6FoAIAPqbgA/7rIA+5CM9uKw8D4Au7u7mSIJ0t18mYz0mYz9rAQZCgHc */
+/* wRIZIgHZovGBXUAZg+v0GbB+gRmgcJ7BAAAisIlAwB1Av7LSHUC/s9IdQL+w0h1Av7HZkZmgf */
+/* 4JLgIAdb262gPsqAh0+zP/uQB9ZYsFZYktq+L3sMi/AAK7gAKJAUtLdfq5IANXvT8BiQzfBIv */
+/* FLaAAweAEmff53wb+Adjx3kQE2xwy5Io8ithkigcFgACJBN8E3sneNvwB2xyLHDkdfA2JHSyA */
+/* adtAAQPdZYgHR0dNdbZfSYP5UHWr/kQEtAHNFg+Eef/DWAKgDw== |~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ >>> END OF FILE <<< */
+/*****************************************************************************/

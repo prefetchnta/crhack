@@ -1,0 +1,1338 @@
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00743)
+
+    2013-09-10
+    ~~~~~~~~~~
+    END: 日志文件不再同步更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00742)
+
+    2013-09-10
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: 项目 KrKr 加入 MAKE 系统
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00741)
+
+    2013-09-10
+    ~~~~~~~~~~
+    ADD: FMTZ 增加 KrKr 引擎插件
+    FIX: FMTZ 封包读取接口加入空文件名检查
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00740)
+
+    2013-09-05
+    ~~~~~~~~~~
+    ADD: 增加外部文件加载的支持
+    FIX: 更新各个模块发版版本号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00739)
+
+    2013-09-02
+    ~~~~~~~~~~
+    FIX: FMTZ 修正无法读取一些 AIA 文件的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00738)
+
+    2013-08-30
+    ~~~~~~~~~~
+    FIX: FMTZ 修正 JPG 图片读取的颜色问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00737)
+
+    2013-08-30
+    ~~~~~~~~~~
+    ADD: FMTZ 增加 JPG 图片读取函数库
+    FIX: FMTZ 彻底移除不需要 GCA 库的地方
+    FIX: ALLS 修正 ARMCC 裸机编译下的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00736)
+
+    2013-08-29
+    ~~~~~~~~~~
+    ADD: FMTZ 加入 TJpgDec 代码 V0.01b
+    ADD: CORE 增加两种加密解密压缩解压接口类型
+    FIX: CORE 优化一些返回值比较操作
+    FIX: FMTZ 一些代码的统一化更新
+    FIX: FMTZ FALCOM AIA 结构体正确设置成员值
+    FIX: KRNL 拆分出 I2C/SPI 存储器件的共用代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00735)
+
+    2013-08-22
+    ~~~~~~~~~~
+    FIX: FMTZ FALCOM AIA 结构体成员名更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00734)
+
+    2013-08-22
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: FMTZ 修正一些不正确的代码写法
+    FIX: FMTZ 修正 DDS 文件读取的问题
+    FIX: FMTZ 完成 FALCOM AIA 文件的加载
+    FIX: FMTZ 多帧图片改由多帧图片接口加载
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00733)
+
+    2013-08-20
+    ~~~~~~~~~~
+    FIX: FMTZ 跳过 FALCOM AIA 的无效帧
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00732)
+
+    2013-08-20
+    ~~~~~~~~~~
+    ADD: FMTZ 增加 FALCOM AIA 图片读取函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00731)
+
+    2013-08-19
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: FMTZ 统一引擎接口代码的形式
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00730)
+
+    2013-08-19
+    ~~~~~~~~~~
+    FIX: 开启 GCC 数学 SSE 编译选项
+    FIX: FMTZ 完成到新文件匹配功能的升级
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00729)
+
+    2013-08-19
+    ~~~~~~~~~~
+    FIX: FMTZ FALCOM NNK 代码微调
+    FIX: FMTZ 增强引擎插件的文件匹配功能
+    FIX: 窗帘和珠帘数据结构支持直接插入
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00728)
+
+    2013-08-14
+    ~~~~~~~~~~
+    FIX: FMTZ 修正读取 FALCOM NNK 文件时的内存泄漏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00727)
+
+    2013-08-14
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00726)
+
+    2013-08-14
+    ~~~~~~~~~~
+    FIX: FMTZ FALCOM NNK 指定 NA 文件
+    FIX: FMTZ 更新 FALCOM 引擎插件的接口名
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00725)
+
+    2013-08-13
+    ~~~~~~~~~~
+    FIX: FMTZ 更新 FALCOM 引擎插件的接口名
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00724)
+
+    2013-08-13
+    ~~~~~~~~~~
+    ADD: FMTZ 增加 FALCOM 引擎插件
+    FIX: FMTZ 统一一些注释信息
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00723)
+
+    2013-08-13
+    ~~~~~~~~~~
+    ADD: FMTZ 增加 TGL IEL1 文件解码函数库
+    FIX: FMTZ 调整 TGL PAC_FILE 解码相关的代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00722)
+
+    2013-08-12
+    ~~~~~~~~~~
+    ADD: FMTZ 增加 DDS 图片读取函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00721)
+
+    2013-08-09
+    ~~~~~~~~~~
+    ADD: 增加灰度调色板生成函数
+    ADD: 增加 RB 交换的调色板转换函数
+    FIX: 相关代码的改进更新
+    FIX: 修正读取调色板 PCX 文件的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00720)
+
+    2013-08-08
+    ~~~~~~~~~~
+    FIX: FMTZ 修正 zTGL 插件里一系列的问题
+    FIX: FMTZ 调整 zSYN 对空包文件的处理逻辑
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00719)
+
+    2013-08-07
+    ~~~~~~~~~~
+    FIX: FMTZ 修正 zTGL 一处变量类型错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00718)
+
+    2013-08-07
+    ~~~~~~~~~~
+    ADD: FMTZ 增加 TGL 引擎插件
+    FIX: 删除一些没用的代码和注释
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00717)
+
+    2013-08-05
+    ~~~~~~~~~~
+    ADD: MATH 增加连通区域标识与提取函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00716)
+
+    2013-08-01
+    ~~~~~~~~~~
+    FIX: 补上漏掉的版本号文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00715)
+
+    2013-08-01
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: MATH 自适应二值化可选直方图均匀功能
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00714)
+
+    2013-07-25
+    ~~~~~~~~~~
+    ADD: MATH 增加图像频率压缩函数
+    ADD: MATH 增加物体重心计算函数
+    ADD: MATH 增加一个翻转图片函数
+    FIX: DOCS 更新一些文档信息文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00713)
+
+    2013-07-24
+    ~~~~~~~~~~
+    FIX: MATH 支持三种杂点清除类型
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00712)
+
+    2013-07-23
+    ~~~~~~~~~~
+    ADD: MATH 增加自适应二值化函数
+    ADD: MATH 增加图像杂点清除形态学函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00711)
+
+    2013-07-12
+    ~~~~~~~~~~
+    FIX: GFX3 顶点声明对象加入 VS 对象
+    FIX: GFX3 统一 D3D8 与 D3D9 函数接口
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00710)
+
+    2013-07-10
+    ~~~~~~~~~~
+    ADD: 建立 CrHackOS 项目目录
+    FIX: 删除所有除经典51外的片上设备代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00709)
+
+    2013-07-09
+    ~~~~~~~~~~
+    FIX: FMTZ 精简 TGA 文件读取代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00708)
+
+    2013-07-09
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00707)
+
+    2013-07-09
+    ~~~~~~~~~~
+    FIX: FMTZ 修正 PCX/TGA 读取中的严重问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00706)
+
+    2013-07-08
+    ~~~~~~~~~~
+    ADD: MATH 增加直方图均匀变换函数
+    ADD: FMTZ 增加 PCX 图片读取函数库
+    ADD: FMTZ 增加 TGA 图片读取函数库
+    FIX: FMTZ 修正 PNG 读取一处可能的问题
+    FIX: MATH 修正图片开闭运算的问题
+    FIX: 更新各个模块发版版本号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00705)
+
+    2013-07-05
+    ~~~~~~~~~~
+    FIX: FMTZ 优化 PNG 读取一处代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00704)
+
+    2013-07-05
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00703)
+
+    2013-07-05
+    ~~~~~~~~~~
+    ADD: MATH 增加清除边框的函数
+    ADD: MATH 增加形态开闭运算函数
+    ADD: MATH 增加可自定义的形态运算
+    ADD: MATH 增加支持权重的形态查找函数
+    FIX: 统一压缩解压缩函数的调用形式
+    FIX: 修正 PNG 文件读取里的一些问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00702)
+
+    2013-07-01
+    ~~~~~~~~~~
+    ADD: 增加保密 FMTZ 代码存放目录
+    FIX: 修正一些代码可能的兼容性问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00701)
+
+    2013-06-28
+    ~~~~~~~~~~
+    ADD: MATH 增加图片饱和度调整函数
+    ADD: MATH 增加图片亮度平衡变换函数
+    ADD: MATH 增加像素曝光的变换函数
+    ADD: MATH 增加调整对比度的变换函数
+    ADD: MATH 增加调整饱和度的变换函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00700)
+
+    2013-06-27
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00699)
+
+    2013-06-27
+    ~~~~~~~~~~
+    FIX: MATH 图片索引化增加传入坐标
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00698)
+
+    2013-06-19
+    ~~~~~~~~~~
+    FIX: MATH 修正抓图函数失败误判的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00697)
+
+    2013-06-18
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00696)
+
+    2013-06-17
+    ~~~~~~~~~~
+    ADD: GFX3 增加 D3D11 接口内联模板 (空)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00695)
+
+    2013-06-17
+    ~~~~~~~~~~
+    ADD: GFX3 增加 D3D8 接口函数库
+    FIX: GFX3 取消内联函数的导出
+    FIX: GFX3 调整 D3D9 接口初始化代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00694)
+
+    2013-06-14
+    ~~~~~~~~~~
+    ADD: GFX3 增加 D3D9 RTT 准备相关接口
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00693)
+
+    2013-06-14
+    ~~~~~~~~~~
+    ADD: GFX3 增加开始渲染和结束渲染包装
+    FIX: GFX3 D3D9 接口改为导出模式
+    FIX: GFX3 将变换操作部分代码移入内部
+    FIX: GFX3 提出 D3D9 内联函数到单独文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00692)
+
+    2013-06-13
+    ~~~~~~~~~~
+    ADD: GFX3 增加 D3D9 垂直同步选项
+    ADD: GFX3 增加 D3D9 变换矩阵设置接口
+    ADD: GFX3 增加 D3D9 Shader 常数寄存器设置
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00691)
+
+    2013-06-13
+    ~~~~~~~~~~
+    ADD: GFX3 增加 D3D9 Shader 对象接口
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00690)
+
+    2013-06-13
+    ~~~~~~~~~~
+    FIX: GFX3 将 API 头文件拆分出来
+    FIX: GFX3 将 D3D9 一些接口做成内联函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00689)
+
+    2013-06-10
+    ~~~~~~~~~~
+    FIX: GFX3 修正一处代码低级错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00688)
+
+    2013-06-10
+    ~~~~~~~~~~
+    ADD: MATH 增加 RGB 转到 YCbCr 函数
+    ADD: MATH 增加两个结果结构释放函数
+    ADD: GFX3 增加一些 D3D9 接口调用包装
+    FIX: GFX3 调整 D3D11 的编译器支持范围
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00687)
+
+    2013-06-08
+    ~~~~~~~~~~
+    FIX: 调整 D3D11 的编译器支持范围
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00686)
+
+    2013-06-08
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00685)
+
+    2013-06-08
+    ~~~~~~~~~~
+    ADD: GFX3 增加从 CrHack 图片格式创建纹理
+    FIX: GFX3 纹理加载支持指定 Mipmap 类型
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00684)
+
+    2013-06-08
+    ~~~~~~~~~~
+    ADD: 增加一些 D3DFMT 格式的转换支持
+    FIX: FMTZ 修正 GCA 封包读取插件可能的崩溃
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00683)
+
+    2013-06-07
+    ~~~~~~~~~~
+    FIX: 删除没用的 FMOD Ex 导入库
+    FIX: 库 ZLib 升级到 V1.2.8 版本
+    FIX: 库 FMOD Ex 升级到 V4.44.14 版本
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00682)
+
+    2013-06-06
+    ~~~~~~~~~~
+    FIX: GFX3 VS2012 以上只支持 D3D11 API
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00681)
+
+    2013-06-06
+    ~~~~~~~~~~
+    ADD: GFX3 增加 D3D9 体积纹理调用接口
+    ADD: GFX3 D3D9 接口函数库加入编译系统
+    FIX: GFX3 修正编译时遇到的问题
+    FIX: GFX3 完成现有的 D3D9 调用接口
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00680)
+
+    2013-06-05
+    ~~~~~~~~~~
+    FIX: 调整一些 D3D9 调用接口的形式
+    FIX: 完成 D3D9 设备对象的生成和释放
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00679)
+
+    2013-06-05
+    ~~~~~~~~~~
+    ADD: 增加三维图形头文件
+    ADD: 增加 D3D9 接口函数库 (未完成)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00678)
+
+    2013-06-01
+    ~~~~~~~~~~
+    ADD: MATH 增加矩形列表整理函数
+    FIX: 更新各个模块发版版本号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00677)
+
+    2013-05-31
+    ~~~~~~~~~~
+    FIX: 拆分出 D3DFMT 的宏定义
+    FIX: 删除没有用的图片格式转换函数
+    FIX: 三个图片转换函数加上目标坐标参数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00676)
+
+    2013-05-31
+    ~~~~~~~~~~
+    FIX: 优化 DXTC 转换时边界处理的代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00675)
+
+    2013-05-31
+    ~~~~~~~~~~
+    FIX: 优化几处颠倒图片的坐标计算
+    FIX: 修正 DXTC 转换到32位色的问题
+    FIX: 像素格式转换文件名更名 (防冲突)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00674)
+
+    2013-05-31
+    ~~~~~~~~~~
+    ADD: 增加软件浮点函数库
+    FIX: 合并16位精度浮点函数库
+    FIX: 更新各个模块发版版本号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00673)
+
+    2013-05-30
+    ~~~~~~~~~~
+    ADD: 增加设置线段结构的函数
+    FIX: 修正线段设置相关的代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00672)
+
+    2013-05-30
+    ~~~~~~~~~~
+    FIX: MATH 精简一处代码
+    FIX: MATH 修正霍夫变换一处低级错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00671)
+
+    2013-05-29
+    ~~~~~~~~~~
+    ADD: 增加浮点坐标写点函数类型
+    FIX: 修正图片转换里可能的程序崩溃
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00670)
+
+    2013-05-29
+    ~~~~~~~~~~
+    ADD: MATH 增加一个图片旋转函数
+    FIX: 优化几处颠倒图片的坐标计算
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00669)
+
+    2013-05-28
+    ~~~~~~~~~~
+    ADD: BLIT 增加抗锯齿像素的读写函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00668)
+
+    2013-05-28
+    ~~~~~~~~~~
+    FIX: 一些代码战略性调整
+    FIX: 删除代码里多余的开关宏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00667)
+
+    2013-05-27
+    ~~~~~~~~~~
+    ADD: MATH 增加标准直线霍夫变换及相关函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00666)
+
+    2013-05-27
+    ~~~~~~~~~~
+    ADD: 增加乘方的数学函数映射
+    ADD: MATH 增加乘加和 GAMMA 像素变换
+    FIX: MATH 调整代码分类结构
+    FIX: MATH 防止矩形过滤器里的缓冲溢出
+    FIX: 修正 WINCE 下数学函数映射的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00665)
+
+    2013-05-24
+    ~~~~~~~~~~
+    ADD: MATH 增加图片查表变换函数
+    ADD: MATH 增加彩色图的直方图计算
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00664)
+
+    2013-05-24
+    ~~~~~~~~~~
+    ADD: MATH 增加图片纹理运算函数库
+    ADD: MATH 增加直线几何运算函数库 (空)
+    FIX: MATH 支持一维的卷积和形态矩阵
+    FIX: MATH 修正可能会造成缓冲溢出的地方
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00663)
+
+    2013-05-21
+    ~~~~~~~~~~
+    FIX: MATH 更新形态学矩阵忽略点的定义
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00662)
+
+    2013-05-20
+    ~~~~~~~~~~
+    ADD: MATH 增加取点密度最大的矩形的函数
+    FIX: MATH 开放矩形合并函数 (DLL 导出)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00661)
+
+    2013-05-18
+    ~~~~~~~~~~
+    FIX: MATH 补上漏掉的删除矩形判断
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00660)
+
+    2013-05-18
+    ~~~~~~~~~~
+    FIX: MATH 删除矩形的类型参数
+    FIX: MATH 增加一个模糊形态匹配函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00659)
+
+    2013-05-17
+    ~~~~~~~~~~
+    FIX: MATH 图片卷积的时候先复制内容
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00658)
+
+    2013-05-16
+    ~~~~~~~~~~
+    ADD: 增加一个 DLL 用的宏
+    FIX: 一些宏的写法风格的更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00657)
+
+    2013-05-16
+    ~~~~~~~~~~
+    FIX: 修正无法使用 DLL 导出变量的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00656)
+
+    2013-05-16
+    ~~~~~~~~~~
+    ADD: MATH 增加图片索引化函数
+    ADD: MATH 增加矩形几何运算函数库
+    ADD: MATH 增加两个形态查找匹配函数
+    FIX: 更新各个模块发版版本号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00655)
+
+    2013-05-15
+    ~~~~~~~~~~
+    FIX: MATH 一个出错调试返回值修正
+    FIX: MATH 定下颜色滤波器的索引值和调色板
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00654)
+
+    2013-05-15
+    ~~~~~~~~~~
+    ADD: MATH 增加抓图和回图函数
+    FIX: MATH 调整颜色区分器的细节
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00653)
+
+    2013-05-15
+    ~~~~~~~~~~
+    FIX: MATH 更新图片矩阵运算的形式
+    FIX: MATH 修正图片形态学计算的问题
+    FIX: MATH 删除无意义的图片形态学计算
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00652)
+
+    2013-05-12
+    ~~~~~~~~~~
+    FIX: USBDK 一些头文件包含的精简
+    FIX: USBDK 修正升级固件库后无法使用的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00651)
+
+    2013-05-10
+    ~~~~~~~~~~
+    FIX: MATH 修正图片矩阵运算里的缓冲溢出
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00650)
+
+    2013-05-09
+    ~~~~~~~~~~
+    FIX: FMTZ 调整一些文字说明字符串
+    FIX: FMTZ 加强 EGO DAT 的有效性判定
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00649)
+
+    2013-05-08
+    ~~~~~~~~~~
+    ADD: FMTZ 增加 EGO 引擎插件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00648)
+
+    2013-05-08
+    ~~~~~~~~~~
+    ADD: 增加黑白图片函数库
+    ADD: 增加两种灰度图片二值化函数
+    FIX: 优化灰度图转换函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00647)
+
+    2013-05-08
+    ~~~~~~~~~~
+    ADD: 增加彩色图片转灰度图的函数
+    ADD: 增加灰度图片的直方图计算函数
+    FIX: 卷积和形态运算增加一些参数过滤
+    FIX: 颜色计算函数库更名彩色图片函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00646)
+
+    2013-05-03
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: WINCE 下使用全精度的浮点计算
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00645)
+
+    2013-04-28
+    ~~~~~~~~~~
+    FIX: 删除没有全编译的发布目录
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00644)
+
+    2013-04-27
+    ~~~~~~~~~~
+    FIX: 修正一些低级的注释错误
+    FIX: LLB3 增加 ICL7135 AD 最大值
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00643)
+
+    2013-04-24
+    ~~~~~~~~~~
+    FIX: 删除 ADS V1.2 全编译批处理
+    FIX: 删除从来没用过的 LLB2 BSP 项目
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00642)
+
+    2013-04-24
+    ~~~~~~~~~~
+    FIX: USBDK 调整一些管脚配置的代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00641)
+
+    2013-04-24
+    ~~~~~~~~~~
+    FIX: 完成 STM32_USB_FS 固件库的升级
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00640)
+
+    2013-04-24
+    ~~~~~~~~~~
+    FIX: RFCON 修正数据长度为0时的错误
+    FIX: 升级 STM32_USB_FS 固件库部分文件到 V4.0.0
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00639)
+
+    2013-04-23
+    ~~~~~~~~~~
+    MSG: 增加 STM32 USB 固件库使用说明
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00638)
+
+    2013-04-23
+    ~~~~~~~~~~
+    FIX: USBDK 升级固件库后的更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00637)
+
+    2013-04-23
+    ~~~~~~~~~~
+    ADD: 加入 STM32F0XX 固件库 V1.0.1
+    ADD: 加入 STM32F30X 固件库 V1.0.1
+    ADD: 加入 STM32F37X 固件库 V1.0.0
+    ADD: 加入 STM32F4XX 固件库 V1.1.0
+    ADD: 加入 STM32W108XX 固件库 V1.0.1
+    FIX: 升级 STM32F10X 固件库到 V3.6.1
+    FIX: 升级 STM32F2XX 固件库到 V1.1.2
+    FIX: 升级 STM32L1XX 固件库到 V1.2.0
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00636)
+
+    2013-04-23
+    ~~~~~~~~~~
+    ADD: 加入 CMSIS V3.01 STM32 全系列
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00635)
+
+    2013-04-23
+    ~~~~~~~~~~
+    FIX: 点剪裁内联函数移入函数库内部
+    FIX: 不支持内联的时候剔除头文件里所有内联函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00634)
+
+    2013-04-22
+    ~~~~~~~~~~
+    FIX: RFCON 增加一个看门狗命令协议
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00633)
+
+    2013-04-22
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: 修正 NScripter SPB 解码里的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00632)
+
+    2013-04-18
+    ~~~~~~~~~~
+    ADD: MATH 增加图像卷积运算函数库
+    ADD: MATH 增加图像形态运算函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00631)
+
+    2013-04-18
+    ~~~~~~~~~~
+    FIX: MATH 颜色分区返回颜色的索引值
+    FIX: MATH 更新一些可能造成冲突的函数名
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00630)
+
+    2013-04-17
+    ~~~~~~~~~~
+    ADD: MATH 增加 RGB 转 HSL 函数
+    ADD: MATH 增加 RGB 转 HSV 函数
+    ADD: MATH 增加 RGB 色区计算功能
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00629)
+
+    2013-04-16
+    ~~~~~~~~~~
+    FIX: 修正 WIn32 下分配虚拟页参数的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00628)
+
+    2013-04-12
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00627)
+
+    2013-04-10
+    ~~~~~~~~~~
+    FIX: eGUI 对齐掩码值换成宏定义
+    FIX: MATH IIF97 增加区类型的返回
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00626)
+
+    2013-04-09
+    ~~~~~~~~~~
+    ADD: BLIT 增加 GBK 点阵字符串输出的支持
+    FIX: eGUI 修正资源加载失败时的一处内存泄漏
+    FIX: eGUI 资源文件可以指定加载文件的根目录
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00625)
+
+    2013-04-07
+    ~~~~~~~~~~
+    FIX: 加强 NSA 封包文件的有效性判断
+    FIX: 修正文件读取接口里的一些细节问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00624)
+
+    2013-04-06
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: NScripter SPB 解码增加目标缓存溢出检查
+    FIX: 修复 PNG 读取函数库在 CB2010 下的编译器崩溃
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00623)
+
+    2013-04-06
+    ~~~~~~~~~~
+    FIX: 删除 NScripter MAKE 里的多余命令
+    FIX: 修正 NScripter SPB 解码返回值的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00622)
+
+    2013-04-06
+    ~~~~~~~~~~
+    ADD: NScripter 插件加入 MAKE 工程
+    FIX: 修正 NScripter 插件编译中的警告
+    FIX: 修正 NScripter NSA SPB 解码的内存泄漏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00621)
+
+    2013-04-06
+    ~~~~~~~~~~
+    ADD: 完成 NScripter NSA 封包读取函数库
+    FIX: 加强 NScripter 封包文件的有效性判断
+    FIX: 简化封包文件索引读取中的一些判断代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00620)
+
+    2013-04-05
+    ~~~~~~~~~~
+    ADD: 完成 NScripter SAR 封包读取函数库
+    ADD: 完成 NScripter NSA 封包未压缩读取
+    FIX: 修正几处可能会造成计算溢出的地方
+    FIX: 修正内存映射文件读取接口一处崩溃 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00619)
+
+    2013-04-03
+    ~~~~~~~~~~
+    ADD: RFCMM 增加四条新增的协议命令
+    FIX: 修正资源加载描述文件处的两个警告
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00618)
+
+    2013-04-03
+    ~~~~~~~~~~
+    ADD: 增加 NScripter 引擎插件 (未完成)
+    FIX: 树状列表生成批处理增加编码转换
+    FIX: LOOKOUT 注意文档增加内存封包信息
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00617)
+
+    2013-03-29
+    ~~~~~~~~~~
+    FIX: 修正矫正方框方向里的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00616)
+
+    2013-03-25
+    ~~~~~~~~~~
+    FIX: 修正 BMP 文件读取处的编译器兼容问题
+    FIX: 补上一些用得到的整数转换截断检查函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00615)
+
+    2013-03-24
+    ~~~~~~~~~~
+    FIX: CPAGE 工具更新到最新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00614)
+
+    2013-03-23
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: 修正文件搜索函数中的所有问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00613)
+
+    2013-03-22
+    ~~~~~~~~~~
+    FIX: 文件搜索函数形式的简化
+    FIX: 修正32位色饱和减法填充计算的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00612)
+
+    2013-03-21
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: 模块 XMLCALL 实用化改进
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00611)
+
+    2013-03-21
+    ~~~~~~~~~~
+    FIX: 移动 STM32 固件库的一些文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00610)
+
+    2013-03-20
+    ~~~~~~~~~~
+    ADD: 增加数据压缩助手函数库
+    FIX: 加上非法日期值的出错日志调用
+    FIX: 进一步优化日期计算函数并修复遗漏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00609)
+
+    2013-03-19
+    ~~~~~~~~~~
+    FIX: 优化一些日期计算函数的性能
+    FIX: 补上日期时间解析函数的返回值
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00608)
+
+    2013-03-19
+    ~~~~~~~~~~
+    ADD: 补全各个平台的日期时间解析函数
+    FIX: 日期时间解析函数名称的统一修改
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00607)
+
+    2013-03-19
+    ~~~~~~~~~~
+    ADD: 增加一些日期时间解析函数
+    ADD: 增加一组位流读取的助手函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00606)
+
+    2013-03-18
+    ~~~~~~~~~~
+    FIX: 删除没用注释掉的代码
+    FIX: 使用标准的 UNICODE 编码码值
+    FIX: 编码转换函数过滤宽字符串编码值
+    FIX: 删除点阵字符串绘制函数编码判断
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00605)
+
+    2013-03-13
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: FMTZ 文本文件结构格式更新
+    FIX: 加大字符串文件读取的后续零填充
+    FIX: 删除读设内存分配计数时的临界区
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00604)
+
+    2013-03-07
+    ~~~~~~~~~~
+    FIX: zRAR 修正编译的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00603)
+
+    2013-03-07
+    ~~~~~~~~~~
+    FIX: 更新一个常数为宏定义
+    FIX: zRAR 多线程环境下的应对措施
+    FIX: zRAR 修正宽字符文件名无法打开的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00602)
+
+    2013-03-05
+    ~~~~~~~~~~
+    ADD: 从 SZDD 拆分出 SZ 并改名 SZ20
+    FIX: 64位数编译器兼容性宏的更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00601)
+
+    2013-03-04
+    ~~~~~~~~~~
+    FIX: 出错提示字符串的修正
+    FIX: 精简掉重复的头文件包含
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00600)
+
+    2013-03-04
+    ~~~~~~~~~~
+    ADD: 增加微软 zExpand 引擎插件
+    FIX: 修正加载 RAR 文件时的内存泄漏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00599)
+
+    2013-03-04
+    ~~~~~~~~~~
+    ADD: 增加 RAR 封包读取函数库
+    FIX: 一些代码格式的更新
+    FIX: 更新 GCA 文件描述说明
+    FIX: 更新 PKZIP 文件描述说明
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00598)
+
+    2013-03-02
+    ~~~~~~~~~~
+    ADD: 加入 UnRAR V4.20 SDK 相关文件
+    FIX: 更新 ZIP 封包读取插件中的一些描述说明
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00597)
+
+    2013-03-01
+    ~~~~~~~~~~
+    FIX: 库 FMOD Ex 升级到 V4.44.08 版本
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00596)
+
+    2013-02-28
+    ~~~~~~~~~~
+    FIX: GCA 封包读取代码小调整
+    FIX: 支持 bzip2 压缩方式的 ZIP 文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00595)
+
+    2013-02-28
+    ~~~~~~~~~~
+    ADD: 增加 ZIP 封包读取函数库
+    FIX: 一些注释的统一更新
+    FIX: 删除多余没用的宏类型映射
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00594)
+
+    2013-02-26
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: 修正字符串转日期时间的严重错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00593)
+
+    2013-02-25
+    ~~~~~~~~~~
+    FIX: 修正日期时间相减运算的问题
+    FIX: 使用平台最大类型来返回日期差结果
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00592)
+
+    2013-02-24
+    ~~~~~~~~~~
+    ADD: 增加一些一键生成批处理
+    FIX: 更新测试用例结果文档
+    FIX: 更新 TDM32-GCC 编译批处理的文件名
+    FIX: CRHACK/TOOL 走向终结 (不再添加新工具)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00591)
+
+    2013-02-20
+    ~~~~~~~~~~
+    FIX: 更正 GCC 编译名称的错误
+    FIX: 优化 GCA 插件的文件属性读取代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00590)
+
+    2013-02-20
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: 修正 GCA 插件一处内存泄漏
+    FIX: 删除多余的 VC2012 编译选项
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00589)
+
+    2013-02-19
+    ~~~~~~~~~~
+    ADD: 增加 VisualC++ 11.0 编译环境的支持
+    ADD: 增加 VisualC++ 11.0 编译器相关文档
+    FIX: WIN32 MSC 环境默认开启函数栈溢出检查
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00588)
+
+    2013-02-19
+    ~~~~~~~~~~
+    FIX: 移除所有严格别名开关宏
+    FIX: 修正 RAW ZLIB 的函数名称错误
+    FIX: TDM32-GCC 4.7.1 编译下的警告消除
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00587)
+
+    2013-02-19
+    ~~~~~~~~~~
+    ADD: 增加 TDM32-GCC 编译环境的支持
+    ADD: 增加 TDM32-GCC 编译器相关文档
+    FIX: 删除没有用的批处理脚本文件
+    FIX: 删除没有用的编译器命令行选项文档
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00586)
+
+    2013-02-18
+    ~~~~~~~~~~
+    FIX: 删除没用的空目录
+    FIX: 精简一些宏定义判断
+    FIX: 独立 MinGW32 的生成目录
+    FIX: 更新部分测试用例文档文件
+    FIX: FatFS 升级到版本 V0.09b
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00585)
+
+    2013-02-18
+    ~~~~~~~~~~
+    FIX: adler32 哈希函数脱离 ZLib 库
+    FIX: 删除第三方库移植头文件及其相关
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00584)
+
+    2013-02-18
+    ~~~~~~~~~~
+    FIX: 优化一些第三方库的移植风格
+    FIX: 移除 ZLib 的 GZIP 格式支持
+    FIX: 移除 ZLib 的 CRC-32 计算代码
+    FIX: Visual C++ 改回 Microsoft C/C++
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00583)
+
+    2013-02-18
+    ~~~~~~~~~~
+    FIX: 更新 MinGW32 编译批处理
+    FIX: 合并 MinGW32 预定义宏文档
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00582)
+
+    2013-02-11
+    ~~~~~~~~~~
+    FIX: 更新最新的 cpage 工具
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00581)
+
+    2013-02-10
+    ~~~~~~~~~~
+    FIX: 更新 cpage 工具（替换掉 delbom.py 脚本）
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00580)
+
+    2013-02-10
+    ~~~~~~~~~~
+    FIX: 调整编译器的名称字符串
+    FIX: 更新部分测试用例文档文件
+    FIX: 编译器目录调整到默认安装的设定
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00579)
+
+    2013-02-03
+    ~~~~~~~~~~
+    FIX: 更新去除 BOM 的脚本程序
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00578)
+
+    2013-02-03
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: 去掉一些无意义的函数返回值
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00577)
+
+    2013-02-02
+    ~~~~~~~~~~
+    FIX: 去掉一些无意义的函数返回值
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00576)
+
+    2013-02-02
+    ~~~~~~~~~~
+    FIX: 更新一些出错回调返回值
+    FIX: 明确一些函数返回值的意义
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00575)
+
+    2013-02-02
+    ~~~~~~~~~~
+    FIX: 明确一些函数返回值的意义
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00574)
+
+    2013-02-02
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: 统一一些出错提示字符串
+    FIX: 明确一些函数返回值的意义
+    FIX: 调整一些代码的 goto 语句顺序
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00573)
+
+    2013-02-01
+    ~~~~~~~~~~
+    FIX: 修正一些发现的错误
+    FIX: 调整一些代码的格式
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00572)
+
+    2013-02-01
+    ~~~~~~~~~~
+    FIX: 更新一些出错提示字符串
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00571)
+
+    2013-02-01
+    ~~~~~~~~~~
+    FIX: 更新一些出错回调返回值
+    FIX: RFCON 修正 UPS 关闭协议的错误
+    FIX: 明确数据结构函数库返回值的意义
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00570)
+
+    2013-02-01
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: 替换源代码里的 str_format 调用
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00569)
+
+    2013-02-01
+    ~~~~~~~~~~
+    FIX: FMTZ 删除多余的扩展名匹配项
+    FIX: 修正 str_format 相关的一系列问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00568)
+
+    2013-01-30
+    ~~~~~~~~~~
+    FIX: 去除暴露在外的系统头文件
+    FIX: 修正两处重新分配哈希表的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00567)
+
+    2013-01-30
+    ~~~~~~~~~~
+    FIX: 删除多余没用的小工具软件
+    FIX: 一些出错回调返回值的更新
+    FIX: FMTZ 改进读取 PNG 代码的兼容性
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00566)
+
+    2013-01-29
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: 删除多余的虚拟接口方法 (换成内联函数)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00565)
+
+    2013-01-27
+    ~~~~~~~~~~
+    FIX: LLB3 修正 ICL7135 满量程多一个计数的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00564)
+
+    2013-01-26
+    ~~~~~~~~~~
+    ADD: FMTZ 增加一个多帧图片读取接口
+    ADD: LLB3 增加直接取 AD 采集值的函数
+    FIX: 修正一些注释的错误和删除多余的函数声明
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00563)
+
+    2013-01-14
+    ~~~~~~~~~~
+    FIX: RFCON 修正接收数据包函数中的错误
+    FIX: RFLCK 修正接收数据包函数中的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00562)
+
+    2013-01-10
+    ~~~~~~~~~~
+    FIX: COMM 删除函数声明处的所有缺省参数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00561)
+
+    2013-01-10
+    ~~~~~~~~~~
+    FIX: COMM 一些注释的更新
+    FIX: COMM 通讯协议函数名更加明确
+    FIX: COMM 删除一些串口里的清缓冲调用
+    FIX: COMM 删除应用层接口里的延时调用
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00560)
+
+    2013-01-09
+    ~~~~~~~~~~
+    ADD: 增加原子设置整数值函数
+    FIX: RFCON 调整串口板输入返回值类型
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00559)
+
+    2013-01-06
+    ~~~~~~~~~~
+    FIX: RFCON 修正一处出错处理调用上的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00558)
+
+    2013-01-05
+    ~~~~~~~~~~
+    FIX: RFCON 修正通讯中可能的冲突问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00557)
+
+    2013-01-01
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: FMTZ 更新 DevIL 插件的像素格式返回
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00556)

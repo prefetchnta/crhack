@@ -1,0 +1,1616 @@
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00153)
+
+    2010-12-31
+    ~~~~~~~~~~
+    FIX: 更新所有测试用例结果文档
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00152)
+
+    2010-12-31
+    ~~~~~~~~~~
+    ADD: 增加时间计算相关的函数
+    ADD: 增加一个计算时间日期秒差的脚本
+    FIX: 目标板编译批处理更名
+    FIX: 更新 PCF8583 BSP 函数定义
+    FIX: 修正日期时间计算中的若干问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00151)
+
+    2010-12-30
+    ~~~~~~~~~~
+    ADD: 增加目标板编译批处理
+    ADD: 增加两种有限状态机函数库
+    FIX: 修正一处代码的警告
+    FIX: 修正日期时间比较的 BUG
+    FIX: 针对裸机系统的若干更新
+    FIX: 更新 ADICC CR_NOP 宏定义
+    FIX: 更新裸机系统的相关宏定义
+    FIX: 重写日期时间函数库及相关代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00150)
+
+    2010-12-29
+    ~~~~~~~~~~
+    ADD: 增加一些宏开关说明
+    ADD: 增加内存分配大小峰值统计
+    ADD: 增加 uC/OS-II 系统的支持
+    FIX: 代码若干小更新
+    FIX: 调整线程同步相关代码
+    FIX: 针对裸机系统的若干更新
+    FIX: 修正 BCC32 编译下的一处警告
+    FIX: 解决 ADICC 处理 double 类型上的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00149)
+
+    2010-12-28
+    ~~~~~~~~~~
+    FIX: 修正 LZARI 压缩在16位编译器上的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00148)
+
+    2010-12-28
+    ~~~~~~~~~~
+    ADD: 增加封闭循环优化函数
+    ADD: 裸机平台加入默认去除调试信息
+    FIX: 更新 ADICC 的配置头文件
+    FIX: 更新 CCBLKFN 编译批处理
+    FIX: BLACKFIN 平台加入 LZMA 压缩库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00147)
+
+    2010-12-27
+    ~~~~~~~~~~
+    ADD: 增加 BLACKFIN 平台的支持
+    ADD: 增加 CCBLKFN 编译器相关 MAKEFILE
+    FIX: CCBLKFN 编译下的若干更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00146)
+
+    2010-12-26
+    ~~~~~~~~~~
+    ADD: 增加架构优化头文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00145)
+
+    2010-12-25
+    ~~~~~~~~~~
+    FIX: 编译器参数文档更名
+    FIX: 修正一处头文件包含的位置错误
+    FIX: 增强编译器在宽字符串上的适应性
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00144)
+
+    2010-12-24
+    ~~~~~~~~~~
+    ADD: 增加编译器断言优化选项
+    ADD: 增加 ADICC 环境变量设置批处理
+    ADD: 增加 ADICC 编译器命令行参数文档
+    ADD: 增加 VC100 测试用例及结果文档
+    ADD: 增加 Microsoft C/C++ VC 10.0 的支持
+    ADD: 增加 VC60 - VC100 编译器命令行参数文档
+    ADD: 增加 BCB60 - CB2009 编译器命令行参数文档
+    FIX: 调整字节顺序头文件里的函数开关宏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00143)
+
+    2010-12-22
+    ~~~~~~~~~~
+    FIX: 删除不确定能正确使用的 UCFONTS 字库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00142)
+
+    2010-12-21
+    ~~~~~~~~~~
+    FIX: 代码和注释若干小更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00141)
+
+    2010-12-20
+    ~~~~~~~~~~
+    ADD: 增加最大最小公约数计算函数
+    ADD: 增加 BCD 数和二进制数互换函数
+    ADD: 增加二进制数值1的位数统计函数
+    ADD: DTM_NEXT 增加 RTC 时钟序列化函数
+    FIX: 代码若干小更新
+    FIX: 修正序列化函数库一处跳过标签的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00140)
+
+    2010-12-19
+    ~~~~~~~~~~
+    ADD: 增加编译器浮点数大小的检查
+    ADD: 增加一组非对齐数据的操作函数
+    FIX: ADICC 配置文件的若干更新
+    FIX: 删除第三方库里所有多余的空白
+    FIX: DTM_NEXT 精简重复包含的头文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00139)
+
+    2010-12-18
+    ~~~~~~~~~~
+    ADD: 准备开始 VSYS 项目
+    FIX: MAKE 系统的若干更新
+    FIX: 通讯协议函数库归入 COMM 项目
+    FIX: 修正 GCC 配置头文件一处书写错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00138)
+
+    2010-12-18
+    ~~~~~~~~~~
+    FIX: ADICC 配置文件的若干更新
+    FIX: DTM_NEXT 调整加密解密接口
+    FIX: DTM_NEXT 完成扩展类型序列化函数
+    FIX: 移除 DTM_NEXT 对出错提示的语言要求
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00137)
+
+    2010-12-16
+    ~~~~~~~~~~
+    ADD: DTM_NEXT 增加扩展类型序列化部分
+    FIX: DTM_NEXT 精简部分类型出错提示
+    FIX: 修正序列化的一些错误的出错提示
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00136)
+
+    2010-12-15
+    ~~~~~~~~~~
+    ADD: 增加可选的日期时间分割字符
+    ADD: DTM_NEXT 增加类型操作函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00135)
+
+    2010-12-15
+    ~~~~~~~~~~
+    ADD: DTM_NEXT 增加新制定的加解密接口
+    ADD: DTM_NEXT 增加读卡机驱动端口自动搜索
+    ADD: DTM_NEXT 增加 DRAM ICCARD 设备驱动函数库
+    ADD: DTM_NEXT 增加 UNIV ICCARD 设备驱动函数库
+
+    2010-12-14
+    ~~~~~~~~~~
+    ADD: 增加一个自动导出 SVN 代码的批处理模板
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00134)
+
+    2010-12-14
+    ~~~~~~~~~~
+    FIX: 修正电源盒用加解密算法中长度的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00133)
+
+    2010-12-11
+    ~~~~~~~~~~
+    ADD: 增加一组常用图标资源包
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00132)
+
+    2010-12-10
+    ~~~~~~~~~~
+    ADD: 增加一组常用图标资源包
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00131)
+
+    2010-12-10
+    ~~~~~~~~~~
+    FIX: 压缩开发资源包
+    FIX: 删除 uTools 工程
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00130)
+
+    2010-12-10
+    ~~~~~~~~~~
+    ADD: 增加 ADICC 编译器配置头文件
+    ADD: 增加 ADICC 字节顺序相关的函数
+    ADD: 增加 BLACKFIN GCC 预定义宏列表
+    FIX: 增强变量对齐宏的兼容性
+    FIX: 增强字节顺序相关函数的兼容性
+    FIX: 补全 GCC 编译器漏掉的配置选项
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00129)
+
+    2010-12-07
+    ~~~~~~~~~~
+    ADD: 增加 ARMCC 下的一些字节顺序调整函数
+    FIX: 修正一些注释的文字错误
+    FIX: 修正通讯协议函数发送时刷读缓冲的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00128)
+
+    2010-12-06
+    ~~~~~~~~~~
+    FIX: 精简一些资源文件
+    FIX: 简化整理模拟总线时序操作
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00127)
+
+    2010-12-06
+    ~~~~~~~~~~
+    ADD: DTM_OLD 通讯协议支持加密模式
+    ADD: DTM_NEXT 增加四川通讯加密解密函数
+    FIX: 增加上海老手持机程序的下载
+    FIX: 修正 DTM_OLD 手持机下载的 BUG
+    FIX: 修正手持机程序下载可能的响应不够
+    FIX: 调整 DTM_OLD 手持机下载命令字优先级
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00126)
+
+    2010-12-05
+    ~~~~~~~~~~
+    FIX: 调整 sGPS_NC 结构体
+    FIX: 统一文件打开模式的处理
+    FIX: 修正若干代码上的书写错误
+    FIX: 完成 DTM_OLD 手持机程序下载
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00125)
+
+    2010-12-03
+    ~~~~~~~~~~
+    ADD: 增加一个进度回调结构
+    ADD: DTM_NEXT 增加新老机型下载函数
+    ADD: DTM_NEXT 增加电源盒语音播放函数
+    ADD: DTM_NEXT 增加南昌 GPS 设备读取函数
+    FIX: 更新相关测试用例及结果文档
+    FIX: DTM_NEXT 完善手持机操作函数库
+    FIX: 串口函数库增加 Windows CE 的支持
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00124)
+
+    2010-12-02
+    ~~~~~~~~~~
+    ADD: 增加一个返回编译日期函数
+    ADD: 增加两种 3DES 加密解密算法
+    FIX: 修正序列化在 GCC 编译下的警告
+    FIX: 修正 AES 加密解密算法缓冲溢出的 BUG
+    FIX: 更新相关测试用例及结果文档
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00123)
+
+    2010-12-01
+    ~~~~~~~~~~
+    ADD: 增加 SDT22 通讯协议函数库
+    FIX: 修正 SDT11 通讯协议的结构体名
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00122)
+
+    2010-12-01
+    ~~~~~~~~~~
+    FIX: 修正 DCRF 读卡函数的问题
+    FIX: DTM_NEXT 完善手持机操作函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00121)
+
+    2010-11-30
+    ~~~~~~~~~~
+    ADD: 增加第三方库的使用开关
+    ADD: 增加块设备信息结构接口
+    ADD: DTM_NEXT 增加手持机操作函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00120)
+
+    2010-11-20
+    ~~~~~~~~~~
+    ADD: 增加 DCIC 24CXX ICCARD 设备驱动函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00119)
+
+    2010-11-19
+    ~~~~~~~~~~
+    ADD: 增加 DTM_NEXT 项目总头文件
+    ADD: DTM_NEXT 补全老版本的解密算法
+    ADD: DTM_NEXT 增加一种变密钥加密算法
+    FIX: 代码若干小更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00118)
+
+    2010-11-16
+    ~~~~~~~~~~
+    FIX: 增加序列化的一些注释
+    FIX: 序列化增加大端小端功能的支持
+    FIX: 修正 xml_skip_tagT() 函数的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00117)
+
+    2010-11-15
+    ~~~~~~~~~~
+    ADD: 增加一个跳过 XML 标签的函数
+    ADD: 序列化增加跳过多层标签的功能
+    ADD: 增加 DTM_NEXT 项目加密解密函数库
+    FIX: 通讯协议接收上的小修改
+    FIX: 修正序列化比较标签名的 BUG
+    FIX: 修正头文件里的一些书写错误
+    FIX: 修正 DTM_OLD 协议处理上的 BUG
+    FIX: 更正 DTM_OLD 通讯协议处理模式
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00116)
+
+    2010-11-14
+    ~~~~~~~~~~
+    ADD: 增加 DTM_OLD 通讯协议函数库
+    ADD: 增加一个返回序列化编码类型的函数
+    FIX: 更新一些出错提示信息及其宏名称
+    FIX: 修正 DTM_NEW 通讯协议函数库的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00115)
+
+    2010-11-13
+    ~~~~~~~~~~
+    FIX: 移动 clear.bat 到 bat 目录
+    FIX: 更新所有编译器的测试用例结果文档
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00114)
+
+    2010-11-12
+    ~~~~~~~~~~
+    FIX: 修正 DCRF M1 卡函数库在 VC2003 下的警告
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00113)
+
+    2010-11-12
+    ~~~~~~~~~~
+    ADD: 增加 DTM_NEW 通讯协议函数库
+    FIX: 修正 SDT11 协议一些 BUG
+    FIX: 文件 sdtlib.c 更名 sdt11.c
+    FIX: 调整块设备关闭接口的返回类型
+    FIX: 完成 JZT-969A 指纹仪驱动函数库
+    FIX: 修正驱动注册表在 C++ 编译下的问题
+    FIX: 修正一系列引用未赋值局部变量的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00112)
+
+    2010-11-11
+    ~~~~~~~~~~
+    ADD: 开始 DTM_NEXT 项目
+    ADD: 增加 DISK ICCARD 设备驱动函数库
+    ADD: 增加 DCRF 24CXX ICCARD 设备驱动函数库
+    ADD: 增加 DCRF S50/S70 ICCARD 设备驱动函数库
+    ADD: 增加 JZT-969A 指纹仪驱动函数库 (未完成)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00111)
+
+    2010-11-10
+    ~~~~~~~~~~
+    ADD: 增加块设备接口函数库
+    FIX: 代码若干小更新
+    FIX: 修正第一版反序列化中存在的严重 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00110)
+
+    2010-11-09
+    ~~~~~~~~~~
+    FIX: 代码若干小更新
+    FIX: 调整校验错误处理机制
+    FIX: 隐藏一些开放的内部函数
+    FIX: 更新序列化数组个数的处理方式
+    FIX: 完成二进制反序列化功能第一版
+    FIX: 修正 FMTLIB 查找扩展名必须小写的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00109)
+
+    2010-11-08
+    ~~~~~~~~~~
+    FIX: 修正序列化里的一些问题
+    FIX: 用例 serial.xml 文件更新
+    FIX: 完成二进制序列化功能第一版
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00108)
+
+    2010-11-07
+    ~~~~~~~~~~
+    ADD: 增加压缩解压的测试用例
+    ADD: 增加序列化内置原生类型函数库
+    FIX: 修正一些宏开关的写法
+    FIX: 更新几个编译器的测试结果文档
+    FIX: 修正 MinGW32 TOOL 工程 MAKEFILE 的问题
+    FIX: 修正 serial_setup() 一处可能的内存泄漏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00107)
+
+    2010-11-07
+    ~~~~~~~~~~
+    FIX: 调整序列化的一些参数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00106)
+
+    2010-11-06
+    ~~~~~~~~~~
+    ADD: 增加序列化类型安全检查部分
+    ADD: 增加一个编译器宽字符串测试文件
+    FIX: 增加输出时文本编码的指定
+    FIX: 增加校验出错的成员名参数
+    FIX: 用例 serial.xml 文件更新
+    FIX: 增加两个新标签取消 hash 属性
+    FIX: 更新 str2bin_t 函数回调的参数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00105)
+
+    2010-11-05
+    ~~~~~~~~~~
+    FIX: 代码若干小修正
+    FIX: 删除多余的图标文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00104)
+
+    2010-11-05
+    ~~~~~~~~~~
+    ADD: 增加自定常数的读取函数
+    ADD: 增加序列化函数库测试文件
+    FIX: 调整 safe 属性值的用法
+    FIX: 修正序列化函数库一系列 BUG
+    FIX: 增加序列化校验出错提示信息
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00103)
+
+    2010-11-04
+    ~~~~~~~~~~
+    ADD: 增加一组可执行文件数字签名工具
+    FIX: 完成第一版序列化反序列化函数库
+
+    2010-11-03
+    ~~~~~~~~~~
+    ADD: 开始开发数据的序列化反序列化模块
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00102)
+
+    2010-11-02
+    ~~~~~~~~~~
+    FIX: 固定 SDT 系列协议为 SDT11
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00101)
+
+    2010-10-27
+    ~~~~~~~~~~
+    ADD: 增加 SDT 系列协议线程处理模式
+    FIX: 整理 MCS-51 串口接收部分代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00100)
+
+    2010-10-26
+    ~~~~~~~~~~
+    FIX: BZip2 库升级到 V1.0.6
+    FIX: ZLib 部分代码升级至 V1.2.5
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00099)
+
+    2010-10-26
+    ~~~~~~~~~~
+    ADD: 增加一些配置宏开关的说明
+    ADD: 增加 SDT 系列协议串口处理函数
+    FIX: 代码若干小更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00098)
+
+    2010-10-24
+    ~~~~~~~~~~
+    ADD: 增加一个临时文件清理批处理
+    FIX: 修正 HaSHer.txt 多一个临时文件的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00097)
+
+    2010-10-23
+    ~~~~~~~~~~ [X]
+    ADD: 增加字符串转字节数组的函数
+    FIX: 若干代码小更新
+    FIX: SDT 协议若干小调整
+    FIX: 修正打开串口的严重 BUG
+    FIX: 继续完成 uTools 调试工具
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00096)
+
+    2010-10-22
+    ~~~~~~~~~~
+    ADD: 增加一些开发中有用的工具文件
+    ADD: 增加一个通用图形化测试工具 (空框架)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00095)
+
+    2010-10-22
+    ~~~~~~~~~~
+    ADD: 增加通讯协议头文件
+    ADD: 增加 SDT 系列通讯协议函数库
+    FIX: 针对8位机编译器的若干精简更新
+    FIX: 修正 CX51 编译器设为小端模式的 BUG
+    FIX: 增加 str_esc_cpyT() 对对齐平台的支持
+    FIX: 修正 str_esc_cpyT() 在16位平台上的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00094)
+
+    2010-10-21
+    ~~~~~~~~~~
+    ADD: 增加脚本解析头文件
+    FIX: 代码若干小修正
+    FIX: MCS51 串口初始化小调整
+    FIX: 内存释放操作代码的精简
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00093)
+
+    2010-10-20
+    ~~~~~~~~~~
+    ADD: 增加 AES 加密解密函数库
+    FIX: 准备通用的测试框架
+    FIX: 代码针对 CX51 编译器的一些精简
+    FIX: 更新测试用例相关代码及部分结果文档
+
+    2010-10-19
+    ~~~~~~~~~~
+    FIX: 修正一处类型宏定义的错误
+    FIX: 合并 MCS51 一些共用的宏代码
+    FIX: LLB 的 CPU_FOSC 宏加入 MAKEFILE
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00092)
+
+    2010-10-17
+    ~~~~~~~~~~
+    ADD: 增加 CAST5 和 CAST6 加密解密函数库
+    FIX: 更新测试用例相关代码及部分结果文档
+    FIX: 修正可变密匙长度算法处理密匙长度的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00091)
+
+    2010-10-16
+    ~~~~~~~~~~
+    ADD: 增加 TWOFISH 加密解密函数库
+    FIX: 修正环形队列漏掉的大小宏
+    FIX: 更新测试用例相关代码及部分结果文档
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00090)
+
+    2010-10-15
+    ~~~~~~~~~~
+    ADD: 增加环形队列模板函数库
+    FIX: 代码若干小更新
+    FIX: memlib.h 针对8位机编译器的修改
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00089)
+
+    2010-10-13
+    ~~~~~~~~~~
+    ADD: 增加测试用例生成结果文档
+    FIX: utest.c 文件更名 utests.c
+    FIX: 修正 utests.c VC2003 编译下的警告
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00088)
+
+    2010-10-13
+    ~~~~~~~~~~
+    ADD: 增加操作符优先级说明文档
+    ADD: 增加测试用例命令行工具 utest 部分代码移入
+    FIX: 更新 stdcui.c & wingui.c 模板文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00087)
+
+    2010-10-12
+    ~~~~~~~~~~
+    ADD: 增加 IDEA 加密解密函数库
+    ADD: 增加几个加密解密函数的测试用例
+    FIX: 修正 BLOWFISH 加密解密的 BUG
+    FIX: 修正 ARC4 加密解密在 BCB 下的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00086)
+
+    2010-10-11
+    ~~~~~~~~~~
+    FIX: 更新内存文件加载接口的对齐处理
+    FIX: TCP/IP 通讯函数库和动态模块函数库文件更名
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00085)
+
+    2010-10-10
+    ~~~~~~~~~~
+    FIX: 基本完成树型查找表函数库
+    FIX: 内存文件操作相关接口增加对齐平台的支持
+
+    2010-10-08
+    ~~~~~~~~~~
+    FIX: 抽出链表节点分配函数
+
+    2010-10-04
+    ~~~~~~~~~~
+    FIX: 树型查找表更名树形数据表
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00084)
+
+    2010-10-04
+    ~~~~~~~~~~
+    FIX: 补完树型查找表数据结构
+
+    2010-09-29
+    ~~~~~~~~~~
+    ADD: 增加树型查找表函数库
+    FIX: 修正双向链表节点个数类型
+    FIX: 修正珠帘哈希表可能出错的 BUG
+    FIX: 修正文件搜索函数一处内存泄漏
+    FIX: 修正文件搜索函数修改引进的新 BUG
+    FIX: 修正哈希素数表在巨模式下的截断
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00083)
+
+    2010-09-28
+    ~~~~~~~~~~
+    FIX: 关闭 BCB 编译下的一个警告
+    FIX: 修正文件搜索函数打开隐藏后任然加入隐藏文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00082)
+
+    2010-09-27
+    ~~~~~~~~~~
+    FIX: 若干小修正
+    FIX: 修正模拟 I2C 一处可能的 BUG
+
+    2010-09-26
+    ~~~~~~~~~~
+    FIX: intx_*() 宏更名 irqx_*()
+    FIX: 拆分 firmware.h 文件内的代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00081)
+
+    2010-09-20
+    ~~~~~~~~~~
+    ADD: 补完 LLB MLR 所有芯片驱动函数库
+    FIX: BSP 函数在 KeilC51 编译下的修正
+    FIX: 修正 BSP 函数和宏名以数字开头的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00080)
+
+    2010-09-19
+    ~~~~~~~~~~
+    FIX: 修正一些编译器下无 mstcpip.h 文件的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00079)
+
+    2010-09-18
+    ~~~~~~~~~~
+    ADD: 增加一张 BCB 自带 MAKE 工具的说明图片
+    FIX: 调整 LLB CX51 编译配置到更合理的模式
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00078)
+
+    2010-09-17
+    ~~~~~~~~~~
+    ADD: 增加 BCB2010 版本值说明
+    ADD: 增加 BCB2010 的 MAKE 工具
+    ADD: 增加 BCB2010 编译的相关配置
+    ADD: 增加 LLB CX51 编译的相关配置
+    ADD: 增加 MCS-51 MCU 驱动函数库 (空)
+    FIX: 更新建立初始目录的批处理
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00077)
+
+    2010-09-16
+    ~~~~~~~~~~
+    FIX: HASHER 工具的更新
+    FIX: 文件搜索函数增加目录搜索功能
+    FIX: 取消数据结构头文件里的一些8位机用不到的带阿姆
+
+    2010-09-15
+    ~~~~~~~~~~
+    ADD: 增加一个建立初始目录的批处理
+    FIX: 修正一处少括号的代码问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00076)
+
+    2010-09-14
+    ~~~~~~~~~~
+    FIX: 完成拆分 mcs51.h 头文件
+    FIX: 更新 LLB board.h 头文件
+
+    2010-09-13
+    ~~~~~~~~~~
+    ADD: 增加 Fedora GCC 预定义宏列表
+    FIX: 开始拆分 mcs51.h 头文件
+    FIX: 更改 MAKE 脚本批处理的位置
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00075)
+
+    2010-09-09
+    ~~~~~~~~~~
+    FIX: 完成珠帘哈希表函数库
+    FIX: 修正可生长数组一处 BUG
+    FIX: 优化窗帘哈希表的一处代码
+
+    2010-09-08
+    ~~~~~~~~~~
+    ADD: 增加循环延时函数库
+    ADD: 增加珠帘哈希表函数库
+    ADD: 增加双向链表对象的复制函数
+    FIX: 修正窗帘哈希表插入的一处 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00074)
+
+    2010-09-07
+    ~~~~~~~~~~
+    ADD: 完成双向链表函数库
+    FIX: 修正一处溢出检查的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00073)
+
+    2010-09-05
+    ~~~~~~~~~~
+    FIX: 完成双向链表的头文件定义
+    FIX: 更新可生长数据的若干代码
+
+    2010-09-03
+    ~~~~~~~~~~
+    FIX: 更新数据结构函数库若干函数的返回值
+
+    2010-09-02
+    ~~~~~~~~~~
+    ADD: 增加双向链表函数库
+    FIX: 修正一个窗帘哈希表函数宏的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00072)
+
+    2010-09-01
+    ~~~~~~~~~~
+    ADD: LLB MLR 增加 1-WIRE 接口
+    FIX: 更新模拟 I2C 总线大小定义方式
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00071)
+
+    2010-08-26
+    ~~~~~~~~~~
+    FIX: 精简 _CR_NO_FLT32_ 宏开关
+    FIX: 完成 DS18B20 驱动函数库模板
+
+    2010-08-25
+    ~~~~~~~~~~
+    ADD: MCS-51 增加关闭中断宏
+    ADD: 增加 DS18B20 驱动函数库模板
+    FIX: CX51 加入 _nop_() 函数声明
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00070)
+
+    2010-08-21
+    ~~~~~~~~~~
+    ADD: 增加 CR_NOP 和 CPU 对齐选项宏
+    ADD: 增加一些 MCS-51 CPU 寄存器定义
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00069)
+
+    2010-08-20
+    ~~~~~~~~~~
+    ADD: 增加 MCS-51 CPU 定义头文件
+    ADD: 增加 LLB MLR 流量结算仪目标板配置头文件
+
+    2010-08-19
+    ~~~~~~~~~~
+    ADD: 开始增加目标开发板的支持
+    FIX: 更新模拟 I2C 总线两个宏的名称
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00068)
+
+    2010-08-17
+    ~~~~~~~~~~
+    ADD: 增加不支持宽字符编译器的开关
+    FIX: 无操作系统下的编译修正
+    FIX: CX51 编译器编译下的修正
+    FIX: 去除8位机的出错处理调用
+    FIX: 开放 CX51 支持多种内存模式
+    FIX: CX51 支持使用 data 关键字 (可选)
+    FIX: 修正不支持宽字符编译器下编译的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00067)
+
+    2010-08-12
+    ~~~~~~~~~~
+    ADD: 增加 MAX538/MAX539 驱动函数库模板
+    ADD: 增加 MAX1246/MAX1247 驱动函数库模板
+    FIX: 若干代码小更新
+    FIX: 独立出器件头文件
+    FIX: 更新字节顺序头文件
+    FIX: 更改底层驱动的文件标识
+
+    2010-08-11
+    ~~~~~~~~~~
+    ADD: 增加 PCF8583 读写函数库模板
+    ADD: 增加一个单独的日期时间检查函数
+    FIX: 修正星期计算的 BUG
+    FIX: 重构 RTCLIB 星期计算部分
+
+    2010-08-10
+    ~~~~~~~~~~
+    ADD: 增加精简的日期时间结构
+    ADD: 增加 AT24CXX 和 FM24CXX 系列读写函数库模板
+
+    2010-08-09
+    ~~~~~~~~~~
+    ADD: 增加 24CXX 读写函数库模板
+    FIX: 增加 RTCLIB 星期成员的读取
+    FIX: 模拟 I2C 总线增加大于 64KB 器件的支持
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00066)
+
+    2010-08-07
+    ~~~~~~~~~~ [X]
+    ADD: 整合加入开发资源包
+    FIX: 优化 RTCLIB 的数据类型
+    FIX: 修正天内秒数可能的数值溢出
+
+    2010-08-05
+    ~~~~~~~~~~ [X]
+    FIX: 导出模拟总线功能性函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00065)
+
+    2010-08-03
+    ~~~~~~~~~~ [X]
+    FIX: LPC2000 宏名称更新
+    FIX: 更新模拟总线函数库模板
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00064)
+
+    2010-07-31
+    ~~~~~~~~~~ [X]
+    FIX: 结构 sWIRE1_ROM 取消对齐
+    FIX: 更新所有模拟总线函数库模板
+
+    2010-07-29
+    ~~~~~~~~~~ [X]
+    ADD: 增加模拟 SPI 函数库模板
+    ADD: 增加 KeilC51 模式设置限制
+    FIX: 改进 offsof 宏的编译器兼容性
+    FIX: 修正 C51 编译器下可能出现的关键字冲突
+
+    2010-07-27
+    ~~~~~~~~~~ [X]
+    ADD: 增加 CRC-8/DALLAS 哈希函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00063)
+
+    2010-07-10
+    ~~~~~~~~~~ [X]
+    ADD: 增加 CPU 晶振频率定义宏
+    ADD: 增加飞利浦 LPC ARM7 BSP 目录
+    FIX: 完成 ARMCC 编译器的第一版配置
+
+    2010-07-08
+    ~~~~~~~~~~ [X]
+    ADD: 增加 ARMCC 编译器配置头文件
+    FIX: 兼容 ADS ARMCC 的压缩结构体写法
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00062)
+
+    2010-07-06
+    ~~~~~~~~~~ [X]
+    ADD: 增加 DES 加密解密函数库
+    ADD: 增加 RC2 加密解密函数库
+    FIX: 修正关于 CR_ERROR 的警告
+    FIX: 修正 BCC32 C 编译下 tcp_keepalive 结构的错误
+
+    2010-06-20
+    ~~~~~~~~~~ [X]
+    ADD: 增加返回网络错误代码的函数
+    FIX: 更新一些错误代码返回值
+    FIX: 更新网络读取写入返回的错误值
+
+    2010-06-14
+    ~~~~~~~~~~ [X]
+    ADD: 增加 SOCKET 断线检测设置函数
+    ADD: 增加清除 SOCKET 错误代码的函数
+
+    2010-06-05
+    ~~~~~~~~~~ [X]
+    ADD: 增加超大整数函数库
+    ADD: 增加一个测试用例源文件
+    ADD: 增加一些常用的快速数值计算函数
+    FIX: 修正 GCC CR_I64 在 Linux 下的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00061)
+
+    2010-06-01
+    ~~~~~~~~~~ [X]
+    FIX: 1-WIRE 相关定义移入设备驱动头文件
+
+    2010-05-31
+    ~~~~~~~~~~ [X]
+    ADD: 增加模拟 1WIRE 函数库模板
+    FIX: 代码若干小更新
+    FIX: CRC 算法增加多项式说明
+    FIX: 增加 conf.inc 编译前配置脚本
+
+    2010-05-30
+    ~~~~~~~~~~ [X]
+    FIX: #pragma 格式修正
+    FIX: 修正 recvfrom() 使用上的错误
+    FIX: 重构 TCP/IP 通讯函数库 for Windows
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00060)
+
+    2010-05-29
+    ~~~~~~~~~~ [X]
+    ADD: 增加 #pragma 导入库的选项
+    FIX: 用查表优化一些代码
+    FIX: 精简 MAKE 系统里的导入库
+    FIX: 精简 Windows 头文件的宏定义
+    FIX: 完成 TCP/IP 通讯函数库 for Windows
+    FIX: 优化 Windows CE 下字节顺序交换函数
+
+    2010-05-28
+    ~~~~~~~~~~ [X]
+    ADD: 增加 TCP/IP 通讯函数库 for Windows
+    FIX: 修改串口通讯中的一些常数名
+    FIX: 第三方库配置头文件名称改得更直观一写
+
+    2010-05-25
+    ~~~~~~~~~~ [X]
+    FIX: 更新 I2C 函数的一些类型
+    FIX: 新增 retc_t 类型, 更新 bool_t 类型
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00059)
+
+    2010-05-22
+    ~~~~~~~~~~ [X]
+    ADD: 增加模拟 I2C 函数库模板
+    ADD: 增加 _CR_FAST_LENG_ 到 conf.h 文件
+    ADD: 增加编译器特有类型定义 (在各自的配置文件里)
+
+    2010-05-21
+    ~~~~~~~~~~ [X]
+    ADD: 增加快速内存长度映射 (8位机使用)
+    FIX: 增加多线程锁的类型
+    FIX: 更新多线程锁的相关代码
+    FIX: 更新一处编译器版本判断方式
+    FIX: 修正平台最快类型定义的低级错误
+    FIX: 修正 mtlock_acquire() 在 VC6 编译下的错误
+
+    2010-05-19
+    ~~~~~~~~~~ [X]
+    FIX: 统一 file_raw_read()/file_raw_write() 出错返回
+
+    2010-05-18
+    ~~~~~~~~~~ [X]
+    FIX: sio_read()/sio_write() 出错返回值修正
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00058)
+
+    2010-05-15
+    ~~~~~~~~~~ [X]
+    ADD: 增加8位机的宏标识 _CR_ARCH8_
+    ADD: 增加 CR_I08 与 CR_I16 修饰宏
+    ADD: 增加平台最快整数类型及相关支持
+
+    2010-05-14
+    ~~~~~~~~~~ [X]
+    FIX: 统一编译器配置文件的宏开关
+    FIX: 消除 defs.h 文件 KeilC51 编译下的警告
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00057)
+
+    2010-05-13
+    ~~~~~~~~~~ [X]
+    ADD: 增加 KeilC51 编译器配置头文件
+    FIX: 开始增加对 KeilC51 编译器的支持
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00056)
+
+    2010-05-11
+    ~~~~~~~~~~ [X]
+    FIX: 若干代码格式的更新
+    FIX: 为8位机做好移植的准备
+    FIX: 修正定时器 for Windows 在 VC6 下编译的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00055)
+
+    2010-05-08
+    ~~~~~~~~~~ [X]
+    FIX: 修正文件操作函数库的 BUG
+    FIX: 完成 MinGW32 编译器的支持
+    FIX: 根除 PCRE 在 Windows CE 编译下的警告
+
+    2010-05-07
+    ~~~~~~~~~~ [X]
+    ADD: 增加类型转换头文件
+    FIX: MinGW32 编译下的若干修正
+
+    2010-04-26
+    ~~~~~~~~~~ [X]
+    ADD: 增加 MinGW32 编译器支持
+    FIX: MinGW32 编译下的若干修正
+
+    2010-04-25
+    ~~~~~~~~~~ [X]
+    ADD: 增加 GCC 公用 MAKE 头文件
+    FIX: 增加编译器配置头文件的重复过滤
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00054)
+
+    2010-04-17
+    ~~~~~~~~~~ [X]
+    ADD: 增加 GNU C/C++ 编译器配置头文件
+    ADD: 增加 GCC 获取所有预定义宏的脚本
+    ADD: 增加 MinGW32 和 DJGPP 的预定义宏列表
+    FIX: 代码若干小修正
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00053)
+
+    2010-04-12
+    ~~~~~~~~~~ [X]
+    FIX: 精简 MAKE 系统的文件名列表
+    FIX: 整理合并 MAKE 系统的一些定义
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00052)
+
+    2010-04-11
+    ~~~~~~~~~~ [X]
+    FIX: 完成串口通讯函数库 for Windows
+    FIX: 精简使用 ReadFile()/WriteFile() 的函数
+
+    2010-04-08
+    ~~~~~~~~~~ [X]
+    ADD: 增加设备驱动头文件
+    ADD: 增加串口通讯函数库 for Windows
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00051)
+
+    2010-03-31
+    ~~~~~~~~~~ [X]
+    ADD: 增加图片颜色格式说明
+    ADD: 增加 offsof() 取结构体成员偏移宏
+    FIX: 若干注释的修正
+    FIX: 更新引擎插件的释放机制
+    FIX: 日志文件添加 SVN 的版本号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00050)
+
+    2010-03-17
+    ~~~~~~~~~~ [X]
+    ADD: 增加 NASMX 2009-01-12 的头文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00049)
+
+    2010-03-16
+    ~~~~~~~~~~ [X]
+    FIX: 修正像素插值值转换的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00048)
+
+    2010-03-14
+    ~~~~~~~~~~ [X]
+    ADD: 增加公用 MAKE 头文件
+    FIX: MAKE 系统目录大更新
+    FIX: 更新一些颜色合成宏的名称
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00047)
+
+    2010-03-13
+    ~~~~~~~~~~
+    FIX: 整理外部库 extlib 目录分类
+    FIX: 改进 Windows 下 file_mapping?() 函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00046)
+
+    2010-03-10
+    ~~~~~~~~~~
+    ADD: 增加关于颜色值的文档说明
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00045)
+
+    2010-03-05
+    ~~~~~~~~~~
+    FIX: 文件 filepsx.c 消除目前编译器下的警告
+
+    2010-03-04
+    ~~~~~~~~~~
+    ADD: 增加 _CR_USE_GLIBC_ 选项
+    ADD: 增加 _CR_MS_POSIX64_ 和 _CR_NO_POSIX64_ 选项
+    ADD: 增加动态模块函数库 for POSIX
+    ADD: 增加 OS API 编码包装函数库 for POSIX（空）
+    FIX: 代码若干小调整
+    FIX: 更新 file_mapping?() 函数
+    FIX: 完成文件操作函数库 for POSIX
+
+    2010-03-03
+    ~~~~~~~~~~
+    ADD: 增加文件操作函数库 for POSIX
+    FIX: 完成字符串编码转换函数库 for POSIX
+    FIX: 修正 Windows RAW 文件操作 CR_FO_AW 下的 BUG
+
+    2010-03-02
+    ~~~~~~~~~~
+    ADD: 增加获取系统本地编码值的函数
+    ADD: 增加应用程序函数库 for Windows
+    ADD: 增加字符串编码转换函数库 for POSIX
+    FIX: 修正头文件包含顺序的 BUG
+    FIX: 删除一处多余的文件系统位数宏
+    FIX: win 的 set_app_type() 移入 appwin.c
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00044)
+
+    2010-02-27
+    ~~~~~~~~~~
+    FIX: 整理 MAKE 系统的文件和目录名
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00043)
+
+    2010-02-24
+    ~~~~~~~~~~
+    FIX: 若干小更新
+    FIX: 更新 BCB2009 下的配置头文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00042)
+
+    2010-02-23
+    ~~~~~~~~~~
+    ADD: 增加 BDS2006+ 编译脚本
+    ADD: 增加一个 2D 点坐标的结构体
+    FIX: 修正 BCC32 编译器版本号的错误
+    FIX: 修正 BDS2006 编译下的一个警告
+    FIX: 完成几何绘制函数库 (线/圆/框/多边形)
+    FIX: 移出 pixcnvt_t 和 pixdraw_t 函数类型
+
+    2010-02-22
+    ~~~~~~~~~~
+    ADD: 增加几何绘制函数库
+    FIX: 修正线段剪裁漏填的两个成员
+    FIX: 修正 sIMAGE 剪裁可能会出现的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00041)
+
+    2010-02-21
+    ~~~~~~~~~~
+    ADD: 增加 REGCALL 函数修饰符
+    FIX: 继续修正 BCC32 编译下的错误和警告
+
+    2010-02-20
+    ~~~~~~~~~~
+    ADD: 增加 BCC32 编译器的支持
+    FIX: MAKE 系统若干注释更新
+    FIX: BCC32 编译下的若干修正
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00040)
+
+    2010-02-12
+    ~~~~~~~~~~
+    ADD: 增加 CR_COLOR15() 函数
+    FIX: 完成所有像素混合绘制函数
+
+    2010-02-11
+    ~~~~~~~~~~
+    ADD: 增加 BLIT API 的剔除开关
+    FIX: 宏 CR_BLT_CPY 更名 CR_BLT_SET
+    FIX: pixel_drw???() 更名 pixel_set???()
+
+    2010-02-10
+    ~~~~~~~~~~
+    ADD: 增加像素混合绘制函数
+    ADD: 增加像素混合函数库模板
+    ADD: 增加8位色的插值混合像素绘制函数
+    FIX: 像素绘制函数更名 (更加对齐)
+    FIX: 开启新增加的像素绘制函数模式
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00039)
+
+    2010-02-09
+    ~~~~~~~~~~
+    FIX: 修正 GlobalMemoryStatusEx() 调用的 BUG
+    FIX: 修正 file_mapping?() 大于 4GB 文件时的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00038)
+
+    2010-02-08
+    ~~~~~~~~~~
+    ADD: 增加一个文件批量哈希工具
+    FIX: 修正电驴哈希函数库的严重 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00037)
+
+    2010-02-07
+    ~~~~~~~~~~
+    FIX: 完成电驴哈希函数库
+    FIX: 外部工具 res 目录也提交到 SVN
+
+    2010-02-06
+    ~~~~~~~~~~
+    ADD: 增加电驴哈希函数库
+    FIX: 移出 res 目录下的资源文件, 改为外部工具
+    FIX: 修正 path_append() 函数特殊情况下的 BUG
+    FIX: 修正文件系统函数库 for Windows 里的若干问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00036)
+
+    2010-02-06
+    ~~~~~~~~~~
+    ADD: 增加24位像素格式屏幕的开关宏
+    ADD: 增加08/24位色插值参数设置函数
+    ADD: 增加相应屏幕格式的绘图 API 映射
+    ADD: 增加带 Alpha 通道的15位色像素合成函数
+    FIX: MAKFNT 为以后的扩展留好位置
+    FIX: 修正透明色比较处理中的一些细节问题
+    FIX: 删除15位像素合成函数的 Alpha 通道值
+    FIX: set_lerp*() 函数移入 blit.h 并更名 CR_COLOR*()
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00035)
+
+    2010-02-05
+    ~~~~~~~~~~
+    FIX: 删除一处多余的批处理指令
+    FIX: MAKFNT 修正一些内存泄漏
+    FIX: MAKFNT 显示字符绘制的实际大小
+    FIX: MAKFNT 将 bold 属性移入 RANGE 标签
+    FIX: MAKFNT 修正少于2个 RANGE 标签时的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00034)
+
+    2010-02-04
+    ~~~~~~~~~~
+    FIX: 精简 VS2005+ 的 MAKE 参数
+    FIX: 修正 MAKFNT 宽高颠倒的 BUG
+    FIX: MAKFNT 增加出错提示时的信息量
+    FIX: MAKFNT 代码重构并支持多字节编码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00033)
+
+    2010-02-03
+    ~~~~~~~~~~
+    ADD: 增加 MAKFNT 工具的配置模板
+    ADD: Windows MAKE 增加子系统选项
+    ADD: 增加 TOOL 工具组的 MAKE 文件
+    FIX: 完成任意点阵字库生成程序
+    FIX: 修正 MAKE 系统里一个宏名称的错误
+    FIX: 修正 GDI 绘制函数 RECT 少两条边的 BUG
+    FIX: MAKE 系统调整到可以同时生成 EXE 和 DLL
+    FIX: 修正 MEM 图形离屏表面少分配多余行的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00032)
+
+    2010-02-02
+    ~~~~~~~~~~
+    ADD: 增加12位色的像素合成函数
+    ADD: 给文字接口增加一个测量输出的方法
+    ADD: 增加 cl32_t 的16位色插值分量设置函数
+    ADD: 增加一个任意点阵字库生成程序 (未完成)
+    FIX: 更新完善两个代码模板
+    FIX: 修正16位像素合成函数的数据类型
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00031)
+
+    2010-02-01
+    ~~~~~~~~~~
+    ADD: 增加一个 ASCII 码表
+    ADD: 接口 iFONT_BIT 支持多文本编码
+    FIX: 若干代码的规范性修改
+    FIX: 删除/合并一些像素绘制函数
+    FIX: 去除模板 cpy/wingui.c 一处警告
+    FIX: 修正点阵文字输出换行符识别的 BUG
+    FIX: 函数 local_to_utf*()/utf*_to_local() 改为宏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00030)
+
+    2010-01-31
+    ~~~~~~~~~~
+    ADD: 增加一个全角半角字符转换函数
+    ADD: 增加常数用的字节顺序调整函数
+    ADD: 增加常数用的颜色合成函数并变更函数名
+    ADD: 给绘制接口增加一个局部刷新的方法
+    ADD: 给文字接口的绘制调用增加一个回调参数
+    FIX: 修正像素绘制在 BE 下的 BUG
+    FIX: 删除8位色以下的插值像素绘制函数
+    FIX: 函数 pixel_cnvt??() 增加插值信息
+    FIX: 更新用到常数颜色合成函数的代码
+    FIX: 更新用到常数字节顺序调整函数的代码
+    FIX: 点阵文字输出可以只绘制中文字库
+    FIX: 修正 create_bit_font() 16位下可能的溢出
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00029)
+
+    2010-01-30
+    ~~~~~~~~~~
+    ADD: 增加一个通用的点阵文字绘制接口
+    FIX: 修正几处出错提示错误
+    FIX: 隐藏 iFONT_UC 的接口结构
+    FIX: 修正 iFONT_UC 几个宏名称的错误
+    FIX: 设置 iFONT_UC 正确的打印字库宏开关
+    FIX: 修正 iFONT_UC 宽非 2^n 字符输出的 BUG
+    FIX: 修正 iFONT_GDI 在没有宽字符 API 下的 BUG
+    FIX: 修正 load_png() 修改后引入的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00028)
+
+    2010-01-29
+    ~~~~~~~~~~
+    ADD: 增加宏 CR_VFUNC()
+    ADD: 增加像素绘制函数库
+    ADD: 增加像素绘制函数库模板
+    ADD: 增加 sFMT_PIC 释放函数
+    ADD: 增加通用的 sFMTZ 释放函数
+    ADD: 增加一组获取 sFMTZ 数据的函数
+    ADD: 增加 sLOADER 的填充函数
+    FIX: 隐藏 sENGINE 的查找表细节
+    FIX: FMTZ 公用部分并入 CORE 模块
+    FIX: UC 更名到全名 UCDOS
+    FIX: 取消 sENGINE 生成时的 const
+    FIX: UC 点阵字库支持对目标表面剪裁
+    FIX: UC 点阵字库可以只绘制西文字库
+
+    2010-01-28
+    ~~~~~~~~~~
+    ADD: 增加软件 2D 内部头文件
+    ADD: 增加软件 2D 内部函数库
+    ADD: 增加 ucfont.inl 代码模板
+    FIX: 取消 X555 的最高位1
+    FIX: 调整 iPAGEIN 的结构体
+    FIX: 删除 bitfont.inl 文件
+    FIX: 提取出点阵字库接口共用的函数
+    FIX: 修正 iMemOT_append() 一个 BUG
+    FIX: 统一接口方法的出错提示
+
+    2010-01-27
+    ~~~~~~~~~~
+    ADD: 开始 BLIT 软 2D 工程
+    ADD: 增加通用的颜色类型 cl32_t
+    ADD: sSTRING 增加 C++ 类的构造函数
+    ADD: 将编译器环境变量设置默认脚本提交
+    ADD: 增加内存位图表面和 UC 点阵字库接口
+    ADD: 给 iFONT 接口增加两个虚方法
+    FIX: 精简一处头文件包含
+    FIX: 更新使用通用颜色类型的代码
+    FIX: 删除 iGFX2::lock() 返回的 const
+    FIX: 修正 GDI 文字绘制漏掉 Y+1 的问题
+    FIX: 取消 create_file_inX() 的自动释放内存
+
+    2010-01-26
+    ~~~~~~~~~~
+    ADD: 增加文字绘制接口
+    ADD: 增加 GDI 文字绘制接口
+    ADD: 增加 CreateFontIndirectA() 的包装
+    FIX: 给 GFX2_GDI 插件的函数名加上 GDI
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00027)
+
+    2010-01-25
+    ~~~~~~~~~~
+    ADD: 引擎插件框架基本形成
+    ADD: 增加引擎插件的公用部分
+    ADD: 增加 CrH_FMTz 插件接口
+    ADD: 文件加载结构增加 crc32
+    ADD: 增加 FMTz 插件结构相关
+    ADD: 增加 FMTz 插件内部头文件
+    FIX: 统一文件格式加载函数原型
+    FIX: 修正 path_splitT() 的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00026)
+
+    2010-01-24
+    ~~~~~~~~~~
+    ADD: 增加文件格式总结构
+    ADD: 增加一个字符串包装结构
+    ADD: 增加通用的文件加载函数
+    FIX: 更新图片文件格式结构
+    FIX: 更新图片颜色位数为总位数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00025)
+
+    2010-01-22
+    ~~~~~~~~~~
+    FIX: 修正 BUG 若干
+    FIX: 整理代码, 部分代码重构
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00024)
+
+    2010-01-21
+    ~~~~~~~~~~
+    ADD: 增加一个自由转换图块格式的函数
+    ADD: 增加一个32位位图透明色识别函数
+    FIX: 代码若干小修正
+    FIX: 完成 PNG 图片读取代码
+    FIX: 移出 LZMA 的多线程配置项
+    FIX: 修正 iGFX2_GDI 绘制少一行的 BUG
+    FIX: img_auto_to_32() 增加 1/4 位位图
+    FIX: 给点阵图像处理函数增加尾部处理功能
+
+    2010-01-20
+    ~~~~~~~~~~
+    ADD: 增加 PNG 图片读取代码
+    ADD: 增加 PNG 文件格式文档
+    ADD: 增加 make_argb24() 函数
+    ADD: 增加 FMTZ 插件文件格式开关
+    ADD: 增加 int32u 到 uint_t 安全截断函数
+    FIX: 代码若干小修正
+    FIX: 修正图块转换丢失关键色的问题
+    FIX: 修正 Big-Endian 下像素计算的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00023)
+
+    2010-01-19
+    ~~~~~~~~~~
+    ADD: 增加一个设置应用程序模式的功能函数
+    ADD: 给 iDATIN 接口增加一个读入内存的方法
+    ADD: 开始 CrH_FMTz 插件 (从老代码里移植过来)
+    ADD: 增加 img_idx1_to_32()/img_idx4_to_32() 函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00022)
+
+    2010-01-18
+    ~~~~~~~~~~
+    ADD: 增加 pixel_addr1() 宏
+    ADD: iGFX_GDI 增加几个原生绘图函数
+    ADD: 增加 A8R8G8B8 像素转 GDI 格式
+    ADD: 增加一个计算32位位图预乘的函数
+    FIX: 重构一些相关函数
+    FIX: WIN32 MAKE 增加 msimg32.lib
+    FIX: 给点阵图形处理模板增加附加参数
+    FIX: 拆分点阵图形处理函数并更新参数
+    FIX: 图块转换函数支持垂直翻转的情况
+    FIX: 更新 img_dxtc_to_32() 处理预乘的部分
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00021)
+
+    2010-01-17
+    ~~~~~~~~~~
+    ADD: 增加点阵图形函数库
+    ADD: 增加自定义图块转换函数
+    ADD: 增加一组调色板格式转换函数
+    FIX: 恢复 pixel_addrN() 计算宏
+    FIX: 给像素块格式转换函数增加指定坐标的功能
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00020)
+
+    2010-01-15
+    ~~~~~~~~~~
+    ADD: 增加点阵图形处理函数模板
+    ADD: 增加图片线性/分片互换函数
+    ADD: 增加老版本里的一些文件
+    FIX: 修正 image_info() 处理 1/4 位色的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00019)
+
+    2010-01-15
+    ~~~~~~~~~~
+    ADD: 增加日期时间头文件
+    ADD: 增加日期时间函数库
+    ADD: 增加日期时间函数库 for Windows
+    ADD: 增加16位浮点数转换函数函数库
+    ADD: 增加带剪裁的 BLT 计算函数
+    ADD: 增加窗口句柄类型
+    ADD: 增加目标平台类型字符串
+    ADD: 增加代码模板目录 (增加两个代码模板)
+    ADD: 开始 FMTZ 插件工程 (增加公用的入口点函数)
+    FIX: 若干小修正
+    FIX: 汇总 CR_NAME_ 宏
+    FIX: 修正 MIPS 字节顺序宏的错误
+    FIX: 解决 _CR_NO_STDC_ 下的 LZMA 编译错误
+
+    2010-01-14
+    ~~~~~~~~~~
+    ADD: 增加文本解析头文件
+    ADD: 增加 LZW 压缩解压函数库
+    ADD: 增加 LZARI 压缩解压函数库
+    ADD: 增加 LZHUF 压缩解压函数库
+    ADD: 增加 PCRE 正则表达式函数库
+    ADD: 增加 INI 解析器函数库模板
+    ADD: 增加 XML 解析器函数库模板
+    FIX: 修正一些小问题
+    FIX: 修正 str_tokenT() 的 BUG
+    FIX: appwin.c 和 msgwin.c 并入 wingui.c
+    FIX: 将 BZip2/ZLib/LZMA/PCRE 移植到 CrHack
+    FIX: 解决一个移植中内存释放函数的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00018)
+
+    2010-01-13
+    ~~~~~~~~~~
+    ADD: 增加编码解码头文件
+    ADD: 增加 aPLib 压缩解压函数库
+    ADD: 增加 BZip2 压缩解压函数库
+    ADD: 增加 JCALG1 压缩解压函数库
+    ADD: 增加 LZO 压缩解压函数库
+    ADD: 增加 ZLIB 压缩解压函数库
+    ADD: 增加 LZMA 压缩解压函数库
+    ADD: 增加 LZSS 压缩解压函数库
+    ADD: 增加 Win32 LZ32 压缩解压函数库
+    ADD: 增加 BASE64 编码解码函数库
+    ADD: 增加一个编译器使用 OBJ 格式的宏
+    FIX: 设置好附加参数名 (conf.txt)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00017)
+
+    2010-01-13
+    ~~~~~~~~~~
+    ADD: 增加 PCRE 原始源代码 v8.0
+    ADD: 增加字符串工具函数库转换组模板
+    ADD: 增加字符串工具函数库文件组模板
+    ADD: 增加字符串工具函数库解析组模板
+    ADD: 增加字符串格式化函数库 for LIBC
+    FIX: 修正 hash_str_ap() 函数一个 BUG
+    FIX: 修正 UNICODE 编码转换中可能的安全问题
+
+    2010-01-12
+    ~~~~~~~~~~
+    ADD: 增加杂项操作头文件
+    ADD: 增加杂项操作函数库
+    ADD: 增加函数钩子函数库
+    ADD: 增加 UNICODE 编码转换函数库
+    ADD: 增加定时器函数库 for Windows
+    ADD: 增加 COM 钩子函数库 for Windows
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00016)
+
+    2010-01-12
+    ~~~~~~~~~~
+    FIX: 若干小修正
+    FIX: 精简 CrHack 出错处理系统
+    FIX: 成功完成 Windows CE ARMv4 编译
+    FIX: 修正 Windows CE 下字节顺序的 BUG
+    FIX: 删除 CR_PREV_ERROR, 全面更新出错提示
+
+    2010-01-11
+    ~~~~~~~~~~
+    ADD: 增加操作系统 API ANSI/WIDE 开关宏
+    ADD: 增加字符串编码转换函数库 for Windows
+    ADD: 增加 OS API 编码包装函数库 for Windows
+    ADD: 增加 VS2005+ ARMv4 MAKE 公用参数
+    ADD: 增加 VS2005+ Windows CE Makefile
+    FIX: Windows CE 编译下的若干修正
+    FIX: 减小文件替换函数使用的栈大小
+    FIX: 更新 heap_alloc() 函数的错误处理
+    FIX: 更新公用 MAKE 头文件 (删除 /FD 选项)
+    FIX: 修正 Windows CE 编译环境设置脚本的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00015)
+
+    2010-01-10
+    ~~~~~~~~~~
+    ADD: 增加系统窗口生成函数库 for Windows
+    FIX: 更新 GFX2_GDI 的一处代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00014)
+
+    2010-01-09
+    ~~~~~~~~~~
+    ADD: 增加 image_info() 函数
+    ADD: 增加 tD3DFMT_UNKNOWN 类型
+    ADD: 增加 CrHack/D3DFMT 类型转换函数
+    ADD: 增加 Windows CE 编译环境设置脚本
+    FIX: 重构 image_new()/image_set() 函数
+    FIX: XXXXX::getMore() 标识改为 int32u 类型
+    FIX: image_new()/image_set() 函数支持 1/4 位位图
+
+    2010-01-08
+    ~~~~~~~~~~
+    ADD: 增加几种像素类型格式
+    ADD: 继续完成前面没有完成的工作
+    ADD: 给 iGFX2 接口增加一个设置调色板的方法
+
+    2010-01-07
+    ~~~~~~~~~~
+    ADD: 增加 GFX2 接口结构 和 GFX2_GDI 插件
+    ADD: 开始 GFX2 插件工程 (增加公用的入口点函数)
+    ADD: 增加文件搜索函数和目录建立函数 for Windows
+    FIX: 若干小修正
+    FIX: 修改最终生成可执行的文件名
+    FIX: 把新增加的头文件加入 crhack.h
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00013)
+
+    2010-01-06
+    ~~~~~~~~~~
+    ADD: 增加字符串操作头文件
+    ADD: 增加字符类型函数库模板
+    ADD: 增加字符类型函数库内部头文件
+    ADD: 增加字符串工具函数库基本组模板
+    ADD: 增加字符串操作函数库AW
+
+    2010-01-06
+    ~~~~~~~~~~
+    ADD: 增加加密解密头文件
+    ADD: 增加 ARC4 加密解密函数库
+    ADD: 增加 ANUBIS 加密解密函数库
+    ADD: 增加 BLOWFISH 加密解密函数库
+    ADD: 增加 TEA 加密解密函数库
+    ADD: 增加文件读取接口生成函数库
+    FIX: 修正两个宏名称错误
+    FIX: 修正 safe_convert() 的对齐问题
+    FIX: 加强 image_new()/image_set() 的错误处理
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00012)
+
+    2010-01-05
+    ~~~~~~~~~~
+    FIX: 默认使用 LE 字节顺序
+    FIX: 改进 Makefile 的机制
+    FIX: 增加第三方库屏蔽配置文件
+    FIX: 不支持 VPAGE 时剔除 pagein
+    FIX: 增加 _CR_MS_STDIO64_ 开关
+    FIX: 对 Windows CE 编译下的若干修改
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00011)

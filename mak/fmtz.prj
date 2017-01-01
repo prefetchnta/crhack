@@ -1,0 +1,339 @@
+###############################################################################
+##                                                  $$$                      ##
+##       $$$$$          $$$    $$$                  $$$  CREATE: 2010-01-19  ##
+##     $$$$$$$          $$$    $$$      [MAKE]      $$$  ~~~~~~~~~~~~~~~~~~  ##
+##    $$$$$$$$          $$$    $$$                  $$$  MODIFY: XXXX-XX-XX  ##
+##    $$$$  $$          $$$    $$$                  $$$  ~~~~~~~~~~~~~~~~~~  ##
+##   $$$       $$$ $$$  $$$    $$$    $$$$    $$$$  $$$   $$  +-----------+  ##
+##  $$$$       $$$$$$$$ $$$$$$$$$$  $$$$$$$  $$$$$$ $$$  $$$  |  A NEW C  |  ##
+##  $$$        $$$$$$$$ $$$$$$$$$$ $$$$$$$$  $$$$$$ $$$ $$$   | FRAMEWORK |  ##
+##  $$$     $$ $$$$ $$$ $$$$$$$$$$ $$$  $$$ $$$     $$$$$$    |  FOR ALL  |  ##
+##  $$$$   $$$ $$$  $$$ $$$    $$$ $$$  $$$ $$$     $$$$$$    | PLATFORMS |  ##
+##  $$$$$$$$$$ $$$      $$$    $$$ $$$$$$$$ $$$$$$$ $$$$$$$   |  AND ALL  |  ##
+##   $$$$$$$   $$$      $$$    $$$ $$$$$$$$  $$$$$$ $$$  $$$  | COMPILERS |  ##
+##    $$$$$    $$$      $$$    $$$  $$$$ $$   $$$$  $$$   $$  +-----------+  ##
+##  =======================================================================  ##
+##  >>>>>>>>>>>>>>>>>>>>>>> CRHACK/FMTZ 工程文件列表 <<<<<<<<<<<<<<<<<<<<<<  ##
+##  =======================================================================  ##
+###############################################################################
+
+OBJ=.$(L)
+SRC=..$(L)src$(L)_fmtz_$(L)
+SRC_3RD=..$(L)src$(L)ex3rd$(L)
+
+###############################################################################
+##                                插件入口点                                 ##
+###############################################################################
+
+DLL_OBJS=$(OBJ)fmtz.$(O)
+
+DLL_CPPS=$(SRC)fmtz.$(C)
+
+###############################################################################
+##                                FreeImage                                  ##
+###############################################################################
+
+FI_OBJS=$(OBJ)e_fimage.$(O)
+
+FI_CPPS=$(SRC)e_fimage.$(C)
+
+###############################################################################
+##                                   SYN                                     ##
+###############################################################################
+
+SYN_OBJS=$(OBJ)gcax.$(O) \
+         $(OBJ)bgra.$(O) \
+         $(OBJ)e_syn.$(O)
+
+SYN_CPPS=$(SRC)e_syn.$(C) \
+         $(SRC)syn$(L)gcax.$(P) \
+         $(SRC)syn$(L)bgra.$(C)
+
+SYN_OBJS_CC=$(OBJ)bgra.$(O) \
+            $(OBJ)e_syn.$(O)
+
+SYN_CPPS_CC=$(SRC)e_syn.$(C) \
+            $(SRC)syn$(L)bgra.$(C)
+
+###############################################################################
+##                                  DevIL                                    ##
+###############################################################################
+
+DEVIL_OBJS=$(OBJ)e_devil.$(O)
+
+DEVIL_CPPS=$(SRC)e_devil.$(C)
+
+###############################################################################
+##                                  FMODEx                                   ##
+###############################################################################
+
+FMOD_OBJS=$(OBJ)e_fmodex.$(O)
+
+FMOD_CPPS=$(SRC)e_fmodex.$(C)
+
+###############################################################################
+##                                DirectShow                                 ##
+###############################################################################
+
+DSHOW_OBJS=$(OBJ)e_dshow.$(O)
+
+DSHOW_CPPS=$(SRC)e_dshow.$(C)
+
+###############################################################################
+##                                   RAR                                     ##
+###############################################################################
+
+RAR_OBJS=$(OBJ)e_rar.$(O)
+
+RAR_CPPS=$(SRC)e_rar.$(C)
+
+###############################################################################
+##                                  EXPAND                                   ##
+###############################################################################
+
+EXPAND_OBJS=$(OBJ)szdd.$(O) \
+            $(OBJ)sz20.$(O) \
+            $(OBJ)e_expand.$(O)
+
+EXPAND_CPPS=$(SRC)e_expand.$(C) \
+            $(SRC)expand$(L)szdd.$(C) \
+            $(SRC)expand$(L)sz20.$(C)
+
+###############################################################################
+##                                NScripter                                  ##
+###############################################################################
+
+NSCR_OBJS=$(OBJ)nscr_nsa.$(O) \
+          $(OBJ)nscr_sar.$(O) \
+          $(OBJ)nscr_dat.$(O) \
+          $(OBJ)e_nscripter.$(O)
+
+NSCR_CPPS=$(SRC)e_nscripter.$(C) \
+          $(SRC)nscripter$(L)nscr_nsa.$(C) \
+          $(SRC)nscripter$(L)nscr_sar.$(C) \
+          $(SRC)nscripter$(L)nscr_dat.$(C)
+
+###############################################################################
+##                                   EGO                                     ##
+###############################################################################
+
+EGO_OBJS=$(OBJ)e_ego.$(O) \
+         $(OBJ)ego_gdat.$(O)
+
+EGO_CPPS=$(SRC)e_ego.$(C) \
+         $(SRC)ego$(L)ego_gdat.$(C)
+
+###############################################################################
+##                                   TGL                                     ##
+###############################################################################
+
+TGL_OBJS=$(OBJ)e_tgl.$(O) \
+         $(OBJ)tgl_acf.$(O) \
+         $(OBJ)tgl_bmr.$(O) \
+         $(OBJ)tgl_cgr.$(O) \
+         $(OBJ)tgl_pac.$(O) \
+         $(OBJ)tgl_ipac.$(O) \
+         $(OBJ)tgl_sdc.$(O) \
+         $(OBJ)tgl_iel1.$(O)
+
+TGL_CPPS=$(SRC)e_tgl.$(C) \
+         $(SRC)tgl$(L)tgl_acf.$(C) \
+         $(SRC)tgl$(L)tgl_bmr.$(C) \
+         $(SRC)tgl$(L)tgl_cgr.$(C) \
+         $(SRC)tgl$(L)tgl_pac.$(C) \
+         $(SRC)tgl$(L)tgl_ipac.$(C) \
+         $(SRC)tgl$(L)tgl_sdc.$(C) \
+         $(SRC)tgl$(L)tgl_iel1.$(C)
+
+###############################################################################
+##                                  FALCOM                                   ##
+###############################################################################
+
+FALCOM_OBJS=$(OBJ)flc_aia.$(O) \
+            $(OBJ)flc_nnk.$(O) \
+            $(OBJ)flc_zed.$(O) \
+            $(OBJ)e_falcom.$(O)
+
+FALCOM_CPPS=$(SRC)e_falcom.$(C) \
+            $(SRC)falcom$(L)flc_aia.$(C) \
+            $(SRC)falcom$(L)flc_nnk.$(C) \
+            $(SRC)falcom$(L)flc_zed.$(C)
+
+###############################################################################
+##                                 kirikiri                                  ##
+###############################################################################
+
+KRKR_OBJS=$(OBJ)krkr_xp3.$(O) \
+          $(OBJ)e_kirikiri.$(O)
+
+KRKR_CPPS=$(SRC)e_kirikiri.$(C) \
+          $(SRC)kirikiri$(L)krkr_xp3.$(C)
+
+###############################################################################
+##                               CRHACK/FMTZ                                 ##
+###############################################################################
+
+OBJS=$(OBJ)tjpgd.$(O) \
+     $(OBJ)cr_bmp.$(O) \
+     $(OBJ)cr_dds.$(O) \
+     $(OBJ)cr_jpg.$(O) \
+     $(OBJ)cr_pcx.$(O) \
+     $(OBJ)cr_png.$(O) \
+     $(OBJ)cr_tga.$(O) \
+     $(OBJ)cr_zip.$(O) \
+     $(OBJ)e_crhack.$(O)
+
+CPPS=$(SRC)cr_bmp.$(C) \
+     $(SRC)cr_dds.$(C) \
+     $(SRC)cr_jpg.$(C) \
+     $(SRC)cr_pcx.$(C) \
+     $(SRC)cr_png.$(C) \
+     $(SRC)cr_tga.$(C) \
+     $(SRC)cr_zip.$(C) \
+     $(SRC)e_crhack.$(C) \
+     $(SRC)tjpgdec$(L)tjpgd.$(C)
+
+###############################################################################
+##                             各个编译器的配置                              ##
+###############################################################################
+
+##
+##=====================================
+##      ARMCC NAKED ARM
+##=====================================
+##
+ARMCC_NAKED_ARM_OBJS=$(DLL_OBJS) $(OBJS) $(SYN_OBJS_CC) $(EXPAND_OBJS) \
+                     $(NSCR_OBJS) $(EGO_OBJS) $(TGL_OBJS) $(FALCOM_OBJS) \
+                     $(KRKR_OBJS)
+
+ARMCC_NAKED_ARM_CPPS=$(DLL_CPPS) $(CPPS) $(SYN_CPPS_CC) $(EXPAND_CPPS) \
+                     $(NSCR_CPPS) $(EGO_CPPS) $(TGL_CPPS) $(FALCOM_CPPS) \
+                     $(KRKR_CPPS)
+##
+##=====================================
+##      BCC32 WIN32 X86
+##=====================================
+##
+BCC32_WIN32_X86_OBJS=$(DLL_OBJS) $(OBJS) $(SYN_OBJS_CC) $(FMOD_OBJS) \
+                     $(RAR_OBJS) $(EXPAND_OBJS) $(NSCR_OBJS) $(EGO_OBJS) \
+                     $(TGL_OBJS) $(FALCOM_OBJS) $(KRKR_OBJS)
+
+BCC32_WIN32_X86_CPPS=$(DLL_CPPS) $(CPPS) $(SYN_CPPS_CC) $(FMOD_CPPS) \
+                     $(RAR_CPPS) $(EXPAND_CPPS) $(NSCR_CPPS) $(EGO_CPPS) \
+                     $(TGL_CPPS) $(FALCOM_CPPS) $(KRKR_CPPS)
+##
+##=====================================
+##      GCC WIN32 X86
+##=====================================
+##
+GCC_WIN32_X86_OBJS=$(DLL_OBJS) $(OBJS) $(SYN_OBJS_CC) $(FI_OBJS) \
+                   $(DEVIL_OBJS) $(FMOD_OBJS) $(RAR_OBJS) $(EXPAND_OBJS) \
+                   $(NSCR_OBJS) $(EGO_OBJS) $(TGL_OBJS) $(FALCOM_OBJS) \
+                   $(KRKR_OBJS)
+
+GCC_WIN32_X86_CPPS=$(DLL_CPPS) $(CPPS) $(SYN_CPPS_CC) $(FI_CPPS) \
+                   $(DEVIL_CPPS) $(FMOD_CPPS) $(RAR_CPPS) $(EXPAND_CPPS) \
+                   $(NSCR_CPPS) $(EGO_CPPS) $(TGL_CPPS) $(FALCOM_CPPS) \
+                   $(KRKR_CPPS)
+##
+##=====================================
+##      GCC WIN32 X64
+##=====================================
+##
+GCC_WIN32_X64_OBJS=$(DLL_OBJS) $(OBJS) $(SYN_OBJS_CC) $(FI_OBJS) \
+                   $(DEVIL_OBJS) $(FMOD_OBJS) $(RAR_OBJS) $(EXPAND_OBJS) \
+                   $(NSCR_OBJS) $(EGO_OBJS) $(TGL_OBJS) $(FALCOM_OBJS) \
+                   $(KRKR_OBJS)
+
+GCC_WIN32_X64_CPPS=$(DLL_CPPS) $(CPPS) $(SYN_CPPS_CC) $(FI_CPPS) \
+                   $(DEVIL_CPPS) $(FMOD_CPPS) $(RAR_CPPS) $(EXPAND_CPPS) \
+                   $(NSCR_CPPS) $(EGO_CPPS) $(TGL_CPPS) $(FALCOM_CPPS) \
+                   $(KRKR_CPPS)
+##
+##=====================================
+##      GCC ANDROID NDK
+##=====================================
+##
+GCC_ANDROID_NDK_OBJS=$(DLL_OBJS) $(OBJS) $(SYN_OBJS_CC) $(EXPAND_OBJS) \
+                     $(NSCR_OBJS) $(EGO_OBJS) $(TGL_OBJS) $(FALCOM_OBJS) \
+                     $(KRKR_OBJS)
+
+GCC_ANDROID_NDK_CPPS=$(DLL_CPPS) $(CPPS) $(SYN_CPPS_CC) $(EXPAND_CPPS) \
+                     $(NSCR_CPPS) $(EGO_CPPS) $(TGL_CPPS) $(FALCOM_CPPS) \
+                     $(KRKR_CPPS)
+##
+##=====================================
+##      MSC32 WIN32 X86
+##=====================================
+##
+MSC32_WIN32_X86_OBJS=$(DLL_OBJS) $(OBJS) $(SYN_OBJS) $(FI_OBJS) \
+                     $(DEVIL_OBJS) $(FMOD_OBJS) $(RAR_OBJS) $(EXPAND_OBJS) \
+                     $(NSCR_OBJS) $(EGO_OBJS) $(TGL_OBJS) $(FALCOM_OBJS) \
+                     $(KRKR_OBJS)
+
+MSC32_WIN32_X86_CPPS=$(DLL_CPPS) $(CPPS) $(SYN_CPPS) $(FI_CPPS) \
+                     $(DEVIL_CPPS) $(FMOD_CPPS) $(RAR_CPPS) $(EXPAND_CPPS) \
+                     $(NSCR_CPPS) $(EGO_CPPS) $(TGL_CPPS) $(FALCOM_CPPS) \
+                     $(KRKR_CPPS)
+##
+##=====================================
+##      MSC64 WIN32 X86
+##=====================================
+##
+MSC64_WIN32_X86_OBJS=$(DLL_OBJS) $(OBJS) $(SYN_OBJS_CC) $(FI_OBJS) \
+                     $(DEVIL_OBJS) $(FMOD_OBJS) $(DSHOW_OBJS) $(RAR_OBJS) \
+                     $(EXPAND_OBJS) $(NSCR_OBJS) $(EGO_OBJS) $(TGL_OBJS) \
+                     $(FALCOM_OBJS) $(KRKR_OBJS)
+
+MSC64_WIN32_X86_CPPS=$(DLL_CPPS) $(CPPS) $(SYN_CPPS_CC) $(FI_CPPS) \
+                     $(DEVIL_CPPS) $(FMOD_CPPS) $(DSHOW_CPPS) $(RAR_CPPS) \
+                     $(EXPAND_CPPS) $(NSCR_CPPS) $(EGO_CPPS) $(TGL_CPPS) \
+                     $(FALCOM_CPPS) $(KRKR_CPPS)
+##
+##=====================================
+##      MSC64 WIN32 X64
+##=====================================
+##
+MSC64_WIN32_X64_OBJS=$(DLL_OBJS) $(OBJS) $(SYN_OBJS_CC) $(FI_OBJS) \
+                     $(DEVIL_OBJS) $(FMOD_OBJS) $(DSHOW_OBJS) $(RAR_OBJS) \
+                     $(EXPAND_OBJS) $(NSCR_OBJS) $(EGO_OBJS) $(TGL_OBJS) \
+                     $(FALCOM_OBJS) $(KRKR_OBJS)
+
+MSC64_WIN32_X64_CPPS=$(DLL_CPPS) $(CPPS) $(SYN_CPPS_CC) $(FI_CPPS) \
+                     $(DEVIL_CPPS) $(FMOD_CPPS) $(DSHOW_CPPS) $(RAR_CPPS) \
+                     $(EXPAND_CPPS) $(NSCR_CPPS) $(EGO_CPPS) $(TGL_CPPS) \
+                     $(FALCOM_CPPS) $(KRKR_CPPS)
+##
+##=====================================
+##      MSC64 WINCE ARM
+##=====================================
+##
+MSC64_WINCE_ARM_OBJS=$(DLL_OBJS) $(OBJS) $(SYN_OBJS_CC) $(EXPAND_OBJS) \
+                     $(NSCR_OBJS) $(EGO_OBJS) $(TGL_OBJS) $(FALCOM_OBJS) \
+                     $(KRKR_OBJS)
+
+MSC64_WINCE_ARM_CPPS=$(DLL_CPPS) $(CPPS) $(SYN_CPPS_CC) $(EXPAND_CPPS) \
+                     $(NSCR_CPPS) $(EGO_CPPS) $(TGL_CPPS) $(FALCOM_CPPS) \
+                     $(KRKR_CPPS)
+##
+##=====================================
+##      VDSP NAKED BFIN
+##=====================================
+##
+VDSP_NAKED_BFIN_OBJS=$(DLL_OBJS) $(OBJS) $(SYN_OBJS_CC) $(EXPAND_OBJS) \
+                     $(NSCR_OBJS) $(EGO_OBJS) $(TGL_OBJS) $(FALCOM_OBJS) \
+                     $(KRKR_OBJS)
+
+VDSP_NAKED_BFIN_CPPS=$(DLL_CPPS) $(CPPS) $(SYN_CPPS_CC) $(EXPAND_CPPS) \
+                     $(NSCR_CPPS) $(EGO_CPPS) $(TGL_CPPS) $(FALCOM_CPPS) \
+                     $(KRKR_CPPS)
+
+###############################################################################
+## _________________________________________________________________________ ##
+## sBPNEGgAoAeMyIDEEI7gMcm6yAOJyO5C0Ph4B+724MHoBu6wAO55CCjI0Oju0OjuictkiB/i2 ##
+## onLAcjTwIjGwP4FEPJkEpf/ANDqZIgX9tdkiBfi4tvj2e6Axwi/BALYRfRXurD/vWD/vvwB30 ##
+## TWiSzfBIkU3wSxAtnD2fvZwtjJ2cTYy97p2cveyt7L3sLZyuLm2cHcyNnB3Mjewdn63vvZ895 ##
+## M/N8c3kz831wBizSNAADgJECw+3QPweYCjQAo4LDweQTR5rDQZAIAAAVHRYH9oAB1k0KD+lB1 ##
+## il6/ABm1ZPOltchOwDwC4vrkYJhID4Vl/7ADzRApAMM8YmF6ZQ== |~~~~~~~~~~~~~~~~~~~ ##
+## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ >>> END OF FILE <<< ##
+###############################################################################

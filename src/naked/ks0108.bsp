@@ -1,0 +1,358 @@
+/*****************************************************************************/
+/*                                                  ###                      */
+/*       #####          ###    ###                  ###  CREATE: 2012-01-18  */
+/*     #######          ###    ###      [KRNL]      ###  ~~~~~~~~~~~~~~~~~~  */
+/*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
+/*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
+/*   ###       ### ###  ###    ###    ####    ####  ###   ##  +-----------+  */
+/*  ####       ######## ##########  #######  ###### ###  ###  |  A NEW C  |  */
+/*  ###        ######## ########## ########  ###### ### ###   | FRAMEWORK |  */
+/*  ###     ## #### ### ########## ###  ### ###     ######    |  FOR ALL  |  */
+/*  ####   ### ###  ### ###    ### ###  ### ###     ######    | PLATFORMS |  */
+/*  ########## ###      ###    ### ######## ####### #######   |  AND ALL  |  */
+/*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
+/*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
+/*  =======================================================================  */
+/*  >>>>>>>>>>>>>>>>> CrHack SAMSUNG KS0108 驱动函数库模板 <<<<<<<<<<<<<<<<  */
+/*  =======================================================================  */
+/*****************************************************************************/
+
+#include "chip/ks0108.h"
+
+/* 宏设定检查 */
+#ifndef _MOTOL_DATA08_
+    #error "ks0108.bsp: invalid DATA TYPE define!"
+#endif
+#if !defined(KS0108_CMD) || \
+    !defined(KS0108_DAT)
+    #error "ks0108.bsp: missing REGISTERS define!"
+#endif
+
+/* 器件长度类型 */
+#ifndef mot_leng_t
+    #define mot_leng_t  ufast_t
+#endif
+
+/* 器件的命令字 */
+#define KS0108_OPEN     0x3F    /* 打开液晶 */
+#define KS0108_CLOSE    0x3E    /* 关闭液晶 */
+#define KS0108_START    0xC0    /* 设起始行 */
+#define KS0108_XPAGE    0xB8    /* 设显示页 */
+#define KS0108_YADDR    0x40    /* 设显示列 */
+
+/* 额外等待 (可选) */
+#ifndef KS0108_EX_WAIT_IDLE
+    #define KS0108_EX_WAIT_IDLE
+#endif
+
+/* 状态寄存器位掩码 */
+#define KS0108_W_MASK   (KS0108_RESET | KS0108_BUSY)
+
+#if !defined(__no_ks0108_get_status)
+/*
+=======================================
+    KS0108 读取状态
+=======================================
+*/
+CR_API byte_t
+ks0108_get_status (void_t)
+{
+    byte_t  status;
+
+    mbus_chip_sel();
+    status = mbus_data_get(KS0108_CMD);
+    mbus_chip_out();
+    return (status);
+}
+
+#endif  /* !__no_ks0108_get_status */
+
+#if !defined(__no_ks0108_wait_idle)
+/*
+---------------------------------------
+    KS0108 等待空闲
+---------------------------------------
+*/
+static retc_t
+ks0108_wait_idle (
+  __CR_IN__ uint_t  times
+    )
+{
+    byte_t  status;
+
+    for (; times != 0; times--)
+    {
+        KS0108_EX_WAIT_IDLE
+        status = ks0108_get_status();
+        if (!(status & KS0108_W_MASK))
+            return (TRUE);
+    }
+    return (FALSE);
+}
+
+#endif  /* !__no_ks0108_wait_idle */
+
+#if !defined(__no_ks0108_lcd_switch)
+/*
+=======================================
+    KS0108 液晶开关
+=======================================
+*/
+CR_API retc_t
+ks0108_lcd_switch (
+  __CR_IN__ bool_t  open,
+  __CR_IN__ uint_t  times
+    )
+{
+    byte_t  cmd;
+
+    /* 等待空闲 */
+    if (!ks0108_wait_idle(times))
+        return (FALSE);
+    cmd = open ? KS0108_OPEN : KS0108_CLOSE;
+    mbus_chip_sel();
+    mbus_data_set(KS0108_CMD, cmd);
+    mbus_chip_out();
+    return (TRUE);
+}
+
+#endif  /* !__no_ks0108_lcd_switch */
+
+#if !defined(__no_ks0108_set_start)
+/*
+=======================================
+    KS0108 设置起始行
+=======================================
+*/
+CR_API retc_t
+ks0108_set_start (
+  __CR_IN__ byte_t  line,
+  __CR_IN__ uint_t  times
+    )
+{
+    byte_t  cmd;
+
+    /* 等待空闲 */
+    if (!ks0108_wait_idle(times))
+        return (FALSE);
+    cmd  = KS0108_START;
+    cmd |= line & KS0108_Z_MASK;
+    mbus_chip_sel();
+    mbus_data_set(KS0108_CMD, cmd);
+    mbus_chip_out();
+    return (TRUE);
+}
+
+#endif  /* !__no_ks0108_set_start */
+
+#if !defined(__no_ks0108_set_dx)
+/*
+=======================================
+    KS0108 设置 X 坐标
+=======================================
+*/
+CR_API retc_t
+ks0108_set_dx (
+  __CR_IN__ byte_t  dx,
+  __CR_IN__ uint_t  times
+    )
+{
+    byte_t  cmd;
+
+    /* 等待空闲 */
+    if (!ks0108_wait_idle(times))
+        return (FALSE);
+    cmd  = KS0108_XPAGE;
+    cmd |= dx & KS0108_X_MASK;
+    mbus_chip_sel();
+    mbus_data_set(KS0108_CMD, cmd);
+    mbus_chip_out();
+    return (TRUE);
+}
+
+#endif  /* !__no_ks0108_set_dx */
+
+#if !defined(__no_ks0108_set_dy)
+/*
+=======================================
+    KS0108 设置 Y 坐标
+=======================================
+*/
+CR_API retc_t
+ks0108_set_dy (
+  __CR_IN__ byte_t  dy,
+  __CR_IN__ uint_t  times
+    )
+{
+    byte_t  cmd;
+
+    /* 等待空闲 */
+    if (!ks0108_wait_idle(times))
+        return (FALSE);
+    cmd  = KS0108_YADDR;
+    cmd |= dy & KS0108_Y_MASK;
+    mbus_chip_sel();
+    mbus_data_set(KS0108_CMD, cmd);
+    mbus_chip_out();
+    return (TRUE);
+}
+
+#endif  /* !__no_ks0108_set_dy */
+
+#if !defined(__no_ks0108_set_xy)
+/*
+=======================================
+    KS0108 设置 XY 坐标
+=======================================
+*/
+CR_API retc_t
+ks0108_set_xy (
+  __CR_IN__ byte_t  dx,
+  __CR_IN__ byte_t  dy,
+  __CR_IN__ uint_t  times
+    )
+{
+    /* 两个一起设置 */
+    if (!ks0108_set_dx(dx, times))
+        return (FALSE);
+    return (ks0108_set_dy(dy, times));
+}
+
+#endif  /* !__no_ks0108_set_xy */
+
+#if !defined(__no_ks0108_read_dot)
+/*
+---------------------------------------
+    KS0108 读取像素数据
+---------------------------------------
+*/
+static byte_t
+ks0108_read_dot (
+  __CR_IN__ uint_t  times
+    )
+{
+    byte_t  dot8;
+
+    /* 等待空闲 */
+    if (!ks0108_wait_idle(times))
+        return (0x00);
+    mbus_chip_sel();    /* 空读一次 */
+    dot8 = mbus_data_get(KS0108_DAT);
+    dot8 = mbus_data_get(KS0108_DAT);
+    mbus_chip_out();
+    return (dot8);
+}
+
+#endif  /* !__no_ks0108_read_dot */
+
+#if !defined(__no_ks0108_write_dot)
+/*
+=======================================
+    KS0108 写入像素数据
+=======================================
+*/
+CR_API retc_t
+ks0108_write_dot (
+  __CR_IN__ byte_t  dot8,
+  __CR_IN__ uint_t  times
+    )
+{
+    /* 等待空闲 */
+    if (!ks0108_wait_idle(times))
+        return (FALSE);
+    mbus_chip_sel();
+    mbus_data_set(KS0108_DAT, dot8);
+    mbus_chip_out();
+    return (TRUE);
+}
+
+#endif  /* !__no_ks0108_write_dot */
+
+#if !defined(__no_ks0108_write_line)
+/*
+=======================================
+    KS0108 写入连续像素
+=======================================
+*/
+CR_API retc_t
+ks0108_write_line (
+  __CR_IN__ const byte_t*   line,
+  __CR_IN__ mot_leng_t      size,
+  __CR_IN__ uint_t          times
+    )
+{
+    /* 等待空闲 */
+    if (!ks0108_wait_idle(times))
+        return (FALSE);
+    mbus_chip_sel();
+    mbus_data_write(KS0108_DAT, line, size);
+    mbus_chip_out();
+    return (TRUE);
+}
+
+#endif  /* !__no_ks0108_write_line */
+
+#if !defined(__no_ks0108_pixel_get)
+/*
+=======================================
+    KS0108 读取一点像素
+=======================================
+*/
+CR_API byte_t
+ks0108_pixel_get (
+  __CR_IN__ byte_t  x,
+  __CR_IN__ byte_t  y,
+  __CR_IN__ uint_t  times
+    )
+{
+    byte_t  dot8;
+
+    /* 设置坐标 */
+    if (!ks0108_set_xy(x >> 3, y, times))
+        return (0xFF);
+    dot8 = ks0108_read_dot(times);
+    return ((dot8 >> (x & 7)) & 1);
+}
+
+#endif  /* !__no_ks0108_pixel_get */
+
+#if !defined(__no_ks0108_pixel_set)
+/*
+=======================================
+    KS0108 写入一点像素
+=======================================
+*/
+CR_API retc_t
+ks0108_pixel_set (
+  __CR_IN__ byte_t  x,
+  __CR_IN__ byte_t  y,
+  __CR_IN__ byte_t  color,
+  __CR_IN__ uint_t  times
+    )
+{
+    byte_t  dot8;
+
+    /* 设置坐标 */
+    if (!ks0108_set_xy(x >> 3, y, times))
+        return (FALSE);
+    dot8 = ks0108_read_dot(times);
+    if (color) dot8 |=  (1 << (x & 7));
+    else       dot8 &= ~(1 << (x & 7));
+
+    /* 回设坐标 */
+    if (!ks0108_set_dy(y, times))
+        return (FALSE);
+    return (ks0108_write_dot(dot8, times));
+}
+
+#endif  /* !__no_ks0108_pixel_set */
+
+/*****************************************************************************/
+/* _________________________________________________________________________ */
+/* uBMAzRBoAKAHaACQD6FoAIAPqbgA/7rIA+5CM9uKw8D4Au7u7mSIJ0t18mYz0mYz9rAQZCgHc */
+/* wRIZIgHZovGBXUAZg+v0GbB+gRmgcJ7BAAAisIlAwB1Av7LSHUC/s9IdQL+w0h1Av7HZkZmgf */
+/* 4JLgIAdb262gPsqAh0+zP/uQB9ZYsFZYktq+L3sMi/AAK7gAKJAUtLdfq5IANXvT8BiQzfBIv */
+/* FLaAAweAEmff53wb+Adjx3kQE2xwy5Io8ithkigcFgACJBN8E3sneNvwB2xyLHDkdfA2JHSyA */
+/* adtAAQPdZYgHR0dNdbZfSYP5UHWr/kQEtAHNFg+Eef/DWAKgDw== |~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ >>> END OF FILE <<< */
+/*****************************************************************************/

@@ -1,0 +1,151 @@
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00011)
+
+    2009-12-31
+    ~~~~~~~~~~ [X]
+    ADD: 增加 mem_replace() 函数
+    ADD: 增加第三方压缩库的原始代码
+    FIX: 目录 std 更名 psx
+    FIX: 调整 Windows 32位文件系统下的文件大小过滤
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00010)
+
+    2009-12-30
+    ~~~~~~~~~~ [X]
+    FIX: 开启 VS2005+ SSE 代码生成
+    FIX: 优化调整字节顺序相关的宏开关
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00009)
+
+    2009-12-29
+    ~~~~~~~~~~ [X]
+    ADD: 增加 VS2002 编译脚本
+    ADD: 完成前面未完成的任务
+    FIX: 若干小修正
+    FIX: 移动 cut_int64_32s() 到 safe.h
+    FIX: 修正 VS2002 编译下的64位常数问题
+
+    2009-12-28
+    ~~~~~~~~~~ [X]
+    ADD: 增加临时文件清理脚本
+    ADD: 增加文件存取接口函数库
+    ADD: 增加一些文件操作助手函数
+    ADD: 增加文件系统函数库 for Windows
+    FIX: 若干小修正
+    FIX: 从工程列表里删除 PNG 相关文件
+    FIX: 打开对 VS2002 的支持
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00008)
+
+    2009-12-26
+    ~~~~~~~~~~ [X]
+    ADD: 完成前面未完成的任务
+    FIX: fswin.c 更名 filewin.c
+    FIX: 修正 CR_SPLITE 的错误
+    FIX: 修正 cut_int64s() 的错误
+
+    2009-12-23
+    ~~~~~~~~~~ [X]
+    ADD: 增加 CR_MX 宏
+    ADD: 增加二维剪裁函数库
+    ADD: 增加 __ftol() 函数
+    ADD: 增加文件操作头文件
+    ADD: 增加文件操作函数库 for LIBC
+    ADD: 增加文件操作函数库 for Windows
+    ADD: 增加64位文件操作宏定义 (GCC)
+    FIX: 删除昨天增加的几处函数的出错返回值
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00007)
+
+    2009-12-22
+    ~~~~~~~~~~ [X]
+    ADD: 增加 mk_maxu() 函数
+    FIX: 更改几个函数的名称
+    FIX: 增加几处函数的出错返回值
+    FIX: 修正一处简中出错提示
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00006)
+
+    2009-12-19
+    ~~~~~~~~~~ [X]
+    ADD: 增加平台最大类型
+    ADD: 增加二维图形头文件
+    ADD: 增加位图结构函数库
+    ADD: 增加像素操作头文件
+    ADD: 增加像素操作函数库
+    FIX: 增加出错处理的 l3rd 值
+    FIX: 改变结构体命名的风格
+    FIX: 将可增长数组的构造析构放入 DLL
+    FIX: 一些代码无关的小修正
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00005)
+
+    2009-12-18
+    ~~~~~~~~~~ [X]
+    ADD: 增加数据结构头文件
+    ADD: 增加可增长数组函数库
+    ADD: 增加窗帘哈希表函数库
+    ADD: 增加数据哈希头文件
+    ADD: 增加字符串哈希函数库
+    ADD: 增加 BZZ5 哈希函数库
+    ADD: 增加 SHA-1 哈希函数库
+    ADD: 增加 MD 系列哈希函数库
+    ADD: 增加 CRC 系列哈希函数库
+    ADD: 增加 SUM 系列哈希函数库
+    ADD: 增加 Adler32 哈希函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00004)
+
+    2009-12-17
+    ~~~~~~~~~~ [X]
+    ADD: 增加出错处理函数库
+    ADD: 增加字节顺序头文件
+    ADD: 增加 CORE 总头文件
+    ADD: 增加 CORE 主程序入口点
+    ADD: 增加一些全局变量的说明
+    ADD: 增加插件操作头文件
+    ADD: 增加动态模块函数库 for Windows
+    ADD: 增加无 CUI 环境的选项
+    ADD: 增加 VC2002+ 和 VC2005+ 的编译脚本
+    ADD: 增加 CRHACK/CORE 工程文件列表
+    ADD: 增加 CUI 输出控制函数库 for Windows
+    FIX: 第一次编译的若干修正 (VC2005)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00003)
+
+    2009-12-16
+    ~~~~~~~~~~
+    ADD: 增加内存分配函数库 for LIBC
+    ADD: 增加内存分配函数库 for Windows
+    FIX: 修正几处宏名称的错误
+    FIX: 统一一处函数参数名称
+    FIX: 移植 dlmalloc 到 CrHack
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00002)
+
+    2009-12-16
+    ~~~~~~~~~~
+    ADD: 增加数值安全头文件
+    ADD: 增加内存操作头文件
+    ADD: 增加内存操作函数库
+    ADD: 增加内存操作内部头文件
+    ADD: 增加 dlmalloc 原始代码
+    ADD: 增加配置检查函数库
+    ADD: 增加线程进程头文件
+    ADD: 增加第三方库函数重定向头文件
+    ADD: 增加线程操作函数库 for Windows
+    ADD: 增加消息提示头文件
+    ADD: 增加消息提示函数库
+    ADD: 增加消息提示函数库 for Windows
+    ADD: 增加应用程序头文件
+    ADD: 增加应用程序函数库
+    ADD: 增加应用程序函数库 for Windows
+    FIX: 修正 defs.h 漏掉头文件的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00001)
+
+    2009-12-15
+    ~~~~~~~~~~
+    ADD: 提交 CrHack 基础构件头文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00000)

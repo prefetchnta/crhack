@@ -1,0 +1,277 @@
+/*****************************************************************************/
+/*                                                  ###                      */
+/*       #####          ###    ###                  ###  CREATE: 2011-09-14  */
+/*     #######          ###    ###      [KRNL]      ###  ~~~~~~~~~~~~~~~~~~  */
+/*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
+/*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
+/*   ###       ### ###  ###    ###    ####    ####  ###   ##  +-----------+  */
+/*  ####       ######## ##########  #######  ###### ###  ###  |  A NEW C  |  */
+/*  ###        ######## ########## ########  ###### ### ###   | FRAMEWORK |  */
+/*  ###     ## #### ### ########## ###  ### ###     ######    |  FOR ALL  |  */
+/*  ####   ### ###  ### ###    ### ###  ### ###     ######    | PLATFORMS |  */
+/*  ########## ###      ###    ### ######## ####### #######   |  AND ALL  |  */
+/*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
+/*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
+/*  =======================================================================  */
+/*  >>>>>>>>>>>>>>>>>> CrHack XICOR X5XXX 驱动函数库模板 <<<<<<<<<<<<<<<<<<  */
+/*  =======================================================================  */
+/*****************************************************************************/
+
+#if     defined(_CR_USE_X5043_)
+
+    #define _SPI_PAGE_              16
+    #define _SPI_SIZE_              512
+    #define x5xxx_lock          x5043_lock
+    #define x5xxx_unlock        x5043_unlock
+    #define x5xxx_read          x5043_read
+    #define x5xxx_write         x5043_write
+    #define x5xxx_clear_wdt     x5043_clear_wdt
+    #define x5xxx_wait_idle     x5043_wait_idle
+    #define x5xxx_get_status    x5043_get_status
+    #define x5xxx_set_status    x5043_set_status
+    #undef  _X5XXX_HAVE_FLB_
+    #define _X5XXX_HAVE_WDT_
+
+#elif   defined(_CR_USE_X5045_)
+
+    #define _SPI_PAGE_              16
+    #define _SPI_SIZE_              512
+    #define x5xxx_lock          x5045_lock
+    #define x5xxx_unlock        x5045_unlock
+    #define x5xxx_read          x5045_read
+    #define x5xxx_write         x5045_write
+    #define x5xxx_clear_wdt     x5045_clear_wdt
+    #define x5xxx_wait_idle     x5045_wait_idle
+    #define x5xxx_get_status    x5045_get_status
+    #define x5xxx_set_status    x5045_set_status
+    #undef  _X5XXX_HAVE_FLB_
+    #define _X5XXX_HAVE_WDT_
+
+#elif   defined(_CR_USE_X5083_)
+
+    #define _SPI_PAGE_              16
+    #define _SPI_SIZE_          CR_K2B(1)
+    #define x5xxx_lock          x5083_lock
+    #define x5xxx_unlock        x5083_unlock
+    #define x5xxx_read          x5083_read
+    #define x5xxx_write         x5083_write
+    #define x5xxx_clear_wdt     x5083_clear_wdt
+    #define x5xxx_wait_idle     x5083_wait_idle
+    #define x5xxx_get_status    x5083_get_status
+    #define x5xxx_set_status    x5083_set_status
+    #undef  _X5XXX_HAVE_FLB_
+    #define _X5XXX_HAVE_WDT_
+
+#elif   defined(_CR_USE_X5163_)
+
+    #define _SPI_PAGE_              32
+    #define _SPI_SIZE_          CR_K2B(2)
+    #define x5xxx_lock          x5163_lock
+    #define x5xxx_unlock        x5163_unlock
+    #define x5xxx_clr_flb       x5163_clr_flb
+    #define x5xxx_set_flb       x5163_set_flb
+    #define x5xxx_read          x5163_read
+    #define x5xxx_write         x5163_write
+    #define x5xxx_clear_wdt     x5163_clear_wdt
+    #define x5xxx_wait_idle     x5163_wait_idle
+    #define x5xxx_get_status    x5163_get_status
+    #define x5xxx_set_status    x5163_set_status
+    #define _X5XXX_HAVE_FLB_
+    #define _X5XXX_HAVE_WDT_
+
+#elif   defined(_CR_USE_X5165_)
+
+    #define _SPI_PAGE_              32
+    #define _SPI_SIZE_          CR_K2B(2)
+    #define x5xxx_lock          x5165_lock
+    #define x5xxx_unlock        x5165_unlock
+    #define x5xxx_clr_flb       x5165_clr_flb
+    #define x5xxx_set_flb       x5165_set_flb
+    #define x5xxx_read          x5165_read
+    #define x5xxx_write         x5165_write
+    #define x5xxx_clear_wdt     x5165_clear_wdt
+    #define x5xxx_wait_idle     x5165_wait_idle
+    #define x5xxx_get_status    x5165_get_status
+    #define x5xxx_set_status    x5165_set_status
+    #define _X5XXX_HAVE_FLB_
+    #define _X5XXX_HAVE_WDT_
+
+#elif   defined(_CR_USE_X5168_)
+
+    #define _SPI_PAGE_              32
+    #define _SPI_SIZE_          CR_K2B(2)
+    #define x5xxx_lock          x5168_lock
+    #define x5xxx_unlock        x5168_unlock
+    #define x5xxx_clr_flb       x5168_clr_flb
+    #define x5xxx_set_flb       x5168_set_flb
+    #define x5xxx_read          x5168_read
+    #define x5xxx_write         x5168_write
+    #define x5xxx_wait_idle     x5168_wait_idle
+    #define x5xxx_get_status    x5168_get_status
+    #define x5xxx_set_status    x5168_set_status
+    #define _X5XXX_HAVE_FLB_
+    #undef  _X5XXX_HAVE_WDT_
+
+#elif   defined(_CR_USE_X5169_)
+
+    #define _SPI_PAGE_              32
+    #define _SPI_SIZE_          CR_K2B(2)
+    #define x5xxx_lock          x5169_lock
+    #define x5xxx_unlock        x5169_unlock
+    #define x5xxx_clr_flb       x5169_clr_flb
+    #define x5xxx_set_flb       x5169_set_flb
+    #define x5xxx_read          x5169_read
+    #define x5xxx_write         x5169_write
+    #define x5xxx_wait_idle     x5169_wait_idle
+    #define x5xxx_get_status    x5169_get_status
+    #define x5xxx_set_status    x5169_set_status
+    #define _X5XXX_HAVE_FLB_
+    #undef  _X5XXX_HAVE_WDT_
+
+#elif   defined(_CR_USE_X5323_)
+
+    #define _SPI_PAGE_              32
+    #define _SPI_SIZE_          CR_K2B(4)
+    #define x5xxx_lock          x5323_lock
+    #define x5xxx_unlock        x5323_unlock
+    #define x5xxx_clr_flb       x5323_clr_flb
+    #define x5xxx_set_flb       x5323_set_flb
+    #define x5xxx_read          x5323_read
+    #define x5xxx_write         x5323_write
+    #define x5xxx_clear_wdt     x5323_clear_wdt
+    #define x5xxx_wait_idle     x5323_wait_idle
+    #define x5xxx_get_status    x5323_get_status
+    #define x5xxx_set_status    x5323_set_status
+    #define _X5XXX_HAVE_FLB_
+    #define _X5XXX_HAVE_WDT_
+
+#elif   defined(_CR_USE_X5325_)
+
+    #define _SPI_PAGE_              32
+    #define _SPI_SIZE_          CR_K2B(4)
+    #define x5xxx_lock          x5325_lock
+    #define x5xxx_unlock        x5325_unlock
+    #define x5xxx_clr_flb       x5325_clr_flb
+    #define x5xxx_set_flb       x5325_set_flb
+    #define x5xxx_read          x5325_read
+    #define x5xxx_write         x5325_write
+    #define x5xxx_clear_wdt     x5325_clear_wdt
+    #define x5xxx_wait_idle     x5325_wait_idle
+    #define x5xxx_get_status    x5325_get_status
+    #define x5xxx_set_status    x5325_set_status
+    #define _X5XXX_HAVE_FLB_
+    #define _X5XXX_HAVE_WDT_
+
+#elif   defined(_CR_USE_X5328_)
+
+    #define _SPI_PAGE_              32
+    #define _SPI_SIZE_          CR_K2B(4)
+    #define x5xxx_lock          x5328_lock
+    #define x5xxx_unlock        x5328_unlock
+    #define x5xxx_clr_flb       x5328_clr_flb
+    #define x5xxx_set_flb       x5328_set_flb
+    #define x5xxx_read          x5328_read
+    #define x5xxx_write         x5328_write
+    #define x5xxx_wait_idle     x5328_wait_idle
+    #define x5xxx_get_status    x5328_get_status
+    #define x5xxx_set_status    x5328_set_status
+    #define _X5XXX_HAVE_FLB_
+    #undef  _X5XXX_HAVE_WDT_
+
+#elif   defined(_CR_USE_X5329_)
+
+    #define _SPI_PAGE_              32
+    #define _SPI_SIZE_          CR_K2B(4)
+    #define x5xxx_lock          x5329_lock
+    #define x5xxx_unlock        x5329_unlock
+    #define x5xxx_clr_flb       x5329_clr_flb
+    #define x5xxx_set_flb       x5329_set_flb
+    #define x5xxx_read          x5329_read
+    #define x5xxx_write         x5329_write
+    #define x5xxx_wait_idle     x5329_wait_idle
+    #define x5xxx_get_status    x5329_get_status
+    #define x5xxx_set_status    x5329_set_status
+    #define _X5XXX_HAVE_FLB_
+    #undef  _X5XXX_HAVE_WDT_
+
+#elif   defined(_CR_USE_X5643_)
+
+    #define _SPI_PAGE_              32
+    #define _SPI_SIZE_          CR_K2B(8)
+    #define x5xxx_lock          x5643_lock
+    #define x5xxx_unlock        x5643_unlock
+    #define x5xxx_clr_flb       x5643_clr_flb
+    #define x5xxx_set_flb       x5643_set_flb
+    #define x5xxx_read          x5643_read
+    #define x5xxx_write         x5643_write
+    #define x5xxx_clear_wdt     x5643_clear_wdt
+    #define x5xxx_wait_idle     x5643_wait_idle
+    #define x5xxx_get_status    x5643_get_status
+    #define x5xxx_set_status    x5643_set_status
+    #define _X5XXX_HAVE_FLB_
+    #define _X5XXX_HAVE_WDT_
+
+#elif   defined(_CR_USE_X5645_)
+
+    #define _SPI_PAGE_              32
+    #define _SPI_SIZE_          CR_K2B(8)
+    #define x5xxx_lock          x5645_lock
+    #define x5xxx_unlock        x5645_unlock
+    #define x5xxx_clr_flb       x5645_clr_flb
+    #define x5xxx_set_flb       x5645_set_flb
+    #define x5xxx_read          x5645_read
+    #define x5xxx_write         x5645_write
+    #define x5xxx_clear_wdt     x5645_clear_wdt
+    #define x5xxx_wait_idle     x5645_wait_idle
+    #define x5xxx_get_status    x5645_get_status
+    #define x5xxx_set_status    x5645_set_status
+    #define _X5XXX_HAVE_FLB_
+    #define _X5XXX_HAVE_WDT_
+
+#elif   defined(_CR_USE_X5648_)
+
+    #define _SPI_PAGE_              32
+    #define _SPI_SIZE_          CR_K2B(8)
+    #define x5xxx_lock          x5648_lock
+    #define x5xxx_unlock        x5648_unlock
+    #define x5xxx_clr_flb       x5648_clr_flb
+    #define x5xxx_set_flb       x5648_set_flb
+    #define x5xxx_read          x5648_read
+    #define x5xxx_write         x5648_write
+    #define x5xxx_wait_idle     x5648_wait_idle
+    #define x5xxx_get_status    x5648_get_status
+    #define x5xxx_set_status    x5648_set_status
+    #define _X5XXX_HAVE_FLB_
+    #undef  _X5XXX_HAVE_WDT_
+
+#elif   defined(_CR_USE_X5649_)
+
+    #define _SPI_PAGE_              32
+    #define _SPI_SIZE_          CR_K2B(8)
+    #define x5xxx_lock          x5649_lock
+    #define x5xxx_unlock        x5649_unlock
+    #define x5xxx_clr_flb       x5649_clr_flb
+    #define x5xxx_set_flb       x5649_set_flb
+    #define x5xxx_read          x5649_read
+    #define x5xxx_write         x5649_write
+    #define x5xxx_wait_idle     x5649_wait_idle
+    #define x5xxx_get_status    x5649_get_status
+    #define x5xxx_set_status    x5649_set_status
+    #define _X5XXX_HAVE_FLB_
+    #undef  _X5XXX_HAVE_WDT_
+
+#endif  /* chip type predefine */
+
+#if defined(_SPI_SIZE_)
+    #include "x5xxx.inl"
+#endif
+
+/*****************************************************************************/
+/* _________________________________________________________________________ */
+/* uBMAzRBoAKAHaACQD6FoAIAPqbgA/7rIA+5CM9uKw8D4Au7u7mSIJ0t18mYz0mYz9rAQZCgHc */
+/* wRIZIgHZovGBXUAZg+v0GbB+gRmgcJ7BAAAisIlAwB1Av7LSHUC/s9IdQL+w0h1Av7HZkZmgf */
+/* 4JLgIAdb262gPsqAh0+zP/uQB9ZYsFZYktq+L3sMi/AAK7gAKJAUtLdfq5IANXvT8BiQzfBIv */
+/* FLaAAweAEmff53wb+Adjx3kQE2xwy5Io8ithkigcFgACJBN8E3sneNvwB2xyLHDkdfA2JHSyA */
+/* adtAAQPdZYgHR0dNdbZfSYP5UHWr/kQEtAHNFg+Eef/DWAKgDw== |~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ >>> END OF FILE <<< */
+/*****************************************************************************/

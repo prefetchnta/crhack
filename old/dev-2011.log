@@ -1,0 +1,1174 @@
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00296)
+
+    2011-12-31
+    ~~~~~~~~~~
+    FIX: TOTCFG 报警配置项增加序号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00295)
+
+    2011-12-30
+    ~~~~~~~~~~
+    ADD: TOTCFG 报警配置增加数组遍历
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00294)
+
+    2011-12-29
+    ~~~~~~~~~~
+    MSG: 潘多拉脚本接口未完成提交
+    ADD: 增加 SVN 的忽略文件列表配置
+    FIX: 修正图片对齐设置的一处问题
+
+    2011-12-27
+    ~~~~~~~~~~
+    ADD: 增加 Pandora 脚本接口函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00293)
+
+    2011-12-26
+    ~~~~~~~~~~
+    ADD: 增加一些常用数学常数
+    FIX: 修正一些浮点常数的精度
+    FIX: 更新潘多拉脚本的头文件准备增加库函数
+    MSG: 项目集决定来一次大规模的结构调整
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00292)
+
+    2011-12-24
+    ~~~~~~~~~~
+    FIX: 修正版本描述文件的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00291)
+
+    2011-12-24
+    ~~~~~~~~~~
+    ADD: 加入潘多拉脚本 SDK 原始文件
+    FIX: 替换线段剪裁函数为整数计算
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00290)
+
+    2011-12-23
+    ~~~~~~~~~~
+    FIX: LZO 库升级到 V2.06
+    FIX: 修正 RGB 计算亮度的问题
+    FIX: 更新部分测试用例文档文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00289)
+
+    2011-12-21
+    ~~~~~~~~~~
+    ADD: 增加通用变量填充设置函数
+    ADD: Lua 脚本增加抛出错误接口
+    FIX: 更新剔除内联函数的宏开关
+    MSG: Lua for Win32 & WinCE 调通
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00288)
+
+    2011-12-20
+    ~~~~~~~~~~
+    ADD: 增加两个开发项目的目录
+    ADD: 基本完成 Lua 脚本接口 (未测试)
+    FIX: 调整通用变量结构类型相关的代码
+    FIX: 修正 VC Windows CE 编译下的一个问题
+
+    2011-12-19
+    ~~~~~~~~~~
+    ADD: 开始脚本接口函数库
+    ADD: 增加 Lua 脚本接口函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00287)
+
+    2011-12-18
+    ~~~~~~~~~~
+    ADD: 增加几个填充位到最高位函数
+    FIX: test_2n 函数改为 CR_TEST2N 宏
+    FIX: 将其他位操作移入杂项操作函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00286)
+
+    2011-12-16
+    ~~~~~~~~~~
+    ADD: 加入 Lua 全套 SDK 文件
+    ADD: 加入 LuaCE 全套 SDK 文件
+    FIX: 更新第三方 SDK 目录结构
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00285)
+
+    2011-12-14
+    ~~~~~~~~~~
+    FIX: NASMX 升级到正式的 V1.0
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00284)
+
+    2011-12-13
+    ~~~~~~~~~~
+    ADD: 增加一个七段数码管显示字符
+    ADD: LLB3 按键驱动增加按过按键功能
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00283)
+
+    2011-12-12
+    ~~~~~~~~~~
+    FIX: 更新七段数码管的显示字符
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00282)
+
+    2011-12-11
+    ~~~~~~~~~~
+    ADD: 增加文件属性更改批处理
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00281)
+
+    2011-12-11
+    ~~~~~~~~~~
+    FIX: LLB3 修正数码管显示闪的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00280)
+
+    2011-12-10
+    ~~~~~~~~~~
+    ADD: 增加 FreeImage 插件的头文件
+    FIX: FreeImage 插件头文件包含更新
+    FIX: FreeImage 一个图片加载函数更名
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00279)
+
+    2011-12-09
+    ~~~~~~~~~~
+    ADD: FMTZ 插件增加一个同名统一接口
+    FIX: 调整各个版本文件的发版信息到最新
+    FIX: mv.bat 文件更名为 mmvv.bat (防冲突)
+    FIX: 修正 FreeImage 图片加载上下颠倒的问题
+    FIX: 修正 FreeImage 颜色分量位数计算的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00278)
+
+    2011-12-08
+    ~~~~~~~~~~
+    FIX: 删除 CRHACK/TOOL MAKE 里多余的代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00277)
+
+    2011-12-08
+    ~~~~~~~~~~
+    ADD: FMTZ 增加 FreeImage 插件
+    ADD: FMTZ 增加一些不常用的图片格式
+    ADD: 加入 FreeImage V3.15.1 SDK
+    ADD: 增加一个 FMTZ 插件使用的函数
+    FIX: 一些注释文字的统一修正
+    FIX: FMTZ 增强插件匹配优化的可靠性
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00276)
+
+    2011-12-07
+    ~~~~~~~~~~
+    FIX: 修正伪随机数生成函数的问题
+    FIX: 杂项操作函数库更名 (防冲突)
+    FIX: 调整 sdk 目录的结构开始借用外力
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00275)
+
+    2011-12-06
+    ~~~~~~~~~~
+    FIX: 增加热电阻的电阻输入参数过滤
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00274)
+
+    2011-12-05
+    ~~~~~~~~~~
+    FIX: 调整一些内联函数可以为宏使用
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00273)
+
+    2011-12-04
+    ~~~~~~~~~~
+    ADD: 增加 ARM 架构系统头文件
+    ADD: 增加 ARM 架构版本说明文档
+    FIX: 删除 uC/OS-II 部分没意义的代码
+    FIX: 修正 Win32 下网络数据包读取的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00272)
+
+    2011-12-01
+    ~~~~~~~~~~
+    ADD: 增加模拟3线 SSI 函数库模板
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00271)
+
+    2011-11-30
+    ~~~~~~~~~~
+    ADD: 增加 MinGW32 4.6.1 相关文档
+    FIX: BLIT 相关调整的文档更新
+    FIX: BLIT 部分使用更清晰的颜色结构
+    FIX: 升级到 MinGW32 4.6.1 的警告修正
+    FIX: 消除 MinGW32 4.4.0 所有可消除的警告
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00270)
+
+    2011-11-29
+    ~~~~~~~~~~
+    ADD: 增加 MinGW32 4.4.0 命令行说明文档
+    FIX: 修正 MinGW32 4.4.0 编译下的大部分警告
+    FIX: 修正 MinGW32 4.4.0 链接 C++ 程序的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00269)
+
+    2011-11-28
+    ~~~~~~~~~~
+    ADD: 增加 MinGW32 4.4.0 预定义宏文档
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00268)
+
+    2011-11-28
+    ~~~~~~~~~~
+    FIX: 删除用到的 uC/OS-II 的头文件
+    FIX: 调整 LPC-ARM7 启动代码相关配置
+    FIX: 取消片上设备初始化的任何中断设置
+    FIX: MinGW32 重装上阵 (使用 QtSDK 版本)
+    FIX: 修正 LPC22XX 片上 UART 中断设置问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00267)
+
+    2011-11-25
+    ~~~~~~~~~~
+    FIX: 修正 BLIT 部分一处代码编译问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00266)
+
+    2011-11-24
+    ~~~~~~~~~~
+    ADD: 增加源代码模板文件
+    ADD: 增加一些数学物理常数
+    ADD: 完成所有热电偶转换函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00265)
+
+    2011-11-23
+    ~~~~~~~~~~
+    ADD: 增加热电偶转换计算函数库（多个文件）
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00264)
+
+    2011-11-22
+    ~~~~~~~~~~
+    FIX: 修正 Win64 下文件写入代码的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00263)
+
+    2011-11-22
+    ~~~~~~~~~~
+    ADD: 增加热电阻转换计算函数库（多个文件）
+    FIX: 补充说明 VC7X 下建立动态的规则
+    FIX: 修正 VC7X 下编译数学物理库的连接问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00262)
+
+    2011-11-21
+    ~~~~~~~~~~
+    ADD: 增加 NEXT 开发日志文件
+    ADD: 开始加入以前的 MATH 项目
+    ADD: 加入空的 GFX3 项目完善项目框架
+    ADD: 增加 CX51 内存用量溢出的备忘录
+    FIX: LLB2/LLB3 去除底层无关的文件
+    FIX: 一些函数增加剔除开关 for CX51
+    FIX: 数码管函数库改名七段数码管函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00261)
+
+    2011-11-10
+    ~~~~~~~~~~
+    FIX: LLB 工程改名 LLB2
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00260)
+
+    2011-11-05
+    ~~~~~~~~~~
+    FIX: 修正模拟 I2C 总线设备地址的 BUG
+    FIX: 取消 Win32 网络库 MSG_PEEK 功能
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00259)
+
+    2011-11-04
+    ~~~~~~~~~~
+    ADD: 增加是否多线程编译的标识符
+    FIX: 更新发版版本号的错误
+    FIX: 修正 Win32 网络库里的问题
+    FIX: Win32 网络库增加 MSG_PEEK 功能
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00258)
+
+    2011-11-03
+    ~~~~~~~~~~
+    FIX: 修正发版的版本信息
+    FIX: 优化 LLB 和 LLB3 的数据类型
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00257)
+
+    2011-11-02
+    ~~~~~~~~~~
+    ADD: 新开几个项目的坑
+    FIX: 变量名的统一修改
+    FIX: LLB3 变量名小修改
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00256)
+
+    2011-11-01
+    ~~~~~~~~~~
+    FIX: 修正常数值的书写错误
+    FIX: 更新模拟 I2C 一处调用参数
+    FIX: 调整器件的容量大小常数写法
+    FIX: 调整 NAKED 一些关键宏的配置
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00255)
+
+    2011-10-31
+    ~~~~~~~~~~
+    ADD: 增加漏掉的文件句柄映射
+    ADD: TOTAL CFG 报警配置增加保存和导入功能
+    FIX: 一些代码格式上的更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00254)
+
+    2011-10-30
+    ~~~~~~~~~~
+    ADD: 完成 LPC21XX/LPC22XX 片上 SPI 函数库
+    FIX: 修正了代码上的一些小问题
+    FIX: 调整 STM32 片上 SPI 函数库的结构
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00253)
+
+    2011-10-28
+    ~~~~~~~~~~
+    FIX: NXP LPC-ARM7 固件库文件改名
+    FIX: 合并 MAX1246 和 MAX1247 头文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00252)
+
+    2011-10-27
+    ~~~~~~~~~~
+    ADD: 增加 M25PEXX 驱动函数库模板
+    ADD: 增加 M25PEXX 系列芯片的驱动函数库
+    FIX: 更新 ARMCC 下的 CR_NOP 宏
+    FIX: 调整一些芯片器件的命令宏的位置
+    FIX: 修正分页器件驱动中数值溢出的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00251)
+
+    2011-10-26
+    ~~~~~~~~~~
+    ADD: 搭好 LPC-ARM7 片上 SPI 函数库框架
+    FIX: 精简 STM32 片上 SPI 函数库代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00250)
+
+    2011-10-25
+    ~~~~~~~~~~
+    FIX: 调整一些函数的作用域前缀
+    FIX: 调整 LPC-ARM7 片上函数库结构
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00249)
+
+    2011-10-25
+    ~~~~~~~~~~
+    FIX: 增强 ARMCC 若干编译器配置选项
+    FIX: 区分 ARM 指令集与 THUMB 指令集平台
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00248)
+
+    2011-10-24
+    ~~~~~~~~~~
+    ADD: 完成 STM32 片上 SPI 函数库
+    FIX: 补上 STM32 片上串口阻塞收发漏掉的代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00247)
+
+    2011-10-21
+    ~~~~~~~~~~
+    FIX: 完成 STM32 异步串口库的改造
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00246)
+
+    2011-10-20
+    ~~~~~~~~~~
+    FIX: 修正文件操作一处可能的未对齐操作
+    FIX: 修正 WIN32 下32位文件系统的一个严重错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00245)
+
+    2011-10-19
+    ~~~~~~~~~~
+    FIX: 调整 STM32 片上功能函数库结构 (未完成)
+
+    2011-10-18
+    ~~~~~~~~~~
+    ADD: STM32 片上功能增加 SPI 函数库
+    FIX: 更新 X5XXX 驱动使之配置更加灵活
+    FIX: 调整模拟驱动接口使之配置更加灵活
+    FIX: 修正 STM32 片上异步串口的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00244)
+
+    2011-10-17
+    ~~~~~~~~~~
+    ADD: STM32 片上功能增加 UART 函数库
+    FIX: 一些注释说明的修改
+    FIX: 所有片上异步串口驱动默认关闭中断
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00243)
+
+    2011-10-15
+    ~~~~~~~~~~
+    FIX: 简化一些常数值的宏定义
+    FIX: 更改分散加载文件扩展名
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00242)
+
+    2011-10-14
+    ~~~~~~~~~~
+    ADD: 增加 STM32 片上功能函数库
+    FIX: 规范驱动库的一些宏定义的名称
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00241)
+
+    2011-10-12
+    ~~~~~~~~~~
+    ADD: 模拟 SPI 接口增加低位先出功能选项
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00240)
+
+    2011-10-10
+    ~~~~~~~~~~
+    ADD: 增加 W78E5XXD 新增的一个寄存器
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00239)
+
+    2011-10-09
+    ~~~~~~~~~~
+    FIX: LLB3 完成 BSP 测试程序 (全部调通)
+
+    2011-10-08
+    ~~~~~~~~~~
+    ADD: LLB3 增加 ICL7135 驱动函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00238)
+
+    2011-10-06
+    ~~~~~~~~~~
+    FIX: LLB3 完成储存器读写测试
+    FIX: 修正 X5XXX 可能存在的误操作
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00237)
+
+    2011-10-04
+    ~~~~~~~~~~
+    ADD: 给模拟 SPI 增加一个双发送接口
+    FIX: LLB3 完成储存器读写测试代码
+    FIX: 修正 X5XXX 驱动代码上的一些问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00236)
+
+    2011-10-03
+    ~~~~~~~~~~
+    ADD: 增加一个七段数码管显示字符
+    ADD: 增加 KeilUV4 工程清理批处理
+    ADD: LLB3 增加储存器读写测试代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00235)
+
+    2011-10-01
+    ~~~~~~~~~~
+    ADD: LLB3 增加储存器读写函数库
+    FIX: 修正一些代码书写错误
+    FIX: 统一 X5XXX 读写函数接口
+    FIX: LLB3 修正显示影响键盘的问题
+    FIX: LLB3 继续完成目标板测试程序
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00234)
+
+    2011-09-30
+    ~~~~~~~~~~
+    ADD: 增加驱动函数库风格的说明
+    FIX: 更新相关目标板配置头文件
+    FIX: 为 KeilC51 调整所有驱动函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00233)
+
+    2011-09-28
+    ~~~~~~~~~~
+    ADD: LLB3 开始目标板测试编码
+    FIX: LLB3 修正上下键按钮的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00232)
+
+    2011-09-26
+    ~~~~~~~~~~
+    ADD: LLB3 增加目标板测试源文件 (空)
+    FIX: 修正 FDU 通讯协议里的一个问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00231)
+
+    2011-09-25
+    ~~~~~~~~~~
+    FIX: LLB3 修正定时器2的 BUG
+    FIX: 修正 MCS-51 定时器2的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00230)
+
+    2011-09-24
+    ~~~~~~~~~~
+    FIX: LLB3 完成键盘显示驱动函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00229)
+
+    2011-09-23
+    ~~~~~~~~~~
+    ADD: LLB3 增加 LED 显示驱动函数库
+    FIX: 数码管字符串生成增加缓冲溢出检查
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00228)
+
+    2011-09-21
+    ~~~~~~~~~~
+    ADD: LLB3 增加键盘驱动函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00227)
+
+    2011-09-20
+    ~~~~~~~~~~
+    ADD: 开始 LLB3 BSP 项目
+    FIX: 删除 DS18B20 驱动一个没用的函数
+    FIX: 修正 x5xxx.inl 一处编译错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00226)
+
+    2011-09-19
+    ~~~~~~~~~~
+    FIX: 增加自定义的数码管显示字符转换
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00225)
+
+    2011-09-17
+    ~~~~~~~~~~
+    ADD: 增加数码管字符串转换函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00224)
+
+    2011-09-14
+    ~~~~~~~~~~
+    ADD: 增加 X5083 的特殊寄存器值
+    ADD: 增加 X5XXX 全系列驱动函数库模板
+    FIX: 修正一些文本错误
+    FIX: 更改模拟总线函数模板的初始化函数名
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00223)
+
+    2011-09-08
+    ~~~~~~~~~~
+    FIX: 拆分重复功能芯片的源代码
+    FIX: 删除模拟接口中的没意义的代码
+    FIX: 移出所有跟模拟总线无关的管脚
+    FIX: 更新上述修改相关的项目源代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00222)
+
+    2011-09-07
+    ~~~~~~~~~~
+    FIX: 补全一些参数过滤判断
+    FIX: 完成 X5XX3/X5XX5 驱动函数库模板
+    FIX: 修正 24CXX 驱动函数库模板的问题
+
+    2011-09-06
+    ~~~~~~~~~~
+    ADD: 增加 X5XX3/X5XX5 驱动函数库模板
+    FIX: 驱动函数库模板的标题加上厂家名称
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00221)
+
+    2011-09-03
+    ~~~~~~~~~~
+    ADD: 独立出 D3D 像素处理函数库
+    ADD: 增加 2D 图形图像内部头文件
+    FIX: 规范离屏表面生成函数的参数调用
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00220)
+
+    2011-08-29
+    ~~~~~~~~~~
+    ADD: 增加模拟 MOTOROLA 总线函数库
+    FIX: 优化模拟 INTEL 总线数据线方向切换
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00219)
+
+    2011-08-17
+    ~~~~~~~~~~
+    FIX: 精简三处多余的头文件包含
+    FIX: TOTCFG 完成报警配置文件函数库
+
+    2011-08-16
+    ~~~~~~~~~~
+    ADD: TOTCFG 增加报警配置文件函数库
+    FIX: 修正一处可能的数据类型问题
+    FIX: TOTCFG 完成多语言配置文件函数库
+    FIX: 修正 ASCII 与宽字符串转换的缓冲溢出
+
+    2011-08-15
+    ~~~~~~~~~~
+    ADD: 开始 TOTAL CFG 项目
+    ADD: TOTCFG 增加多语言配置文件函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00218)
+
+    2011-08-04
+    ~~~~~~~~~~
+    FIX: 更新通讯协议函数库里可能出错的代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00217)
+
+    2011-08-02
+    ~~~~~~~~~~
+    ADD: 增加一组 FDU 通讯协议函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00216)
+
+    2011-07-10
+    ~~~~~~~~~~
+    FIX: 移出所有素材资源
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00215)
+
+    2011-06-29
+    ~~~~~~~~~~
+    FIX: 优化硬件总线函数库模板在8位机下的性能
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00214)
+
+    2011-06-28
+    ~~~~~~~~~~
+    ADD: 正式建立通讯协议函数库工程
+    FIX: 调整一些嵌入式相关的宏定义
+    FIX: FDU 协议增加一个延时点 (软驱可以接收了)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00213)
+
+    2011-06-27
+    ~~~~~~~~~~
+    ADD: 增加 FDU 协议的文件传输功能
+    FIX: 修正 FDU 协议函数库里的 BUG
+    FIX: 修正通讯协议里接收部分的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00212)
+
+    2011-06-26
+    ~~~~~~~~~~
+    ADD: 补全硬件总线的接口函数
+    ADD: 增加 ECC-256/512 编码函数库
+    FIX: 模拟 Intel 总线增加地址 /CS 锁存支持
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00211)
+
+    2011-06-24
+    ~~~~~~~~~~
+    ADD: 增加 FDU 通讯协议函数库
+    FIX: 更改一些过长的参数名
+    FIX: 若干函数参数修饰符的修正
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00210)
+
+    2011-06-23
+    ~~~~~~~~~~
+    ADD: 增加使编译器崩溃的文件列表
+    FIX: 检查 SVN 所有版本的完整性 (更新日志)
+    FIX: 完善 zlib 1.2.5 在 MinGW32 下的编译问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00209)
+
+    2011-06-22
+    ~~~~~~~~~~
+    ADD: 增加自旋转锁相关函数
+    FIX: 更新正则表达式选项标志
+    FIX: 调整第三方库的移植风格
+    FIX: 修正 CR_BTEX_FAIL 的问题
+    FIX: 更新部分测试用例结果文档
+
+    2011-06-21
+    ~~~~~~~~~~
+    FIX: 完成 lzma/pcre/zlib 的重新移植
+
+    2011-06-20
+    ~~~~~~~~~~
+    FIX: 完成 bzip2/dl/minilzo 的重新移植
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00208)
+
+    2011-06-16
+    ~~~~~~~~~~
+    FIX: 修正 PCRE 配置头文件的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00207)
+
+    2011-06-16
+    ~~~~~~~~~~
+    FIX: 准备重新移植第三方库
+    FIX: LZO 库升级到 V2.05
+    FIX: LZMA 库升级到 V9.20
+    FIX: PCRE 库升级到 V8.12
+    FIX: ZLib 库升级到 V1.2.5
+    FIX: 第三方源代码全部置只读
+    FIX: 优化简单 NAND 驱动的块擦除
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00206)
+
+    2011-06-14
+    ~~~~~~~~~~
+    ADD: 增加项目目录树生成批处理
+    ADD: 加入第三方库 FatFS 的源代码
+    FIX: 优化简单 NAND 驱动的算法
+    FIX: 修正简单 NAND 驱动的算法里的 BUG
+    FIX: 更新一些配置的宏定义
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00205)
+
+    2011-06-13
+    ~~~~~~~~~~
+    FIX: 更新简单 NAND 驱动的算法
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00204)
+
+    2011-06-13
+    ~~~~~~~~~~
+    FIX: 简单 NAND 驱动不实用, 准备废弃
+    FIX: 修正 K9F1208X0C 驱动状态读取的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00203)
+
+    2011-06-12
+    ~~~~~~~~~~
+    ADD: 增加硬件总线函数库模板
+    ADD: 增加 TLC5615 驱动函数库模板
+    FIX: MAX538/MAX539 驱动增加最大值限位
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00202)
+
+    2011-06-10
+    ~~~~~~~~~~
+    ADD: 增加 KeilMDK 4.x 编译的支持
+    ADD: 增加简单 NAND 驱动函数库模板
+    ADD: 增加 KeilMDK 4.x CPU 支持列表
+    FIX: 完善 ARMCC 编译批处理脚本
+    FIX: 调整 ARMCC 新老版本的控制方式
+    FIX: KeilMDK ARMCC 下的若干代码修正
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00201)
+
+    2011-06-09
+    ~~~~~~~~~~
+    ADD: 增加 ARMCC ADS 1.2 编译批处理
+    FIX: 修正 ARMCC MAKEFILE 中的错误
+    FIX: ARMCC ADS 1.2 编译下的若干修正 (不可靠)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00200)
+
+    2011-06-09
+    ~~~~~~~~~~
+    ADD: 增加 K9F1208X0C 安全擦除函数
+    FIX: 修正 K9F1208X0C 一些代码问题
+    FIX: 调整 ARMCC 结构体对齐宏定义
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00199)
+
+    2011-06-08
+    ~~~~~~~~~~
+    ADD: 增加 ECC-512 编码函数库
+    ADD: 增加高精度计数器 for Windows
+    FIX: 取消 INTEL 模拟总线可能多余的方向切换
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00198)
+
+    2011-06-07
+    ~~~~~~~~~~
+    ADD: 增加 K9F1208X0C 驱动函数库模板
+    ADD: 增加 STM32 固件库文件属性更改批处理
+    FIX: 更新一些 BSP 文件的标题
+    FIX: 更新 LPC-ARM7 EMC 总线相关的配置宏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00197)
+
+    2011-05-30
+    ~~~~~~~~~~
+    ADD: 增加 ARMCC 用的工程 MAKEFILE
+    FIX: 废弃的老日志文件扩展名更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00196)
+
+    2011-05-29
+    ~~~~~~~~~~
+    ADD: 增加 ARMCC 公用 MAKE 头文件
+    ADD: 增加 ARM 使用的工程文件列表
+    FIX: 调整 MAKE 的附加参数头文件包含位置
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00195)
+
+    2011-05-29
+    ~~~~~~~~~~
+    FIX: 修正 STM32 目录名的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00194)
+
+    2011-05-28
+    ~~~~~~~~~~
+    ADD: 增加几个 ARMCC 的命令行说明文件
+    FIX: 移动 ST 固件库一些文件的位置
+    FIX: 修正 LPC-ARM7 串口收发的问题
+    FIX: LPC-ARM7 增加可设的串口 FIFO 触发点
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00193)
+
+    2011-05-26
+    ~~~~~~~~~~
+    FIX: 更新一些批处理程文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00192)
+
+    2011-05-25
+    ~~~~~~~~~~
+    ADD: 加入一些 ST 提供的 STM32 固件库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00191)
+
+    2011-05-22
+    ~~~~~~~~~~
+    ADD: 增加连续读写的总线函数
+    ADD: 增加图片颜色分量位数的设置
+    FIX: 一些代码的位置更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00190)
+
+    2011-05-21
+    ~~~~~~~~~~
+    ADD: 增加模拟 Intel 总线函数库
+    FIX: 修正一处浮点数宏开关问题
+    FIX: 修正模拟总线中的一些错误用法
+
+    2011-05-19
+    ~~~~~~~~~~
+    FIX: 删除第三方库行尾的多余空白
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00189)
+
+    2011-05-09
+    ~~~~~~~~~~
+    FIX: 模拟 1-WIRE 相关的一些更新
+    FIX: 修正模拟 1-WIRE 总线里的一些问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00188)
+
+    2011-04-25
+    ~~~~~~~~~~
+    ADD: ARMCC 增加两个编译器定义
+    FIX: 增加一些重要的注释
+    FIX: LPC-ARM7 串口增加可选中断开关
+    FIX: 修正32位计数器可能溢出的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00187)
+
+    2011-04-21
+    ~~~~~~~~~~
+    ADD: 增加 SAMSUNG S3C2440A 头文件
+
+    2011-04-20
+    ~~~~~~~~~~
+    ADD: 增加大小端的寄存器偏移宏
+    ADD: 增加 SAMSUNG S3C2410A 头文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00186)
+
+    2011-04-17
+    ~~~~~~~~~~
+    FIX: 头文件包含的若干更新
+    FIX: 函数钩子函数库移出 CrHack 核心库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00185)
+
+    2011-04-16
+    ~~~~~~~~~~
+    FIX: LLB 一些注释的更新
+    FIX: LLB 修正一处警告错误
+    FIX: 更新一些容易出现重名的宏标识
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00184)
+
+    2011-04-06
+    ~~~~~~~~~~
+    FIX: 环形队列结构增加可分配方式
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00183)
+
+    2011-03-29
+    ~~~~~~~~~~
+    ADD: 增加一些 STC 51 CPU 定义头文件
+    FIX: 删减一些没用的管脚定义
+    FIX: 补全所有可以位操作的寄存器定义
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00182)
+
+    2011-03-25
+    ~~~~~~~~~~
+    ADD: 增加 DTM BF512 编译批处理
+    ADD: 增加 LPC-ARM7 启动代码 for ARMCC
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00181)
+
+    2011-03-24
+    ~~~~~~~~~~
+    ADD: 建立启动代码项目目录
+    ADD: 增加 LPC-ARM7 串口设备驱动
+    FIX: 增强 LPC-ARM7 初始化的通用性
+    FIX: 精简模拟 I2C 一处比较代码
+    FIX: 增加额外的 I2C ACK 等待延时
+    FIX: 优化 MCS-51 串口连续收发代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00180)
+
+    2011-03-23
+    ~~~~~~~~~~
+    ADD: 增加 LPC-ARM7 CPU 片上功能函数库
+    FIX: 若干注释小更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00179)
+
+    2011-03-22
+    ~~~~~~~~~~
+    ADD: 增加异或和校验哈希函数
+    FIX: 增加部分 MCU 功能定义宏
+    FIX: 更新命令行工具出错提示风格
+    FIX: 串口增加倍速 MCS-51 MCU 的支持
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00178)
+
+    2011-03-15
+    ~~~~~~~~~~
+    FIX: 修正两处漏掉的注释符号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00177)
+
+    2011-03-14
+    ~~~~~~~~~~
+    FIX: 相关头文件的更新
+    FIX: 调整 MCS-51 头文件组织
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00176)
+
+    2011-03-12
+    ~~~~~~~~~~
+    ADD: 增加 LPC214x 头文件
+
+    2011-03-10
+    ~~~~~~~~~~
+    ADD: 增加 LPC213x 头文件
+    FIX: MCS-51 片上功能文件更名
+    FIX: 修正序列化一处遗漏的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00175)
+
+    2011-03-08
+    ~~~~~~~~~~
+    FIX: 完成 LPC2000 头文件的更新
+
+    2011-03-06
+    ~~~~~~~~~~
+    FIX: 开始更新 LPC2000 头文件
+    FIX: 调整 LLB 项目的 MAKE 文件
+    FIX: 修正 MCS-51 寄存器命名错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00174)
+
+    2011-03-02
+    ~~~~~~~~~~
+    FIX: LLB 项目相关代码更新
+    FIX: 更新 MCS-51 寄存器命名
+    FIX: 优化 MCS-51 串口部分代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00173)
+
+    2011-02-28
+    ~~~~~~~~~~
+    FIX: 一处类型修正
+    FIX: 更新版本号文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00172)
+
+    2011-02-23
+    ~~~~~~~~~~
+    ADD: 增加 NTFS 目录链接工具
+    ADD: 增加数据包结构相关代码
+    FIX: 文件属性成员类型更改
+    FIX: DTM_NEXT 删减一些代码
+    FIX: DTM_NEXT 统一读写卡接口
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00171)
+
+    2011-02-15
+    ~~~~~~~~~~
+    ADD: 增加平面哈希表函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00170)
+
+    2011-02-14
+    ~~~~~~~~~~
+    ADD: 增加不进行错误回调的 MAKE 版本
+    FIX: 更新 CrHack 编译器名称字符串
+    FIX: 修正不进行错误回调时的所有警告
+    FIX: 修正 image_info() 函数的一些问题
+    FIX: 修正 VC2008 Windows CE MAKE 一处遗漏
+
+    2011-02-12
+    ~~~~~~~~~~
+    FIX: 点阵字库绘制接口增加行间距的功能
+    FIX: 修正 CrHack 文件引擎加载文件的一处 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00169)
+
+    2011-02-09
+    ~~~~~~~~~~
+    ADD: 增加一组有用的图标资源
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00168)
+
+    2011-01-31
+    ~~~~~~~~~~
+    FIX: 继续完成虚拟系统头文件
+
+    2011-01-23
+    ~~~~~~~~~~
+    FIX: 修正 XMLCALL 执行的一处问题
+
+    2011-01-22
+    ~~~~~~~~~~
+    ADD: 增加虚拟系统头文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00167)
+
+    2011-01-21
+    ~~~~~~~~~~
+    FIX: 修正数据结构复制的一些 BUG
+    FIX: 修正双向链表一处可能的内存泄漏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00166)
+
+    2011-01-20
+    ~~~~~~~~~~
+    FIX: 序列化若干出错提示修改
+    FIX: 修正反序列化中的若干 BUG
+    FIX: 序列化增加输出一个额外参数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00165)
+
+    2011-01-18
+    ~~~~~~~~~~
+    FIX: DTM_NEXT 代码若干小更新
+    FIX: 序列化字符串增加支持\0结尾
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00164)
+
+    2011-01-17
+    ~~~~~~~~~~
+    FIX: XMLCALL 增加手动插件点
+    FIX: 序列化增加成员起始索引号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00163)
+
+    2011-01-16
+    ~~~~~~~~~~
+    FIX: 部分代码格式调整
+    FIX: 更新部分出错提示
+    FIX: DTM_NEXT 增强一处加法运算的检查
+
+    2011-01-15
+    ~~~~~~~~~~
+    ADD: 增加一组文件操作映射宏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00162)
+
+    2011-01-15
+    ~~~~~~~~~~
+    FIX: 更改子项目目录名
+    FIX: 更改目录名的相关代码更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00161)
+
+    2011-01-14
+    ~~~~~~~~~~
+    FIX: 更新出错提示格式
+    FIX: 开启 BCB 字符串常数池
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00160)
+
+    2011-01-14
+    ~~~~~~~~~~
+    FIX: 函数出错处理的若干更新
+    FIX: DTM_NEXT 去除误删除的设置版本代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00159)
+
+    2011-01-13
+    ~~~~~~~~~~
+    FIX: 修正 XMLCALL 没有设置回调的问题
+    FIX: DTM_NEXT 统一设备版本号长度
+    FIX: DTM_NEXT 修正解包版本大小端问题
+    FIX: DTM_NEXT 兼容一种错误的老版打包方式
+
+    2011-01-12
+    ~~~~~~~~~~
+    ADD: DTM_NEXT 增加老设备初始化和读版本函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00158)
+
+    2011-01-09
+    ~~~~~~~~~~
+    ADD: 增加 DMC v5.82 命令行说明文件
+    FIX: 完成 XML 调用器函数库
+    FIX: 修正 Windows 98 下创建线程的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00157)
+
+    2011-01-07
+    ~~~~~~~~~~
+    ADD: 增加 XML 调用器函数库
+    FIX: 完成通用的线程池函数库
+    FIX: 增强序列化函数的适用性
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00156)
+
+    2011-01-06
+    ~~~~~~~~~~
+    ADD: 增加通用的线程池函数库
+    ADD: 增加线程优先级参数获取函数
+    ADD: 增加一组类型安全加法函数
+    ADD: 增加返回定时器计数的函数
+    ADD: DTM_NEXT 增加 WLFID 加密解密算法
+    FIX: 精简头文件的包含
+    FIX: 建立线程函数增加优先级参数
+    FIX: 调整 uC/OS-II 休眠分割时间片
+    FIX: DTM_NEXT 删除加密解密接口代码
+    FIX: DTM_NEXT 修正代码里若干小问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00155)
+
+    2011-01-05
+    ~~~~~~~~~~
+    ADD: 增加 uC/OS-II 配置头文件
+    ADD: DTM_NEXT 增加程序解包函数库
+    FIX: 调整 uC/OS-II 多线程相关函数
+    FIX: DTM_NEXT 修正代码里若干小问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00154)
+
+    2011-01-04
+    ~~~~~~~~~~
+    ADD: DTM_NEXT 增加双字位域转换函数
+    ADD: DTM_NEXT 增加 DTM_NEW 读机写机函数
+    ADD: DTM_NEXT 增加自动搜索老通讯密钥的函数
+    FIX: 针对裸机系统的若干更新
+    FIX: DTM_NEXT 修正 DTM_NEW 下载文件大小限制
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00153)

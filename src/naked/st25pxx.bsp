@@ -1,0 +1,160 @@
+/*****************************************************************************/
+/*                                                  ###                      */
+/*       #####          ###    ###                  ###  CREATE: 2012-03-03  */
+/*     #######          ###    ###      [KRNL]      ###  ~~~~~~~~~~~~~~~~~~  */
+/*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
+/*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
+/*   ###       ### ###  ###    ###    ####    ####  ###   ##  +-----------+  */
+/*  ####       ######## ##########  #######  ###### ###  ###  |  A NEW C  |  */
+/*  ###        ######## ########## ########  ###### ### ###   | FRAMEWORK |  */
+/*  ###     ## #### ### ########## ###  ### ###     ######    |  FOR ALL  |  */
+/*  ####   ### ###  ### ###    ### ###  ### ###     ######    | PLATFORMS |  */
+/*  ########## ###      ###    ### ######## ####### #######   |  AND ALL  |  */
+/*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
+/*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
+/*  =======================================================================  */
+/*  >>>>>>>>>>>>>>>>>>> CrHack ST M25PXX 驱动函数库模板 <<<<<<<<<<<<<<<<<<<  */
+/*  =======================================================================  */
+/*****************************************************************************/
+
+#if     defined(_CR_USE_ST25P05_)
+
+    #define _SPI_PAGE_              128
+    #define _SPI_SIZE_          CR_K2B(64)
+    #define m25pxx_lock         m25p05_lock
+    #define m25pxx_unlock       m25p05_unlock
+    #define m25pxx_read         m25p05_read
+    #define m25pxx_fread        m25p05_fread
+    #define m25pxx_program      m25p05_program
+    #define m25pxx_pwr_off      m25p05_pwr_off
+    #define m25pxx_pwr_xon      m25p05_pwr_xon
+    #define m25pxx_read_id      m25p05_read_id
+    #define m25pxx_wait_idle    m25p05_wait_idle
+    #define m25pxx_get_status   m25p05_get_status
+    #define m25pxx_set_status   m25p05_set_status
+    #define m25pxx_bsec_erase   m25p05_bsec_erase
+    #define m25pxx_bulk_erase   m25p05_bulk_erase
+
+#elif   defined(_CR_USE_ST25P10_)
+
+    #define _SPI_PAGE_              128
+    #define _SPI_SIZE_          CR_K2B(128)
+    #define m25pxx_lock         m25p10_lock
+    #define m25pxx_unlock       m25p10_unlock
+    #define m25pxx_read         m25p10_read
+    #define m25pxx_fread        m25p10_fread
+    #define m25pxx_program      m25p10_program
+    #define m25pxx_pwr_off      m25p10_pwr_off
+    #define m25pxx_pwr_xon      m25p10_pwr_xon
+    #define m25pxx_read_id      m25p10_read_id
+    #define m25pxx_wait_idle    m25p10_wait_idle
+    #define m25pxx_get_status   m25p10_get_status
+    #define m25pxx_set_status   m25p10_set_status
+    #define m25pxx_bsec_erase   m25p10_bsec_erase
+    #define m25pxx_bulk_erase   m25p10_bulk_erase
+
+#elif   defined(_CR_USE_ST25P20_)
+
+    #define _SPI_PAGE_              256
+    #define _SPI_SIZE_          CR_K2B(256)
+    #define m25pxx_lock         m25p20_lock
+    #define m25pxx_unlock       m25p20_unlock
+    #define m25pxx_read         m25p20_read
+    #define m25pxx_fread        m25p20_fread
+    #define m25pxx_program      m25p20_program
+    #define m25pxx_pwr_off      m25p20_pwr_off
+    #define m25pxx_pwr_xon      m25p20_pwr_xon
+    #define m25pxx_read_id      m25p20_read_id
+    #define m25pxx_wait_idle    m25p20_wait_idle
+    #define m25pxx_get_status   m25p20_get_status
+    #define m25pxx_set_status   m25p20_set_status
+    #define m25pxx_bsec_erase   m25p20_bsec_erase
+    #define m25pxx_bulk_erase   m25p20_bulk_erase
+
+#elif   defined(_CR_USE_ST25P40_)
+
+    #define _SPI_PAGE_              256
+    #define _SPI_SIZE_          CR_K2B(512)
+    #define m25pxx_lock         m25p40_lock
+    #define m25pxx_unlock       m25p40_unlock
+    #define m25pxx_read         m25p40_read
+    #define m25pxx_fread        m25p40_fread
+    #define m25pxx_program      m25p40_program
+    #define m25pxx_pwr_off      m25p40_pwr_off
+    #define m25pxx_pwr_xon      m25p40_pwr_xon
+    #define m25pxx_read_id      m25p40_read_id
+    #define m25pxx_wait_idle    m25p40_wait_idle
+    #define m25pxx_get_status   m25p40_get_status
+    #define m25pxx_set_status   m25p40_set_status
+    #define m25pxx_bsec_erase   m25p40_bsec_erase
+    #define m25pxx_bulk_erase   m25p40_bulk_erase
+
+#elif   defined(_CR_USE_ST25P80_)
+
+    #define _SPI_PAGE_              256
+    #define _SPI_SIZE_          CR_M2B(1)
+    #define m25pxx_lock         m25p80_lock
+    #define m25pxx_unlock       m25p80_unlock
+    #define m25pxx_read         m25p80_read
+    #define m25pxx_fread        m25p80_fread
+    #define m25pxx_program      m25p80_program
+    #define m25pxx_pwr_off      m25p80_pwr_off
+    #define m25pxx_pwr_xon      m25p80_pwr_xon
+    #define m25pxx_read_id      m25p80_read_id
+    #define m25pxx_wait_idle    m25p80_wait_idle
+    #define m25pxx_get_status   m25p80_get_status
+    #define m25pxx_set_status   m25p80_set_status
+    #define m25pxx_bsec_erase   m25p80_bsec_erase
+    #define m25pxx_bulk_erase   m25p80_bulk_erase
+
+#elif   defined(_CR_USE_ST25P16_)
+
+    #define _SPI_PAGE_              256
+    #define _SPI_SIZE_          CR_M2B(2)
+    #define m25pxx_lock         m25p16_lock
+    #define m25pxx_unlock       m25p16_unlock
+    #define m25pxx_read         m25p16_read
+    #define m25pxx_fread        m25p16_fread
+    #define m25pxx_program      m25p16_program
+    #define m25pxx_pwr_off      m25p16_pwr_off
+    #define m25pxx_pwr_xon      m25p16_pwr_xon
+    #define m25pxx_read_id      m25p16_read_id
+    #define m25pxx_wait_idle    m25p16_wait_idle
+    #define m25pxx_get_status   m25p16_get_status
+    #define m25pxx_set_status   m25p16_set_status
+    #define m25pxx_bsec_erase   m25p16_bsec_erase
+    #define m25pxx_bulk_erase   m25p16_bulk_erase
+
+#elif   defined(_CR_USE_ST25P32_)
+
+    #define _SPI_PAGE_              256
+    #define _SPI_SIZE_          CR_M2B(4)
+    #define m25pxx_lock         m25p32_lock
+    #define m25pxx_unlock       m25p32_unlock
+    #define m25pxx_read         m25p32_read
+    #define m25pxx_fread        m25p32_fread
+    #define m25pxx_program      m25p32_program
+    #define m25pxx_pwr_off      m25p32_pwr_off
+    #define m25pxx_pwr_xon      m25p32_pwr_xon
+    #define m25pxx_read_id      m25p32_read_id
+    #define m25pxx_wait_idle    m25p32_wait_idle
+    #define m25pxx_get_status   m25p32_get_status
+    #define m25pxx_set_status   m25p32_set_status
+    #define m25pxx_bsec_erase   m25p32_bsec_erase
+    #define m25pxx_bulk_erase   m25p32_bulk_erase
+
+#endif  /* chip type predefine */
+
+#if defined(_SPI_SIZE_)
+    #include "m25pxx.inl"
+#endif
+
+/*****************************************************************************/
+/* _________________________________________________________________________ */
+/* uBMAzRBoAKAHaACQD6FoAIAPqbgA/7rIA+5CM9uKw8D4Au7u7mSIJ0t18mYz0mYz9rAQZCgHc */
+/* wRIZIgHZovGBXUAZg+v0GbB+gRmgcJ7BAAAisIlAwB1Av7LSHUC/s9IdQL+w0h1Av7HZkZmgf */
+/* 4JLgIAdb262gPsqAh0+zP/uQB9ZYsFZYktq+L3sMi/AAK7gAKJAUtLdfq5IANXvT8BiQzfBIv */
+/* FLaAAweAEmff53wb+Adjx3kQE2xwy5Io8ithkigcFgACJBN8E3sneNvwB2xyLHDkdfA2JHSyA */
+/* adtAAQPdZYgHR0dNdbZfSYP5UHWr/kQEtAHNFg+Eef/DWAKgDw== |~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ >>> END OF FILE <<< */
+/*****************************************************************************/

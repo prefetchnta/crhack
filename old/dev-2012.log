@@ -1,0 +1,1879 @@
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00556)
+
+    2012-12-29
+    ~~~~~~~~~~
+    FIX: FMTZ 修正图片插件里的图片格式错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00555)
+
+    2012-12-28
+    ~~~~~~~~~~
+    FIX: FMTZ 支持 RLE 压缩的 BMP 图片文件格式
+    FIX: 修正新版本 FreeImage 返回图片掩码值的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00554)
+
+    2012-12-27
+    ~~~~~~~~~~
+    FIX: 优化内存文件读取接口的函数
+    FIX: 修正磁盘文件读取接口里的严重 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00553)
+
+    2012-12-26
+    ~~~~~~~~~~
+    ADD: COMM 增加新添加的 RFCON 通讯函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00552)
+
+    2012-12-23
+    ~~~~~~~~~~
+    FIX: FMTZ 提前判断插件加载文件类型
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00551)
+
+    2012-12-22
+    ~~~~~~~~~~
+    FIX: FMTZ 修正上次提交一些漏掉的改动
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00550)
+
+    2012-12-22
+    ~~~~~~~~~~
+    FIX: FMTZ 修改 FreeImage 插件的文件名
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00549)
+
+    2012-12-21
+    ~~~~~~~~~~
+    FIX: FMTZ 更新 DirectShow 插件 COM 初始化释放逻辑
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00548)
+
+    2012-12-20
+    ~~~~~~~~~~
+    FIX: FMTZ 修正 DirectShow 插件 COM 初始化引发的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00547)
+
+    2012-12-20
+    ~~~~~~~~~~
+    FIX: FMTZ 增加内存大小的截断检查
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00546)
+
+    2012-12-20
+    ~~~~~~~~~~
+    FIX: EXTZ 修正 DirectShow 获取时间长度的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00545)
+
+    2012-12-20
+    ~~~~~~~~~~
+    ADD: FMTZ 增加 DirectShow 插件
+    FIX: FMTZ 调整一些函数名的冲突
+    FIX: FMTZ 统一初始化函数的形式
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00544)
+
+    2012-12-20
+    ~~~~~~~~~~
+    FIX: FMTZ 为视频播放插件做好准备
+    FIX: MAKE 调整各个子项目的编译顺序
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00543)
+
+    2012-12-19
+    ~~~~~~~~~~
+    FIX: zFMOD 修正判断短小声音是否播放结束的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00542)
+
+    2012-12-19
+    ~~~~~~~~~~
+    FIX: FMTZ 调整 FMOD Ex 插件的文件说明格式字符串
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00541)
+
+    2012-12-19
+    ~~~~~~~~~~
+    FIX: FMTZ 删除 FMOD Ex 插件里停止方法中的多余代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00540)
+
+    2012-12-19
+    ~~~~~~~~~~
+    ADD: FMTZ 增加一些内联函数包装
+    FIX: FMTZ 精简媒体播放接口
+    FIX: FMTZ 完成 FMOD Ex 插件
+    FIX: 更新各个模块发版版本号
+    FIX: EXTZ 统一 DShow 播放函数接口
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00539)
+
+    2012-12-18
+    ~~~~~~~~~~
+    FIX: FMTZ 去除 GCA 插件的文件区段功能
+    FIX: FMTZ 完成 FMOD Ex 插件文件加载部分
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00538)
+
+    2012-12-18
+    ~~~~~~~~~~
+    ADD: FMTZ 增加 FMOD Ex 插件 (未完成)
+    FIX: FMTZ 生成引擎时可以选择不设置匹配表
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00537)
+
+    2012-12-18
+    ~~~~~~~~~~
+    ADD: 加入 FMOD Ex V4.44.02 SDK for Win32 X86
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00536)
+
+    2012-12-17
+    ~~~~~~~~~~
+    FIX: 修正 DShow 播放媒体结束判断的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00535)
+
+    2012-12-14
+    ~~~~~~~~~~
+    ADD: 增加 ADS 编译环境变量批处理
+    ADD: 增加 CC65 编译环境变量批处理
+    FIX: 升级 NASMX 头文件到 V1.1
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00534)
+
+    2012-12-12
+    ~~~~~~~~~~
+    FIX: 屏蔽一处 MinGW32 编译下的警告
+    FIX: zDevIL 考虑 DevIL 库没初始化的情况
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00533)
+
+    2012-12-11
+    ~~~~~~~~~~
+    FIX: 将引擎接口释放回调函数暴露出来
+    FIX: 移出并简化引擎接口的文件格式匹配表
+    FIX: 不支持宽字符串的编译器也可以使用引擎接口
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00532)
+
+    2012-12-11
+    ~~~~~~~~~~
+    FIX: 更新 zDevIL 插件的初始化和释放功能
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00531)
+
+    2012-12-07
+    ~~~~~~~~~~
+    ADD: 增加获取 UDP 接收缓冲长度的接口
+    ADD: 增加获取 SOCKET 接收缓冲长度的接口
+    FIX: 删除多余没用的 SOCKET 函数接口
+    FIX: 修正使用 UDP 通讯的函数库读取的问题
+    FIX: 修正使用 UDP 通讯的函数库在 CE 下的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00530)
+
+    2012-12-04
+    ~~~~~~~~~~
+    FIX: 修正文件搜索路径不完整的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00529)
+
+    2012-12-02
+    ~~~~~~~~~~
+    FIX: FMTZ 只使用文件名来匹配插件接口
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00528)
+
+    2012-12-02
+    ~~~~~~~~~~
+    FIX: 删除多余的代码剔除宏
+    FIX: 完成新 MAKE 系统的 FMTZ 改造
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00527)
+
+    2012-12-02
+    ~~~~~~~~~~
+    FIX: 统一 MAKE 里的一些代码规范
+    FIX: 完成新 MAKE 系统的 GFX3 改造
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00526)
+
+    2012-12-02
+    ~~~~~~~~~~
+    FIX: 统一 MAKE 里的一些代码规范
+    FIX: 完成新 MAKE 系统的 GFX2 改造
+    FIX: 删除 GAPI 插件里的编译器限制
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00525)
+
+    2012-12-02
+    ~~~~~~~~~~
+    FIX: 删除多余的开关配置宏
+    FIX: 完成新 MAKE 系统的 EXTZ 改造
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00524)
+
+    2012-12-01
+    ~~~~~~~~~~
+    FIX: 修正 ARMCC MAKE 目录的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00523)
+
+    2012-12-01
+    ~~~~~~~~~~
+    FIX: 完成新 MAKE 系统的 BLIT 改造
+    FIX: 完成新 MAKE 系统的 COMM 改造
+    FIX: 完成新 MAKE 系统的 MATH 改造
+    FIX: 完成新 MAKE 系统的 VSYS 改造
+    FIX: 删除会死翘翘的代码行数统计工具
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00522)
+
+    2012-12-01
+    ~~~~~~~~~~
+    FIX: 删除多余的开关配置宏
+    FIX: 完成新 MAKE 系统的 CORE 改造
+    FIX: 规范 MAKEFILE 的存放目录规则
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00521)
+
+    2012-11-30
+    ~~~~~~~~~~
+    FIX: 删掉一个漏删除的文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00520)
+
+    2012-11-30
+    ~~~~~~~~~~ [X]
+    FIX: 删除 SDK 目录下的所有版本文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00519)
+
+    2012-11-30
+    ~~~~~~~~~~
+    FIX: 将 SRC 目录里的静态库全部移到 SDK 目录下
+    FIX: 修正 SDK 目录下的子目录的名称（-可能会出错）
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00518)
+
+    2012-11-30
+    ~~~~~~~~~~
+    FIX: MAKE 删除多余的文件
+    FIX: 删除目标文件格式类型宏
+    FIX: 删除 _CR_NO_MSTCPIP_ 宏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00517)
+
+    2012-11-28
+    ~~~~~~~~~~
+    FIX: 删除一处多余的代码剔除宏
+    FIX: 规范 Makefile 里的宏名称使用
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00516)
+
+    2012-11-27
+    ~~~~~~~~~~
+    ADD: 增加一个返回树结构子节点数的函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00515)
+
+    2012-11-26
+    ~~~~~~~~~~
+    ADD: 增加 Code128 数据编码函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00514)
+
+    2012-11-24
+    ~~~~~~~~~~
+    FIX: 删除数据结构函数库里很少用的功能
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00513)
+
+    2012-11-23
+    ~~~~~~~~~~
+    FIX: 删除通讯协议函数库头文件里多余的剔除宏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00512)
+
+    2012-11-23
+    ~~~~~~~~~~
+    ADD: 增加分发版本文件的批处理
+    FIX: 更新各个模块发版版本号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00511)
+
+    2012-11-23
+    ~~~~~~~~~~
+    ADD: RFCON 增加一个打印机状态
+    ADD: EXTZ 增加 Windows 下的网络扩展库
+    FIX: 删除所有头文件里的功能限制宏
+    FIX: 修正关闭一些对象时的出错处理方法
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00510)
+
+    2012-11-16
+    ~~~~~~~~~~
+    FIX: RFLCK 协议加入状态的大端处理
+    FIX: RFLCK 修正接收数据时的冲突问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00509)
+
+    2012-11-14
+    ~~~~~~~~~~
+    ADD: FMTZ 增加媒体播放抽象接口
+    FIX: EXTZ 更新 DShow 一个函数的名称
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00508)
+
+    2012-11-12
+    ~~~~~~~~~~
+    FIX: 更新 CX51 的64位数后缀宏
+    FIX: 使用毫秒作为 DShow 播放时间单位
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00507)
+
+    2012-11-07
+    ~~~~~~~~~~
+    FIX: FreeImage SDK 升级到 V3.15.4
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00506)
+
+    2012-11-07
+    ~~~~~~~~~~
+    MSG: 这次提交没有任何代码更新，只是标记一下这个日子
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00505)
+
+    2012-10-26
+    ~~~~~~~~~~
+    MSG: 这次提交没有任何代码更新，只是纪念一下这个日子
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00504)
+
+    2012-10-25
+    ~~~~~~~~~~
+    FIX: 继续完成 TX10I 通讯协议函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00503)
+
+    2012-10-24
+    ~~~~~~~~~~
+    ADD: COMM 增加 TX10I 通讯协议函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00502)
+
+    2012-10-16
+    ~~~~~~~~~~
+    ADD: COMM 增加车位锁 RFLCK 通讯协议函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00501)
+
+    2012-10-15
+    ~~~~~~~~~~
+    ADD: RFCON 增加一些新的协议命令
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00500)
+
+    2012-09-28
+    ~~~~~~~~~~
+    ADD: 将 QuestLAB 项目的共用文件合并入内
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00499)
+
+    2012-09-27
+    ~~~~~~~~~~
+    FIX: FMTZ 修正读取图片调色板的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00498)
+
+    2012-09-25
+    ~~~~~~~~~~
+    FIX: FMTZ 更新 DevIL 插件的一个函数名
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00497)
+
+    2012-09-25
+    ~~~~~~~~~~
+    ADD: COMM 增加一种通用通讯协议函数库
+
+    2012-09-24
+    ~~~~~~~~~~
+    FIX: RFCMM 读写各个屏幕箭头协议的小修改
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00496)
+
+    2012-09-21
+    ~~~~~~~~~~
+    FIX: FMTZ 调整文件名匹配的规则
+    FIX: 修正行长超过79个字符的代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00495)
+
+    2012-09-20
+    ~~~~~~~~~~
+    FIX: FMTZ 处理插件匹配后失败的一种情况
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00494)
+
+    2012-09-20
+    ~~~~~~~~~~
+    FIX: 修正 DevIL 在非插件下无法使用的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00493)
+
+    2012-09-20
+    ~~~~~~~~~~
+    FIX: FMTZ 删除一处多余的头文件包含
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00492)
+
+    2012-09-20
+    ~~~~~~~~~~
+    ADD: FMTZ 增加 DevIL 插件
+    ADD: 加入 DevIL unicode SDK V1.7.8
+    FIX: FreeImage 补上可能漏填的图片参数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00491)
+
+    2012-09-19
+    ~~~~~~~~~~
+    FIX: 封包内文件的文件名大小写敏感可设
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00490)
+
+    2012-09-19
+    ~~~~~~~~~~
+    FIX: 封包内文件的文件名改成大小写敏感
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00489)
+
+    2012-09-16
+    ~~~~~~~~~~
+    FIX: 修正 FreeImage 加载内存图片文件的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00488)
+
+    2012-09-13
+    ~~~~~~~~~~
+    FIX: 一些注释文字的修改
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00487)
+
+    2012-09-13
+    ~~~~~~~~~~
+    FIX: 一些代码风格的小更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00486)
+
+    2012-09-12
+    ~~~~~~~~~~
+    FIX: VC2002 也支持 GcaSDK 的库
+    FIX: 修正 ARGB 64位色读取的 BUG
+    FIX: 去除非调试模式下多余的代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00485)
+
+    2012-09-12
+    ~~~~~~~~~~
+    ADD: FMTZ 完成 SYN 引擎插件
+    ADD: 加入 SYN 设计的 ARGB 图片读取
+    FIX: 整理 FMTZ 的文件类型常数表
+    FIX: 适当放松 BMP 文件的读取限制
+    FIX: 删除非调试模式下没有用的代码
+    FIX: 修正 GCA 封包读取中的一些错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00484)
+
+    2012-09-12
+    ~~~~~~~~~~
+    ADD: FMTZ 增加 SYN 插件
+    FIX: FMTZ 读包接口的一些调整
+    FIX: 删除插件生成的导入库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00483)
+
+    2012-09-11
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+    FIX: 细化一些出错处理回调信息
+    FIX: 删除四个没用的 XML 解析函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00482)
+
+    2012-09-10
+    ~~~~~~~~~~
+    FIX: FMTZ 补上一个漏掉的类型判断
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00481)
+
+    2012-09-10
+    ~~~~~~~~~~
+    FIX: FMTZ 增加插件结果提前过滤功能
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00480)
+
+    2012-09-10
+    ~~~~~~~~~~
+    ADD: 加入 GcaSDK for VC60 & VC71
+    FIX: RFCMM 修正一个函数的大小端问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00479)
+
+    2012-09-09
+    ~~~~~~~~~~
+    FIX: 完成读包系统第一版
+
+    2012-09-08
+    ~~~~~~~~~~
+    FIX: 补完读包系统接口定义
+    FIX: 文件加载结构增加一个编码成员
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00478)
+
+    2012-09-07
+    ~~~~~~~~~~
+    ADD: 增加读包系统接口一些定义
+    ADD: 增加一种新的出错代码方式
+    ADD: RFCMM 加入几个漏掉的通讯协议
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00477)
+
+    2012-09-04
+    ~~~~~~~~~~
+    FIX: RFCMM 更新区域屏的箭头读取协议
+    FIX: RFCMM 修正一处计算返回大小的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00476)
+
+    2012-09-03
+    ~~~~~~~~~~
+    FIX: RFCMM 更新最新的超声波协议
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00475)
+
+    2012-08-30
+    ~~~~~~~~~~
+    FIX: 增加一些字库制作的范例
+    FIX: 整理 MAKFNT 工具的源代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00474)
+
+    2012-08-29
+    ~~~~~~~~~~
+    ADD: 增加获取已加载插件句柄的函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00473)
+
+    2012-08-27
+    ~~~~~~~~~~
+    ADD: 增加 TCP 连接远端时的超时功能
+    FIX: COMM 增加一些串口函数的可靠性
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00472)
+
+    2012-08-26
+    ~~~~~~~~~~
+    FIX: 更新一些文档资料
+    FIX: 更新部分测试用例文档
+    FIX: 修正一处 BCB2006 编译下的警告
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00471)
+
+    2012-08-25
+    ~~~~~~~~~~
+    ADD: 增加 BASE32 编码解码函数库
+    ADD: 增加 BASE32 编解码函数的测试用例
+    ADD: 增加几种变种的 BASE32/BASE64 转换
+    FIX: 更新部分测试用例文档
+    FIX: 取消 BASE16/BASE64 的默认断行
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00470)
+
+    2012-08-23
+    ~~~~~~~~~~
+    FIX: 修正 BASE16 解码部分的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00469)
+
+    2012-08-22
+    ~~~~~~~~~~
+    FIX: 更新部分测试用例文档
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00468)
+
+    2012-08-22
+    ~~~~~~~~~~
+    ADD: 增加 BASE16 编码解码函数库
+    ADD: 增加一些编解码函数的测试用例
+    FIX: 更新部分测试用例文档
+    FIX: 修正一些出错的返回设置值
+    FIX: RFCMM 超声波协议操作函数名更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00467)
+
+    2012-08-21
+    ~~~~~~~~~~
+    ADD: RFCMM 增加超声波转发协议接口
+    FIX: 修正 Windows 下 UDP 预读的问题
+
+    2012-08-20
+    ~~~~~~~~~~
+    FIX: EXTZ 修正 COM 初始化返回值的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00466)
+
+    2012-08-17
+    ~~~~~~~~~~
+    FIX: COMM 完成 RFCMM 通讯协议函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00465)
+
+    2012-08-15
+    ~~~~~~~~~~
+    ADD: COMM 增加 RFCMM 通讯协议函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00464)
+
+    2012-08-14
+    ~~~~~~~~~~
+    ADD: 增加 MSG_PEEK 方式读取网络数据
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00463)
+
+    2012-08-13
+    ~~~~~~~~~~
+    FIX: 修正 XXE GCC 编译下的警告
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00462)
+
+    2012-08-13
+    ~~~~~~~~~~
+    ADD: 增加 UUE 编码解码函数库
+    ADD: 增加 XXE 编码解码函数库
+    FIX: 修正一处可能的字符串溢出操作
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00461)
+
+    2012-08-12
+    ~~~~~~~~~~
+    ADD: 增加命令行字符串解析函数
+    ADD: 增加去除字符串头尾空白的函数
+    FIX: 删除没有用的字符串工具函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00460)
+
+    2012-08-11
+    ~~~~~~~~~~
+    FIX: 修正内部日期计算函数的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00459)
+
+    2012-08-08
+    ~~~~~~~~~~
+    FIX: 更新各个模块发版版本号
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00458)
+
+    2012-08-03
+    ~~~~~~~~~~
+    FIX: 修正 GDI 字体绘制绑定的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00457)
+
+    2012-08-02
+    ~~~~~~~~~~
+    FIX: 一些代码小更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00456)
+
+    2012-08-01
+    ~~~~~~~~~~
+    FIX: 更新一些出错提示字符串
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00455)
+
+    2012-08-01
+    ~~~~~~~~~~
+    FIX: 调整通讯包含头文件的位置
+    FIX: 使用字符串来表示接口对象名称
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00454)
+
+    2012-07-31
+    ~~~~~~~~~~
+    FIX: 拆分 comlib.h 头文件
+    FIX: FMTZ 改动对象接口结构
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00453)
+
+    2012-07-31
+    ~~~~~~~~~~
+    FIX: 更新一些出错提示字符串和错别字
+    FIX: 修正 UNICODE 编码转换函数的 BUG
+    FIX: 转义字符串生成函数支持 XML 相关特性
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00452)
+
+    2012-07-28
+    ~~~~~~~~~~
+    FIX: eGUI 部分多余代码的删除
+    FIX: eGUI 部分几何坐标换成有符号数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00451)
+
+    2012-07-28
+    ~~~~~~~~~~
+    FIX: BLIT 几何坐标换成有符号数
+    FIX: BLIT 调整点阵字库绘制代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00450)
+
+    2012-07-28
+    ~~~~~~~~~~
+    FIX: CORE 部分几何坐标换成有符号数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00449)
+
+    2012-07-27
+    ~~~~~~~~~~
+    FIX: 修正椭圆绘制函数的错误
+    FIX: 删除没有用的几何绘制代码
+    FIX: 统一颜色合成函数的参数形式
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00448)
+
+    2012-07-26
+    ~~~~~~~~~~
+    FIX: 删除没有用的判断代码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00447)
+
+    2012-07-26
+    ~~~~~~~~~~
+    FIX: 获取行号函数增加获取列数的功能
+    FIX: 修正转义字符串复制时可能的缓冲溢出
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00446)
+
+    2012-07-26
+    ~~~~~~~~~~
+    ADD: 增加一个生成转义字符串的函数
+    FIX: 修正一些出错提示字符串的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00445)
+
+    2012-07-24
+    ~~~~~~~~~~
+    FIX: 删除多余的 Windows 宏预定义
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00444)
+
+    2012-07-24
+    ~~~~~~~~~~
+    FIX: 所有西文编码文件转换到 UTF-8 编码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00443)
+
+    2012-07-24
+    ~~~~~~~~~~
+    FIX: 所有中文编码文件转换到 UTF-8 编码
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00442)
+
+    2012-07-24
+    ~~~~~~~~~~
+    FIX: 为所有文件编码转换到 UTF-8 做好准备
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00441)
+
+    2012-07-19
+    ~~~~~~~~~~
+    FIX: 更新所有动态库发版参数
+    FIX: 调整 VC 部分的公用 MAKEFILE
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00440)
+
+    2012-07-17
+    ~~~~~~~~~~
+    FIX: 修正 GDI 表面生成里的内存泄漏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00439)
+
+    2012-07-16
+    ~~~~~~~~~~
+    ADD: 增加拆分合并 Alpha 通道的函数
+    ADD: 增加目标关键色 BLIT 的 C 实现
+    FIX: 修正一个图像类型判断上的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00438)
+
+    2012-07-14
+    ~~~~~~~~~~
+    FIX: 修正全桌面宽高计算的问题
+    FIX: 修正数据结构函数库复制时的一些问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00437)
+
+    2012-07-13
+    ~~~~~~~~~~
+    ADD: 增加多字节编码函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00436)
+
+    2012-07-13
+    ~~~~~~~~~~
+    ADD: 增加直接坐标的文字输出函数
+    FIX: 删除多余的文字绘制接口参数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00435)
+
+    2012-07-12
+    ~~~~~~~~~~
+    FIX: 移入一些内联函数到内部
+    FIX: 增强矩形区域设置函数的安全性
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00434)
+
+    2012-07-12
+    ~~~~~~~~~~
+    ADD: eGUI 增加 eGUI 绘制布局函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00433)
+
+    2012-07-10
+    ~~~~~~~~~~
+    ADD: 增加一些鼠标相关的函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00432)
+
+    2012-07-10
+    ~~~~~~~~~~
+    ADD: 增加检测按钮释放函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00431)
+
+    2012-07-10
+    ~~~~~~~~~~
+    FIX: 优化 1555 像素内透明插值混合的计算
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00430)
+
+    2012-07-10
+    ~~~~~~~~~~
+    FIX: 补全颜色值内带透明通道的插值混合
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00429)
+
+    2012-07-09
+    ~~~~~~~~~~
+    FIX: 修正无出错回调时的几处警告
+    FIX: 更新一些平台下的 MAX_PATH 宏
+    FIX: 更新若干测试用例运行结果文档
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00428)
+
+    2012-07-09
+    ~~~~~~~~~~
+    FIX: 更新若干测试用例运行结果文档
+    FIX: 替换掉源代码里所有中文的字符串
+    FIX: 统一通道插值 BLIT 函数的参数形式
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00427)
+
+    2012-07-08
+    ~~~~~~~~~~
+    ADD: 完成各个混合模式的 BLIT 函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00426)
+
+    2012-07-08
+    ~~~~~~~~~~
+    ADD: 完成各个混合模式的 FILL 函数
+    ADD: 基本完成各个混合模式的 BLIT 函数
+    FIX: 大规模代码抽出成模板文件
+    FIX: 修正点插值混合时可能的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00425)
+
+    2012-07-07
+    ~~~~~~~~~~
+    FIX: 删除多余没用的内联函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00424)
+
+    2012-07-05
+    ~~~~~~~~~~
+    FIX: 修正各个平台下最长路径的宏值
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00423)
+
+    2012-07-05
+    ~~~~~~~~~~
+    ADD: 增加 Windows GUI 键盘读取函数
+    FIX: 更新调整两个源代码模板文件
+    FIX: 调整一些 Windows API 调用的形式
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00422)
+
+    2012-07-03
+    ~~~~~~~~~~
+    FIX: 更新目录树列表文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00421)
+
+    2012-07-03
+    ~~~~~~~~~~
+    FIX: CrHack 头文件全部使用 UTF-8 编码
+    FIX: Visual Studio 2005+ 编译下的警告关闭
+    FIX: 使用原汁原味的 FreeImage V3.15.3 头文件
+    FIX: 使用原汁原味的 DirectShow SDK 2005年02月版本
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00420)
+
+    2012-07-02
+    ~~~~~~~~~~
+    FIX: 删除暂时没有用到的空目录
+    FIX: 修正英文提示里的语法错误
+    FIX: 全部使用英文的出错提示字符串
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00419)
+
+    2012-06-30
+    ~~~~~~~~~~
+    FIX: 将几个字符类型宏改成函数 (更安全)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00418)
+
+    2012-06-30
+    ~~~~~~~~~~
+    FIX: 修正 Win32 API 下线程创建的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00417)
+
+    2012-06-30
+    ~~~~~~~~~~
+    ADD: 增加两幅 ASCII 码值查表图片
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00416)
+
+    2012-06-29
+    ~~~~~~~~~~
+    FIX: 修正一处导入库引用的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00415)
+
+    2012-06-25
+    ~~~~~~~~~~
+    FIX: 去除所有动态库的自定义入口
+    FIX: 完成 DirectShow 多媒体函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00414)
+
+    2012-06-24
+    ~~~~~~~~~~
+    ADD: 增加是否自带 DirectX SDK 的宏
+    ADD: 增加是否自带 DirectShow SDK 的宏
+    FIX: 修正内建 DirectShow 头文件的警告
+    FIX: 低版本 VC 使用自己的 DirectX SDK
+    FIX: 低版本 VC 使用自己的 DirectShow SDK
+
+    2012-06-23
+    ~~~~~~~~~~
+    ADD: 增加 DirectShow 多媒体函数库
+    FIX: 更改 Win32 多媒体函数库文件名
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00413)
+
+    2012-06-21
+    ~~~~~~~~~~
+    ADD: 增加 Win32 多媒体函数库
+    ADD: 增加 Win32 COM 初始化函数
+    FIX: 合并 MCI 多媒体函数库
+    FIX: 更新全局目录树列表文件
+    FIX: 补上误删的 UNICODE 预定义宏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00412)
+
+    2012-06-20
+    ~~~~~~~~~~
+    ADD: EXTZ 加入 DirectShow SDK 2005.02
+    FIX: 将 DXSDK 和 DShow 的头文件加入搜索路径
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00411)
+
+    2012-06-15
+    ~~~~~~~~~~
+    ADD: 增加一个路径字符串统一函数
+    ADD: 增加一个判断线程单元结束函数
+    FIX: 修正 MACOS 目录分割符的影响
+    FIX: SFRW 支持所有目录风格符路径
+    FIX: SFRW 支持不同的协议支持模式
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00410)
+
+    2012-06-14
+    ~~~~~~~~~~
+    FIX: 调整各个模块发版的参数
+    FIX: 增强 SFRW 协议的安全性
+    FIX: 修正 SFRW 文件名选择的错误
+    FIX: 开放 SFRW 计算文件校验函数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00409)
+
+    2012-06-13
+    ~~~~~~~~~~
+    FIX: 更新文件读写操作映射宏
+    FIX: 删除所有第三方库剔除开关
+    FIX: 删除所有文件函数剔除开关
+    FIX: 删除像素格式函数剔除开关
+    FIX: 删除外部编码转换库的剔除宏
+    FIX: eGUI 也加入裸机的 MAKE 列表
+    FIX: 恢复 TOTCFG 在 ccblkfn 下的编译
+    FIX: 修正最新 ZLib 在 ARMCC 下的编译问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00408)
+
+    2012-06-12
+    ~~~~~~~~~~
+    FIX: 调整 GCC 下的编译配置
+    FIX: 修正 ccblkfn 编译下的警告
+    FIX: 删除所有 _OS_NAKED 宏开关
+    FIX: 修正 EXTZ 在 ccblkfn 下的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00407)
+
+    2012-06-12
+    ~~~~~~~~~~
+    ADD: 增加 FUN 目录收集一些有趣代码
+    FIX: 更新一些出错代码值的设置错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00406)
+
+    2012-06-11
+    ~~~~~~~~~~
+    FIX: 修正 SFRW 通讯协议里的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00405)
+
+    2012-06-10
+    ~~~~~~~~~~
+    FIX: 更新目录树列表文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00404)
+
+    2012-06-07
+    ~~~~~~~~~~
+    FIX: 完成 SFRW 网络通讯协议函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00403)
+
+    2012-06-06
+    ~~~~~~~~~~
+    FIX: 恢复原汁原味的 NASMX 头文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00402)
+
+    2012-06-06
+    ~~~~~~~~~~
+    FIX: 更新一些宏定义的写法
+    FIX: SFRW 加强一些参数的过滤
+    FIX: 修正两处模块定义名称错误
+    FIX: 移动 FatFS 源代码到 NAKED
+    FIX: 移动 NASMX 头文件到新目录
+    FIX: SFRW 文件接收增加校验计算
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00401)
+
+    2012-06-04
+    ~~~~~~~~~~
+    FIX: 删除所有只读属性设置批处理
+    FIX: 完成 SFRW 协议的底层收发功能
+    FIX: 移动 CORE 里的脚本接口到 EXTZ
+    FIX: 调整老版 VC 的动态库 MAKEFILE
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00400)
+
+    2012-06-03
+    ~~~~~~~~~~
+    ADD: 增加 MCI 多媒体函数库
+    FIX: 一些代码的格式小更新
+    FIX: 调整所有项目 GCC 的 MAKE
+    FIX: 调整 VC 下关闭的全局警告
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00399)
+
+    2012-06-02
+    ~~~~~~~~~~
+    ADD: 增加 1T 51单片机下的波特率值
+    ADD: 增加一个51波特率计算 Py 脚本
+    FIX: 修正51单片机串口波特率的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00398)
+
+    2012-06-01
+    ~~~~~~~~~~
+    ADD: 增加 6T 51单片机下的波特率值
+    FIX: 更新一些函数声明的代码格式
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00397)
+
+    2012-06-01
+    ~~~~~~~~~~
+    FIX: 删除所有 PCRE 相关的代码
+    FIX: 调整两个 EXTZ 的 MAKEFILE
+    FIX: 修正两处可能的 XML 解析问题
+    FIX: 完善使用 XML 解析器的注意文档
+    FIX: TOTCFG 增加 XML 解析的有效性
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00396)
+
+    2012-05-31
+    ~~~~~~~~~~
+    ADD: 增加 BCB2010 测试用例文档
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00395)
+
+    2012-05-30
+    ~~~~~~~~~~
+    FIX: ZLib 升级到版本 V1.2.7
+    FIX: 消除少数编译器编译下的警告
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00394)
+
+    2012-05-30
+    ~~~~~~~~~~
+    ADD: 增加动态内存分配峰值统计计数
+    FIX: 增加统计内存使用数量的精确度
+    FIX: 更新一些文档资料和测试用例文档
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00393)
+
+    2012-05-24
+    ~~~~~~~~~~
+    FIX: 增加统计内存使用数量的精确度
+    FIX: 修正 Win32 获取内存空闲代码的问题
+
+    2012-05-23
+    ~~~~~~~~~~
+    ADD: 增加 SFRW 通讯协议函数库
+    FIX: 更新一些宏定义开关的写法
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00392)
+
+    2012-05-22
+    ~~~~~~~~~~
+    FIX: 修正 CX51 编译下单字交换内联函数的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00391)
+
+    2012-05-21
+    ~~~~~~~~~~
+    FIX: 优化 CX51 下单字交换函数的性能
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00390)
+
+    2012-05-20
+    ~~~~~~~~~~
+    FIX: LLB3 增加 ICL7135 通道采集的稳定性
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00389)
+
+    2012-05-18
+    ~~~~~~~~~~
+    FIX: 移动一些内联函数到开发库内部
+    FIX: 修正文件系统读写可能出现的问题
+    FIX: 取消文件读写接口直接在 STDC 上的绑定
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00388)
+
+    2012-05-16
+    ~~~~~~~~~~
+    ADD: 增加平台很大的浮点数
+    ADD: 增加一种 3DES 加解密形式
+    FIX: VSYS 系统取消插件机制
+    FIX: 补全 EXTZ 用到的外部库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00387)
+
+    2012-05-10
+    ~~~~~~~~~~
+    FIX: 更新修正 Win32 UDP 收发函数
+    FIX: 更新 SOCKET 超时模式下的出错处理
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00386)
+
+    2012-05-09
+    ~~~~~~~~~~
+    FIX: 更新目录树列表文件
+    FIX: 修正 Win32 UDP 通讯函数库的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00385)
+
+    2012-05-08
+    ~~~~~~~~~~
+    ADD: 开始新的 EXTZ 子项目
+    FIX: 删除 XMLCALL 的转移函数
+    FIX: 返回 SDT22 协议反码的修改
+    FIX: 调整 DTM_NEXT 一些声明定义
+    FIX: DTM_NEXT 修正两处 GCC 编译警告
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00384)
+
+    2012-05-07
+    ~~~~~~~~~~
+    ADD: 增加辅助代码函数库
+    ADD: 重新加入以前的钩子函数库
+    FIX: 统一一些头文件说明标识
+    FIX: 补上所有 CrHack 头文件标识
+    FIX: 给多语言文件加上文件头和尾
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00383)
+
+    2012-05-06
+    ~~~~~~~~~~
+    ADD: 增加解析器使用情况的文档
+    FIX: 删除 eGUI 资源文件编码的限制
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00382)
+
+    2012-05-04
+    ~~~~~~~~~~
+    ADD: 增加矩形对齐运算函数
+    ADD: 增加 BMP 图片读取函数库
+    FIX: 更新 FMTZ 一处数据类型
+    FIX: RFCON 输入结构增加类型值
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00381)
+
+    2012-05-03
+    ~~~~~~~~~~
+    FIX: 修正一处64位下可能的整数截断问题
+    FIX: 修正 PNG 读取函数库可能的内存泄漏
+    FIX: 更改漏改的 GameAPI 接口头文件的文件名
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00380)
+
+    2012-05-02
+    ~~~~~~~~~~
+    FIX: 补上 RFCON 两个漏掉的输入结构
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00379)
+
+    2012-04-28
+    ~~~~~~~~~~
+    FIX: 进一步完善通讯协议函数库
+    FIX: 完成 RFCON 通讯协议第一版
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00378)
+
+    2012-04-27
+    ~~~~~~~~~~
+    FIX: 优化所有通讯协议接收部分
+    FIX: 修正通讯协议函数库里可能的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00377)
+
+    2012-04-27
+    ~~~~~~~~~~
+    ADD: 增加通讯用数据哈希函数库
+    ADD: 增加 RFCON 通讯协议函数库
+    FIX: 两种 CRC-16 加上函数剔除宏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00376)
+
+    2012-04-26
+    ~~~~~~~~~~
+    ADD: 增加一种小表格的 CRC-16 计算方法
+    FIX: 修正哈希函数库里的超级大 BUG
+    FIX: 哈希函数库都加上可剔除函数的宏
+    FIX: 修正字符串格式化在 WinCE 下出异常的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00375)
+
+    2012-04-24
+    ~~~~~~~~~~
+    FIX: 加强一些加密算法输入参数的可靠性
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00374)
+
+    2012-04-24
+    ~~~~~~~~~~
+    FIX: 修正 3DES 算法使用三倍密钥时的 BUG
+    FIX: 修正 ARC4 算法在 BCB6 下生成代码的 BUG
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00373)
+
+    2012-04-23
+    ~~~~~~~~~~
+    FIX: GameAPI 绘制接口源文件更名
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00372)
+
+    2012-04-23
+    ~~~~~~~~~~
+    FIX: 一些代码的小更新
+    MSG: 准备开始 EGUIEX 项目
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00371)
+
+    2012-04-21
+    ~~~~~~~~~~
+    FIX: 修改一些 ISO14443 函数的名字
+
+    2012-04-20
+    ~~~~~~~~~~
+    ADD: 增加 ISO14443 通讯协议函数库
+    FIX: 更正 LLB3 通讯中可能的一个问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00370)
+
+    2012-04-13
+    ~~~~~~~~~~
+    ADD: 加入目录树列表文件
+    FIX: 把 DXSDK 库路径加入 MAKEFILE
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00369)
+
+    2012-04-12
+    ~~~~~~~~~~
+    ADD: 加入被废弃的 D3D 图形组件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00368)
+
+    2012-04-12
+    ~~~~~~~~~~
+    ADD: 加入 DirectX SDK 2010.06
+    ADD: 建立第三方库公开头文件目录
+    FIX: 抽取出一部分代码到公用模板
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00367)
+
+    2012-04-11
+    ~~~~~~~~~~
+    ADD: 加入 Windows CE 下 DirectDraw 头文件
+    FIX: GameAPI 后台缓冲增加一点尾部空间
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00366)
+
+    2012-04-11
+    ~~~~~~~~~~
+    ADD: 增加图形接口插件的公用接口
+    ADD: 增加 GameAPI 图形绘制接口实现
+    FIX: 砍掉一个很难实现的图形绘制接口
+    FIX: FMTZ 更新一处编译器宏定义开关
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00365)
+
+    2012-04-09
+    ~~~~~~~~~~
+    FIX: FreeImage 升级到版本 V3.15.3
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00364)
+
+    2012-04-09
+    ~~~~~~~~~~
+    ADD: eGUI 控件基类加入分组编号成员
+    ADD: 加入 BCB 用的 DirectDraw 导入库
+    ADD: 加入 GameAPI V1.2 for ARM SDK 文件
+    FIX: 优化 PCF8583 在51下的驱动
+    FIX: 调整51下的 ICL7135 串行驱动
+    FIX: 修正加入51硬件 SPI 接口的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00363)
+
+    2012-04-06
+    ~~~~~~~~~~
+    ADD: eGUI 增加手工注册资源功能
+    ADD: 增加动态模块函数库 for Naked
+    FIX: 修正 STDC 内存释放的问题
+    FIX: VC 在 X64 下无法内联汇编的更新
+    FIX: 删除所有 uC/OS-II 相关的源代码
+    FIX: 调整 USB MASS 库的文件目录结构
+    FIX: 改进裸机内存分配器 (通吃所有裸机系统)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00362)
+
+    2012-04-05
+    ~~~~~~~~~~
+    ADD: 增加内存分配函数库模板 for Naked
+    FIX: 删除所有 uC/OS-II 编译相关的部分
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00361)
+
+    2012-04-05
+    ~~~~~~~~~~
+    FIX: 2D 图形库的若干小更新 (统一函数参数)
+    FIX: 所有 BLT 操作里弃用图片里的关键色参数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00360)
+
+    2012-04-04
+    ~~~~~~~~~~
+    FIX: 移出一些与编译器无关的配置选项
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00359)
+
+    2012-04-04
+    ~~~~~~~~~~
+    FIX: eGUI 源文件改名 (防冲突)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00358)
+
+    2012-04-04
+    ~~~~~~~~~~
+    FIX: ADICC 改名为 VDSP 的若干更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00357)
+
+    2012-04-03
+    ~~~~~~~~~~
+    FIX: 修正一处 GCC 编译器警告
+    FIX: 调整 MAKE 系统使之更合理
+    FIX: 修正 MAKE 系统里众多错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00356)
+
+    2012-04-02
+    ~~~~~~~~~~
+    FIX: 增强 IARCC 在 ARM 架构下的支持
+    FIX: 增强 MSC 编译器在 ARM 架构上的支持
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00355)
+
+    2012-03-31
+    ~~~~~~~~~~
+    ADD: 增加一份注意事项文档
+    FIX: 部分文档拼写错误修正
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00354)
+
+    2012-03-30
+    ~~~~~~~~~~
+    FIX: 继续完善 eGUI 事件消息分发系统
+    FIX: 从 MAKE 头文件里移出一些平台相关参数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00353)
+
+    2012-03-29
+    ~~~~~~~~~~
+    FIX: 一些 MAKEFILE 小的统一改动
+    FIX: 调整 MSC32 下的公用 MAKE 头文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00352)
+
+    2012-03-28
+    ~~~~~~~~~~
+    ADD: eGUI 增加一些控件设置函数
+    FIX: eGUI 支持剪裁掉界面控件和风格
+    FIX: 删除 SDK 目录下的二进制发布目录
+    FIX: 从 MAKE 里移出所有 WINCE 版本号设置
+    FIX: EMB 目录改为用户定制编译 USR 目录
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00351)
+
+    2012-03-27
+    ~~~~~~~~~~
+    FIX: 完成 eGUI 界面文件加载部分
+    FIX: 修正 eGUI 资源加载的一处 BUG
+    MSG: 完成 eGUI 界面文件读取第一版
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00350)
+
+    2012-03-26
+    ~~~~~~~~~~
+    FIX: 继续完成 eGUI widget 部分设计
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00349)
+
+    2012-03-23
+    ~~~~~~~~~~
+    ADD: 增加公用的对象接口类型
+    ADD: 增加对象文件 FMTZ 数据类型
+    FIX: eGUI 准备开始 widget 部分设计
+    FIX: eGUI 增加资源静态使用插件的功能
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00348)
+
+    2012-03-22
+    ~~~~~~~~~~
+    FIX: 调增 SDK 相关目录和文件
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00347)
+
+    2012-03-22
+    ~~~~~~~~~~
+    ADD: 增加一些 eGUI 资源助手函数
+    ADD: 增加软件 BLIT 函数库 (C 实现)
+    ADD: 增加关闭内存释放函数指针检查的选项
+    FIX: 优化 eGUI 资源图片加载时的格式转换
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00346)
+
+    2012-03-21
+    ~~~~~~~~~~
+    ADD: 增加一些 FMTZ 数据类型
+    ADD: 开始 eGUI 子项目的开发 (并入 CORE 中)
+    MSG: 完成 eGUI 资源文件读取第一版
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00345)
+
+    2012-03-20
+    ~~~~~~~~~~
+    FIX: 一些文档的小更新
+    FIX: PNG 源代码文件名的更新
+    FIX: 一些图片加载函数名称的更改
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00344)
+
+    2012-03-18
+    ~~~~~~~~~~
+    FIX: 更新部分测试用例结果文档
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00343)
+
+    2012-03-12
+    ~~~~~~~~~~
+    FIX: FreeImage 升级到版本 V3.15.2
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00342)
+
+    2012-03-07
+    ~~~~~~~~~~
+    FIX: FatFS 升级到版本 V0.09
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00341)
+
+    2012-03-07
+    ~~~~~~~~~~
+    ADD: 增加 STC51 片上 SPI 设备函数库模板
+    ADD: 增加 WTV-OTP 语音芯片驱动函数库模板
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00340)
+
+    2012-03-03
+    ~~~~~~~~~~
+    FIX: 删除多余的函数映射宏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00339)
+
+    2012-03-03
+    ~~~~~~~~~~
+    ADD: 增加 M25PXX 驱动函数库模板
+    ADD: 增加 ST M25PXX 驱动函数库模板
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00338)
+
+    2012-02-28
+    ~~~~~~~~~~
+    ADD: USBDK 调整整体工程文件结构
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00337)
+
+    2012-02-25
+    ~~~~~~~~~~
+    FIX: 删除多余的 DEV 目录和 MAKEFILE
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00336)
+
+    2012-02-13
+    ~~~~~~~~~~
+    FIX: 修正两处 REL 编译下的警告
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00335)
+
+    2012-02-11
+    ~~~~~~~~~~
+    FIX: 调整 STM32 芯片类型的宏定义开关
+    FIX: 修正 STM32 USB 库里一处冲突定义
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00334)
+
+    2012-02-10
+    ~~~~~~~~~~
+    FIX: 调整一些第三方库的文件位置
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00333)
+
+    2012-02-09
+    ~~~~~~~~~~
+    FIX: USBDK 修正硬件 ECC 部分的错误
+    FIX: 修正 STM32 硬件 ECC 校验的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00332)
+
+    2012-02-09
+    ~~~~~~~~~~
+    ADD: LPC-ARM7 启动汇编代码的更新
+    FIX: 调整硬件总线连续读写的代码
+    FIX: 修正 STM32 硬件 ECC 校验的错误
+    FIX: USBDK 换用更高效的软件 ECC 算法
+    FIX: USBDK 调整到可以支持硬件 ECC 计算
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00331)
+
+    2012-02-08
+    ~~~~~~~~~~
+    ADD: 增加 ECC 纠错代码的测试用例
+    ADD: 增加 STM32 硬件 ECC 纠错函数库
+    FIX: 更新部分测试用例文档
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00330)
+
+    2012-02-07
+    ~~~~~~~~~~
+    FIX: 调整硬件总线连续读写代码
+    FIX: USBDK 调整硬件 ECC 生成代码
+    FIX: USBDK 暂时使用软件 ECC 计算
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00329)
+
+    2012-02-06
+    ~~~~~~~~~~
+    ADD: USBDK 加入一个 NAND 存储设备
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00328)
+
+    2012-02-04
+    ~~~~~~~~~~
+    ADD: USBDK 搭好 NAND 读写框架
+    FIX: USBDK 补上漏掉的 FSMC 开时钟
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00327)
+
+    2012-02-04
+    ~~~~~~~~~~
+    FIX: USBDK MASS USB 通讯调试通过
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00326)
+
+    2012-02-03
+    ~~~~~~~~~~
+    ADD: USBDK 增加 NAND 读写函数库框架
+    ADD: USBDK 增加 K9F1208X0C 驱动函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00325)
+
+    2012-02-02
+    ~~~~~~~~~~
+    ADD: USBDK 增加一个 RAM DISK 设备
+    FIX: LLB3 补上漏掉的芯片头文件
+    FIX: USBDK 补上漏掉的写保护管脚代码
+    FIX: 调整 LPC-ARM7 的栈位置到高地址
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00324)
+
+    2012-02-01
+    ~~~~~~~~~~
+    ADD: USBDK 增加目标板配置头文件
+    ADD: USBDK 增加所有板级接口函数库
+    ADD: 硬件总线增加连续读写进入退出功能
+    FIX: USBDK 删除漏掉的遗留代码
+    FIX: USBDK 调整到目标板硬件配置
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00323)
+
+    2012-02-01
+    ~~~~~~~~~~
+    ADD: USBDK 加入漏掉的 USB 中断文件
+    FIX: USBDK 调整 USB 设备个数的设定
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00322)
+
+    2012-01-31
+    ~~~~~~~~~~
+    FIX: USBDK 完成 ST 的 MASS 源代码的裁剪
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00321)
+
+    2012-01-31
+    ~~~~~~~~~~
+    FIX: USBDK 删除 ST 的 MASS 源代码里的空白
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00320)
+
+    2012-01-31
+    ~~~~~~~~~~
+    ADD: USBDK 底层驱动项目开始
+    ADD: USBDK 加入 ST 的 MASS 原始文件
+    FIX: 一些批处理及文档文件的更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00319)
+
+    2012-01-29
+    ~~~~~~~~~~
+    FIX: 若干函数作用域和可裁剪宏的更新
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00318)
+
+    2012-01-24
+    ~~~~~~~~~~
+    FIX: 修正若干文件名的错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00317)
+
+    2012-01-24
+    ~~~~~~~~~~
+    FIX: 修正一处文件名错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00316)
+
+    2012-01-24
+    ~~~~~~~~~~
+    FIX: 编译器配置头文件若干更新
+    FIX: IARCC 配置文件支持 ARM 平台
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00315)
+
+    2012-01-23
+    ~~~~~~~~~~
+    FIX: 一些需要等待的驱动加入额外的等待宏
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00314)
+
+    2012-01-23
+    ~~~~~~~~~~
+    FIX: KS0108 驱动的一些小调整
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00313)
+
+    2012-01-22
+    ~~~~~~~~~~
+    FIX: LLB3 一个常数的更新
+    FIX: KS0108 驱动一些 BUG 修正
+    FIX: KS0108 驱动 X 坐标改为页坐标
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00312)
+
+    2012-01-21
+    ~~~~~~~~~~
+    ADD: LLB3 加入 KS0108 驱动函数声明
+    FIX: LLB3 液晶部分硬件调整的驱动调整
+    FIX: 修正 KS0108 驱动里的低级书写错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00311)
+
+    2012-01-18
+    ~~~~~~~~~~
+    ADD: LLB3 增加 KS0108 液晶驱动的支持
+    ADD: 增加 SAMSUNG KS0108 驱动函数库模板
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00310)
+
+    2012-01-17
+    ~~~~~~~~~~
+    FIX: MATH 调整弦截法的语句顺序
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00309)
+
+    2012-01-16
+    ~~~~~~~~~~
+    FIX: MATH 调整弦截法的语句顺序
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00308)
+
+    2012-01-16
+    ~~~~~~~~~~
+    FIX: MATH 使用弦截法计算 IIF97 三区密度
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00307)
+
+    2012-01-15
+    ~~~~~~~~~~
+    ADD: 增加一个浮点常数宏定义
+    ADD: MATH 增加 IAPWS-IF97 函数库
+    FIX: MATH 完成二分法的 IIF97 三区密度计算
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00306)
+
+    2012-01-13
+    ~~~~~~~~~~
+    FIX: 更新部分测试用例文档
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00305)
+
+    2012-01-13
+    ~~~~~~~~~~
+    ADD: MATH 增加 IIF97 一区函数库
+    ADD: MATH 增加 IIF97 四区函数库
+    ADD: MATH 增加 IIF97 五区函数库
+    ADD: MATH 增加 IIF97 三区函数库 (未实现)
+    ADD: TOOL 增加 IIF97 各个区的测试用例
+    FIX: MATH 修正 IIF97 二三区一个常数
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00304)
+
+    2012-01-11
+    ~~~~~~~~~~
+    ADD: MATH 增加 IIF97 二三区函数库
+    FIX: MATH 删除没有用的函数
+    FIX: MATH 修正温压转换的概念错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00303)
+
+    2012-01-09
+    ~~~~~~~~~~
+    ADD: MATH 增加水蒸汽温压函数库
+    FIX: MATH 修正一些常数的注释错误
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00302)
+
+    2012-01-09
+    ~~~~~~~~~~
+    ADD: MATH 增加一些物理常数
+    FIX: MATH IAPWS-IF97 函数库更名
+    FIX: TOTCFG 修正加载标志覆盖的问题
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00301)
+
+    2012-01-08
+    ~~~~~~~~~~
+    ADD: MATH 增加 IFC-67 水蒸汽密度函数库
+    ADD: MATH 增加 IAPWS-IF97 水蒸汽函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00300)
+
+    2012-01-07
+    ~~~~~~~~~~
+    FIX: 潘多拉脚本使用更安全的内存分配器
+    FIX: 完成 IAR C/C++ for 8051 配置第一版
+
+    2012-01-05
+    ~~~~~~~~~~
+    ADD: 增加 IAR C/C++ 编译器配置头文件
+    FIX: 修正指针常数数组的写法问题
+    FIX: 删除没有用到的脚本接口函数指针
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00299)
+
+    2012-01-04
+    ~~~~~~~~~~
+    ADD: 增加 iccarm 预定义宏列表
+    ADD: 增加 iccarm 命令行参数说明
+    ADD: 增加 icc8051 预定义宏列表
+    ADD: 增加 icc8051 命令行参数说明
+    FIX: MinGW 预定义宏若干更新
+    FIX: CCBLKFN 编译器 MAKE 选项调整
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00298)
+
+    2012-01-02
+    ~~~~~~~~~~
+    FIX: 调整 VC 的 MAKE 系统整体结构
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00297)
+
+    2012-01-01
+    ~~~~~~~~~~
+    ADD: 增加 LLB3 通讯协议函数库
+    ADD: 增加一些 UVAR 变量设置函数
+    ADD: 增加新的问题解决列表日志文件
+    FIX: 删除 COMM 模块的入口点指定
+    FIX: 调整 Pandora 脚本头文件
+    FIX: 完成 Pandora 脚本接口函数库
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX (rev00296)

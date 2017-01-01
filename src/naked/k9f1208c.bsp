@@ -1,0 +1,409 @@
+/*****************************************************************************/
+/*                                                  ###                      */
+/*       #####          ###    ###                  ###  CREATE: 2011-06-07  */
+/*     #######          ###    ###      [KRNL]      ###  ~~~~~~~~~~~~~~~~~~  */
+/*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
+/*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
+/*   ###       ### ###  ###    ###    ####    ####  ###   ##  +-----------+  */
+/*  ####       ######## ##########  #######  ###### ###  ###  |  A NEW C  |  */
+/*  ###        ######## ########## ########  ###### ### ###   | FRAMEWORK |  */
+/*  ###     ## #### ### ########## ###  ### ###     ######    |  FOR ALL  |  */
+/*  ####   ### ###  ### ###    ### ###  ### ###     ######    | PLATFORMS |  */
+/*  ########## ###      ###    ### ######## ####### #######   |  AND ALL  |  */
+/*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
+/*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
+/*  =======================================================================  */
+/*  >>>>>>>>>>>>>>> CrHack SAMSUNG K9F1208X0C 驱动函数库模板 <<<<<<<<<<<<<<  */
+/*  =======================================================================  */
+/*****************************************************************************/
+
+#include "chip/k9f1208c.h"
+
+/* 宏设定检查 */
+#ifndef _INTEL_DATA08_
+    #error "k9f1208c.bsp: invalid DATA TYPE define!"
+#endif
+#if !defined(K9F1208C_ADR) || \
+    !defined(K9F1208C_CMD) || \
+    !defined(K9F1208C_DAT)
+    #error "k9f1208c.bsp: missing REGISTERS define!"
+#endif
+
+/* 读写等待 (可选) */
+#ifndef K9F1208C_RD_WAIT_IDLE
+    #define K9F1208C_RD_WAIT_IDLE
+#endif
+#ifndef K9F1208C_WR_WAIT_IDLE
+    #define K9F1208C_WR_WAIT_IDLE
+#endif
+
+/* 器件的状态位 */
+#define K9F1208C_IO0    (1 << 0)    /* 操作是否失败位 */
+#define K9F1208C_IO6    (1 << 6)    /* 器件是否空闲位 */
+
+/* 器件的命令字 */
+#define K9F1208C_RESET      0xFF    /*   芯片复位     */
+#define K9F1208C_BLKWP1     0x41    /*  块保护命令1   */
+#define K9F1208C_BLKWP2     0x42    /*  块保护命令2   */
+#define K9F1208C_BLKWP3     0x43    /*  块保护命令3   */
+#define	K9F1208C_AREA_A     0x00    /* 指针指向 A 区  */
+#define	K9F1208C_AREA_B     0x01    /* 指针指向 B 区  */
+#define K9F1208C_AREA_C     0x50    /* 指针指向 C 区  */
+#define K9F1208C_READID     0x90    /* 读取器件的编号 */
+#define K9F1208C_STATUS     0x70    /* 读取状态寄存器 */
+#define K9F1208C_RDLOCK     0x7A    /* 读取保护寄存器 */
+#define K9F1208C_WRITE0     0x80    /* 器件页编程准备 */
+#define K9F1208C_WRITE1     0x10    /* 器件页编程开始 */
+#define K9F1208C_ERASE0     0x60    /* 器件块擦除准备 */
+#define K9F1208C_ERASE1     0xD0    /* 器件块擦除开始 */
+
+/* 状态寄存器位掩码 */
+#define K9F1208C_MASK   (K9F1208C_IO0 | K9F1208C_IO6)
+
+#if !defined(__no_k9f1208c_wait_idle)
+/*
+---------------------------------------
+    K9F1208X0C 等待空闲
+---------------------------------------
+*/
+static byte_t
+k9f1208c_wait_idle (
+  __CR_IN__ uint_t  times
+    )
+{
+    byte_t  status;
+
+    /* 这里不对片选做任何操作 */
+    ibus_data_set(K9F1208C_CMD, K9F1208C_STATUS);
+    status = ibus_data_get(K9F1208C_DAT);
+    status &= K9F1208C_MASK;
+    while (status != K9F1208C_IO6 && times-- != 0)
+    {
+        K9F1208C_WR_WAIT_IDLE
+        ibus_data_set(K9F1208C_CMD, K9F1208C_STATUS);
+        status = ibus_data_get(K9F1208C_DAT);
+        status &= K9F1208C_MASK;
+    }
+    return (status);
+}
+
+#endif  /* !__no_k9f1208c_wait_idle */
+
+#if !defined(__no_k9f1208c_reset)
+/*
+=======================================
+    K9F1208X0C 器件复位
+=======================================
+*/
+CR_API void_t
+k9f1208c_reset (void_t)
+{
+    ibus_chip_sel();
+    ibus_data_set(K9F1208C_CMD, K9F1208C_RESET);
+    ibus_chip_out();
+}
+
+#endif  /* !__no_k9f1208c_reset */
+
+#if !defined(__no_k9f1208c_get_status)
+/*
+=======================================
+    K9F1208X0C 读取状态
+=======================================
+*/
+CR_API byte_t
+k9f1208c_get_status (void_t)
+{
+    byte_t  status;
+
+    ibus_chip_sel();
+    ibus_data_set(K9F1208C_CMD, K9F1208C_STATUS);
+    status = ibus_data_get(K9F1208C_DAT);
+    ibus_chip_out();
+    return (status & K9F1208C_MASK);
+}
+
+#endif  /* !__no_k9f1208c_get_status */
+
+#if !defined(__no_k9f1208c_get_devid)
+/*
+=======================================
+    K9F1208X0C 读设备号
+=======================================
+*/
+CR_API void_t
+k9f1208c_get_devid (
+  __CR_OT__ sK9F1208C*  devid
+    )
+{
+    ibus_chip_sel();
+    ibus_data_set(K9F1208C_CMD, K9F1208C_READID);
+    ibus_data_set(K9F1208C_ADR, 0x00);
+    ibus_data_read(K9F1208C_DAT, (byte_t*)devid, sizeof(sK9F1208C));
+    ibus_chip_out();
+}
+
+#endif  /* !__no_k9f1208c_get_devid */
+
+#if !defined(__no_k9f1208c_page_read)
+/*
+=======================================
+    K9F1208X0C 读取一页
+=======================================
+*/
+CR_API retc_t
+k9f1208c_page_read (
+  __CR_IN__ int32u  apage,
+  __CR_OT__ void_t* buffer
+    )
+{
+    byte_t  val[4];
+
+    /* 过滤参数 */
+    if (apage >= K9F1208C_BLOCK_NUM * K9F1208C_PAGE_PBLK)
+        return (FALSE);
+    val[0] = (byte_t)(0x00);
+    val[1] = (byte_t)(apage >>  0);
+    val[2] = (byte_t)(apage >>  8);
+    val[3] = (byte_t)(apage >> 16);
+
+    /* 总线时序 */
+    ibus_chip_sel();
+    ibus_data_set(K9F1208C_CMD, K9F1208C_AREA_A);
+    ibus_data_write(K9F1208C_ADR, val, 4);
+    K9F1208C_RD_WAIT_IDLE   /* 需要页加载的等待 (可用 RB 引脚判断) */
+    ibus_data_read(K9F1208C_DAT, (byte_t*)buffer, K9F1208C_ABCA_SIZE);
+    ibus_chip_out();
+    return (TRUE);
+}
+
+#endif  /* !__no_k9f1208c_page_read */
+
+#if !defined(__no_k9f1208c_page_write)
+/*
+=======================================
+    K9F1208X0C 写入一页
+=======================================
+*/
+CR_API retc_t
+k9f1208c_page_write (
+  __CR_IN__ int32u          apage,
+  __CR_IN__ const void_t*   buffer,
+  __CR_IN__ uint_t          t500us
+    )
+{
+    byte_t  state;
+    byte_t  val[4];
+
+    /* 过滤参数 */
+    if (apage >= K9F1208C_BLOCK_NUM * K9F1208C_PAGE_PBLK)
+        return (FALSE);
+    val[0] = (byte_t)(0x00);
+    val[1] = (byte_t)(apage >>  0);
+    val[2] = (byte_t)(apage >>  8);
+    val[3] = (byte_t)(apage >> 16);
+
+    /* 总线时序 */
+    ibus_chip_sel();
+    ibus_data_set(K9F1208C_CMD, K9F1208C_AREA_A);
+    ibus_data_set(K9F1208C_CMD, K9F1208C_WRITE0);
+    ibus_data_write(K9F1208C_ADR, val, 4);
+    ibus_data_write(K9F1208C_DAT, (byte_t*)buffer, K9F1208C_ABCA_SIZE);
+    ibus_data_set(K9F1208C_CMD, K9F1208C_WRITE1);
+    state = k9f1208c_wait_idle(t500us);     /* 读状态寄存器来判断 */
+    ibus_chip_out();
+    return ((state == K9F1208C_IO6) ? TRUE : FALSE);
+}
+
+#endif  /* !__no_k9f1208c_page_write */
+
+#if !defined(__no_k9f1208c_csec_read)
+/*
+=======================================
+    K9F1208X0C 读取 C 区
+=======================================
+*/
+CR_API retc_t
+k9f1208c_csec_read (
+  __CR_IN__ int32u  apage,
+  __CR_OT__ void_t* buffer
+    )
+{
+    byte_t  val[4];
+
+    /* 过滤参数 */
+    if (apage >= K9F1208C_BLOCK_NUM * K9F1208C_PAGE_PBLK)
+        return (FALSE);
+    val[0] = (byte_t)(0x00);
+    val[1] = (byte_t)(apage >>  0);
+    val[2] = (byte_t)(apage >>  8);
+    val[3] = (byte_t)(apage >> 16);
+
+    /* 总线时序 */
+    ibus_chip_sel();
+    ibus_data_set(K9F1208C_CMD, K9F1208C_AREA_C);
+    ibus_data_write(K9F1208C_ADR, val, 4);
+    K9F1208C_RD_WAIT_IDLE   /* 需要页加载的等待 (可用 RB 引脚判断) */
+    ibus_data_read(K9F1208C_DAT, (byte_t*)buffer, K9F1208C_CSEC_SIZE);
+    ibus_chip_out();
+    return (TRUE);
+}
+
+#endif  /* !__no_k9f1208c_csec_read */
+
+#if !defined(__no_k9f1208c_csec_write)
+/*
+=======================================
+    K9F1208X0C 写入 C 区
+=======================================
+*/
+CR_API retc_t
+k9f1208c_csec_write (
+  __CR_IN__ int32u          apage,
+  __CR_IN__ const void_t*   buffer,
+  __CR_IN__ uint_t          t500us
+    )
+{
+    byte_t  state;
+    byte_t  val[4];
+
+    /* 过滤参数 */
+    if (apage >= K9F1208C_BLOCK_NUM * K9F1208C_PAGE_PBLK)
+        return (FALSE);
+    val[0] = (byte_t)(0x00);
+    val[1] = (byte_t)(apage >>  0);
+    val[2] = (byte_t)(apage >>  8);
+    val[3] = (byte_t)(apage >> 16);
+
+    /* 总线时序 */
+    ibus_chip_sel();
+    ibus_data_set(K9F1208C_CMD, K9F1208C_AREA_C);
+    ibus_data_set(K9F1208C_CMD, K9F1208C_WRITE0);
+    ibus_data_write(K9F1208C_ADR, val, 4);
+    ibus_data_write(K9F1208C_DAT, (byte_t*)buffer, K9F1208C_CSEC_SIZE);
+    ibus_data_set(K9F1208C_CMD, K9F1208C_WRITE1);
+    state = k9f1208c_wait_idle(t500us);     /* 读状态寄存器来判断 */
+    ibus_chip_out();
+    return ((state == K9F1208C_IO6) ? TRUE : FALSE);
+}
+
+#endif  /* !__no_k9f1208c_csec_write */
+
+#if !defined(__no_k9f1208c_block_check)
+/*
+=======================================
+    K9F1208X0C 坏块检查
+=======================================
+*/
+CR_API retc_t
+k9f1208c_block_check (
+  __CR_IN__ uint_t  ablock,
+  __CR_OT__ int32u* page_addr
+    )
+{
+    int32u  apage;
+    byte_t  spare[K9F1208C_CSEC_SIZE];
+
+    /* 厂家标出坏块的识别
+       块内第一二页 C 区第六字节处是否为 0xFF
+       不为 0xFF 表示为出厂坏块, 不能擦除 */
+    if (ablock >= K9F1208C_BLOCK_NUM)
+        return (FALSE);
+    apage  =  (int32u)ablock;
+    apage *= K9F1208C_PAGE_PBLK;
+    k9f1208c_csec_read(apage + 0, spare);
+    if (spare[5] != 0xFF)
+        return (FALSE);
+    k9f1208c_csec_read(apage + 1, spare);
+    if (spare[5] != 0xFF)
+        return (FALSE);
+
+    /* 非坏块时返回页号 */
+    if (page_addr != NULL)
+       *page_addr  = apage;
+    return (TRUE);
+}
+
+#endif  /* !__no_k9f1208c_block_check */
+
+#if !defined(__no_k9f1208c_block_erase)
+/*
+=======================================
+    K9F1208X0C 整块擦除
+=======================================
+*/
+CR_API retc_t
+k9f1208c_block_erase (
+  __CR_IN__ uint_t  ablock,
+  __CR_IN__ uint_t  t2ms
+    )
+{
+    int32u  apage;
+    byte_t  state;
+    byte_t  val[3];
+
+    /* 参数过滤 */
+    if (ablock >= K9F1208C_BLOCK_NUM)
+        return (FALSE);
+    apage  =  (int32u)ablock;
+    apage *= K9F1208C_PAGE_PBLK;
+    val[0] = (byte_t)(apage >>  0);
+    val[1] = (byte_t)(apage >>  8);
+    val[2] = (byte_t)(apage >> 16);
+
+    /* 总线时序 */
+    ibus_chip_sel();
+    ibus_data_set(K9F1208C_CMD, K9F1208C_ERASE0);
+    ibus_data_write(K9F1208C_ADR, val, 3);
+    ibus_data_set(K9F1208C_CMD, K9F1208C_ERASE1);
+    state = k9f1208c_wait_idle(t2ms);
+    ibus_chip_out();
+    return ((state == K9F1208C_IO6) ? TRUE : FALSE);
+}
+
+#endif  /* !__no_k9f1208c_block_erase */
+
+#if !defined(__no_k9f1208c_block_erase_safe)
+/*
+=======================================
+    K9F1208X0C 整块擦除 (安全)
+=======================================
+*/
+CR_API retc_t
+k9f1208c_block_erase_safe (
+  __CR_IN__ uint_t  ablock,
+  __CR_IN__ uint_t  t2ms
+    )
+{
+    int32u  apage;
+    byte_t  state;
+    byte_t  val[3];
+
+    /* 坏块检查 */
+    if (k9f1208c_block_check(ablock, &apage))
+        return (FALSE);
+    val[0] = (byte_t)(apage >>  0);
+    val[1] = (byte_t)(apage >>  8);
+    val[2] = (byte_t)(apage >> 16);
+
+    /* 总线时序 */
+    ibus_chip_sel();
+    ibus_data_set(K9F1208C_CMD, K9F1208C_ERASE0);
+    ibus_data_write(K9F1208C_ADR, val, 3);
+    ibus_data_set(K9F1208C_CMD, K9F1208C_ERASE1);
+    state = k9f1208c_wait_idle(t2ms);
+    ibus_chip_out();
+    return ((state == K9F1208C_IO6) ? TRUE : FALSE);
+}
+
+#endif  /* !__no_k9f1208c_block_erase_safe */
+
+/*****************************************************************************/
+/* _________________________________________________________________________ */
+/* uBMAzRBoAKAHaACQD6FoAIAPqbgA/7rIA+5CM9uKw8D4Au7u7mSIJ0t18mYz0mYz9rAQZCgHc */
+/* wRIZIgHZovGBXUAZg+v0GbB+gRmgcJ7BAAAisIlAwB1Av7LSHUC/s9IdQL+w0h1Av7HZkZmgf */
+/* 4JLgIAdb262gPsqAh0+zP/uQB9ZYsFZYktq+L3sMi/AAK7gAKJAUtLdfq5IANXvT8BiQzfBIv */
+/* FLaAAweAEmff53wb+Adjx3kQE2xwy5Io8ithkigcFgACJBN8E3sneNvwB2xyLHDkdfA2JHSyA */
+/* adtAAQPdZYgHR0dNdbZfSYP5UHWr/kQEtAHNFg+Eef/DWAKgDw== |~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ >>> END OF FILE <<< */
+/*****************************************************************************/

@@ -1,0 +1,125 @@
+/*****************************************************************************/
+/*                                                  ###                      */
+/*       #####          ###    ###                  ###  CREATE: 2010-08-25  */
+/*     #######          ###    ###      [KRNL]      ###  ~~~~~~~~~~~~~~~~~~  */
+/*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
+/*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
+/*   ###       ### ###  ###    ###    ####    ####  ###   ##  +-----------+  */
+/*  ####       ######## ##########  #######  ###### ###  ###  |  A NEW C  |  */
+/*  ###        ######## ########## ########  ###### ### ###   | FRAMEWORK |  */
+/*  ###     ## #### ### ########## ###  ### ###     ######    |  FOR ALL  |  */
+/*  ####   ### ###  ### ###    ### ###  ### ###     ######    | PLATFORMS |  */
+/*  ########## ###      ###    ### ######## ####### #######   |  AND ALL  |  */
+/*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
+/*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
+/*  =======================================================================  */
+/*  >>>>>>>>>>>>>>>>> CrHack DALLAS DS18B20 驱动函数库模板 <<<<<<<<<<<<<<<<  */
+/*  =======================================================================  */
+/*****************************************************************************/
+
+#include "chip/ds18b20.h"
+
+#if !defined(__no_ds18b20_do_cmd)
+/*
+=======================================
+    执行 DS18B20 命令 (单节点)
+=======================================
+*/
+CR_API retc_t
+ds18b20_do_cmd (
+  __CR_IN__ byte_t  cmd
+    )
+{
+    retc_t  rett;
+
+    irqx_disable();
+    rett = wire1_reset();
+    if (!rett)
+        goto _func_out;
+    wire1_send_byte(WIRE1_ROM_SKIP);
+    wire1_send_byte(cmd);
+
+_func_out:
+    irqx_enabled();
+    return (rett);
+}
+
+#endif  /* !__no_ds18b20_do_cmd */
+
+#if !defined(__no_ds18b20_ram_read)
+/*
+=======================================
+    读取 DS18B20 SCRATCHPAD 数据
+=======================================
+*/
+CR_API retc_t
+ds18b20_ram_read (
+  __CR_OT__ void_t* data,
+  __CR_IN__ ufast_t size
+    )
+{
+    retc_t  rett;
+
+    if (size > 9)
+        return (FALSE);
+    if (size == 0)
+        return (TRUE);
+    irqx_disable();
+    rett = wire1_reset();
+    if (!rett)
+        goto _func_out;
+    wire1_send_byte(WIRE1_ROM_SKIP);
+    wire1_send_byte(DS18B20_RAM_READ);
+    for (; size != 0; size--) {
+        *(uchar*)data = wire1_recv_byte();
+        data = (uchar*)data + 1;
+    }
+
+_func_out:
+    irqx_enabled();
+    return (rett);
+}
+
+#endif  /* !__no_ds18b20_ram_read */
+
+#if !defined(__no_ds18b20_ram_write)
+/*
+=======================================
+    写入 DS18B20 SCRATCHPAD 数据
+=======================================
+*/
+CR_API retc_t
+ds18b20_ram_write (
+  __CR_IN__ byte_t  th,
+  __CR_IN__ byte_t  tl,
+  __CR_IN__ byte_t  config
+    )
+{
+    retc_t  rett;
+
+    irqx_disable();
+    rett = wire1_reset();
+    if (!rett)
+        goto _func_out;
+    wire1_send_byte(WIRE1_ROM_SKIP);
+    wire1_send_byte(DS18B20_RAM_WRITE);
+    wire1_send_byte(th);
+    wire1_send_byte(tl);
+    wire1_send_byte(config);
+
+_func_out:
+    irqx_enabled();
+    return (rett);
+}
+
+#endif  /* !__no_ds18b20_ram_write */
+
+/*****************************************************************************/
+/* _________________________________________________________________________ */
+/* uBMAzRBoAKAHaACQD6FoAIAPqbgA/7rIA+5CM9uKw8D4Au7u7mSIJ0t18mYz0mYz9rAQZCgHc */
+/* wRIZIgHZovGBXUAZg+v0GbB+gRmgcJ7BAAAisIlAwB1Av7LSHUC/s9IdQL+w0h1Av7HZkZmgf */
+/* 4JLgIAdb262gPsqAh0+zP/uQB9ZYsFZYktq+L3sMi/AAK7gAKJAUtLdfq5IANXvT8BiQzfBIv */
+/* FLaAAweAEmff53wb+Adjx3kQE2xwy5Io8ithkigcFgACJBN8E3sneNvwB2xyLHDkdfA2JHSyA */
+/* adtAAQPdZYgHR0dNdbZfSYP5UHWr/kQEtAHNFg+Eef/DWAKgDw== |~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ >>> END OF FILE <<< */
+/*****************************************************************************/

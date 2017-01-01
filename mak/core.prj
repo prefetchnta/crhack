@@ -1,0 +1,503 @@
+###############################################################################
+##                                                  $$$                      ##
+##       $$$$$          $$$    $$$                  $$$  CREATE: 2009-12-17  ##
+##     $$$$$$$          $$$    $$$      [MAKE]      $$$  ~~~~~~~~~~~~~~~~~~  ##
+##    $$$$$$$$          $$$    $$$                  $$$  MODIFY: XXXX-XX-XX  ##
+##    $$$$  $$          $$$    $$$                  $$$  ~~~~~~~~~~~~~~~~~~  ##
+##   $$$       $$$ $$$  $$$    $$$    $$$$    $$$$  $$$   $$  +-----------+  ##
+##  $$$$       $$$$$$$$ $$$$$$$$$$  $$$$$$$  $$$$$$ $$$  $$$  |  A NEW C  |  ##
+##  $$$        $$$$$$$$ $$$$$$$$$$ $$$$$$$$  $$$$$$ $$$ $$$   | FRAMEWORK |  ##
+##  $$$     $$ $$$$ $$$ $$$$$$$$$$ $$$  $$$ $$$     $$$$$$    |  FOR ALL  |  ##
+##  $$$$   $$$ $$$  $$$ $$$    $$$ $$$  $$$ $$$     $$$$$$    | PLATFORMS |  ##
+##  $$$$$$$$$$ $$$      $$$    $$$ $$$$$$$$ $$$$$$$ $$$$$$$   |  AND ALL  |  ##
+##   $$$$$$$   $$$      $$$    $$$ $$$$$$$$  $$$$$$ $$$  $$$  | COMPILERS |  ##
+##    $$$$$    $$$      $$$    $$$  $$$$ $$   $$$$  $$$   $$  +-----------+  ##
+##  =======================================================================  ##
+##  >>>>>>>>>>>>>>>>>>>>>>> CRHACK/CORE 工程文件列表 <<<<<<<<<<<<<<<<<<<<<<  ##
+##  =======================================================================  ##
+###############################################################################
+
+OBJ=.$(L)
+SRC=..$(L)src$(L)
+SRC_3RD=..$(L)src$(L)ex3rd$(L)
+SRC_NAK=..$(L)src$(L)naked$(L)
+SRC_PSX=..$(L)src$(L)posix$(L)
+SRC_LNX=..$(L)src$(L)linux$(L)
+SRC_WIN=..$(L)src$(L)win32$(L)
+
+###############################################################################
+##                                  BZip2                                    ##
+###############################################################################
+
+BZIP2_OBJS=$(OBJ)comp_bz2.$(O) \
+           $(OBJ)bz_blocksort.$(O) \
+           $(OBJ)bz_bzlib.$(O) \
+           $(OBJ)bz_compress.$(O) \
+           $(OBJ)bz_decompress.$(O) \
+           $(OBJ)bz_huffman.$(O) \
+           $(OBJ)bz_randtable.$(O)
+
+BZIP2_CPPS=$(SRC)comp_bz2.$(C) \
+           $(SRC_3RD)bzip2$(L)bz_blocksort.$(C) \
+           $(SRC_3RD)bzip2$(L)bz_bzlib.$(C) \
+           $(SRC_3RD)bzip2$(L)bz_compress.$(C) \
+           $(SRC_3RD)bzip2$(L)bz_decompress.$(C) \
+           $(SRC_3RD)bzip2$(L)bz_huffman.$(C) \
+           $(SRC_3RD)bzip2$(L)bz_randtable.$(C)
+
+###############################################################################
+##                                 miniLZO                                   ##
+###############################################################################
+
+LZO_OBJS=$(OBJ)comp_lzo.$(O) \
+         $(OBJ)minilzo.$(O)
+
+LZO_CPPS=$(SRC)comp_lzo.$(C) \
+         $(SRC_3RD)minilzo$(L)minilzo.$(C)
+
+###############################################################################
+##                                   ZLib                                    ##
+###############################################################################
+
+ZLIB_OBJS=$(OBJ)comp_z.$(O) \
+          $(OBJ)z_adler32.$(O) \
+          $(OBJ)z_compress.$(O) \
+          $(OBJ)z_deflate.$(O) \
+          $(OBJ)z_infback.$(O) \
+          $(OBJ)z_inffast.$(O) \
+          $(OBJ)z_inflate.$(O) \
+          $(OBJ)z_inftrees.$(O) \
+          $(OBJ)z_trees.$(O) \
+          $(OBJ)z_uncompr.$(O) \
+          $(OBJ)z_zutil.$(O)
+
+ZLIB_CPPS=$(SRC)comp_z.$(C) \
+          $(SRC_3RD)zlib$(L)z_adler32.$(C) \
+          $(SRC_3RD)zlib$(L)z_compress.$(C) \
+          $(SRC_3RD)zlib$(L)z_deflate.$(C) \
+          $(SRC_3RD)zlib$(L)z_infback.$(C) \
+          $(SRC_3RD)zlib$(L)z_inffast.$(C) \
+          $(SRC_3RD)zlib$(L)z_inflate.$(C) \
+          $(SRC_3RD)zlib$(L)z_inftrees.$(C) \
+          $(SRC_3RD)zlib$(L)z_trees.$(C) \
+          $(SRC_3RD)zlib$(L)z_uncompr.$(C) \
+          $(SRC_3RD)zlib$(L)z_zutil.$(C)
+
+###############################################################################
+##                               CRHACK/CORE                                 ##
+###############################################################################
+
+OBJS=$(OBJ)errs.$(O) \
+     $(OBJ)anubis.$(O) \
+     $(OBJ)blowfish.$(O) \
+     $(OBJ)twofish.$(O) \
+     $(OBJ)idea.$(O) \
+     $(OBJ)cast5.$(O) \
+     $(OBJ)cast6.$(O) \
+     $(OBJ)aes.$(O) \
+     $(OBJ)des.$(O) \
+     $(OBJ)rsa.$(O) \
+     $(OBJ)rc2.$(O) \
+     $(OBJ)rc4.$(O) \
+     $(OBJ)tea.$(O) \
+     $(OBJ)xtea.$(O) \
+     $(OBJ)xxtea.$(O) \
+     $(OBJ)bigint.$(O) \
+     $(OBJ)crypto.$(O) \
+     $(OBJ)md2.$(O) \
+     $(OBJ)md4.$(O) \
+     $(OBJ)md5.$(O) \
+     $(OBJ)sha1.$(O) \
+     $(OBJ)sha256.$(O) \
+     $(OBJ)sha512.$(O) \
+     $(OBJ)rmd128.$(O) \
+     $(OBJ)rmd160.$(O) \
+     $(OBJ)rmd256.$(O) \
+     $(OBJ)rmd320.$(O) \
+     $(OBJ)bzz5.$(O) \
+     $(OBJ)hash.$(O) \
+     $(OBJ)hashx.$(O) \
+     $(OBJ)hashc.$(O) \
+     $(OBJ)emule.$(O) \
+     $(OBJ)crc7.$(O) \
+     $(OBJ)crc8a.$(O) \
+     $(OBJ)crc8d.$(O) \
+     $(OBJ)crc16c.$(O) \
+     $(OBJ)crc16i.$(O) \
+     $(OBJ)crc32a.$(O) \
+     $(OBJ)crc32c.$(O) \
+     $(OBJ)crc32h.$(O) \
+     $(OBJ)crc32i.$(O) \
+     $(OBJ)crc64e.$(O) \
+     $(OBJ)chksum.$(O) \
+     $(OBJ)adler32.$(O) \
+     $(OBJ)ecc256.$(O) \
+     $(OBJ)ecc512.$(O) \
+     $(OBJ)ecc_st.$(O) \
+     $(OBJ)crhack.$(O) \
+     $(OBJ)applib.$(O) \
+     $(OBJ)devlib.$(O) \
+     $(OBJ)fmtlib.$(O) \
+     $(OBJ)memlib.$(O) \
+     $(OBJ)fileio.$(O) \
+     $(OBJ)datio.$(O) \
+     $(OBJ)dskin.$(O) \
+     $(OBJ)dskot.$(O) \
+     $(OBJ)memin.$(O) \
+     $(OBJ)memot.$(O) \
+     $(OBJ)pagein.$(O) \
+     $(OBJ)filein.$(O) \
+     $(OBJ)plugin.$(O) \
+     $(OBJ)base16.$(O) \
+     $(OBJ)base32.$(O) \
+     $(OBJ)base64.$(O) \
+     $(OBJ)code128.$(O) \
+     $(OBJ)uue.$(O) \
+     $(OBJ)xxe.$(O) \
+     $(OBJ)lzw.$(O) \
+     $(OBJ)lz32.$(O) \
+     $(OBJ)lzss.$(O) \
+     $(OBJ)lzari.$(O) \
+     $(OBJ)lzhuf.$(O) \
+     $(OBJ)enclib.$(O) \
+     $(OBJ)fpsoft.$(O) \
+     $(OBJ)delay.$(O) \
+     $(OBJ)fsm_n.$(O) \
+     $(OBJ)fsm_x.$(O) \
+     $(OBJ)segdpy.$(O) \
+     $(OBJ)msclib.$(O) \
+     $(OBJ)rtclib.$(O) \
+     $(OBJ)rtcfmt.$(O) \
+     $(OBJ)image.$(O) \
+     $(OBJ)pixelz.$(O) \
+     $(OBJ)d3dfmt.$(O) \
+     $(OBJ)bitfont.$(O) \
+     $(OBJ)clipper.$(O) \
+     $(OBJ)stringa.$(O) \
+     $(OBJ)stringw.$(O) \
+     $(OBJ)xmlcall.$(O) \
+     $(OBJ)mltbyte.$(O) \
+     $(OBJ)unicode.$(O) \
+     $(OBJ)slist.$(O) \
+     $(OBJ)array.$(O) \
+     $(OBJ)atree.$(O) \
+     $(OBJ)bring.$(O) \
+     $(OBJ)curbead.$(O) \
+     $(OBJ)curtain.$(O) \
+     $(OBJ)pltable.$(O) \
+     $(OBJ)ui_align.$(O) \
+     $(OBJ)ui_resrc.$(O)
+
+CPPS=$(SRC)errs.$(C) \
+     $(SRC)anubis.$(C) \
+     $(SRC)blowfish.$(C) \
+     $(SRC)twofish.$(C) \
+     $(SRC)idea.$(C) \
+     $(SRC)cast5.$(C) \
+     $(SRC)cast6.$(C) \
+     $(SRC)aes.$(C) \
+     $(SRC)des.$(C) \
+     $(SRC)rsa.$(C) \
+     $(SRC)rc2.$(C) \
+     $(SRC)rc4.$(C) \
+     $(SRC)tea.$(C) \
+     $(SRC)xtea.$(C) \
+     $(SRC)xxtea.$(C) \
+     $(SRC)bigint.$(C) \
+     $(SRC)crypto.$(C) \
+     $(SRC)md2.$(C) \
+     $(SRC)md4.$(C) \
+     $(SRC)md5.$(C) \
+     $(SRC)sha1.$(C) \
+     $(SRC)sha256.$(C) \
+     $(SRC)sha512.$(C) \
+     $(SRC)bzz5.$(C) \
+     $(SRC)rmd128.$(C) \
+     $(SRC)rmd160.$(C) \
+     $(SRC)rmd256.$(C) \
+     $(SRC)rmd320.$(C) \
+     $(SRC)hash.$(C) \
+     $(SRC)hashx.$(C) \
+     $(SRC)hashc.$(C) \
+     $(SRC)emule.$(C) \
+     $(SRC)crc7.$(C) \
+     $(SRC)crc8a.$(C) \
+     $(SRC)crc8d.$(C) \
+     $(SRC)crc16c.$(C) \
+     $(SRC)crc16i.$(C) \
+     $(SRC)crc32a.$(C) \
+     $(SRC)crc32c.$(C) \
+     $(SRC)crc32h.$(C) \
+     $(SRC)crc32i.$(C) \
+     $(SRC)crc64e.$(C) \
+     $(SRC)chksum.$(C) \
+     $(SRC)adler32.$(C) \
+     $(SRC)ecc256.$(C) \
+     $(SRC)ecc512.$(C) \
+     $(SRC)ecc_st.$(C) \
+     $(SRC)crhack.$(C) \
+     $(SRC)applib.$(C) \
+     $(SRC)devlib.$(C) \
+     $(SRC)fmtlib.$(C) \
+     $(SRC)memlib.$(C) \
+     $(SRC)fileio.$(C) \
+     $(SRC)datio.$(C) \
+     $(SRC)dskin.$(C) \
+     $(SRC)dskot.$(C) \
+     $(SRC)memin.$(C) \
+     $(SRC)memot.$(C) \
+     $(SRC)pagein.$(C) \
+     $(SRC)filein.$(C) \
+     $(SRC)plugin.$(C) \
+     $(SRC)base16.$(C) \
+     $(SRC)base32.$(C) \
+     $(SRC)base64.$(C) \
+     $(SRC)code128.$(C) \
+     $(SRC)uue.$(C) \
+     $(SRC)xxe.$(C) \
+     $(SRC)lzw.$(C) \
+     $(SRC)lz32.$(C) \
+     $(SRC)lzss.$(C) \
+     $(SRC)lzari.$(C) \
+     $(SRC)lzhuf.$(C) \
+     $(SRC)enclib.$(C) \
+     $(SRC)fpsoft.$(C) \
+     $(SRC)delay.$(C) \
+     $(SRC)fsm_n.$(C) \
+     $(SRC)fsm_x.$(C) \
+     $(SRC)segdpy.$(C) \
+     $(SRC)msclib.$(C) \
+     $(SRC)rtclib.$(C) \
+     $(SRC)rtcfmt.$(C) \
+     $(SRC)image.$(C) \
+     $(SRC)pixelz.$(C) \
+     $(SRC)d3dfmt.$(C) \
+     $(SRC)bitfont.$(C) \
+     $(SRC)clipper.$(C) \
+     $(SRC)stringa.$(C) \
+     $(SRC)stringw.$(C) \
+     $(SRC)xmlcall.$(C) \
+     $(SRC)mltbyte.$(C) \
+     $(SRC)unicode.$(C) \
+     $(SRC)slist.$(C) \
+     $(SRC)array.$(C) \
+     $(SRC)atree.$(C) \
+     $(SRC)bring.$(C) \
+     $(SRC)curbead.$(C) \
+     $(SRC)curtain.$(C) \
+     $(SRC)pltable.$(C) \
+     $(SRC)ui_align.$(C) \
+     $(SRC)ui_resrc.$(C)
+
+###############################################################################
+##                                  WIN32                                    ##
+###############################################################################
+
+WIN32_OBJS=$(OBJ)appwin.$(O) \
+           $(OBJ)cuiwin.$(O) \
+           $(OBJ)dllwin.$(O) \
+           $(OBJ)memwin.$(O) \
+           $(OBJ)rtcwin.$(O) \
+           $(OBJ)siowin.$(O) \
+           $(OBJ)netwin.$(O) \
+           $(OBJ)xmmwin.$(O) \
+           $(OBJ)dshow2.$(O) \
+           $(OBJ)thread.$(O) \
+           $(OBJ)wingui.$(O) \
+           $(OBJ)filewin.$(O) \
+           $(OBJ)fsyswin.$(O) \
+           $(OBJ)filestd.$(O) \
+           $(OBJ)strfmt.$(O) \
+           $(OBJ)wrapper.$(O) \
+           $(OBJ)counter.$(O) \
+           $(OBJ)network.$(O) \
+           $(OBJ)codepage.$(O)
+
+WIN32_CPPS=$(SRC_WIN)appwin.$(C) \
+           $(SRC_WIN)cuiwin.$(C) \
+           $(SRC_WIN)dllwin.$(C) \
+           $(SRC_WIN)memwin.$(C) \
+           $(SRC_WIN)rtcwin.$(C) \
+           $(SRC_WIN)siowin.$(C) \
+           $(SRC_WIN)netwin.$(C) \
+           $(SRC_WIN)xmmwin.$(C) \
+           $(SRC_WIN)dshow2.$(P) \
+           $(SRC_WIN)thread.$(C) \
+           $(SRC_WIN)wingui.$(C) \
+           $(SRC_WIN)filewin.$(C) \
+           $(SRC_WIN)fsyswin.$(C) \
+           $(SRC_PSX)filestd.$(C) \
+           $(SRC_PSX)strfmt.$(C) \
+           $(SRC_WIN)wrapper.$(C) \
+           $(SRC_WIN)counter.$(C) \
+           $(SRC_WIN)network.$(C) \
+           $(SRC_WIN)codepage.$(C)
+
+###############################################################################
+##                                  POSIX                                    ##
+###############################################################################
+
+POSIX_OBJS=$(OBJ)appnak.$(O) \
+           $(OBJ)dllpsx.$(O) \
+           $(OBJ)rtcpsx.$(O) \
+           $(OBJ)siopsx.$(O) \
+           $(OBJ)netbsd.$(O) \
+           $(OBJ)thread.$(O) \
+           $(OBJ)filepsx.$(O) \
+           $(OBJ)fsyspsx.$(O) \
+           $(OBJ)filestd.$(O) \
+           $(OBJ)strfmt.$(O) \
+           $(OBJ)counter.$(O) \
+           $(OBJ)codepage.$(O)
+
+POSIX_CPPS=$(SRC_NAK)appnak.$(C) \
+           $(SRC_PSX)dllpsx.$(C) \
+           $(SRC_PSX)rtcpsx.$(C) \
+           $(SRC_PSX)siopsx.$(C) \
+           $(SRC_PSX)netbsd.$(C) \
+           $(SRC_PSX)thread.$(C) \
+           $(SRC_PSX)filepsx.$(C) \
+           $(SRC_PSX)fsyspsx.$(C) \
+           $(SRC_PSX)filestd.$(C) \
+           $(SRC_PSX)strfmt.$(C) \
+           $(SRC_PSX)counter.$(C) \
+           $(SRC_PSX)codepage.$(C)
+
+###############################################################################
+##                                  LINUX                                    ##
+###############################################################################
+
+LINUX_OBJS=$(OBJ)cr_spi.$(O) \
+           $(OBJ)cr_wdg.$(O)
+
+LINUX_CPPS=$(SRC_LNX)cr_spi.$(C) \
+           $(SRC_LNX)cr_wdg.$(C)
+
+###############################################################################
+##                                 NAKED OS                                  ##
+###############################################################################
+
+NAKED_OBJS=$(OBJ)appnak.$(O) \
+           $(OBJ)dllnak.$(O) \
+           $(OBJ)strfmt.$(O) \
+           $(OBJ)codepage.$(O)
+
+NAKED_CPPS=$(SRC_NAK)appnak.$(C) \
+           $(SRC_NAK)dllnak.$(C) \
+           $(SRC_PSX)strfmt.$(C) \
+           $(SRC_NAK)codepage.$(C)
+
+###############################################################################
+##                             各个编译器的配置                              ##
+###############################################################################
+
+##
+##=====================================
+##      ARMCC NAKED ARM
+##=====================================
+##
+ARMCC_NAKED_ARM_OBJS=$(OBJS) $(NAKED_OBJS) $(LZO_OBJS) \
+                     $(BZIP2_OBJS) $(ZLIB_OBJS)
+
+ARMCC_NAKED_ARM_CPPS=$(CPPS) $(NAKED_CPPS) $(LZO_CPPS) \
+                     $(BZIP2_CPPS) $(ZLIB_CPPS)
+##
+##=====================================
+##      BCC32 WIN32 X86
+##=====================================
+##
+BCC32_WIN32_X86_OBJS=$(OBJS) $(WIN32_OBJS) $(LZO_OBJS) \
+                     $(BZIP2_OBJS) $(ZLIB_OBJS)
+
+BCC32_WIN32_X86_CPPS=$(CPPS) $(WIN32_CPPS) $(LZO_CPPS) \
+                     $(BZIP2_CPPS) $(ZLIB_CPPS)
+##
+##=====================================
+##      GCC WIN32 X86
+##=====================================
+##
+GCC_WIN32_X86_OBJS=$(OBJS) $(WIN32_OBJS) $(LZO_OBJS) \
+                   $(BZIP2_OBJS) $(ZLIB_OBJS)
+
+GCC_WIN32_X86_CPPS=$(CPPS) $(WIN32_CPPS) $(LZO_CPPS) \
+                   $(BZIP2_CPPS) $(ZLIB_CPPS)
+##
+##=====================================
+##      GCC WIN32 X64
+##=====================================
+##
+GCC_WIN32_X64_OBJS=$(OBJS) $(WIN32_OBJS) $(LZO_OBJS) \
+                   $(BZIP2_OBJS) $(ZLIB_OBJS)
+
+GCC_WIN32_X64_CPPS=$(CPPS) $(WIN32_CPPS) $(LZO_CPPS) \
+                   $(BZIP2_CPPS) $(ZLIB_CPPS)
+##
+##=====================================
+##      GCC ANDROID NDK
+##=====================================
+##
+GCC_ANDROID_NDK_OBJS=$(OBJS) $(POSIX_OBJS) $(LINUX_OBJS) \
+                     $(LZO_OBJS) $(BZIP2_OBJS) $(ZLIB_OBJS)
+
+GCC_ANDROID_NDK_CPPS=$(CPPS) $(POSIX_CPPS) $(LINUX_CPPS) \
+                     $(LZO_CPPS) $(BZIP2_CPPS) $(ZLIB_CPPS)
+##
+##=====================================
+##      MSC32 WIN32 X86
+##=====================================
+##
+MSC32_WIN32_X86_OBJS=$(OBJS) $(WIN32_OBJS) $(LZO_OBJS) \
+                     $(BZIP2_OBJS) $(ZLIB_OBJS)
+
+MSC32_WIN32_X86_CPPS=$(CPPS) $(WIN32_CPPS) $(LZO_CPPS) \
+                     $(BZIP2_CPPS) $(ZLIB_CPPS)
+##
+##=====================================
+##      MSC64 WIN32 X86
+##=====================================
+##
+MSC64_WIN32_X86_OBJS=$(OBJS) $(WIN32_OBJS) $(LZO_OBJS) \
+                     $(BZIP2_OBJS) $(ZLIB_OBJS)
+
+MSC64_WIN32_X86_CPPS=$(CPPS) $(WIN32_CPPS) $(LZO_CPPS) \
+                     $(BZIP2_CPPS) $(ZLIB_CPPS)
+##
+##=====================================
+##      MSC64 WIN32 X64
+##=====================================
+##
+MSC64_WIN32_X64_OBJS=$(OBJS) $(WIN32_OBJS) $(LZO_OBJS) \
+                     $(BZIP2_OBJS) $(ZLIB_OBJS)
+
+MSC64_WIN32_X64_CPPS=$(CPPS) $(WIN32_CPPS) $(LZO_CPPS) \
+                     $(BZIP2_CPPS) $(ZLIB_CPPS)
+##
+##=====================================
+##      MSC64 WINCE ARM
+##=====================================
+##
+MSC64_WINCE_ARM_OBJS=$(OBJS) $(WIN32_OBJS) $(LZO_OBJS) \
+                     $(BZIP2_OBJS) $(ZLIB_OBJS)
+
+MSC64_WINCE_ARM_CPPS=$(CPPS) $(WIN32_CPPS) $(LZO_CPPS) \
+                     $(BZIP2_CPPS) $(ZLIB_CPPS)
+##
+##=====================================
+##      VDSP NAKED BFIN
+##=====================================
+##
+VDSP_NAKED_BFIN_OBJS=$(OBJS) $(NAKED_OBJS) $(LZO_OBJS) \
+                     $(BZIP2_OBJS) $(ZLIB_OBJS)
+
+VDSP_NAKED_BFIN_CPPS=$(CPPS) $(NAKED_CPPS) $(LZO_CPPS) \
+                     $(BZIP2_CPPS) $(ZLIB_CPPS)
+
+###############################################################################
+## _________________________________________________________________________ ##
+## sBPNEGgAoAeMyIDEEI7gMcm6yAOJyO5C0Ph4B+724MHoBu6wAO55CCjI0Oju0OjuictkiB/i2 ##
+## onLAcjTwIjGwP4FEPJkEpf/ANDqZIgX9tdkiBfi4tvj2e6Axwi/BALYRfRXurD/vWD/vvwB30 ##
+## TWiSzfBIkU3wSxAtnD2fvZwtjJ2cTYy97p2cveyt7L3sLZyuLm2cHcyNnB3Mjewdn63vvZ895 ##
+## M/N8c3kz831wBizSNAADgJECw+3QPweYCjQAo4LDweQTR5rDQZAIAAAVHRYH9oAB1k0KD+lB1 ##
+## il6/ABm1ZPOltchOwDwC4vrkYJhID4Vl/7ADzRApAMM8YmF6ZQ== |~~~~~~~~~~~~~~~~~~~ ##
+## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ >>> END OF FILE <<< ##
+###############################################################################

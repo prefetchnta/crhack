@@ -1,0 +1,4 @@
+@set PATH=%DEV_ROOT%\MinGW64\bin;%PATH%
+@set C_INCLUDE_PATH=%DEV_ROOT%\MinGW64\include
+@set CPLUS_INCLUDE_PATH=%DEV_ROOT%\MinGW64\include
+@set LIBRARY_PATH=%DEV_ROOT%\MinGW64\lib

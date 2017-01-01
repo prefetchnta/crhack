@@ -1,0 +1,3 @@
+文件 ex3rd/bzip2/bz_decompress.c 在 VisualDSP++ 5.0 UP9 ccblkfn 下编译器崩溃
+文件 ex3rd/bzip2/bz_decompress.c 在 VisualDSP++ 5.0 UP10 ccblkfn 下编译器崩溃
+文件 ex3rd/zlib/z_deflate.c 在 C++Builder 2009 下编译器崩溃

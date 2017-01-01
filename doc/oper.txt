@@ -1,0 +1,69 @@
++-------------------------------------------------------------------+
+|                         C/C++ 操作符优先级                        |
++--------+------------------------------------------+---------------+
+|   ()   | Grouping operator                        | left to right |
+|   []   | Array access                             | left to right |
+|   ->   | Member access from a pointer             | left to right |
+|   .    | Member access from an object             | left to right |
+|   ::   | Scoping operator                         | left to right |
+|   ++   | Post-increment                           | left to right |
+|   --   | Post-decrement                           | left to right |
++--------+------------------------------------------+---------------+
+|   !    | Logical negation                         | right to left |
+|   ~    | Bitwise complement                       | right to left |
+|   ++   | Pre-increment                            | right to left |
+|   --   | Pre-decrement                            | right to left |
+|   -    | Unary minus                              | right to left |
+|   +    | Unary plus                               | right to left |
+|   *    | Dereference                              | right to left |
+|   &    | Address of                               | right to left |
+| (type) | Cast to a given type                     | right to left |
+| sizeof | Return size in bytes                     | right to left |
++--------+------------------------------------------+---------------+
+|   ->*  | Member pointer selector                  | left to right |
+|   .*   | Member pointer selector                  | left to right |
++--------+------------------------------------------+---------------|
+|   *    | Multiplication                           | left to right |
+|   /    | Division                                 | left to right |
+|   %    | Modulus                                  | left to right |
++--------+------------------------------------------+---------------+
+|   +    | Addition                                 | left to right |
+|   -    | Subtraction                              | left to right |
++--------+------------------------------------------+---------------|
+|   <<   | Bitwise shift left                       | left to right |
+|   >>   | Bitwise shift right                      | left to right |
++--------+------------------------------------------+---------------+
+|   <    | Comparison less-than                     | left to right |
+|   <=   | Comparison less-than-or-equal-to         | left to right |
+|   >    | Comparison greater-than                  | left to right |
+|   >=   | Comparison geater-than-or-equal-to       | left to right |
++--------+------------------------------------------+---------------+
+|   ==   | Comparison equal-to                      | left to right |
+|   !=   | Comparison not-equal-to                  | left to right |
++--------+------------------------------------------+---------------+
+|   &    | Bitwise AND                              | left to right |
++--------+------------------------------------------+---------------+
+|   ^    | Bitwise exclusive OR                     | left to right |
++--------+------------------------------------------+---------------+
+|   |    | Bitwise inclusive (normal) OR            | left to right |
++--------+------------------------------------------+---------------+
+|   &&   | Logical AND                              | left to right |
++--------+------------------------------------------+---------------+
+|   ||   | Logical OR                               | left to right |
++--------+------------------------------------------+---------------+
+|   ? :  | Ternary conditional (if-then-else)       | right to left |
++--------+------------------------------------------+---------------+
+|   =    | Assignment operator                      | right to left |
+|   +=   | Increment and assign                     | right to left |
+|   -=   | Decrement and assign                     | right to left |
+|   *=   | Multiply and assign                      | right to left |
+|   /=   | Divide and assign                        | right to left |
+|   %=   | Modulo and assign                        | right to left |
+|   &=   | Bitwise AND and assign                   | right to left |
+|   ^=   | Bitwise exclusive OR and assign          | right to left |
+|   |=   | Bitwise inclusive (normal) OR and assign | right to left |
+|   <<=  | Bitwise shift left and assign            | right to left |
+|   >>=  | Bitwise shift right and assign           | right to left |
++--------+------------------------------------------+---------------+
+|   ,    | Sequential evaluation operator           | left to right |
++--------+------------------------------------------+---------------+

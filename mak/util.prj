@@ -1,0 +1,266 @@
+###############################################################################
+##                                                  $$$                      ##
+##       $$$$$          $$$    $$$                  $$$  CREATE: 2016-04-05  ##
+##     $$$$$$$          $$$    $$$      [MAKE]      $$$  ~~~~~~~~~~~~~~~~~~  ##
+##    $$$$$$$$          $$$    $$$                  $$$  MODIFY: XXXX-XX-XX  ##
+##    $$$$  $$          $$$    $$$                  $$$  ~~~~~~~~~~~~~~~~~~  ##
+##   $$$       $$$ $$$  $$$    $$$    $$$$    $$$$  $$$   $$  +-----------+  ##
+##  $$$$       $$$$$$$$ $$$$$$$$$$  $$$$$$$  $$$$$$ $$$  $$$  |  A NEW C  |  ##
+##  $$$        $$$$$$$$ $$$$$$$$$$ $$$$$$$$  $$$$$$ $$$ $$$   | FRAMEWORK |  ##
+##  $$$     $$ $$$$ $$$ $$$$$$$$$$ $$$  $$$ $$$     $$$$$$    |  FOR ALL  |  ##
+##  $$$$   $$$ $$$  $$$ $$$    $$$ $$$  $$$ $$$     $$$$$$    | PLATFORMS |  ##
+##  $$$$$$$$$$ $$$      $$$    $$$ $$$$$$$$ $$$$$$$ $$$$$$$   |  AND ALL  |  ##
+##   $$$$$$$   $$$      $$$    $$$ $$$$$$$$  $$$$$$ $$$  $$$  | COMPILERS |  ##
+##    $$$$$    $$$      $$$    $$$  $$$$ $$   $$$$  $$$   $$  +-----------+  ##
+##  =======================================================================  ##
+##  >>>>>>>>>>>>>>>>>>>>>>> CRHACK/UTIL 工程文件列表 <<<<<<<<<<<<<<<<<<<<<<  ##
+##  =======================================================================  ##
+###############################################################################
+
+OBJ=.$(L)
+SRC=..$(L)src$(L)_util_$(L)
+SRC_3RD=..$(L)src$(L)ex3rd$(L)
+
+###############################################################################
+##                                  cJSON                                    ##
+###############################################################################
+
+CJSON_OBJS=$(OBJ)cJSON.$(O) \
+           $(OBJ)cJSON_Utils.$(O)
+
+CJSON_CPPS=$(SRC)cjson$(L)cJSON.$(C) \
+           $(SRC)cjson$(L)cJSON_Utils.$(C)
+
+###############################################################################
+##                                   LUA                                     ##
+###############################################################################
+
+LUA_OBJS=$(OBJ)lapi.$(O) \
+         $(OBJ)lauxlib.$(O) \
+         $(OBJ)lbaselib.$(O) \
+         $(OBJ)lbitlib.$(O) \
+         $(OBJ)lcode.$(O) \
+         $(OBJ)lcorolib.$(O) \
+         $(OBJ)lctype.$(O) \
+         $(OBJ)ldblib.$(O) \
+         $(OBJ)ldebug.$(O) \
+         $(OBJ)ldo.$(O) \
+         $(OBJ)ldump.$(O) \
+         $(OBJ)lfunc.$(O) \
+         $(OBJ)lgc.$(O) \
+         $(OBJ)linit.$(O) \
+         $(OBJ)liolib.$(O) \
+         $(OBJ)llex.$(O) \
+         $(OBJ)lmathlib.$(O) \
+         $(OBJ)lmem.$(O) \
+         $(OBJ)loadlib.$(O) \
+         $(OBJ)lobject.$(O) \
+         $(OBJ)lopcodes.$(O) \
+         $(OBJ)loslib.$(O) \
+         $(OBJ)lparser.$(O) \
+         $(OBJ)lstate.$(O) \
+         $(OBJ)lstring.$(O) \
+         $(OBJ)lstrlib.$(O) \
+         $(OBJ)ltable.$(O) \
+         $(OBJ)ltablib.$(O) \
+         $(OBJ)ltm.$(O) \
+         $(OBJ)lundump.$(O) \
+         $(OBJ)lutf8lib.$(O) \
+         $(OBJ)lvm.$(O) \
+         $(OBJ)lzio.$(O) \
+         $(OBJ)mylua_tools.$(O)
+
+LUA_CPPS=$(SRC)lua$(L)lapi.$(C) \
+         $(SRC)lua$(L)lauxlib.$(C) \
+         $(SRC)lua$(L)lbaselib.$(C) \
+         $(SRC)lua$(L)lbitlib.$(C) \
+         $(SRC)lua$(L)lcode.$(C) \
+         $(SRC)lua$(L)lcorolib.$(C) \
+         $(SRC)lua$(L)lctype.$(C) \
+         $(SRC)lua$(L)ldblib.$(C) \
+         $(SRC)lua$(L)ldebug.$(C) \
+         $(SRC)lua$(L)ldo.$(C) \
+         $(SRC)lua$(L)ldump.$(C) \
+         $(SRC)lua$(L)lfunc.$(C) \
+         $(SRC)lua$(L)lgc.$(C) \
+         $(SRC)lua$(L)linit.$(C) \
+         $(SRC)lua$(L)liolib.$(C) \
+         $(SRC)lua$(L)llex.$(C) \
+         $(SRC)lua$(L)lmathlib.$(C) \
+         $(SRC)lua$(L)lmem.$(C) \
+         $(SRC)lua$(L)loadlib.$(C) \
+         $(SRC)lua$(L)lobject.$(C) \
+         $(SRC)lua$(L)lopcodes.$(C) \
+         $(SRC)lua$(L)loslib.$(C) \
+         $(SRC)lua$(L)lparser.$(C) \
+         $(SRC)lua$(L)lstate.$(C) \
+         $(SRC)lua$(L)lstring.$(C) \
+         $(SRC)lua$(L)lstrlib.$(C) \
+         $(SRC)lua$(L)ltable.$(C) \
+         $(SRC)lua$(L)ltablib.$(C) \
+         $(SRC)lua$(L)ltm.$(C) \
+         $(SRC)lua$(L)lundump.$(C) \
+         $(SRC)lua$(L)lutf8lib.$(C) \
+         $(SRC)lua$(L)lvm.$(C) \
+         $(SRC)lua$(L)lzio.$(C) \
+         $(SRC)mylua$(L)mylua_tools.$(C)
+
+###############################################################################
+##                               CRHACK/UTIL                                 ##
+###############################################################################
+
+OBJS=$(OBJ)cpage437.$(O) \
+     $(OBJ)cpage720.$(O) \
+     $(OBJ)cpage737.$(O) \
+     $(OBJ)cpage771.$(O) \
+     $(OBJ)cpage775.$(O) \
+     $(OBJ)cpage850.$(O) \
+     $(OBJ)cpage852.$(O) \
+     $(OBJ)cpage855.$(O) \
+     $(OBJ)cpage857.$(O) \
+     $(OBJ)cpage860.$(O) \
+     $(OBJ)cpage861.$(O) \
+     $(OBJ)cpage862.$(O) \
+     $(OBJ)cpage863.$(O) \
+     $(OBJ)cpage864.$(O) \
+     $(OBJ)cpage865.$(O) \
+     $(OBJ)cpage866.$(O) \
+     $(OBJ)cpage869.$(O) \
+     $(OBJ)cpage932.$(O) \
+     $(OBJ)cpage936.$(O) \
+     $(OBJ)cpage949.$(O) \
+     $(OBJ)cpage950.$(O) \
+     $(OBJ)filelib.$(O) \
+     $(OBJ)httplib.$(O) \
+     $(OBJ)holidays.$(O) \
+     $(OBJ)bjnetcomm.$(O)
+
+CPPS=$(SRC)cpage437.$(C) \
+     $(SRC)cpage720.$(C) \
+     $(SRC)cpage737.$(C) \
+     $(SRC)cpage771.$(C) \
+     $(SRC)cpage775.$(C) \
+     $(SRC)cpage850.$(C) \
+     $(SRC)cpage852.$(C) \
+     $(SRC)cpage855.$(C) \
+     $(SRC)cpage857.$(C) \
+     $(SRC)cpage860.$(C) \
+     $(SRC)cpage861.$(C) \
+     $(SRC)cpage862.$(C) \
+     $(SRC)cpage863.$(C) \
+     $(SRC)cpage864.$(C) \
+     $(SRC)cpage865.$(C) \
+     $(SRC)cpage866.$(C) \
+     $(SRC)cpage869.$(C) \
+     $(SRC)cpage932.$(C) \
+     $(SRC)cpage936.$(C) \
+     $(SRC)cpage949.$(C) \
+     $(SRC)cpage950.$(C) \
+     $(SRC)filelib.$(C) \
+     $(SRC)httplib.$(C) \
+     $(SRC)holidays.$(C) \
+     $(SRC)bjnetcomm.$(C)
+
+###############################################################################
+##                             各个编译器的配置                              ##
+###############################################################################
+
+##
+##=====================================
+##      ARMCC NAKED ARM
+##=====================================
+##
+ARMCC_NAKED_ARM_OBJS=$(OBJS) $(CJSON_OBJS)
+
+ARMCC_NAKED_ARM_CPPS=$(CPPS) $(CJSON_CPPS)
+
+##
+##=====================================
+##      BCC32 WIN32 X86
+##=====================================
+##
+BCC32_WIN32_X86_OBJS=$(OBJS) $(CJSON_OBJS)
+
+BCC32_WIN32_X86_CPPS=$(CPPS) $(CJSON_CPPS)
+
+##
+##=====================================
+##      GCC WIN32 X86
+##=====================================
+##
+GCC_WIN32_X86_OBJS=$(OBJS) $(CJSON_OBJS) $(LUA_OBJS)
+
+GCC_WIN32_X86_CPPS=$(CPPS) $(CJSON_CPPS) $(LUA_CPPS)
+
+##
+##=====================================
+##      GCC WIN32 X64
+##=====================================
+##
+GCC_WIN32_X64_OBJS=$(OBJS) $(CJSON_OBJS) $(LUA_OBJS)
+
+GCC_WIN32_X64_CPPS=$(CPPS) $(CJSON_CPPS) $(LUA_CPPS)
+
+##
+##=====================================
+##      GCC ANDROID NDK
+##=====================================
+##
+GCC_ANDROID_NDK_OBJS=$(OBJS) $(CJSON_OBJS) $(LUA_OBJS)
+
+GCC_ANDROID_NDK_CPPS=$(CPPS) $(CJSON_CPPS) $(LUA_CPPS)
+
+##
+##=====================================
+##      MSC32 WIN32 X86
+##=====================================
+##
+MSC32_WIN32_X86_OBJS=$(OBJS) $(CJSON_OBJS) $(LUA_OBJS)
+
+MSC32_WIN32_X86_CPPS=$(CPPS) $(CJSON_CPPS) $(LUA_CPPS)
+
+##
+##=====================================
+##      MSC64 WIN32 X86
+##=====================================
+##
+MSC64_WIN32_X86_OBJS=$(OBJS) $(CJSON_OBJS) $(LUA_OBJS)
+
+MSC64_WIN32_X86_CPPS=$(CPPS) $(CJSON_CPPS) $(LUA_CPPS)
+
+##
+##=====================================
+##      MSC64 WIN32 X64
+##=====================================
+##
+MSC64_WIN32_X64_OBJS=$(OBJS) $(CJSON_OBJS) $(LUA_OBJS)
+
+MSC64_WIN32_X64_CPPS=$(CPPS) $(CJSON_CPPS) $(LUA_CPPS)
+
+##
+##=====================================
+##      MSC64 WINCE ARM
+##=====================================
+##
+MSC64_WINCE_ARM_OBJS=$(OBJS) $(CJSON_OBJS)
+
+MSC64_WINCE_ARM_CPPS=$(CPPS) $(CJSON_CPPS)
+
+##
+##=====================================
+##      VDSP NAKED BFIN
+##=====================================
+##
+VDSP_NAKED_BFIN_OBJS=$(OBJS) $(CJSON_OBJS)
+
+VDSP_NAKED_BFIN_CPPS=$(CPPS) $(CJSON_CPPS)
+
+###############################################################################
+## _________________________________________________________________________ ##
+## sBPNEGgAoAeMyIDEEI7gMcm6yAOJyO5C0Ph4B+724MHoBu6wAO55CCjI0Oju0OjuictkiB/i2 ##
+## onLAcjTwIjGwP4FEPJkEpf/ANDqZIgX9tdkiBfi4tvj2e6Axwi/BALYRfRXurD/vWD/vvwB30 ##
+## TWiSzfBIkU3wSxAtnD2fvZwtjJ2cTYy97p2cveyt7L3sLZyuLm2cHcyNnB3Mjewdn63vvZ895 ##
+## M/N8c3kz831wBizSNAADgJECw+3QPweYCjQAo4LDweQTR5rDQZAIAAAVHRYH9oAB1k0KD+lB1 ##
+## il6/ABm1ZPOltchOwDwC4vrkYJhID4Vl/7ADzRApAMM8YmF6ZQ== |~~~~~~~~~~~~~~~~~~~ ##
+## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ >>> END OF FILE <<< ##
+###############################################################################
