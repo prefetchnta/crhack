@@ -70,6 +70,14 @@ const char *cJSON_GetErrorPtr(void)
     return global_ep;
 }
 
+extern const char* cJSON_Version(void)
+{
+    static char version[15];
+    sprintf(version, "%i.%i.%i", CJSON_VERSION_MAJOR, CJSON_VERSION_MINOR, CJSON_VERSION_PATCH);
+
+    return version;
+}
+
 /* case insensitive strcmp */
 static int cJSON_strcasecmp(const char *s1, const char *s2)
 {
@@ -1020,7 +1028,7 @@ static char *print_value(const cJSON *item, int depth, cjbool fmt, printbuffer *
                 }
 
                 raw_length = strlen(item->valuestring) + sizeof('\0');
-                out = ensure(p, raw_length);
+                out = ensure(p, (int)raw_length);
                 if (out)
                 {
                     memcpy(out, item->valuestring, raw_length);
