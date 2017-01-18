@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-IOSSDK_VER=10.0
+IOSSDK_VER=$1
 xcodebuild -project CrHack.xcodeproj -target CrHack -configuration Release -sdk iphoneos${IOSSDK_VER} build
 xcodebuild -project CrHack.xcodeproj -target CrHack -configuration Release -sdk iphonesimulator${IOSSDK_VER} build
 cd build
