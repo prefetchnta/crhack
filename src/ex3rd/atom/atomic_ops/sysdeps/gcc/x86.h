@@ -27,11 +27,13 @@
 # if defined(__clang__) \
      && (!(defined(__x86_64__) || defined(__APPLE_CC__) \
            || defined(__CYGWIN__) || defined(AO_PREFER_BUILTIN_ATOMICS)) \
-         || (defined(AO_ADDRESS_SANITIZER) && defined(__x86_64__) \
-             && !defined(__ILP32__)))
+         || (defined(__x86_64__) && !defined(__ILP32__) \
+             && ((__clang_major__ == 3 && __clang_minor__ == 4 \
+                   && !defined(AO_PREFER_BUILTIN_ATOMICS)) \
+                 || defined(AO_ADDRESS_SANITIZER))))
     /* As of clang-3.8 i686 (NDK r11c), it requires -latomic for all    */
-    /* the double-wide operations.  For now, we fall back to the        */
-    /* non-intrinsic implementation by default.                         */
+    /* the double-wide operations.  Same for clang-3.4/x64.  For now,   */
+    /* we fall back to the non-intrinsic implementation by default.     */
     /* As of clang-3.8, double-wide arguments are incorrectly passed to */
     /* atomic intrinsic operations for x64 target if ASan is enabled.   */
 #   define AO_SKIPATOMIC_double_compare_and_swap_ANY
@@ -411,8 +413,10 @@ AO_fetch_compare_and_swap_full(volatile AO_t *addr, AO_t old_val,
   /* Reading or writing a quadword aligned on a 64-bit boundary is      */
   /* always carried out atomically on at least a Pentium according to   */
   /* Chapter 8.1.1 of Volume 3A Part 1 of Intel processor manuals.      */
-# define AO_ACCESS_double_CHECK_ALIGNED
-# include "../loadstore/double_atomic_load_store.h"
+# ifndef AO_PREFER_GENERALIZED
+#   define AO_ACCESS_double_CHECK_ALIGNED
+#   include "../loadstore/double_atomic_load_store.h"
+# endif
 
   /* Returns nonzero if the comparison succeeded.       */
   /* Really requires at least a Pentium.                */
@@ -481,8 +485,10 @@ AO_fetch_compare_and_swap_full(volatile AO_t *addr, AO_t old_val,
 
   /* Reading or writing a quadword aligned on a 64-bit boundary is      */
   /* always carried out atomically (requires at least a Pentium).       */
-# define AO_ACCESS_double_CHECK_ALIGNED
-# include "../loadstore/double_atomic_load_store.h"
+# ifndef AO_PREFER_GENERALIZED
+#   define AO_ACCESS_double_CHECK_ALIGNED
+#   include "../loadstore/double_atomic_load_store.h"
+# endif
 
   /* X32 has native support for 64-bit integer operations (AO_double_t  */
   /* is a 64-bit integer and we could use 64-bit cmpxchg).              */

@@ -32,7 +32,7 @@
 #   if defined(__clang__)
 #     pragma GCC diagnostic ignored "-Wpedantic"
 #   else
-      /* GCC before ~4.8 does not accept "-Wpedanic" quietly.     */
+      /* GCC before ~4.8 does not accept "-Wpedantic" quietly.  */
 #     pragma GCC diagnostic ignored "-pedantic"
 #   endif
     typedef unsigned __int128 double_ptr_storage;
@@ -50,24 +50,13 @@
   typedef __m128 double_ptr_storage;
 #elif defined(_WIN32) && !defined(__GNUC__)
   typedef unsigned __int64 double_ptr_storage;
-# ifdef _MSC_VER
-    /* VC++/x86 does not align __int64 properly by default, thus,       */
-    /* causing an undefined behavior or assertions violation in         */
-    /* the double-wide atomic primitives.  For the proper alignment,    */
-    /* all variables of AO_double_t type (in the client code) those     */
-    /* address is passed to an AO primitive should be defined with the  */
-    /* given attribute.  Not a part of double_ptr_storage because the   */
-    /* attribute cannot be applied to function parameters.              */
-#   define AO_DOUBLE_ALIGN __declspec(align(8))
-# endif
+#elif defined(__i386__) && defined(__GNUC__)
+  typedef unsigned long long double_ptr_storage
+                                __attribute__((__aligned__(8)));
 #else
   typedef unsigned long long double_ptr_storage;
 #endif
 # define AO_HAVE_DOUBLE_PTR_STORAGE
-
-#ifndef AO_DOUBLE_ALIGN
-# define AO_DOUBLE_ALIGN /* empty */
-#endif
 
 typedef union {
     struct { AO_t AO_v1; AO_t AO_v2; } AO_parts;
@@ -80,6 +69,11 @@ typedef union {
         /* to a structure or array/vector).                             */
 } AO_double_t;
 #define AO_HAVE_double_t
+
+/* Note: AO_double_t volatile variables are not intended to be local    */
+/* ones (at least those which are passed to AO double-wide primitives   */
+/* as the first argument), otherwise it is the client responsibility to */
+/* ensure they have double-word alignment.                              */
 
 /* Dummy declaration as a compile-time assertion for AO_double_t size.  */
 struct AO_double_t_size_static_assert {
