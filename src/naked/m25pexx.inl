@@ -34,7 +34,7 @@
 #define M25PEXX_PAGEP   0x02    /* 写入内存内容 */
 #define M25PEXX_PAGEE   0xDB    /* 数据页的擦除 */
 #define M25PEXX_SSECE   0x20    /* 小扇区的擦除 */
-#define M25PEXX_BSECE   0xD8    /* 大扇区的擦除 */
+#define M25PEXX_BSECE   0xD8    /* 大区块的擦除 */
 #define M25PEXX_BULKE   0xC7    /* 全芯片的擦除 */
 #define M25PEXX_DDOWN   0xB9    /* 进入掉电模式 */
 #define M25PEXX_RDOWN   0xAB    /* 退出掉电模式 */
@@ -86,12 +86,12 @@ m25pexx_lock (void_t)
 */
 CR_API void_t
 m25pexx_read_id (
-  __CR_OT__ void_t* id
+  __CR_OT__ sM25PEXX*   id
     )
 {
     byte_t  cmd = M25PEXX_RDID;
 
-    spi_send_recv(id, M25PEXX_ID_LEN, &cmd, 1);
+    spi_send_recv(id, 3, &cmd, 1);
 }
 
 #endif  /* !__no_m25pexx_read_id */
@@ -148,7 +148,7 @@ m25pexx_wait_idle (
 CR_API retc_t
 m25pexx_set_status (
   __CR_IN__ byte_t  status,
-  __CR_IN__ uint_t  t1ms
+  __CR_IN__ uint_t  timeout
     )
 {
     byte_t  cmd[2];
@@ -157,7 +157,7 @@ m25pexx_set_status (
     cmd[1] = status;
     m25pexx_unlock();
     spi_send_data(cmd, 2);
-    return (m25pexx_wait_idle(t1ms));
+    return (m25pexx_wait_idle(timeout));
 }
 
 #endif  /* !__no_m25pexx_set_status */
@@ -198,7 +198,7 @@ CR_API retc_t
 m25pexx_set_rlock (
   __CR_IN__ spi_addr_t  addr,
   __CR_IN__ byte_t      rlock,
-  __CR_IN__ uint_t      t1ms
+  __CR_IN__ uint_t      tout
     )
 {
     byte_t  cmd[5];
@@ -212,7 +212,7 @@ m25pexx_set_rlock (
     cmd[4] = rlock;
     m25pexx_unlock();
     spi_send_data(cmd, 5);
-    return (m25pexx_wait_idle(t1ms));
+    return (m25pexx_wait_idle(tout));
 }
 
 #endif  /* !__no_m25pexx_set_rlock */
@@ -289,7 +289,7 @@ m25pexx_fread (
 CR_API retc_t
 m25pexx_page_erase (
   __CR_IN__ spi_addr_t  addr,
-  __CR_IN__ uint_t      t10ms
+  __CR_IN__ uint_t      tout
     )
 {
     byte_t  cmd[4];
@@ -302,10 +302,46 @@ m25pexx_page_erase (
     cmd[3] = (byte_t)(addr >>  0);
     m25pexx_unlock();
     spi_send_data(cmd, 4);
-    return (m25pexx_wait_idle(t10ms));
+    return (m25pexx_wait_idle(tout));
 }
 
 #endif  /* !__no_m25pexx_page_erase */
+
+#if !defined(__no_m25pexx_ssec_erase) || \
+    !defined(__no_m25pexx_bsec_erase)
+/*
+---------------------------------------
+    M25PEXX 扇区擦除 (内部)
+---------------------------------------
+*/
+static retc_t
+m25pexx_sector_erase (
+  __CR_IN__ byte_t      type,
+  __CR_IN__ spi_addr_t  addr,
+  __CR_IN__ uint_t      time,
+  __CR_IN__ uint_t      tout
+    )
+{
+    byte_t  cmd[4];
+
+    if (addr >= _SPI_SIZE_)
+        return (FALSE);
+    if (time == 0) time = 1;
+    cmd[0] = type;
+    cmd[1] = (byte_t)(addr >> 16);
+    cmd[2] = (byte_t)(addr >>  8);
+    cmd[3] = (byte_t)(addr >>  0);
+    m25pexx_unlock();
+    spi_send_data(cmd, 4);
+    for (; time != 0; time--) {
+        if (m25pexx_wait_idle(tout))
+            return (TRUE);
+    }
+    return (FALSE);
+}
+
+#endif  /* !__no_m25pexx_ssec_erase ||
+           !__no_m25pexx_bsec_erase */
 
 #if !defined(__no_m25pexx_ssec_erase)
 /*
@@ -317,25 +353,10 @@ CR_API retc_t
 m25pexx_ssec_erase (
   __CR_IN__ spi_addr_t  addr,
   __CR_IN__ uint_t      time,
-  __CR_IN__ uint_t      t1s
+  __CR_IN__ uint_t      tout
     )
 {
-    byte_t  cmd[4];
-
-    if (addr >= _SPI_SIZE_)
-        return (FALSE);
-    if (time == 0) time = 1;
-    cmd[0] = M25PEXX_SSECE;
-    cmd[1] = (byte_t)(addr >> 16);
-    cmd[2] = (byte_t)(addr >>  8);
-    cmd[3] = (byte_t)(addr >>  0);
-    m25pexx_unlock();
-    spi_send_data(cmd, 4);
-    for (; time != 0; time--) {
-        if (m25pexx_wait_idle(t1s))
-            return (TRUE);
-    }
-    return (FALSE);
+    return (m25pexx_sector_erase(M25PEXX_SSECE, addr, time, tout));
 }
 
 #endif  /* !__no_m25pexx_ssec_erase */
@@ -343,32 +364,17 @@ m25pexx_ssec_erase (
 #if !defined(__no_m25pexx_bsec_erase)
 /*
 =======================================
-    M25PEXX 大扇区擦除
+    M25PEXX 大区块擦除
 =======================================
 */
 CR_API retc_t
 m25pexx_bsec_erase (
   __CR_IN__ spi_addr_t  addr,
   __CR_IN__ uint_t      time,
-  __CR_IN__ uint_t      t5s
+  __CR_IN__ uint_t      tout
     )
 {
-    byte_t  cmd[4];
-
-    if (addr >= _SPI_SIZE_)
-        return (FALSE);
-    if (time == 0) time = 1;
-    cmd[0] = M25PEXX_BSECE;
-    cmd[1] = (byte_t)(addr >> 16);
-    cmd[2] = (byte_t)(addr >>  8);
-    cmd[3] = (byte_t)(addr >>  0);
-    m25pexx_unlock();
-    spi_send_data(cmd, 4);
-    for (; time != 0; time--) {
-        if (m25pexx_wait_idle(t5s))
-            return (TRUE);
-    }
-    return (FALSE);
+    return (m25pexx_sector_erase(M25PEXX_BSECE, addr, time, tout));
 }
 
 #endif  /* !__no_m25pexx_bsec_erase */
@@ -382,7 +388,7 @@ m25pexx_bsec_erase (
 CR_API retc_t
 m25pexx_bulk_erase (
   __CR_IN__ uint_t  time,
-  __CR_IN__ uint_t  t10s
+  __CR_IN__ uint_t  tout
     )
 {
     byte_t  cmd;
@@ -392,7 +398,7 @@ m25pexx_bulk_erase (
     m25pexx_unlock();
     spi_send_data(&cmd, 1);
     for (; time != 0; time--) {
-        if (m25pexx_wait_idle(t10s))
+        if (m25pexx_wait_idle(tout))
             return (TRUE);
     }
     return (FALSE);
@@ -411,7 +417,7 @@ m25pexx_page_write (
   __CR_IN__ spi_addr_t      addr,
   __CR_IN__ const void_t*   data,
   __CR_IN__ spi_leng_t      size,
-  __CR_IN__ uint_t          t11ms
+  __CR_IN__ uint_t          tout
     )
 {
     byte_t  cmd[4];
@@ -422,7 +428,7 @@ m25pexx_page_write (
     cmd[3] = (byte_t)(addr >>  0);
     m25pexx_unlock();
     spi_send_send(cmd, 4, data, size);
-    return (m25pexx_wait_idle(t11ms));
+    return (m25pexx_wait_idle(tout));
 }
 
 /*
@@ -435,7 +441,7 @@ m25pexx_write (
   __CR_IN__ spi_addr_t      addr,
   __CR_IN__ const void_t*   data,
   __CR_IN__ spi_leng_t      size,
-  __CR_IN__ uint_t          t11ms
+  __CR_IN__ uint_t          tout
     )
 {
     byte_t*     ptr;
@@ -452,11 +458,11 @@ m25pexx_write (
     ptr = (byte_t*)data;
     rst = (spi_page_t)(_SPI_PAGE_ - addr % _SPI_PAGE_);
     if (rst >= size) {
-        if (!m25pexx_page_write(addr, ptr, size, t11ms))
+        if (!m25pexx_page_write(addr, ptr, size, tout))
             return (0);
         return (size);
     }
-    if (!m25pexx_page_write(addr, ptr, rst, t11ms))
+    if (!m25pexx_page_write(addr, ptr, rst, tout))
         return (0);
     ptr  += rst;
     addr += rst;
@@ -466,7 +472,7 @@ m25pexx_write (
     /* 分块和尾部 */
     blk = (spi_blks_t)(size / _SPI_PAGE_);
     for (; blk != 0; blk--) {
-        if (!m25pexx_page_write(addr, ptr, _SPI_PAGE_, t11ms))
+        if (!m25pexx_page_write(addr, ptr, _SPI_PAGE_, tout))
             return (total);
         ptr   += _SPI_PAGE_;
         addr  += _SPI_PAGE_;
@@ -474,7 +480,7 @@ m25pexx_write (
     }
     rst = (spi_page_t)(size % _SPI_PAGE_);
     if (rst != 0) {
-        if (!m25pexx_page_write(addr, ptr, rst, t11ms))
+        if (!m25pexx_page_write(addr, ptr, rst, tout))
             return (total);
         total += rst;
     }
@@ -494,7 +500,7 @@ m25pexx_page_prog (
   __CR_IN__ spi_addr_t      addr,
   __CR_IN__ const void_t*   data,
   __CR_IN__ spi_leng_t      size,
-  __CR_IN__ uint_t          t5ms
+  __CR_IN__ uint_t          tout
     )
 {
     byte_t  cmd[4];
@@ -505,7 +511,7 @@ m25pexx_page_prog (
     cmd[3] = (byte_t)(addr >>  0);
     m25pexx_unlock();
     spi_send_send(cmd, 4, data, size);
-    return (m25pexx_wait_idle(t5ms));
+    return (m25pexx_wait_idle(tout));
 }
 
 /*
@@ -518,7 +524,7 @@ m25pexx_program (
   __CR_IN__ spi_addr_t      addr,
   __CR_IN__ const void_t*   data,
   __CR_IN__ spi_leng_t      size,
-  __CR_IN__ uint_t          t5ms
+  __CR_IN__ uint_t          tout
     )
 {
     byte_t*     ptr;
@@ -535,11 +541,11 @@ m25pexx_program (
     ptr = (byte_t*)data;
     rst = (spi_page_t)(_SPI_PAGE_ - addr % _SPI_PAGE_);
     if (rst >= size) {
-        if (!m25pexx_page_prog(addr, ptr, size, t5ms))
+        if (!m25pexx_page_prog(addr, ptr, size, tout))
             return (0);
         return (size);
     }
-    if (!m25pexx_page_prog(addr, ptr, rst, t5ms))
+    if (!m25pexx_page_prog(addr, ptr, rst, tout))
         return (0);
     ptr  += rst;
     addr += rst;
@@ -549,7 +555,7 @@ m25pexx_program (
     /* 分块和尾部 */
     blk = (spi_blks_t)(size / _SPI_PAGE_);
     for (; blk != 0; blk--) {
-        if (!m25pexx_page_prog(addr, ptr, _SPI_PAGE_, t5ms))
+        if (!m25pexx_page_prog(addr, ptr, _SPI_PAGE_, tout))
             return (total);
         ptr   += _SPI_PAGE_;
         addr  += _SPI_PAGE_;
@@ -557,7 +563,7 @@ m25pexx_program (
     }
     rst = (spi_page_t)(size % _SPI_PAGE_);
     if (rst != 0) {
-        if (!m25pexx_page_prog(addr, ptr, rst, t5ms))
+        if (!m25pexx_page_prog(addr, ptr, rst, tout))
             return (total);
         total += rst;
     }

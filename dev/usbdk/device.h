@@ -30,12 +30,12 @@
 CR_API void_t   k9f1208c_get_devid (sK9F1208C *devid);
 CR_API retc_t   k9f1208c_page_read (int32u apage, void_t *buffer);
 CR_API retc_t   k9f1208c_page_write (int32u apage, const void_t *buffer,
-                                     uint_t t500us);
+                                     uint_t timeout);
 CR_API retc_t   k9f1208c_csec_read (int32u apage, void_t *buffer);
 CR_API retc_t   k9f1208c_csec_write (int32u apage, const void_t *buffer,
-                                     uint_t t500us);
+                                     uint_t timeout);
 CR_API retc_t   k9f1208c_block_check (uint_t ablock, int32u *page_addr);
-CR_API retc_t   k9f1208c_block_erase (uint_t ablock, uint_t t2ms);
+CR_API retc_t   k9f1208c_block_erase (uint_t ablock, uint_t timeout);
 
 /*****************************************************************************/
 /*                               储存器1读写                                 */

@@ -38,7 +38,7 @@ CR_API byte_t   x5045_get_status (void_t);
 CR_API retc_t   x5045_wait_idle (uint_t times);
 CR_API leng_t   x5045_read (int16u addr, void_t *data, leng_t size);
 CR_API leng_t   x5045_write (int16u addr, const void_t *data,
-                             leng_t size, uint_t t5ms);
+                             leng_t size, uint_t tout);
 
 /*****************************************************************************/
 /*                                 TLC5615                                   */

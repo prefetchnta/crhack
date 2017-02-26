@@ -13,7 +13,7 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>>> CrHack XICOR X5XXX 驱动函数库模板 <<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>>>>>> CrHack X5XXX 驱动函数库模板 <<<<<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
@@ -174,7 +174,7 @@ x5xxx_wait_idle (
 CR_API retc_t
 x5xxx_set_status (
   __CR_IN__ byte_t  status,
-  __CR_IN__ uint_t  t5ms
+  __CR_IN__ uint_t  timeout
     )
 {
     byte_t  cmd[2];
@@ -183,7 +183,7 @@ x5xxx_set_status (
     cmd[1] = status;
     x5xxx_unlock();
     spi_send_data(cmd, 2);
-    return (x5xxx_wait_idle(t5ms));
+    return (x5xxx_wait_idle(timeout));
 }
 
 #endif  /* !__no_x5xxx_set_status */
@@ -235,7 +235,7 @@ x5xxx_page_write (
   __CR_IN__ spi_addr_t      addr,
   __CR_IN__ const void_t*   data,
   __CR_IN__ spi_leng_t      size,
-  __CR_IN__ uint_t          t5ms
+  __CR_IN__ uint_t          tout
     )
 {
     byte_t  cmd[3];
@@ -253,7 +253,7 @@ x5xxx_page_write (
     x5xxx_unlock();
     spi_send_send(cmd, 3, data, size);
 #endif
-    return (x5xxx_wait_idle(t5ms));
+    return (x5xxx_wait_idle(tout));
 }
 
 /*
@@ -266,7 +266,7 @@ x5xxx_write (
   __CR_IN__ spi_addr_t      addr,
   __CR_IN__ const void_t*   data,
   __CR_IN__ spi_leng_t      size,
-  __CR_IN__ uint_t          t5ms
+  __CR_IN__ uint_t          tout
     )
 {
     byte_t*     ptr;
@@ -283,11 +283,11 @@ x5xxx_write (
     ptr = (byte_t*)data;
     rst = (spi_page_t)(_SPI_PAGE_ - addr % _SPI_PAGE_);
     if (rst >= size) {
-        if (!x5xxx_page_write(addr, ptr, size, t5ms))
+        if (!x5xxx_page_write(addr, ptr, size, tout))
             return (0);
         return (size);
     }
-    if (!x5xxx_page_write(addr, ptr, rst, t5ms))
+    if (!x5xxx_page_write(addr, ptr, rst, tout))
         return (0);
     ptr  += rst;
     addr += rst;
@@ -297,7 +297,7 @@ x5xxx_write (
     /* 分块和尾部 */
     blk = (spi_blks_t)(size / _SPI_PAGE_);
     for (; blk != 0; blk--) {
-        if (!x5xxx_page_write(addr, ptr, _SPI_PAGE_, t5ms))
+        if (!x5xxx_page_write(addr, ptr, _SPI_PAGE_, tout))
             return (total);
         ptr   += _SPI_PAGE_;
         addr  += _SPI_PAGE_;
@@ -305,7 +305,7 @@ x5xxx_write (
     }
     rst = (spi_page_t)(size % _SPI_PAGE_);
     if (rst != 0) {
-        if (!x5xxx_page_write(addr, ptr, rst, t5ms))
+        if (!x5xxx_page_write(addr, ptr, rst, tout))
             return (total);
         total += rst;
     }

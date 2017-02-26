@@ -143,6 +143,42 @@
     #define m25pxx_bsec_erase   m25p32_bsec_erase
     #define m25pxx_bulk_erase   m25p32_bulk_erase
 
+#elif   defined(_CR_USE_ST25P64_)
+
+    #define _SPI_PAGE_              256
+    #define _SPI_SIZE_          CR_M2B(8)
+    #define m25pxx_lock         m25p64_lock
+    #define m25pxx_unlock       m25p64_unlock
+    #define m25pxx_read         m25p64_read
+    #define m25pxx_fread        m25p64_fread
+    #define m25pxx_program      m25p64_program
+    #define m25pxx_pwr_off      m25p64_pwr_off
+    #define m25pxx_pwr_xon      m25p64_pwr_xon
+    #define m25pxx_read_id      m25p64_read_id
+    #define m25pxx_wait_idle    m25p64_wait_idle
+    #define m25pxx_get_status   m25p64_get_status
+    #define m25pxx_set_status   m25p64_set_status
+    #define m25pxx_bsec_erase   m25p64_bsec_erase
+    #define m25pxx_bulk_erase   m25p64_bulk_erase
+
+#elif   defined(_CR_USE_ST25P128_)
+
+    #define _SPI_PAGE_              256
+    #define _SPI_SIZE_          CR_M2B(16)
+    #define m25pxx_lock         m25p128_lock
+    #define m25pxx_unlock       m25p128_unlock
+    #define m25pxx_read         m25p128_read
+    #define m25pxx_fread        m25p128_fread
+    #define m25pxx_program      m25p128_program
+    #define m25pxx_pwr_off      m25p128_pwr_off
+    #define m25pxx_pwr_xon      m25p128_pwr_xon
+    #define m25pxx_read_id      m25p128_read_id
+    #define m25pxx_wait_idle    m25p128_wait_idle
+    #define m25pxx_get_status   m25p128_get_status
+    #define m25pxx_set_status   m25p128_set_status
+    #define m25pxx_bsec_erase   m25p128_bsec_erase
+    #define m25pxx_bulk_erase   m25p128_bulk_erase
+
 #endif  /* chip type predefine */
 
 #if defined(_SPI_SIZE_)

@@ -189,7 +189,7 @@ CR_API retc_t
 k9f1208c_page_write (
   __CR_IN__ int32u          apage,
   __CR_IN__ const void_t*   buffer,
-  __CR_IN__ uint_t          t500us
+  __CR_IN__ uint_t          timeout
     )
 {
     byte_t  state;
@@ -210,7 +210,7 @@ k9f1208c_page_write (
     ibus_data_write(K9F1208C_ADR, val, 4);
     ibus_data_write(K9F1208C_DAT, (byte_t*)buffer, K9F1208C_ABCA_SIZE);
     ibus_data_set(K9F1208C_CMD, K9F1208C_WRITE1);
-    state = k9f1208c_wait_idle(t500us);     /* 读状态寄存器来判断 */
+    state = k9f1208c_wait_idle(timeout);    /* 读状态寄存器来判断 */
     ibus_chip_out();
     return ((state == K9F1208C_IO6) ? TRUE : FALSE);
 }
@@ -261,7 +261,7 @@ CR_API retc_t
 k9f1208c_csec_write (
   __CR_IN__ int32u          apage,
   __CR_IN__ const void_t*   buffer,
-  __CR_IN__ uint_t          t500us
+  __CR_IN__ uint_t          timeout
     )
 {
     byte_t  state;
@@ -282,7 +282,7 @@ k9f1208c_csec_write (
     ibus_data_write(K9F1208C_ADR, val, 4);
     ibus_data_write(K9F1208C_DAT, (byte_t*)buffer, K9F1208C_CSEC_SIZE);
     ibus_data_set(K9F1208C_CMD, K9F1208C_WRITE1);
-    state = k9f1208c_wait_idle(t500us);     /* 读状态寄存器来判断 */
+    state = k9f1208c_wait_idle(timeout);    /* 读状态寄存器来判断 */
     ibus_chip_out();
     return ((state == K9F1208C_IO6) ? TRUE : FALSE);
 }
@@ -335,7 +335,7 @@ k9f1208c_block_check (
 CR_API retc_t
 k9f1208c_block_erase (
   __CR_IN__ uint_t  ablock,
-  __CR_IN__ uint_t  t2ms
+  __CR_IN__ uint_t  timeout
     )
 {
     int32u  apage;
@@ -356,7 +356,7 @@ k9f1208c_block_erase (
     ibus_data_set(K9F1208C_CMD, K9F1208C_ERASE0);
     ibus_data_write(K9F1208C_ADR, val, 3);
     ibus_data_set(K9F1208C_CMD, K9F1208C_ERASE1);
-    state = k9f1208c_wait_idle(t2ms);
+    state = k9f1208c_wait_idle(timeout);
     ibus_chip_out();
     return ((state == K9F1208C_IO6) ? TRUE : FALSE);
 }
@@ -372,7 +372,7 @@ k9f1208c_block_erase (
 CR_API retc_t
 k9f1208c_block_erase_safe (
   __CR_IN__ uint_t  ablock,
-  __CR_IN__ uint_t  t2ms
+  __CR_IN__ uint_t  timeout
     )
 {
     int32u  apage;
@@ -391,7 +391,7 @@ k9f1208c_block_erase_safe (
     ibus_data_set(K9F1208C_CMD, K9F1208C_ERASE0);
     ibus_data_write(K9F1208C_ADR, val, 3);
     ibus_data_set(K9F1208C_CMD, K9F1208C_ERASE1);
-    state = k9f1208c_wait_idle(t2ms);
+    state = k9f1208c_wait_idle(timeout);
     ibus_chip_out();
     return ((state == K9F1208C_IO6) ? TRUE : FALSE);
 }
