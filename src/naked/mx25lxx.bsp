@@ -25,12 +25,11 @@
     #define mx25lxx_unlock          mx25l10_unlock
     #define mx25lxx_read            mx25l10_read
     #define mx25lxx_fread           mx25l10_fread
-    #define mx25lxx_write           mx25l10_write
     #define mx25lxx_program         mx25l10_program
     #define mx25lxx_pwr_off         mx25l10_pwr_off
     #define mx25lxx_pwr_xon         mx25l10_pwr_xon
-    #define mx25lxx_read_id         mx25l10_read_id
-    #define mx25lxx_read_mid        mx25l10_read_mid
+    #define mx25lxx_read_id3        mx25l10_read_id3
+    #define mx25lxx_read_id2        mx25l10_read_id2
     #define mx25lxx_wait_idle       mx25l10_wait_idle
     #define mx25lxx_otp_enter       mx25l10_otp_enter
     #define mx25lxx_otp_leave       mx25l10_otp_leave
@@ -50,12 +49,11 @@
     #define mx25lxx_unlock          mx25l20_unlock
     #define mx25lxx_read            mx25l20_read
     #define mx25lxx_fread           mx25l20_fread
-    #define mx25lxx_write           mx25l20_write
     #define mx25lxx_program         mx25l20_program
     #define mx25lxx_pwr_off         mx25l20_pwr_off
     #define mx25lxx_pwr_xon         mx25l20_pwr_xon
-    #define mx25lxx_read_id         mx25l20_read_id
-    #define mx25lxx_read_mid        mx25l20_read_mid
+    #define mx25lxx_read_id3        mx25l20_read_id3
+    #define mx25lxx_read_id2        mx25l20_read_id2
     #define mx25lxx_wait_idle       mx25l20_wait_idle
     #define mx25lxx_otp_enter       mx25l20_otp_enter
     #define mx25lxx_otp_leave       mx25l20_otp_leave
@@ -75,12 +73,11 @@
     #define mx25lxx_unlock          mx25l40_unlock
     #define mx25lxx_read            mx25l40_read
     #define mx25lxx_fread           mx25l40_fread
-    #define mx25lxx_write           mx25l40_write
     #define mx25lxx_program         mx25l40_program
     #define mx25lxx_pwr_off         mx25l40_pwr_off
     #define mx25lxx_pwr_xon         mx25l40_pwr_xon
-    #define mx25lxx_read_id         mx25l40_read_id
-    #define mx25lxx_read_mid        mx25l40_read_mid
+    #define mx25lxx_read_id3        mx25l40_read_id3
+    #define mx25lxx_read_id2        mx25l40_read_id2
     #define mx25lxx_wait_idle       mx25l40_wait_idle
     #define mx25lxx_otp_enter       mx25l40_otp_enter
     #define mx25lxx_otp_leave       mx25l40_otp_leave
@@ -100,12 +97,11 @@
     #define mx25lxx_unlock          mx25l80_unlock
     #define mx25lxx_read            mx25l80_read
     #define mx25lxx_fread           mx25l80_fread
-    #define mx25lxx_write           mx25l80_write
     #define mx25lxx_program         mx25l80_program
     #define mx25lxx_pwr_off         mx25l80_pwr_off
     #define mx25lxx_pwr_xon         mx25l80_pwr_xon
-    #define mx25lxx_read_id         mx25l80_read_id
-    #define mx25lxx_read_mid        mx25l80_read_mid
+    #define mx25lxx_read_id3        mx25l80_read_id3
+    #define mx25lxx_read_id2        mx25l80_read_id2
     #define mx25lxx_wait_idle       mx25l80_wait_idle
     #define mx25lxx_otp_enter       mx25l80_otp_enter
     #define mx25lxx_otp_leave       mx25l80_otp_leave
@@ -125,12 +121,11 @@
     #define mx25lxx_unlock          mx25l16_unlock
     #define mx25lxx_read            mx25l16_read
     #define mx25lxx_fread           mx25l16_fread
-    #define mx25lxx_write           mx25l16_write
     #define mx25lxx_program         mx25l16_program
     #define mx25lxx_pwr_off         mx25l16_pwr_off
     #define mx25lxx_pwr_xon         mx25l16_pwr_xon
-    #define mx25lxx_read_id         mx25l16_read_id
-    #define mx25lxx_read_mid        mx25l16_read_mid
+    #define mx25lxx_read_id3        mx25l16_read_id3
+    #define mx25lxx_read_id2        mx25l16_read_id2
     #define mx25lxx_wait_idle       mx25l16_wait_idle
     #define mx25lxx_otp_enter       mx25l16_otp_enter
     #define mx25lxx_otp_leave       mx25l16_otp_leave

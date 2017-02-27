@@ -28,8 +28,8 @@
     #define w25xxx_program      w25x10_program
     #define w25xxx_pwr_off      w25x10_pwr_off
     #define w25xxx_pwr_xon      w25x10_pwr_xon
-    #define w25xxx_read_id      w25x10_read_id
-    #define w25xxx_read_mid     w25x10_read_mid
+    #define w25xxx_read_id3     w25x10_read_id3
+    #define w25xxx_read_id2     w25x10_read_id2
     #define w25xxx_wait_idle    w25x10_wait_idle
     #define w25xxx_get_status   w25x10_get_status
     #define w25xxx_set_status   w25x10_set_status
@@ -48,8 +48,8 @@
     #define w25xxx_program      w25x20_program
     #define w25xxx_pwr_off      w25x20_pwr_off
     #define w25xxx_pwr_xon      w25x20_pwr_xon
-    #define w25xxx_read_id      w25x20_read_id
-    #define w25xxx_read_mid     w25x20_read_mid
+    #define w25xxx_read_id3     w25x20_read_id3
+    #define w25xxx_read_id2     w25x20_read_id2
     #define w25xxx_wait_idle    w25x20_wait_idle
     #define w25xxx_get_status   w25x20_get_status
     #define w25xxx_set_status   w25x20_set_status
@@ -68,8 +68,8 @@
     #define w25xxx_program      w25x40_program
     #define w25xxx_pwr_off      w25x40_pwr_off
     #define w25xxx_pwr_xon      w25x40_pwr_xon
-    #define w25xxx_read_id      w25x40_read_id
-    #define w25xxx_read_mid     w25x40_read_mid
+    #define w25xxx_read_id3     w25x40_read_id3
+    #define w25xxx_read_id2     w25x40_read_id2
     #define w25xxx_wait_idle    w25x40_wait_idle
     #define w25xxx_get_status   w25x40_get_status
     #define w25xxx_set_status   w25x40_set_status
@@ -88,8 +88,8 @@
     #define w25xxx_program      w25x80_program
     #define w25xxx_pwr_off      w25x80_pwr_off
     #define w25xxx_pwr_xon      w25x80_pwr_xon
-    #define w25xxx_read_id      w25x80_read_id
-    #define w25xxx_read_mid     w25x80_read_mid
+    #define w25xxx_read_id3     w25x80_read_id3
+    #define w25xxx_read_id2     w25x80_read_id2
     #define w25xxx_wait_idle    w25x80_wait_idle
     #define w25xxx_get_status   w25x80_get_status
     #define w25xxx_set_status   w25x80_set_status
@@ -108,8 +108,8 @@
     #define w25xxx_program      w25x16_program
     #define w25xxx_pwr_off      w25x16_pwr_off
     #define w25xxx_pwr_xon      w25x16_pwr_xon
-    #define w25xxx_read_id      w25x16_read_id
-    #define w25xxx_read_mid     w25x16_read_mid
+    #define w25xxx_read_id3     w25x16_read_id3
+    #define w25xxx_read_id2     w25x16_read_id2
     #define w25xxx_wait_idle    w25x16_wait_idle
     #define w25xxx_get_status   w25x16_get_status
     #define w25xxx_set_status   w25x16_set_status
@@ -128,8 +128,8 @@
     #define w25xxx_program      w25x32_program
     #define w25xxx_pwr_off      w25x32_pwr_off
     #define w25xxx_pwr_xon      w25x32_pwr_xon
-    #define w25xxx_read_id      w25x32_read_id
-    #define w25xxx_read_mid     w25x32_read_mid
+    #define w25xxx_read_id3     w25x32_read_id3
+    #define w25xxx_read_id2     w25x32_read_id2
     #define w25xxx_wait_idle    w25x32_wait_idle
     #define w25xxx_get_status   w25x32_get_status
     #define w25xxx_set_status   w25x32_set_status
@@ -148,8 +148,8 @@
     #define w25xxx_program      w25x64_program
     #define w25xxx_pwr_off      w25x64_pwr_off
     #define w25xxx_pwr_xon      w25x64_pwr_xon
-    #define w25xxx_read_id      w25x64_read_id
-    #define w25xxx_read_mid     w25x64_read_mid
+    #define w25xxx_read_id3     w25x64_read_id3
+    #define w25xxx_read_id2     w25x64_read_id2
     #define w25xxx_wait_idle    w25x64_wait_idle
     #define w25xxx_get_status   w25x64_get_status
     #define w25xxx_set_status   w25x64_set_status

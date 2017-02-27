@@ -19,7 +19,7 @@
 
 #include "i2c_mm.h"
 
-#if !defined(__no_e24cxx_read)
+#if defined(e24cxx_read)
 /*
 =======================================
     读取 24CXX 地址数据
@@ -40,9 +40,9 @@ e24cxx_read (
     return (i2c_read_device(devs, addr, data, size));
 }
 
-#endif  /* !__no_e24cxx_read */
+#endif  /* e24cxx_read */
 
-#if !defined(__no_e24cxx_write)
+#if defined(e24cxx_write)
 /*
 =======================================
     写入 24CXX 地址数据
@@ -110,7 +110,7 @@ e24cxx_write (
 #endif
 }
 
-#endif  /* !__no_e24cxx_write */
+#endif  /* e24cxx_write */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */

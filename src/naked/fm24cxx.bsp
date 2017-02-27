@@ -20,44 +20,74 @@
 #if     defined(_CR_USE_FM24C04_)
 
     #undef  _I2C_PAGE_
-    #define _I2C_SIZE_          512
-    #define e24cxx_read     fm24c04_read
-    #define e24cxx_write    fm24c04_write
+    #define _I2C_SIZE_  512
+
+    #if !defined(__no_fm24c04_read)
+        #define e24cxx_read     fm24c04_read
+    #endif
+    #if !defined(__no_fm24c04_write)
+        #define e24cxx_write    fm24c04_write
+    #endif
 
 #elif   defined(_CR_USE_FM24C16_)
 
     #undef  _I2C_PAGE_
-    #define _I2C_SIZE_      CR_K2B(2)
-    #define e24cxx_read     fm24c16_read
-    #define e24cxx_write    fm24c16_write
+    #define _I2C_SIZE_  CR_K2B(2)
+
+    #if !defined(__no_fm24c16_read)
+        #define e24cxx_read     fm24c16_read
+    #endif
+    #if !defined(__no_fm24c16_write)
+        #define e24cxx_write    fm24c16_write
+    #endif
 
 #elif   defined(_CR_USE_FM24C32_)
 
     #undef  _I2C_PAGE_
-    #define _I2C_SIZE_      CR_K2B(4)
-    #define e24cxx_read     fm24c32_read
-    #define e24cxx_write    fm24c32_write
+    #define _I2C_SIZE_  CR_K2B(4)
+
+    #if !defined(__no_fm24c32_read)
+        #define e24cxx_read     fm24c32_read
+    #endif
+    #if !defined(__no_fm24c32_write)
+        #define e24cxx_write    fm24c32_write
+    #endif
 
 #elif   defined(_CR_USE_FM24C64_)
 
     #undef  _I2C_PAGE_
-    #define _I2C_SIZE_      CR_K2B(8)
-    #define e24cxx_read     fm24c64_read
-    #define e24cxx_write    fm24c64_write
+    #define _I2C_SIZE_  CR_K2B(8)
+
+    #if !defined(__no_fm24c64_read)
+        #define e24cxx_read     fm24c64_read
+    #endif
+    #if !defined(__no_fm24c64_write)
+        #define e24cxx_write    fm24c64_write
+    #endif
 
 #elif   defined(_CR_USE_FM24C256_)
 
     #undef  _I2C_PAGE_
-    #define _I2C_SIZE_      CR_K2B(32)
-    #define e24cxx_read     fm24c256_read
-    #define e24cxx_write    fm24c256_write
+    #define _I2C_SIZE_  CR_K2B(32)
+
+    #if !defined(__no_fm24c256_read)
+        #define e24cxx_read     fm24c256_read
+    #endif
+    #if !defined(__no_fm24c256_write)
+        #define e24cxx_write    fm24c256_write
+    #endif
 
 #elif   defined(_CR_USE_FM24C512_)
 
     #undef  _I2C_PAGE_
-    #define _I2C_SIZE_      CR_K2B(64)
-    #define e24cxx_read     fm24c512_read
-    #define e24cxx_write    fm24c512_write
+    #define _I2C_SIZE_  CR_K2B(64)
+
+    #if !defined(__no_fm24c512_read)
+        #define e24cxx_read     fm24c512_read
+    #endif
+    #if !defined(__no_fm24c512_write)
+        #define e24cxx_write    fm24c512_write
+    #endif
 
 #endif  /* chip type predefine */
 
