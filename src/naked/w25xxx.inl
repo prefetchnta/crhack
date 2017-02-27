@@ -45,7 +45,7 @@
     #define e25cxx_set_status   w25xxx_set_status
 #endif
 #if !defined(__no_w25xxx_read)
-    #define e25cxx_read         e25cxx_read
+    #define e25cxx_read         w25xxx_read
 #endif
 #if !defined(__no_w25xxx_fread)
     #define e25cxx_fread        w25xxx_fread

@@ -57,10 +57,10 @@
     #define e25cxx_page_prog    m25pxx_page_prog
 #endif
 #if !defined(__no_m25pxx_pwr_off)
-    #define e25cxx_pwr_off  m25pxx_pwr_off
+    #define e25cxx_pwr_off      m25pxx_pwr_off
 #endif
 #if !defined(__no_m25pxx_pwr_xon)
-    #define e25cxx_pwr_xon  m25pxx_pwr_xon
+    #define e25cxx_pwr_xon      m25pxx_pwr_xon
 #endif
 
 #include "25cxx.inl"
