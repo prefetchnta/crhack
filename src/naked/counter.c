@@ -1,6 +1,6 @@
 /*****************************************************************************/
 /*                                                  ###                      */
-/*       #####          ###    ###                  ###  CREATE: 2009-12-16  */
+/*       #####          ###    ###                  ###  CREATE: 2017-03-04  */
 /*     #######          ###    ###      [CORE]      ###  ~~~~~~~~~~~~~~~~~~  */
 /*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
 /*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
@@ -13,131 +13,97 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>>>>>>>>> CrHack 应用程序函数库 <<<<<<<<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>>>>> CrHack 定时器函数库 for Naked <<<<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
 #include "applib.h"
+#include "memlib.h"
 
-/* 应用程序相关全局变量 */
-quit_t      g_quit_now = NULL;          /* 自定义的退出函数 */
-uint_t      g_app_type = CR_APP_GUI;    /* 应用程序类型指定 */
-hwnd_t      g_gui_hwnd = NULL;          /* 应用程序窗口句柄 */
-msgboxA_t   g_msg_boxA = NULL;          /* 自定义消息窗口回调A */
-msgboxW_t   g_msg_boxW = NULL;          /* 自定义消息窗口回调W */
-uint_t      g_codepage = CR_UTF8;       /* 默认使用 UTF-8 编码 */
-
-/* 外挂的编码转换函数 */
-cr_acp2uni_t    g_str_acp2uni = NULL;
-cr_uni2acp_t    g_str_uni2acp = NULL;
+/* 需要在1毫秒计数器里计时 */
+extern int32u   g_tick_ms;
 
 /*
 =======================================
-    设置退出回调
+    创建定时器
 =======================================
 */
-CR_API void_t
-quit_set (
-  __CR_IN__ quit_t  func
-    )
+CR_API xtime_t
+timer_new (void_t)
 {
-    g_quit_now = func;
+    int32u* timer;
+
+    timer = struct_new(int32u);
+    if (timer == NULL)
+        return (NULL);
+    *timer = 0;
+    return ((xtime_t)timer);
 }
 
 /*
 =======================================
-    设置 GUI 窗口句柄
+    释放定时器
 =======================================
 */
 CR_API void_t
-set_gui_hwnd (
-  __CR_IN__ hwnd_t  hwnd
+timer_del (
+  __CR_IN__ xtime_t timer
     )
 {
-    g_gui_hwnd = hwnd;
+    mem_free(timer);
 }
 
 /*
 =======================================
-    设置消息提示调用A
-=======================================
-*/
-CR_API void_t
-set_msg_callA (
-  __CR_IN__ msgboxA_t   func
-    )
-{
-    g_msg_boxA = func;
-}
-
-/*
-=======================================
-    设置消息提示调用W
-=======================================
-*/
-CR_API void_t
-set_msg_callW (
-  __CR_IN__ msgboxW_t   func
-    )
-{
-    g_msg_boxW = func;
-}
-
-/*
-=======================================
-    设置系统本地编码值
-=======================================
-*/
-CR_API void_t
-set_sys_codepage (
-  __CR_IN__ uint_t  cpage
-    )
-{
-    if (cpage != CR_LOCAL)
-        g_codepage = cpage;
-}
-
-/*
-=======================================
-    设置 str_acp2uni 外挂
-=======================================
-*/
-CR_API void_t
-set_str_acp2uni (
-  __CR_IN__ cr_acp2uni_t    func
-    )
-{
-    g_str_acp2uni = func;
-}
-
-/*
-=======================================
-    设置 str_uni2acp 外挂
-=======================================
-*/
-CR_API void_t
-set_str_uni2acp (
-  __CR_IN__ cr_uni2acp_t    func
-    )
-{
-    g_str_uni2acp = func;
-}
-
-/*
-=======================================
-    计算 Tick 时间差
+    获取系统计时 (低精度)
 =======================================
 */
 CR_API int32u
-timer_delta32 (
-  __CR_IN__ int32u  base
+timer_get32 (void_t)
+{
+    return (g_tick_ms);
+}
+
+/*
+=======================================
+    获取系统计时 (高精度)
+=======================================
+*/
+CR_API int64u
+timer_get64 (void_t)
+{
+    return (g_tick_ms);
+}
+
+/*
+=======================================
+    设置定时器基数
+=======================================
+*/
+CR_API void_t
+timer_set_base (
+  __CR_IN__ xtime_t timer
     )
 {
+    *(int32u*)timer = timer_get32();
+}
+
+/*
+=======================================
+    获取定时器时差 (ms)
+=======================================
+*/
+CR_API fp32_t
+timer_get_delta (
+  __CR_IN__ xtime_t timer
+    )
+{
+    int32u  base = *(int32u*)timer;
     int32u  now = timer_get32();
 
-    if (now < base)
-        return (0xFFFFFFFFUL - base + now + 1);
-    return (now - base);
+    if (rarely(now < base))
+        return ((fp32_t)(0xFFFFFFFFUL - base + now + 1));
+    return ((fp32_t)(now - base));
 }
 
 /*****************************************************************************/

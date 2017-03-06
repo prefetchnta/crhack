@@ -1,6 +1,6 @@
 /*****************************************************************************/
 /*                                                  ###                      */
-/*       #####          ###    ###                  ###  CREATE: 2009-12-16  */
+/*       #####          ###    ###                  ###  CREATE: 2017-03-05  */
 /*     #######          ###    ###      [CORE]      ###  ~~~~~~~~~~~~~~~~~~  */
 /*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
 /*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
@@ -13,132 +13,98 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>>>>>>>>> CrHack 应用程序函数库 <<<<<<<<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>>>> CrHack 日期时间函数库 for STM32 <<<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
-#include "applib.h"
+#include "devlib.h"
+#include "rtclib.h"
+#include "stm32cpu.h"
 
-/* 应用程序相关全局变量 */
-quit_t      g_quit_now = NULL;          /* 自定义的退出函数 */
-uint_t      g_app_type = CR_APP_GUI;    /* 应用程序类型指定 */
-hwnd_t      g_gui_hwnd = NULL;          /* 应用程序窗口句柄 */
-msgboxA_t   g_msg_boxA = NULL;          /* 自定义消息窗口回调A */
-msgboxW_t   g_msg_boxW = NULL;          /* 自定义消息窗口回调W */
-uint_t      g_codepage = CR_UTF8;       /* 默认使用 UTF-8 编码 */
-
-/* 外挂的编码转换函数 */
-cr_acp2uni_t    g_str_acp2uni = NULL;
-cr_uni2acp_t    g_str_uni2acp = NULL;
+#if defined(_CR_STM32F10X_)
 
 /*
 =======================================
-    设置退出回调
+    初始化 RTC (片内)
 =======================================
 */
 CR_API void_t
-quit_set (
-  __CR_IN__ quit_t  func
-    )
+rtc_init (void_t)
 {
-    g_quit_now = func;
+    sDATETIME   temp;
+
+    /* 判断电池是否掉电, 掉电要重新初始化 */
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR |
+                           RCC_APB1Periph_BKP, ENABLE);
+    PWR_BackupAccessCmd(ENABLE);
+    if (BKP_ReadBackupRegister(BKP_DR1) != 0xA5A5) {
+        BKP_DeInit();
+        RCC_LSEConfig(RCC_LSE_ON);
+        while (RCC_GetFlagStatus(RCC_FLAG_LSERDY) == RESET);
+        RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);
+        RCC_RTCCLKCmd(ENABLE);
+        RTC_WaitForSynchro();
+        RTC_WaitForLastTask();
+        RTC_SetPrescaler(32767);
+        RTC_WaitForLastTask();
+        RTC_ITConfig(RTC_IT_SEC, ENABLE);
+        RTC_WaitForLastTask();
+
+        /* 初始时间 */
+        temp.year = 2010;
+        temp.month = 3;
+        temp.day = 22;
+        temp.hour = 0;
+        temp.minute = 0;
+        temp.second = 0;
+        temp.week = 1;
+        datetime_set(&temp);
+        BKP_WriteBackupRegister(BKP_DR1, 0xA5A5);
+    }
+    else {
+        RCC_ClearFlag();
+        RTC_ITConfig(RTC_IT_SEC, ENABLE);
+        RTC_WaitForLastTask();
+    }
 }
 
 /*
 =======================================
-    设置 GUI 窗口句柄
+    获取系统时间
 =======================================
 */
-CR_API void_t
-set_gui_hwnd (
-  __CR_IN__ hwnd_t  hwnd
+CR_API bool_t
+datetime_get (
+  __CR_OT__ sDATETIME*  datetime
     )
 {
-    g_gui_hwnd = hwnd;
+    if (!datetime_from_unx(datetime, RTC_GetCounter()))
+        return (FALSE);
+    return (TRUE);
 }
 
 /*
 =======================================
-    设置消息提示调用A
+    设置系统时间
 =======================================
 */
-CR_API void_t
-set_msg_callA (
-  __CR_IN__ msgboxA_t   func
+CR_API bool_t
+datetime_set (
+  __CR_IN__ const sDATETIME*    datetime
     )
 {
-    g_msg_boxA = func;
+    int64u  count;
+
+    if (!datetime_to_unx(&count, datetime))
+        return (FALSE);
+    if (count > 0xFFFFFFFFUL)
+        return (FALSE);
+    RTC_SetCounter((int32u)count);
+    RTC_WaitForLastTask();
+    return (TRUE);
 }
 
-/*
-=======================================
-    设置消息提示调用W
-=======================================
-*/
-CR_API void_t
-set_msg_callW (
-  __CR_IN__ msgboxW_t   func
-    )
-{
-    g_msg_boxW = func;
-}
-
-/*
-=======================================
-    设置系统本地编码值
-=======================================
-*/
-CR_API void_t
-set_sys_codepage (
-  __CR_IN__ uint_t  cpage
-    )
-{
-    if (cpage != CR_LOCAL)
-        g_codepage = cpage;
-}
-
-/*
-=======================================
-    设置 str_acp2uni 外挂
-=======================================
-*/
-CR_API void_t
-set_str_acp2uni (
-  __CR_IN__ cr_acp2uni_t    func
-    )
-{
-    g_str_acp2uni = func;
-}
-
-/*
-=======================================
-    设置 str_uni2acp 外挂
-=======================================
-*/
-CR_API void_t
-set_str_uni2acp (
-  __CR_IN__ cr_uni2acp_t    func
-    )
-{
-    g_str_uni2acp = func;
-}
-
-/*
-=======================================
-    计算 Tick 时间差
-=======================================
-*/
-CR_API int32u
-timer_delta32 (
-  __CR_IN__ int32u  base
-    )
-{
-    int32u  now = timer_get32();
-
-    if (now < base)
-        return (0xFFFFFFFFUL - base + now + 1);
-    return (now - base);
-}
+#endif  /* _CR_STM32F10X_ */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */

@@ -123,6 +123,7 @@ OBJS=$(OBJ)errs.$(O) \
      $(OBJ)crc8a.$(O) \
      $(OBJ)crc8d.$(O) \
      $(OBJ)crc16c.$(O) \
+     $(OBJ)crc16h.$(O) \
      $(OBJ)crc16i.$(O) \
      $(OBJ)crc32a.$(O) \
      $(OBJ)crc32c.$(O) \
@@ -224,6 +225,7 @@ CPPS=$(SRC)errs.$(C) \
      $(SRC)crc8a.$(C) \
      $(SRC)crc8d.$(C) \
      $(SRC)crc16c.$(C) \
+     $(SRC)crc16h.$(C) \
      $(SRC)crc16i.$(C) \
      $(SRC)crc32a.$(C) \
      $(SRC)crc32c.$(C) \
@@ -380,11 +382,13 @@ LINUX_CPPS=$(SRC_LNX)cr_spi.$(C) \
 NAKED_OBJS=$(OBJ)appnak.$(O) \
            $(OBJ)dllnak.$(O) \
            $(OBJ)strfmt.$(O) \
+           $(OBJ)counter.$(O) \
            $(OBJ)codepage.$(O)
 
 NAKED_CPPS=$(SRC_NAK)appnak.$(C) \
            $(SRC_NAK)dllnak.$(C) \
            $(SRC_PSX)strfmt.$(C) \
+           $(SRC_NAK)counter.$(C) \
            $(SRC_NAK)codepage.$(C)
 
 ###############################################################################

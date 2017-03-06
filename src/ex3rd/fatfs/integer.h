@@ -22,7 +22,7 @@ typedef long			LONG;
 typedef unsigned long	DWORD;
 
 #if _FATFS != 1
-/* This type MUST be 64-bit (Remove this for C89 compatibility) */
+/* This type MUST be 64-bit (Remove this for ANSI C (C89) compatibility) */
 typedef unsigned long long QWORD;
 #endif
 

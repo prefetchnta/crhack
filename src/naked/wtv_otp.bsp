@@ -18,6 +18,9 @@
 /*****************************************************************************/
 
 /* 管脚相关配置 */
+#ifndef _WTV_INIT_
+    #define _WTV_INIT_
+#endif
 #ifndef WTV_RESET_DIRO
     #define WTV_RESET_DIRO
 #endif
@@ -76,6 +79,7 @@ wtv_send_cmd (
 CR_API void_t
 wtv_init (void_t)
 {
+    _WTV_INIT_
     /* -------- */
     WTV_RESET_DIRO
     /* -------- */

@@ -2,8 +2,10 @@
 #include "util/cjson/cJSON_Utils.h"
 #if     defined(_CR_CC_BCC_)
     #pragma warn -8004
+    #pragma warn -8008
     #pragma warn -8012
     #pragma warn -8060
+    #pragma warn -8066
 #elif   defined(_CR_CC_MSC_)
     #pragma warning (disable: 4706)
 #elif   defined(_CR_CC_ARMCC_NEW_)

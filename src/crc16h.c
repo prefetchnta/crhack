@@ -1,6 +1,6 @@
 /*****************************************************************************/
 /*                                                  ###                      */
-/*       #####          ###    ###                  ###  CREATE: 2009-12-16  */
+/*       #####          ###    ###                  ###  CREATE: 2017-03-04  */
 /*     #######          ###    ###      [CORE]      ###  ~~~~~~~~~~~~~~~~~~  */
 /*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
 /*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
@@ -13,132 +13,102 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>>>>>>>>> CrHack 应用程序函数库 <<<<<<<<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>>>>> CrHack CRC-16/CCITT 哈希函数库 <<<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
-#include "applib.h"
+#include "hash.h"
 
-/* 应用程序相关全局变量 */
-quit_t      g_quit_now = NULL;          /* 自定义的退出函数 */
-uint_t      g_app_type = CR_APP_GUI;    /* 应用程序类型指定 */
-hwnd_t      g_gui_hwnd = NULL;          /* 应用程序窗口句柄 */
-msgboxA_t   g_msg_boxA = NULL;          /* 自定义消息窗口回调A */
-msgboxW_t   g_msg_boxW = NULL;          /* 自定义消息窗口回调W */
-uint_t      g_codepage = CR_UTF8;       /* 默认使用 UTF-8 编码 */
+/* CRC-16/CCITT 常数表 (X^16 + X^12 + X^5 + 1) */
+static const int16u _rom_ s_crc16[16] =
+{
+    0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50A5, 0x60C6, 0x70E7,
+    0x8108, 0x9129, 0xA14A, 0xB16B, 0xC18C, 0xD1AD, 0xE1CE, 0xF1EF,
+};
 
-/* 外挂的编码转换函数 */
-cr_acp2uni_t    g_str_acp2uni = NULL;
-cr_uni2acp_t    g_str_uni2acp = NULL;
+#define CRC16_INT_VALUE     0xFFFF
+#define CRC16_XOR_VALUE     0x0000
 
+#if !defined(__no_hash_crc16h_init)
 /*
 =======================================
-    设置退出回调
+    CRC-16/CCITT 初始化
 =======================================
 */
-CR_API void_t
-quit_set (
-  __CR_IN__ quit_t  func
-    )
+CR_API int16u
+hash_crc16h_init (void_t)
 {
-    g_quit_now = func;
+    return (CRC16_INT_VALUE);
 }
 
+#endif  /* !__no_hash_crc16h_init */
+
+#if !defined(__no_hash_crc16h_update)
 /*
 =======================================
-    设置 GUI 窗口句柄
+    CRC-16/CCITT 计算数据块
 =======================================
 */
-CR_API void_t
-set_gui_hwnd (
-  __CR_IN__ hwnd_t  hwnd
+CR_API int16u
+hash_crc16h_update (
+  __CR_IN__ int16u          hash,
+  __CR_IN__ const void_t*   data,
+  __CR_IN__ leng_t          size
     )
 {
-    g_gui_hwnd = hwnd;
+    int16u  temp;
+
+    for (; size != 0; size--)
+    {
+        temp = ((uchar)(hash >> 8)) >> 4;
+        hash <<= 4;
+        hash ^= s_crc16[temp ^ (*((uchar*)data) >> 4)];
+        temp = ((uchar)(hash >> 8)) >> 4;
+        hash <<= 4;
+        hash ^= s_crc16[temp ^ (*((uchar*)data) & 0x0F)];
+        data = (const uchar*)data + 1;
+    }
+    return ((int16u)(hash));
 }
 
+#endif  /* !__no_hash_crc16h_update */
+
+#if !defined(__no_hash_crc16h_finish)
 /*
 =======================================
-    设置消息提示调用A
+    CRC-16/CCITT 获取结果
 =======================================
 */
-CR_API void_t
-set_msg_callA (
-  __CR_IN__ msgboxA_t   func
+CR_API int16u
+hash_crc16h_finish (
+  __CR_IN__ int16u  hash
     )
 {
-    g_msg_boxA = func;
+    return ((int16u)(hash ^ CRC16_XOR_VALUE));
 }
 
+#endif  /* !__no_hash_crc16h_finish */
+
+#if !defined(__no_hash_crc16h_total)
 /*
 =======================================
-    设置消息提示调用W
+    CRC-16/CCITT 一次性完成
 =======================================
 */
-CR_API void_t
-set_msg_callW (
-  __CR_IN__ msgboxW_t   func
+CR_API int16u
+hash_crc16h_total (
+  __CR_IN__ const void_t*   data,
+  __CR_IN__ leng_t          size
     )
 {
-    g_msg_boxW = func;
+    int16u  hash = hash_crc16h_init();
+
+    hash = hash_crc16h_update(hash, data, size);
+
+    return (hash_crc16h_finish(hash));
 }
 
-/*
-=======================================
-    设置系统本地编码值
-=======================================
-*/
-CR_API void_t
-set_sys_codepage (
-  __CR_IN__ uint_t  cpage
-    )
-{
-    if (cpage != CR_LOCAL)
-        g_codepage = cpage;
-}
-
-/*
-=======================================
-    设置 str_acp2uni 外挂
-=======================================
-*/
-CR_API void_t
-set_str_acp2uni (
-  __CR_IN__ cr_acp2uni_t    func
-    )
-{
-    g_str_acp2uni = func;
-}
-
-/*
-=======================================
-    设置 str_uni2acp 外挂
-=======================================
-*/
-CR_API void_t
-set_str_uni2acp (
-  __CR_IN__ cr_uni2acp_t    func
-    )
-{
-    g_str_uni2acp = func;
-}
-
-/*
-=======================================
-    计算 Tick 时间差
-=======================================
-*/
-CR_API int32u
-timer_delta32 (
-  __CR_IN__ int32u  base
-    )
-{
-    int32u  now = timer_get32();
-
-    if (now < base)
-        return (0xFFFFFFFFUL - base + now + 1);
-    return (now - base);
-}
+#endif  /* !__no_hash_crc16h_total */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */

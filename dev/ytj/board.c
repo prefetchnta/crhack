@@ -1,6 +1,6 @@
 /*****************************************************************************/
 /*                                                  ###                      */
-/*       #####          ###    ###                  ###  CREATE: 2012-02-28  */
+/*       #####          ###    ###                  ###  CREATE: 2017-03-06  */
 /*     #######          ###    ###      [HARD]      ###  ~~~~~~~~~~~~~~~~~~  */
 /*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
 /*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
@@ -13,62 +13,58 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>>>>>>> USBDK U盘目标板测试源文件 <<<<<<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>>>>> YTJ 一体机 LED 屏目标板函数库 <<<<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
-#include "device.h"
-
-/*
----------------------------------------
-    目标板初始化
----------------------------------------
-*/
-static void_t
-board_init (void_t)
-{
-#if FALSE
-    ibus_init();
-    nand_format();
-#else
-    usb0_init();
-#endif
-}
-
-/*
----------------------------------------
-    应用程序初始化
----------------------------------------
-*/
-static void_t
-appli_init (void_t)
-{
-    for (;;);
-}
+#include "board.h"
+#include "stm32f10x_conf.h"
 
 /*
 =======================================
-    U盘主程序
-=======================================
-*/
-sint_t  main (void_t)
-{
-    board_init();
-    appli_init();
-    return (0);
-}
-
-/*
-=======================================
-    系统退出的库调用
+    系统中断初始化
 =======================================
 */
 CR_API void_t
-_sys_exit (
-  __CR_IN__ sint_t  retcode
-    )
+nvic_init (void_t)
 {
-    for (retcode = retcode;;);
+    NVIC_InitTypeDef    nvic;
+
+    /* 初始化 SysTick */
+    SysTick_Config(SystemCoreClock / 1000);
+
+    /* 中断优先级初始化 */
+    /* SysTick 优先级最高（定时用） */
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+    NVIC_SetPriority(SysTick_IRQn, 0);
+
+    /* TIM4 用于语音播放 */
+    nvic.NVIC_IRQChannel = TIM4_IRQn;
+    nvic.NVIC_IRQChannelPreemptionPriority = 0;
+    nvic.NVIC_IRQChannelSubPriority = 1;
+    nvic.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&nvic);
+
+    /* TIM2 用于屏幕显示 */
+    nvic.NVIC_IRQChannel = TIM2_IRQn;
+    nvic.NVIC_IRQChannelPreemptionPriority = 0;
+    nvic.NVIC_IRQChannelSubPriority = 2;
+    nvic.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&nvic);
+
+    /* ETH 中断可被打断 */
+    nvic.NVIC_IRQChannel = ETH_IRQn;
+    nvic.NVIC_IRQChannelPreemptionPriority = 1;
+    nvic.NVIC_IRQChannelSubPriority = 0;
+    nvic.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&nvic);
+
+    /* RTC 中断可被打断 */
+    nvic.NVIC_IRQChannel = RTC_IRQn;
+    nvic.NVIC_IRQChannelPreemptionPriority = 1;
+    nvic.NVIC_IRQChannelSubPriority = 1;
+    nvic.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&nvic);
 }
 
 /*****************************************************************************/
