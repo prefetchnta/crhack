@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		11026EDA1CBE66D40003E386 /* holidays.c in Sources */ = {isa = PBXBuildFile; fileRef = 11026ED91CBE66D40003E386 /* holidays.c */; };
+		112B130D1E6D451F00BA7848 /* crc16h.c in Sources */ = {isa = PBXBuildFile; fileRef = 112B130C1E6D451F00BA7848 /* crc16h.c */; };
 		1144871F1D2B947A00D89DF2 /* pf_astar.c in Sources */ = {isa = PBXBuildFile; fileRef = 1144871E1D2B947A00D89DF2 /* pf_astar.c */; };
 		117FCB881CA2ACF900490097 /* appnak.c in Sources */ = {isa = PBXBuildFile; fileRef = 117FC09D1CA2ACF600490097 /* appnak.c */; };
 		117FD11E1CA5096D00490097 /* siopsx.c in Sources */ = {isa = PBXBuildFile; fileRef = 117FD11D1CA5096D00490097 /* siopsx.c */; };
@@ -249,6 +250,7 @@
 
 /* Begin PBXFileReference section */
 		11026ED91CBE66D40003E386 /* holidays.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = holidays.c; sourceTree = "<group>"; };
+		112B130C1E6D451F00BA7848 /* crc16h.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = crc16h.c; path = ../../../src/crc16h.c; sourceTree = "<group>"; };
 		1144871E1D2B947A00D89DF2 /* pf_astar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pf_astar.c; sourceTree = "<group>"; };
 		117FC09D1CA2ACF600490097 /* appnak.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = appnak.c; sourceTree = "<group>"; };
 		117FD11D1CA5096D00490097 /* siopsx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = siopsx.c; sourceTree = "<group>"; };
@@ -560,6 +562,7 @@
 				11A473A61C9FE90F00CFC25E /* crc8a.c */,
 				11A473A71C9FE90F00CFC25E /* crc8d.c */,
 				11A473A81C9FE90F00CFC25E /* crc16c.c */,
+				112B130C1E6D451F00BA7848 /* crc16h.c */,
 				11A473A91C9FE90F00CFC25E /* crc16i.c */,
 				11A473AA1C9FE90F00CFC25E /* crc32a.c */,
 				11A473AB1C9FE90F00CFC25E /* crc32c.c */,
@@ -1124,6 +1127,7 @@
 				11A474011C9FE90F00CFC25E /* blowfish.c in Sources */,
 				11A474451C9FE90F00CFC25E /* rc2.c in Sources */,
 				11A474281C9FE90F00CFC25E /* filein.c in Sources */,
+				112B130D1E6D451F00BA7848 /* crc16h.c in Sources */,
 				11A473FF1C9FE90F00CFC25E /* bigint.c in Sources */,
 				11A4743B1C9FE90F00CFC25E /* md5.c in Sources */,
 				11A474031C9FE90F00CFC25E /* bzz5.c in Sources */,

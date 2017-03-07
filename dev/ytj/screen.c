@@ -26,8 +26,8 @@
 static byte_t*  s_front;
 
 /* 三色 64x64 显示区 */
-static byte_t   s_screen1[16 * 64];
-static byte_t   s_screen2[16 * 64];
+static byte_t   s_screen1[SCREEN_SIZE];
+static byte_t   s_screen2[SCREEN_SIZE];
 
 /*
 =======================================
@@ -94,54 +94,61 @@ screen_main (void_t)
 static void_t
 screen_refresh (void_t)
 {
-    byte_t  tmp[4];
-    ufast_t ii, jj, line, bpl;
+    byte_t          tmp[4];
+    uint_t          ii, jj;
+    uint_t          line_ee;
+    static uint_t   line_ss = 0;
+
+    line_ee = line_ss + SCREEN_BPL;
 
     HS08_SK_CLRB
     HS08_LT_CLRB
     HS08_EN_SETB
-    for (bpl = 0, line = 0; line < 16; line++, bpl += 16) {
-        for (ii = bpl; ii < bpl + 16; ii++) {
-            tmp[0] = s_front[0x00 + ii];
-            tmp[1] = s_front[0x10 + ii];
-            tmp[2] = s_front[0x20 + ii];
-            tmp[3] = s_front[0x30 + ii];
-            for (jj = 4; jj != 0; jj--) {
-                if (tmp[0] & 0x80) HS08_R1A_SETB
-                else               HS08_R1A_CLRB
-                if (tmp[0] & 0x40) HS08_G1A_SETB
-                else               HS08_G1A_CLRB
-                if (tmp[1] & 0x80) HS08_R2A_SETB
-                else               HS08_R2A_CLRB
-                if (tmp[1] & 0x40) HS08_G2A_SETB
-                else               HS08_G2A_CLRB
-                if (tmp[2] & 0x80) HS08_R1B_SETB
-                else               HS08_R1B_CLRB
-                if (tmp[2] & 0x40) HS08_G1B_SETB
-                else               HS08_G1B_CLRB
-                if (tmp[3] & 0x80) HS08_R2B_SETB
-                else               HS08_R2B_CLRB
-                if (tmp[3] & 0x40) HS08_G2B_SETB
-                else               HS08_G2B_CLRB
-                HS08_SK_SETB
-                tmp[0] <<= 2;
-                tmp[1] <<= 2;
-                tmp[2] <<= 2;
-                tmp[3] <<= 2;
-                HS08_SK_CLRB
-            }
+    for (ii = line_ss; ii < line_ee; ii++) {
+        tmp[0] = s_front[0x000 + ii];
+        tmp[1] = s_front[0x100 + ii];
+        tmp[2] = s_front[0x200 + ii];
+        tmp[3] = s_front[0x300 + ii];
+        for (jj = 4; jj != 0; jj--) {
+            if (tmp[0] & 0x80) HS08_R1A_SETB
+            else               HS08_R1A_CLRB
+            if (tmp[0] & 0x40) HS08_G1A_SETB
+            else               HS08_G1A_CLRB
+            if (tmp[1] & 0x80) HS08_R2A_SETB
+            else               HS08_R2A_CLRB
+            if (tmp[1] & 0x40) HS08_G2A_SETB
+            else               HS08_G2A_CLRB
+            if (tmp[2] & 0x80) HS08_R1B_SETB
+            else               HS08_R1B_CLRB
+            if (tmp[2] & 0x40) HS08_G1B_SETB
+            else               HS08_G1B_CLRB
+            if (tmp[3] & 0x80) HS08_R2B_SETB
+            else               HS08_R2B_CLRB
+            if (tmp[3] & 0x40) HS08_G2B_SETB
+            else               HS08_G2B_CLRB
+            HS08_SK_SETB
+            tmp[0] <<= 2;
+            tmp[1] <<= 2;
+            tmp[2] <<= 2;
+            tmp[3] <<= 2;
+            HS08_SK_CLRB
         }
-        HS08_LT_SETB
-        if (line & 0x01) HS08_AA_SETB
-        else             HS08_AA_CLRB
-        if (line & 0x02) HS08_BB_SETB
-        else             HS08_BB_CLRB
-        if (line & 0x03) HS08_CC_SETB
-        else             HS08_CC_CLRB
-        if (line & 0x04) HS08_DD_SETB
-        else             HS08_DD_CLRB
-        HS08_LT_CLRB
     }
+    HS08_LT_SETB
+    jj = line_ss >> 4;
+    if (jj & 0x01) HS08_AA_SETB
+    else           HS08_AA_CLRB
+    if (jj & 0x02) HS08_BB_SETB
+    else           HS08_BB_CLRB
+    if (jj & 0x04) HS08_CC_SETB
+    else           HS08_CC_CLRB
+    if (jj & 0x08) HS08_DD_SETB
+    else           HS08_DD_CLRB
+    HS08_LT_CLRB
+    if (jj == 15)
+        line_ss = 0;
+    else
+        line_ss += SCREEN_BPL;
     HS08_EN_CLRB
 }
 
@@ -150,10 +157,10 @@ screen_refresh (void_t)
     TIMER2 中断处理
 =======================================
 */
-extern void_t
+CR_API void_t
 TIM2_IRQHandler (void_t)
 {
-    if (TIM_GetITStatus(TIM2, TIM_IT_Update) == SET) {
+    if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
         TIM_ClearITPendingBit(TIM2, TIM_FLAG_Update);
         screen_refresh();
     }

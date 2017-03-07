@@ -37,7 +37,7 @@
 #define NANDS_PAGE_PBLK     K9F1208C_PAGE_PBLK
 #define NANDS_BLOCK_NUM     K9F1208C_BLOCK_NUM
 
-#if     1
+#if TRUE
     #include "nandsm.inl"
 #endif
 

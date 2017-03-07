@@ -79,7 +79,7 @@ nandsm_get_zone (
     apage  = (int32u)ablock;
     apage *= NANDS_PAGE_PBLK;
     if (page_addr != NULL)
-       *page_addr  = apage;
+        *page_addr = apage;
     return (ablock);
 }
 
@@ -95,6 +95,7 @@ nandsm_init (void_t)
     retc_t  retcode = TRUE;
     byte_t  csec[NANDS_CSEC_SIZE];
     uint_t  idx, blk, end = nandsm_info();
+    /* -------------------------------- */
     sNANDS_OOB* oob = (sNANDS_OOB*)csec;
 
     /* 记录每个块的起始区 */
@@ -261,6 +262,7 @@ nandsm_write_int (
     byte_t  cpys[NANDS_PAGE_SIZE];
     byte_t  csec[NANDS_CSEC_SIZE];
     uint_t  tmp, aidx, xidx, xblock = 0;
+    /* ------------------------------ */
     sNANDS_OOB* oob = (sNANDS_OOB*)csec;
 
     /* 找到块使用的分区 */

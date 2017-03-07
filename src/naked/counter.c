@@ -23,6 +23,7 @@
 /* 需要在1毫秒计数器里计时 */
 extern int32u   g_tick_ms;
 
+#if !defined(_CR_NAKED_NO_MALLOC_)
 /*
 =======================================
     创建定时器
@@ -53,6 +54,8 @@ timer_del (
     mem_free(timer);
 }
 
+#endif  /* !_CR_NAKED_NO_MALLOC_ */
+
 /*
 =======================================
     获取系统计时 (低精度)
@@ -75,6 +78,7 @@ timer_get64 (void_t)
     return (g_tick_ms);
 }
 
+#if !defined(_CR_NAKED_NO_MALLOC_)
 /*
 =======================================
     设置定时器基数
@@ -105,6 +109,8 @@ timer_get_delta (
         return ((fp32_t)(0xFFFFFFFFUL - base + now + 1));
     return ((fp32_t)(now - base));
 }
+
+#endif  /* !_CR_NAKED_NO_MALLOC_ */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */
