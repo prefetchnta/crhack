@@ -51,14 +51,14 @@ nvic_init (void_t)
     nvic.NVIC_IRQChannelSubPriority = 2;
     nvic.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&nvic);
-#if 0
+
     /* ETH 中断可被打断 */
     nvic.NVIC_IRQChannel = ETH_IRQn;
     nvic.NVIC_IRQChannelPreemptionPriority = 1;
     nvic.NVIC_IRQChannelSubPriority = 0;
     nvic.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&nvic);
-#endif
+
     /* RTC 中断可被打断 */
     nvic.NVIC_IRQChannel = RTC_IRQn;
     nvic.NVIC_IRQChannelPreemptionPriority = 1;
