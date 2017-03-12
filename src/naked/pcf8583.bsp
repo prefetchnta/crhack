@@ -17,8 +17,6 @@
 /*  =======================================================================  */
 /*****************************************************************************/
 
-#include "rtclib.h"
-
 #undef  _I2C_PAGE_
 #define _I2C_SIZE_  256
 
@@ -60,20 +58,20 @@ pcf8583_init_time (
 CR_API bool_t
 pcf8583_get_time (
   __CR_IN__ byte_t      devs,
-  __CR_OT__ sDATETIME*  datetime
+  __CR_OT__ sDATETIME*  dttm
     )
 {
     byte_t  buf[5];
 
     if (i2c_read_device(devs, 2, buf, 5) != 5)
         return (FALSE);
-    datetime->week = buf[4] >> 5;
+    dttm->week = buf[4] >> 5;
     buf[2] &= 0x3F; buf[3] &= 0x3F; buf[4] &= 0x1F;
-    datetime->second = (buf[0] >> 4) * 10 + (buf[0] & 0x0F);
-    datetime->minute = (buf[1] >> 4) * 10 + (buf[1] & 0x0F);
-    datetime->hour   = (buf[2] >> 4) * 10 + (buf[2] & 0x0F);
-    datetime->day    = (buf[3] >> 4) * 10 + (buf[3] & 0x0F);
-    datetime->month  = (buf[4] >> 4) * 10 + (buf[4] & 0x0F);
+    dttm->second = (buf[0] >> 4) * 10 + (buf[0] & 0x0F);
+    dttm->minute = (buf[1] >> 4) * 10 + (buf[1] & 0x0F);
+    dttm->hour   = (buf[2] >> 4) * 10 + (buf[2] & 0x0F);
+    dttm->day    = (buf[3] >> 4) * 10 + (buf[3] & 0x0F);
+    dttm->month  = (buf[4] >> 4) * 10 + (buf[4] & 0x0F);
     return (TRUE);
 }
 
@@ -88,21 +86,19 @@ pcf8583_get_time (
 CR_API bool_t
 pcf8583_set_time (
   __CR_IN__ byte_t              devs,
-  __CR_IN__ const sDATETIME*    datetime
+  __CR_IN__ const sDATETIME*    dttm
     )
 {
     byte_t  buf[6];
 
-    if (!datetime_chk(datetime))
-        return (FALSE);
     buf[0]  = 0x00;
-    buf[1]  = ((datetime->second /  10) << 4) | (datetime->second % 10);
-    buf[2]  = ((datetime->minute /  10) << 4) | (datetime->minute % 10);
-    buf[3]  = ((datetime->hour   /  10) << 4) | (datetime->hour   % 10);
-    buf[4]  = ((datetime->day    /  10) << 4) | (datetime->day    % 10);
-    buf[4] |= ((datetime->year   &   3) << 6);
-    buf[5]  = ((datetime->month  /  10) << 4) | (datetime->month  % 10);
-    buf[5] |=  (date_get_week(datetime) << 5);
+    buf[1]  = (byte_t)(((dttm->second /  10) << 4) | (dttm->second % 10));
+    buf[2]  = (byte_t)(((dttm->minute /  10) << 4) | (dttm->minute % 10));
+    buf[3]  = (byte_t)(((dttm->hour   /  10) << 4) | (dttm->hour   % 10));
+    buf[4]  = (byte_t)(((dttm->day    /  10) << 4) | (dttm->day    % 10));
+    buf[4] |= (byte_t) ((dttm->year   &   3) << 6);
+    buf[5]  = (byte_t)(((dttm->month  /  10) << 4) | (dttm->month  % 10));
+    buf[5] |= (byte_t)  (date_get_week(dttm) << 5);
     return ((i2c_write_device(devs, 1, buf, 6) != 6) ? FALSE : TRUE);
 }
 
