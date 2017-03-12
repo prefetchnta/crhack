@@ -1,6 +1,6 @@
 /*****************************************************************************/
 /*                                                  ###                      */
-/*       #####          ###    ###                  ###  CREATE: 2017-03-06  */
+/*       #####          ###    ###                  ###  CREATE: 2017-03-09  */
 /*     #######          ###    ###      [HARD]      ###  ~~~~~~~~~~~~~~~~~~  */
 /*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
 /*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
@@ -13,7 +13,7 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>>>>> YTJ 一体机 LED 屏目标板函数库 <<<<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>>>>> RFGEO-SRV-2 采集器目标板函数库 <<<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
@@ -30,29 +30,6 @@ nvic_init (void_t)
 {
     NVIC_InitTypeDef    nvic;
 
-#if defined(YTJ_DEBUG)
-    GPIO_InitTypeDef    gpio;
-    USART_InitTypeDef   uart;
-
-    /* 调试用的串口初始化 */
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA |
-                           RCC_APB2Periph_USART1, ENABLE);
-    gpio.GPIO_Speed = GPIO_Speed_10MHz;
-    gpio.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-    gpio.GPIO_Pin = GPIO_Pin_10;
-    GPIO_Init(GPIOA, &gpio);
-    gpio.GPIO_Mode = GPIO_Mode_AF_PP;
-    gpio.GPIO_Pin = GPIO_Pin_9;
-    GPIO_Init(GPIOA, &gpio);
-    uart.USART_BaudRate = 115200UL;
-    uart.USART_WordLength = USART_WordLength_8b;
-    uart.USART_StopBits = USART_StopBits_1;
-    uart.USART_Parity = USART_Parity_No;
-    uart.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-    uart.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-    USART_Init(USART1, &uart);
-    USART_Cmd(USART1, ENABLE);
-#endif
     /* 初始化 SysTick */
     SysTick_Config(SystemCoreClock / 1000);
 
@@ -60,57 +37,7 @@ nvic_init (void_t)
     /* SysTick 优先级最高（定时用） */
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     NVIC_SetPriority(SysTick_IRQn, 0);
-
-    /* TIM4 用于语音播放 */
-    nvic.NVIC_IRQChannel = TIM4_IRQn;
-    nvic.NVIC_IRQChannelPreemptionPriority = 0;
-    nvic.NVIC_IRQChannelSubPriority = 1;
-    nvic.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_Init(&nvic);
-
-    /* TIM2 用于屏幕显示 */
-    nvic.NVIC_IRQChannel = TIM2_IRQn;
-    nvic.NVIC_IRQChannelPreemptionPriority = 0;
-    nvic.NVIC_IRQChannelSubPriority = 2;
-    nvic.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_Init(&nvic);
-
-    /* ETH 中断可被打断 */
-    nvic.NVIC_IRQChannel = ETH_IRQn;
-    nvic.NVIC_IRQChannelPreemptionPriority = 1;
-    nvic.NVIC_IRQChannelSubPriority = 0;
-    nvic.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_Init(&nvic);
-
-    /* RTC 中断可被打断 */
-    nvic.NVIC_IRQChannel = RTC_IRQn;
-    nvic.NVIC_IRQChannelPreemptionPriority = 1;
-    nvic.NVIC_IRQChannelSubPriority = 1;
-    nvic.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_Init(&nvic);
 }
-
-#if defined(YTJ_DEBUG)
-
-#include <stdio.h>
-
-/*
-=======================================
-    串口发送字符串
-=======================================
-*/
-CR_API sint_t
-fputc (
-  __CR_IN__ sint_t  ch,
-  __CR_IN__ FILE*   fp
-    )
-{
-    while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
-    USART_SendData(USART1, (byte_t)ch);
-    return (ch);
-}
-
-#endif  /* YTJ_DEBUG */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */

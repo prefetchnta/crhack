@@ -226,32 +226,16 @@ low_level_output(struct netif *netif, struct pbuf *p)
 static struct pbuf *
 low_level_input(struct netif *netif)
 {
-  struct pbuf *p, *q;
-  u16_t len;
-  int l =0;
+  static struct pbuf p = { 0 };
   FrameTypeDef frame;
-  u8 *buffer;
 
-  p = NULL;
   frame = ETH_RxPkt_ChainMode();
   /* Obtain the size of the packet and put it into the "len"
      variable. */
-  len = frame.length;
-
-  buffer = (u8 *)frame.buffer;
-
-  /* We allocate a pbuf chain of pbufs from the pool. */
-  p = pbuf_alloc(PBUF_RAW, len, PBUF_POOL);
-
-  if (p != NULL)
-  {
-    for (q = p; q != NULL; q = q->next)
-    {
-      memcpy((u8_t*)q->payload, (u8_t*)&buffer[l], q->len);
-      l = l + q->len;
-    }
-  }
-
+  p.len = p.tot_len = frame.length;
+  p.payload = (u8*)frame.buffer;
+  p.type = PBUF_POOL;
+  p.ref = 2;
 
   /* Set Own bit of the Rx descriptor Status: gives the buffer back to ETHERNET DMA */
   frame.descriptor->Status = ETH_DMARxDesc_OWN;
@@ -266,7 +250,7 @@ low_level_input(struct netif *netif)
   }
 
 
-  return p;
+  return &p;
 }
 
 /**
@@ -294,8 +278,6 @@ ethernetif_input(struct netif *netif)
   if (err != ERR_OK)
   {
     LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_input: IP input error\n"));
-    pbuf_free(p);
-    p = NULL;
   }
 
   return err;

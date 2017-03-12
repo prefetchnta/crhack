@@ -1,6 +1,6 @@
 /*****************************************************************************/
 /*                                                  ###                      */
-/*       #####          ###    ###                  ###  CREATE: 2017-03-04  */
+/*       #####          ###    ###                  ###  CREATE: 2017-03-09  */
 /*     #######          ###    ###      [HARD]      ###  ~~~~~~~~~~~~~~~~~~  */
 /*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
 /*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
@@ -13,22 +13,13 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>>> YTJ 一体机 LED 屏 SPI0 接口函数库 <<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>> RFGEO-SRV-2 采集器 SPI0 接口函数库 <<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
-#define _YTJ_SPI0_
+#define _SRV2_SPI0_
 #include "board.h"
 #include "stm32f10x_conf.h"
-
-/* 片选引脚配置 */
-#if defined(YTJ_NEW)
-    #define NSS_PORT    GPIOC
-    #define NSS_PINS    GPIO_Pin_5
-#else
-    #define NSS_PORT    GPIOA
-    #define NSS_PINS    GPIO_Pin_4
-#endif
 
 /*
 =======================================
@@ -41,26 +32,21 @@ spi0_init (void_t)
     SPI_InitTypeDef     sspi;
     GPIO_InitTypeDef    gpio;
 
-    /* SPI 端口配置 (#WP 默认保护) */
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA |
-                           RCC_APB2Periph_GPIOC |
-                           RCC_APB2Periph_SPI1, ENABLE);
+    /* SPI 端口配置 */
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+    RCC_APB1PeriphClockCmd(RCC_APB2Periph_SPI2, ENABLE);
     gpio.GPIO_Speed = GPIO_Speed_50MHz;
     gpio.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-    gpio.GPIO_Pin = GPIO_Pin_6;
-    GPIO_Init(GPIOA, &gpio);
-    gpio.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_7;
+    gpio.GPIO_Pin = GPIO_Pin_14;
+    GPIO_Init(GPIOB, &gpio);
+    gpio.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_15;
     gpio.GPIO_Mode = GPIO_Mode_AF_PP;
-    GPIO_Init(GPIOA, &gpio);
+    GPIO_Init(GPIOB, &gpio);
     gpio.GPIO_Speed = GPIO_Speed_10MHz;
-    gpio.GPIO_Pin = GPIO_Pin_4;
+    gpio.GPIO_Pin = GPIO_Pin_12;
     gpio.GPIO_Mode = GPIO_Mode_Out_PP;
-    GPIO_Init(GPIOC, &gpio);
-    GPIO_ResetBits(GPIOC, GPIO_Pin_4);
-    gpio.GPIO_Pin = NSS_PINS;
-    gpio.GPIO_Mode = GPIO_Mode_Out_PP;
-    GPIO_Init(NSS_PORT, &gpio);
-    GPIO_SetBits(NSS_PORT, NSS_PINS);
+    GPIO_Init(GPIOB, &gpio);
+    GPIO_SetBits(GPIOB, GPIO_Pin_12);
 
     /* SPI 外设配置 */
     sspi.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
@@ -72,8 +58,8 @@ spi0_init (void_t)
     sspi.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
     sspi.SPI_FirstBit = SPI_FirstBit_MSB;
     sspi.SPI_CRCPolynomial = 7;
-    SPI_Init(SPI1, &sspi);
-    SPI_Cmd(SPI1, ENABLE);
+    SPI_Init(SPI2, &sspi);
+    SPI_Cmd(SPI2, ENABLE);
 }
 
 /*
@@ -86,10 +72,10 @@ spi0_iorw (
   __CR_IN__ byte_t  ch
     )
 {
-    while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);
-    SPI_I2S_SendData(SPI1, ch);
-    while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET);
-    return ((byte_t)SPI_I2S_ReceiveData(SPI1));
+    while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);
+    SPI_I2S_SendData(SPI2, ch);
+    while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET);
+    return ((byte_t)SPI_I2S_ReceiveData(SPI2));
 }
 
 /*
@@ -103,12 +89,12 @@ spi0_send_data (
   __CR_IN__ leng_t          size
     )
 {
-    GPIO_ResetBits(NSS_PORT, NSS_PINS);
+    GPIO_ResetBits(GPIOB, GPIO_Pin_12);
     for (; size != 0; size--) {
         spi0_iorw(*(byte_t*)data);
         data = (byte_t*)data + 1;
     }
-    GPIO_SetBits(NSS_PORT, NSS_PINS);
+    GPIO_SetBits(GPIOB, GPIO_Pin_12);
 }
 
 /*
@@ -124,7 +110,7 @@ spi0_send_recv (
   __CR_IN__ leng_t          send_size
     )
 {
-    GPIO_ResetBits(NSS_PORT, NSS_PINS);
+    GPIO_ResetBits(GPIOB, GPIO_Pin_12);
     for (; send_size != 0; send_size--) {
         spi0_iorw(*(byte_t*)send_data);
         send_data = (byte_t*)send_data + 1;
@@ -133,7 +119,7 @@ spi0_send_recv (
         *(byte_t*)recv_data = spi0_iorw(0xFF);
         recv_data = (byte_t*)recv_data + 1;
     }
-    GPIO_SetBits(NSS_PORT, NSS_PINS);
+    GPIO_SetBits(GPIOB, GPIO_Pin_12);
 }
 
 /*
@@ -149,7 +135,7 @@ spi0_send_send (
   __CR_IN__ leng_t          send2_size
     )
 {
-    GPIO_ResetBits(NSS_PORT, NSS_PINS);
+    GPIO_ResetBits(GPIOB, GPIO_Pin_12);
     for (; send1_size != 0; send1_size--) {
         spi0_iorw(*(byte_t*)send1_data);
         send1_data = (byte_t*)send1_data + 1;
@@ -158,7 +144,7 @@ spi0_send_send (
         spi0_iorw(*(byte_t*)send2_data);
         send2_data = (byte_t*)send2_data + 1;
     }
-    GPIO_SetBits(NSS_PORT, NSS_PINS);
+    GPIO_SetBits(GPIOB, GPIO_Pin_12);
 }
 
 /*****************************************************************************/

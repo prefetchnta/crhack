@@ -1,6 +1,6 @@
 /*****************************************************************************/
 /*                                                  ###                      */
-/*       #####          ###    ###                  ###  CREATE: 2017-03-04  */
+/*       #####          ###    ###                  ###  CREATE: 2017-03-09  */
 /*     #######          ###    ###      [HARD]      ###  ~~~~~~~~~~~~~~~~~~  */
 /*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
 /*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
@@ -13,7 +13,7 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>>> YTJ 一体机 LED 屏目标板配置头文件 <<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>> RFGEO-SRV-2 采集器目标板配置头文件 <<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
@@ -27,7 +27,7 @@
 /*****************************************************************************/
 
 /* 连接 MX25L1606E */
-#if     defined(_YTJ_SPI0_)
+#if     defined(_SRV2_SPI0_)
 
     /***** 管脚操作定义 *****/
     #define spi_leng_t          leng_t
@@ -38,7 +38,7 @@
     #define spi_send_recv       spi0_send_recv
     #define spi_send_send       spi0_send_send
 
-#endif  /* _YTJ_SPI0_ */
+#endif  /* _SRV2_SPI0_ */
 
 CR_API void_t   spi0_init (void_t);
 CR_API void_t   spi0_send_data (const void_t *data, leng_t size);
@@ -46,68 +46,6 @@ CR_API void_t   spi0_send_recv (void_t *recv_data, leng_t recv_size,
                           const void_t *send_data, leng_t send_size);
 CR_API void_t   spi0_send_send (const void_t *send1_data, leng_t send1_size,
                                 const void_t *send2_data, leng_t send2_size);
-
-/*****************************************************************************/
-/*                              接口 AUD0 配置                               */
-/*****************************************************************************/
-
-/* 连接 PAM8303D */
-CR_API void_t   aud0_init (void_t);
-CR_API void_t   aud0_output (byte_t value);
-CR_API void_t   aud0_zero (void_t);
-
-/*****************************************************************************/
-/*                              接口 ETH0 配置                               */
-/*****************************************************************************/
-
-/* 连接 RTL8201CP/DP83848I */
-CR_API void_t   eth0_init (void_t);
-
-/*****************************************************************************/
-/*                              接口 HS08 配置                               */
-/*****************************************************************************/
-
-/* 连接两个 LED 屏 */
-#if     defined(_YTJ_HS08_)
-
-    /***** 管脚操作定义 *****/
-    #define HS08_EN_SETB    GPIOC->BSRR = GPIO_Pin_9;
-    #define HS08_EN_CLRB    GPIOC->BRR = GPIO_Pin_9;
-    #define HS08_LT_SETB    GPIOD->BSRR = GPIO_Pin_14;
-    #define HS08_LT_CLRB    GPIOD->BRR = GPIO_Pin_14;
-    #define HS08_SK_SETB    GPIOD->BSRR = GPIO_Pin_13;
-    #define HS08_SK_CLRB    GPIOD->BRR = GPIO_Pin_13;
-    #define HS08_AA_SETB    GPIOC->BSRR = GPIO_Pin_8;
-    #define HS08_AA_CLRB    GPIOC->BRR = GPIO_Pin_8;
-    #define HS08_BB_SETB    GPIOC->BSRR = GPIO_Pin_7;
-    #define HS08_BB_CLRB    GPIOC->BRR = GPIO_Pin_7;
-    #define HS08_CC_SETB    GPIOC->BSRR = GPIO_Pin_6;
-    #define HS08_CC_CLRB    GPIOC->BRR = GPIO_Pin_6;
-    #define HS08_DD_SETB    GPIOD->BSRR = GPIO_Pin_15;
-    #define HS08_DD_CLRB    GPIOD->BRR = GPIO_Pin_15;
-    /* ------------------------------------------- */
-    #define HS08_R1A_SETB   GPIOE->BSRR = GPIO_Pin_13;
-    #define HS08_R1A_CLRB   GPIOE->BRR = GPIO_Pin_13;
-    #define HS08_R2A_SETB   GPIOE->BSRR = GPIO_Pin_15;
-    #define HS08_R2A_CLRB   GPIOE->BRR = GPIO_Pin_15;
-    #define HS08_G1A_SETB   GPIOE->BSRR = GPIO_Pin_12;
-    #define HS08_G1A_CLRB   GPIOE->BRR = GPIO_Pin_12;
-    #define HS08_G2A_SETB   GPIOE->BSRR = GPIO_Pin_14;
-    #define HS08_G2A_CLRB   GPIOE->BRR = GPIO_Pin_14;
-    /* ------------------------------------------- */
-    #define HS08_R1B_SETB   GPIOE->BSRR = GPIO_Pin_11;
-    #define HS08_R1B_CLRB   GPIOE->BRR = GPIO_Pin_11;
-    #define HS08_R2B_SETB   GPIOE->BSRR = GPIO_Pin_9;
-    #define HS08_R2B_CLRB   GPIOE->BRR = GPIO_Pin_9;
-    #define HS08_G1B_SETB   GPIOE->BSRR = GPIO_Pin_10;
-    #define HS08_G1B_CLRB   GPIOE->BRR = GPIO_Pin_10;
-    #define HS08_G2B_SETB   GPIOE->BSRR = GPIO_Pin_8;
-    #define HS08_G2B_CLRB   GPIOE->BRR = GPIO_Pin_8;
-    /* ------------------------------------------ */
-
-#endif  /* _YTJ_HS08_ */
-
-CR_API void_t   hs08_init (void_t);
 
 /*****************************************************************************/
 /*                              接口 GPIO 配置                               */

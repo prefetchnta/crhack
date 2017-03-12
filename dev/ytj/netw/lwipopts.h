@@ -52,16 +52,22 @@ a lot of data that needs to be copied, this should be set high. */
 #define MEMP_NUM_PBUF           10
 /* MEMP_NUM_UDP_PCB: the number of UDP protocol control blocks. One
    per active UDP "connection". */
-#define MEMP_NUM_UDP_PCB        6
+#define MEMP_NUM_UDP_PCB        4
 /* MEMP_NUM_TCP_PCB: the number of simulatenously active TCP
    connections. */
-#define MEMP_NUM_TCP_PCB        10
+#define MEMP_NUM_TCP_PCB        4
 /* MEMP_NUM_TCP_PCB_LISTEN: the number of listening TCP
    connections. */
-#define MEMP_NUM_TCP_PCB_LISTEN 6
+#define MEMP_NUM_TCP_PCB_LISTEN 4
 /* MEMP_NUM_TCP_SEG: the number of simultaneously queued TCP
    segments. */
 #define MEMP_NUM_TCP_SEG        12
+
+/* Enable mem_malloc() and mem_free() protect. */
+#define SYS_ARCH_DECL_PROTECT(lev)
+#define SYS_ARCH_PROTECT(lev)   __disable_irq()
+#define SYS_ARCH_UNPROTECT(lev) __enable_irq()
+#define LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT  1
 
 
 /* ---------- Pbuf options ---------- */
@@ -166,6 +172,52 @@ The STM32F107 allows computing and verifying the IP, UDP, TCP and ICMP checksums
  * LWIP_SOCKET==1: Enable Socket API (require to use sockets.c)
  */
 #define LWIP_SOCKET             0
+
+/*
+   ---------------------------------------
+   ---------- Debugging options ----------
+   ---------------------------------------
+*/
+#if defined(YTJ_DEBUG)
+    #include <stdio.h>
+    #include <stdlib.h>
+    #define LWIP_DEBUG
+    #define LWIP_PLATFORM_DIAG(x) \
+                do { printf x; } while (0)
+    /* --------------------------------- */
+    #define ETHARP_DEBUG        LWIP_DBG_ON
+    #define NETIF_DEBUG         LWIP_DBG_ON
+    #define PBUF_DEBUG          LWIP_DBG_ON
+    #define API_LIB_DEBUG       LWIP_DBG_ON
+    #define API_MSG_DEBUG       LWIP_DBG_ON
+    #define SOCKETS_DEBUG       LWIP_DBG_ON
+    #define ICMP_DEBUG          LWIP_DBG_ON
+    #define IGMP_DEBUG          LWIP_DBG_ON
+    #define INET_DEBUG          LWIP_DBG_ON
+    #define IP_DEBUG            LWIP_DBG_ON
+    #define IP_REASS_DEBUG      LWIP_DBG_ON
+    #define RAW_DEBUG           LWIP_DBG_ON
+    #define MEM_DEBUG           LWIP_DBG_ON
+    #define MEMP_DEBUG          LWIP_DBG_ON
+    #define SYS_DEBUG           LWIP_DBG_ON
+    #define TIMERS_DEBUG        LWIP_DBG_ON
+    #define TCP_DEBUG           LWIP_DBG_ON
+    #define TCP_INPUT_DEBUG     LWIP_DBG_ON
+    #define TCP_FR_DEBUG        LWIP_DBG_ON
+    #define TCP_RTO_DEBUG       LWIP_DBG_ON
+    #define TCP_CWND_DEBUG      LWIP_DBG_ON
+    #define TCP_WND_DEBUG       LWIP_DBG_ON
+    #define TCP_OUTPUT_DEBUG    LWIP_DBG_ON
+    #define TCP_RST_DEBUG       LWIP_DBG_ON
+    #define TCP_QLEN_DEBUG      LWIP_DBG_ON
+    #define UDP_DEBUG           LWIP_DBG_ON
+    #define TCPIP_DEBUG         LWIP_DBG_ON
+    #define SLIP_DEBUG          LWIP_DBG_ON
+    #define DHCP_DEBUG          LWIP_DBG_ON
+    #define AUTOIP_DEBUG        LWIP_DBG_ON
+    #define DNS_DEBUG           LWIP_DBG_ON
+    #define IP6_DEBUG           LWIP_DBG_ON
+#endif
 
 #endif /* __LWIPOPTS_H__ */
 

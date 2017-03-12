@@ -31,11 +31,11 @@
 #undef  mem_free
 
 #include "stm32_eth.h"
-#include <lwip/priv/tcp_priv.h>
 #include <lwip/init.h>
-#include <lwip/tcp.h>
-#include <lwip/udp.h>
 #include <lwip/dhcp.h>
+#include <lwip/udp.h>
+#include <lwip/tcp.h>
+#include <lwip/priv/tcp_priv.h>
 #include <netif/etharp.h>
 #include "ethernetif.h"
 
