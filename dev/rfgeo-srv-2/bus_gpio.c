@@ -1,6 +1,6 @@
 /*****************************************************************************/
 /*                                                  ###                      */
-/*       #####          ###    ###                  ###  CREATE: 2017-03-05  */
+/*       #####          ###    ###                  ###  CREATE: 2017-03-12  */
 /*     #######          ###    ###      [HARD]      ###  ~~~~~~~~~~~~~~~~~~  */
 /*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
 /*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
@@ -13,41 +13,81 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>>> YTJ 一体机 LED 屏 HS08 接口函数库 <<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>> RFGEO-SRV-2 采集器 GPIO 接口函数库 <<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
-#define _YTJ_HS08_
 #include "board.h"
 #include "stm32f10x_conf.h"
 
 /*
 =======================================
-    HS08 初始化
+    GPIO 初始化
 =======================================
 */
 CR_API void_t
-hs08_init (void_t)
+gpio_init (void_t)
 {
     GPIO_InitTypeDef    gpio;
 
-    /* 引脚配置 */
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC |
-                           RCC_APB2Periph_GPIOD |
-                           RCC_APB2Periph_GPIOE, ENABLE);
-    gpio.GPIO_Speed = GPIO_Speed_10MHz;
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA |
+                           RCC_APB2Periph_GPIOE |
+                           RCC_APB2Periph_GPIOG, ENABLE);
+    gpio.GPIO_Speed = GPIO_Speed_2MHz;
     gpio.GPIO_Mode = GPIO_Mode_Out_PP;
-    gpio.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
-    GPIO_Init(GPIOC, &gpio);
-    GPIO_ResetBits(GPIOC, GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9);
-    gpio.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
-    GPIO_Init(GPIOD, &gpio);
-    GPIO_ResetBits(GPIOD, GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15);
-    gpio.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 |
-                    GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+    gpio.GPIO_Pin = GPIO_Pin_1;
+    GPIO_Init(GPIOA, &gpio);
+    GPIO_ResetBits(GPIOA, GPIO_Pin_1);
+    gpio.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 |
+                    GPIO_Pin_5 | GPIO_Pin_6;
     GPIO_Init(GPIOE, &gpio);
-    GPIO_ResetBits(GPIOE, GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11 |
-                   GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15);
+    GPIO_SetBits(GPIOE, GPIO_Pin_6);
+    GPIO_ResetBits(GPIOE, GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5);
+    gpio.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+    gpio.GPIO_Pin = GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14;
+    GPIO_Init(GPIOG, &gpio);
+}
+
+/*
+=======================================
+    GPIO 读引脚
+=======================================
+*/
+CR_API byte_t
+gpio_input (void_t)
+{
+    int16u  pins;
+
+    pins = GPIO_ReadOutputData(GPIOG);
+    return ((pins >> 11) & 0x0F);
+}
+
+/*
+=======================================
+    GPIO OC 输出
+=======================================
+*/
+CR_API void_t
+gpio_output (
+  __CR_IN__ byte_t  out
+    )
+{
+    int16u  pins_s = 0;
+    int16u  pins_r = 0;
+
+    if (out & 0x01) pins_s |= GPIO_Pin_2;
+    else            pins_r |= GPIO_Pin_2;
+    if (out & 0x02) pins_s |= GPIO_Pin_3;
+    else            pins_r |= GPIO_Pin_3;
+    if (out & 0x04) pins_s |= GPIO_Pin_4;
+    else            pins_r |= GPIO_Pin_4;
+    if (out & 0x08) pins_s |= GPIO_Pin_5;
+    else            pins_r |= GPIO_Pin_5;
+
+    if (pins_s != 0)
+        GPIO_SetBits(GPIOE, pins_s);
+    if (pins_r != 0)
+        GPIO_ResetBits(GPIOE, pins_r);
 }
 
 /*****************************************************************************/

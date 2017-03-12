@@ -49,16 +49,16 @@ spi0_init (void_t)
     gpio.GPIO_Mode = GPIO_Mode_IN_FLOATING;
     gpio.GPIO_Pin = GPIO_Pin_6;
     GPIO_Init(GPIOA, &gpio);
-    gpio.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_7;
     gpio.GPIO_Mode = GPIO_Mode_AF_PP;
+    gpio.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_7;
     GPIO_Init(GPIOA, &gpio);
     gpio.GPIO_Speed = GPIO_Speed_10MHz;
-    gpio.GPIO_Pin = GPIO_Pin_4;
     gpio.GPIO_Mode = GPIO_Mode_Out_PP;
+    gpio.GPIO_Pin = GPIO_Pin_4;
     GPIO_Init(GPIOC, &gpio);
     GPIO_ResetBits(GPIOC, GPIO_Pin_4);
-    gpio.GPIO_Pin = NSS_PINS;
     gpio.GPIO_Mode = GPIO_Mode_Out_PP;
+    gpio.GPIO_Pin = NSS_PINS;
     GPIO_Init(NSS_PORT, &gpio);
     GPIO_SetBits(NSS_PORT, NSS_PINS);
 

@@ -41,8 +41,8 @@ aud0_init (void_t)
                            RCC_APB2Periph_GPIOB, ENABLE);
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE);
     gpio.GPIO_Speed = GPIO_Speed_2MHz;
-    gpio.GPIO_Pin = GPIO_Pin_4;
     gpio.GPIO_Mode = GPIO_Mode_AIN;
+    gpio.GPIO_Pin = GPIO_Pin_4;
     GPIO_Init(GPIOA, &gpio);
 
     /* DAC 外设配置 */
@@ -61,8 +61,8 @@ aud0_init (void_t)
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB |
                            RCC_APB2Periph_TIM1, ENABLE);
     gpio.GPIO_Speed = GPIO_Speed_2MHz;
+    gpio.GPIO_Mode = GPIO_Mode_AF_PP;
     gpio.GPIO_Pin = GPIO_Pin_14 | GPIO_Pin_15;
-    gpio.GPIO_Mode  = GPIO_Mode_AF_PP;
     GPIO_Init(GPIOB, &gpio);
 
     /* PWM 外设配置 (8位 PCM 编码) */
@@ -88,8 +88,8 @@ aud0_init (void_t)
     TIM_CtrlPWMOutputs(TIM1, ENABLE);
 #endif
     /* 音频使能管脚 */
-    gpio.GPIO_Pin = GPIO_Pin_0;
     gpio.GPIO_Mode = GPIO_Mode_Out_PP;
+    gpio.GPIO_Pin = GPIO_Pin_0;
     GPIO_Init(GPIOB, &gpio);
     GPIO_ResetBits(GPIOB, GPIO_Pin_0);
 

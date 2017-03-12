@@ -105,6 +105,7 @@ fputc (
   __CR_IN__ FILE*   fp
     )
 {
+    CR_NOUSE(fp);
     while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
     USART_SendData(USART1, (byte_t)ch);
     return (ch);

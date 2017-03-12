@@ -48,10 +48,62 @@ CR_API void_t   spi0_send_send (const void_t *send1_data, leng_t send1_size,
                                 const void_t *send2_data, leng_t send2_size);
 
 /*****************************************************************************/
+/*                              接口 SPI1 配置                               */
+/*****************************************************************************/
+
+/* 连接 SX1278 (M1) */
+#if     defined(_SRV2_SPI1_)
+
+    /***** 管脚操作定义 *****/
+    #define spi_leng_t          leng_t
+
+    /***** 函数的重映射 *****/
+    #define spi_init            spi1_init
+    #define spi_send_data       spi1_send_data
+    #define spi_send_recv       spi1_send_recv
+    #define spi_send_send       spi1_send_send
+
+#endif  /* _SRV2_SPI1_ */
+
+CR_API void_t   spi1_init (void_t);
+CR_API void_t   spi1_send_data (const void_t *data, leng_t size);
+CR_API void_t   spi1_send_recv (void_t *recv_data, leng_t recv_size,
+                          const void_t *send_data, leng_t send_size);
+CR_API void_t   spi1_send_send (const void_t *send1_data, leng_t send1_size,
+                                const void_t *send2_data, leng_t send2_size);
+
+/*****************************************************************************/
+/*                              接口 SPI2 配置                               */
+/*****************************************************************************/
+
+/* 连接 SX1278 (M2) */
+#if     defined(_SRV2_SPI2_)
+
+    /***** 管脚操作定义 *****/
+    #define spi_leng_t          leng_t
+
+    /***** 函数的重映射 *****/
+    #define spi_init            spi2_init
+    #define spi_send_data       spi2_send_data
+    #define spi_send_recv       spi2_send_recv
+    #define spi_send_send       spi2_send_send
+
+#endif  /* _SRV2_SPI2_ */
+
+CR_API void_t   spi2_init (void_t);
+CR_API void_t   spi2_send_data (const void_t *data, leng_t size);
+CR_API void_t   spi2_send_recv (void_t *recv_data, leng_t recv_size,
+                          const void_t *send_data, leng_t send_size);
+CR_API void_t   spi2_send_send (const void_t *send1_data, leng_t send1_size,
+                                const void_t *send2_data, leng_t send2_size);
+
+/*****************************************************************************/
 /*                              接口 GPIO 配置                               */
 /*****************************************************************************/
 
 CR_API void_t   gpio_init (void_t);
+CR_API byte_t   gpio_input (void_t);
+CR_API void_t   gpio_output (byte_t out);
 
 /*****************************************************************************/
 /*                                 公用配置                                  */
