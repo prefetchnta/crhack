@@ -37,7 +37,7 @@
     RX-8025 初始设置
 =======================================
 */
-CR_API bool_t
+CR_API retc_t
 rx8025_init_time (void_t)
 {
     byte_t  ctl[2] = { 0x20, 0x00 };
@@ -55,7 +55,7 @@ rx8025_init_time (void_t)
     RX-8025 获取时间
 =======================================
 */
-CR_API bool_t
+CR_API retc_t
 rx8025_get_time (
   __CR_OT__ sDATETIME*  dttm
     )
@@ -83,12 +83,12 @@ rx8025_get_time (
     RX-8025 设置时间
 =======================================
 */
-CR_API bool_t
+CR_API retc_t
 rx8025_set_time (
   __CR_IN__ const sDATETIME*    dttm
     )
 {
-    byte_t  buf[7];
+    byte_t  buf[8];
 
     if (dttm->year < 2000 || dttm->year > 2099)
         return (FALSE);
@@ -98,8 +98,8 @@ rx8025_set_time (
     buf[3] = (byte_t)  (dttm->week);
     buf[4] = (byte_t)(((dttm->day    /  10) << 4) | (dttm->day    % 10));
     buf[5] = (byte_t)(((dttm->month  /  10) << 4) | (dttm->month  % 10));
-    buf[6] = (byte_t)  (dttm->year -  2000);
-    buf[6] = (byte_t)(((      buf[6] /  10) << 4) | (      buf[6] % 10));
+    buf[7] = (byte_t)  (dttm->year -  2000);
+    buf[6] = (byte_t)(((      buf[7] /  10) << 4) | (      buf[7] % 10));
     return ((i2c_write_device(RX8025_DEV, 0, buf, 7) != 7) ? FALSE : TRUE);
 }
 

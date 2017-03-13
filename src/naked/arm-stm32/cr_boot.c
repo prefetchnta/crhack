@@ -1,6 +1,6 @@
 /*****************************************************************************/
 /*                                                  ###                      */
-/*       #####          ###    ###                  ###  CREATE: 2017-03-06  */
+/*       #####          ###    ###                  ###  CREATE: 2017-03-13  */
 /*     #######          ###    ###      [CORE]      ###  ~~~~~~~~~~~~~~~~~~  */
 /*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
 /*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
@@ -13,31 +13,60 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>>>>>> CrHack STM32 CPU 配置头文件 <<<<<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>>>>> CrHack BOOT 函数库 for STM32 <<<<<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
-#ifndef __CR_STM32CPU_H__
-#define __CR_STM32CPU_H__
+#include "devlib.h"
+#include "stm32cpu.h"
 
-/* STM32F10X */
-#if defined(STM32F10X_LD) || defined(STM32F10X_LD_VL) || \
-    defined(STM32F10X_MD) || defined(STM32F10X_MD_VL) || \
-    defined(STM32F10X_HD) || defined(STM32F10X_HD_VL) || \
-    defined(STM32F10X_XL) || defined(STM32F10X_CL)
-    #define _CR_STM32F10X_
-    #include "stm32f10x_conf.h"
-    #define irqx_enabled()  __enable_irq()
-    #define irqx_disable()  __disable_irq()
-    #if defined(STM32F10X_LD) || defined(STM32F10X_LD_VL) || \
-        defined(STM32F10X_MD) || defined(STM32F10X_MD_VL)
-        #define STM32FLASH_PAGE 1024
-    #else
-        #define STM32FLASH_PAGE 2048
-    #endif
-#endif
+/* 跳转用的函数类型 */
+typedef void_t  (*boot_jump_t) (void_t);
 
-#endif  /* !__CR_STM32CPU_H__ */
+/*
+=======================================
+    跳转到指定区域的程序
+=======================================
+*/
+CR_API void_t
+boot_jump (
+  __CR_IN__ int32u  addr
+    )
+{
+    static int32u*      table = (int32u*)addr;
+    static boot_jump_t  jump = (boot_jump_t)table[1];
+
+    /* 自己保证地址的正确性 */
+    irqx_disable();
+    __set_MSP(table[0]);
+    jump();
+}
+
+/*
+=======================================
+    跳转后程序执行的初始化
+=======================================
+*/
+CR_API void_t
+boot_goon (
+  __CR_IN__ int32u  addr
+    )
+{
+    /* 自己保证地址的正确性 */
+    SCB->VTOR = addr & 0x1FFFFF80UL;
+    irqx_enabled();
+}
+
+/*
+=======================================
+    CPU 复位
+=======================================
+*/
+CR_API void_t
+boot_reset (void_t)
+{
+    NVIC_SystemReset();
+}
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */

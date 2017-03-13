@@ -35,7 +35,7 @@
     PCF8583 获取时间
 =======================================
 */
-CR_API bool_t
+CR_API retc_t
 pcf8583_get_time (
   __CR_IN__ byte_t      devs,
   __CR_OT__ sDATETIME*  dttm
@@ -64,7 +64,7 @@ pcf8583_get_time (
     PCF8583 设置时间
 =======================================
 */
-CR_API bool_t
+CR_API retc_t
 pcf8583_set_time (
   __CR_IN__ byte_t              devs,
   __CR_IN__ const sDATETIME*    dttm

@@ -1,6 +1,6 @@
 /*****************************************************************************/
 /*                                                  ###                      */
-/*       #####          ###    ###                  ###  CREATE: 2017-03-09  */
+/*       #####          ###    ###                  ###  CREATE: 2017-03-13  */
 /*     #######          ###    ###      [HARD]      ###  ~~~~~~~~~~~~~~~~~~  */
 /*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
 /*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
@@ -13,49 +13,102 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>>> RFGEO-SRV-2 采集器芯片驱动头文件 <<<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>>> RFGEO-SRV-2 采集器系统调用函数库 <<<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
-#ifndef __CR_DEVICE_H__
-#define __CR_DEVICE_H__
-
-#include "board.h"
-#include "rtclib.h"
-#include "chip/mx25lxx.h"
+#include "applib.h"
+#include "device.h"
+#include "devlib.h"
 
 /*****************************************************************************/
-/*                                MX25L1606E                                 */
+/*                                   RTC                                     */
 /*****************************************************************************/
 
-/* 写保护管脚 */
-CR_API void_t   mx25l16_unlock (void_t);
-CR_API byte_t   mx25l16_get_status (void_t);
-CR_API retc_t   mx25l16_wait_idle (uint_t times);
-CR_API void_t   mx25l16_read_id3 (sMX25LXX3 *id);
-CR_API leng_t   mx25l16_fread (int32u addr, void_t *data, leng_t size);
-CR_API retc_t   mx25l16_ssec_erase (int32u addr, uint_t time, uint_t tout);
-CR_API leng_t   mx25l16_program (int32u addr, const void_t *data,
-                                 leng_t size, uint_t tout);
+/*
+=======================================
+    RTC 初始化
+=======================================
+*/
+CR_API void_t
+rtc_init (void_t)
+{
+    uint_t  idx;
+
+    /* 重试几次 */
+    for (idx = 0; idx < 5; idx++) {
+        if (rx8025_init_time())
+            break;
+    }
+}
+
+/*
+=======================================
+    获取系统时间
+=======================================
+*/
+CR_API bool_t
+datetime_get (
+  __CR_OT__ sDATETIME*  datetime
+    )
+{
+    uint_t  idx;
+
+    /* 重试几次 */
+    for (idx = 0; idx < 5; idx++) {
+        if (rx8025_get_time(datetime))
+            return (TRUE);
+    }
+    return (FALSE);
+}
+
+/*
+=======================================
+    设置系统时间
+=======================================
+*/
+CR_API bool_t
+datetime_set (
+  __CR_IN__ const sDATETIME*    datetime
+    )
+{
+    uint_t  idx;
+
+    /* 强制设置星期 */
+    if (!datetime_chk(datetime))
+        return (FALSE);
+    date_set_week((sDATETIME*)datetime);
+
+    /* 重试几次 */
+    for (idx = 0; idx < 5; idx++) {
+        if (rx8025_set_time(datetime))
+            return (TRUE);
+    }
+    return (FALSE);
+}
 
 /*****************************************************************************/
-/*                                 RX-8025                                   */
+/*                                   MISC                                    */
 /*****************************************************************************/
 
-CR_API retc_t   rx8025_init_time (void_t);
-CR_API retc_t   rx8025_get_time (sDATETIME *dttm);
-CR_API retc_t   rx8025_set_time (const sDATETIME *dttm);
+/*
+=======================================
+    延时一段时间
+=======================================
+*/
+CR_API void_t
+thread_sleep (
+  __CR_IN__ uint_t  time_ms
+    )
+{
+    int32u  base = timer_get32();
 
-/*****************************************************************************/
-/*                                储存器读写                                 */
-/*****************************************************************************/
-
-CR_API retc_t   store_init (void_t);
-CR_API retc_t   store_check (void_t);
-CR_API retc_t   store_read (int32u addr, void_t *data, leng_t size);
-CR_API retc_t   store_write (int32u addr, const void_t *data, leng_t size);
-
-#endif  /* !__CR_DEVICE_H__ */
+    while (timer_delta32(base) < time_ms)
+    {
+        /* 喂狗操作 */
+        /************/
+    }
+}
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */
