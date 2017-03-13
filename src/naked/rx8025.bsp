@@ -1,0 +1,116 @@
+/*****************************************************************************/
+/*                                                  ###                      */
+/*       #####          ###    ###                  ###  CREATE: 2017-03-13  */
+/*     #######          ###    ###      [KRNL]      ###  ~~~~~~~~~~~~~~~~~~  */
+/*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
+/*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
+/*   ###       ### ###  ###    ###    ####    ####  ###   ##  +-----------+  */
+/*  ####       ######## ##########  #######  ###### ###  ###  |  A NEW C  |  */
+/*  ###        ######## ########## ########  ###### ### ###   | FRAMEWORK |  */
+/*  ###     ## #### ### ########## ###  ### ###     ######    |  FOR ALL  |  */
+/*  ####   ### ###  ### ###    ### ###  ### ###     ######    | PLATFORMS |  */
+/*  ########## ###      ###    ### ######## ####### #######   |  AND ALL  |  */
+/*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
+/*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
+/*  =======================================================================  */
+/*  >>>>>>>>>>>>>>>>> CrHack EPSON RX-8025 驱动函数库模板 <<<<<<<<<<<<<<<<<  */
+/*  =======================================================================  */
+/*****************************************************************************/
+
+#undef  _I2C_PAGE_
+#define _I2C_SIZE_  16
+
+#if !defined(__no_rx8025_read)
+    #define e24cxx_read     rx8025_read
+#endif
+#if !defined(__no_rx8025_write)
+    #define e24cxx_write    rx8025_write
+#endif
+
+#include "24cxx.inl"
+
+#define RX8025_DEV  0x64
+
+#if !defined(__no_rx8025_init_time)
+/*
+=======================================
+    RX-8025 初始设置
+=======================================
+*/
+CR_API bool_t
+rx8025_init_time (void_t)
+{
+    byte_t  ctl[2] = { 0x20, 0x00 };
+
+    if (i2c_write_device(RX8025_DEV, 14, ctl, 2) != 2)
+        return (FALSE);
+    return (TRUE);
+}
+
+#endif  /* !__no_rx8025_init_time */
+
+#if !defined(__no_rx8025_get_time)
+/*
+=======================================
+    RX-8025 获取时间
+=======================================
+*/
+CR_API bool_t
+rx8025_get_time (
+  __CR_OT__ sDATETIME*  dttm
+    )
+{
+    byte_t  buf[7];
+
+    if (i2c_read_device(RX8025_DEV, 0, buf, 7) != 7)
+        return (FALSE);
+    dttm->second = (buf[0] >> 4) * 10 + (buf[0] & 0x0F);
+    dttm->minute = (buf[1] >> 4) * 10 + (buf[1] & 0x0F);
+    dttm->hour   = (buf[2] >> 4) * 10 + (buf[2] & 0x0F);
+    dttm->week   = (buf[3]);
+    dttm->day    = (buf[4] >> 4) * 10 + (buf[4] & 0x0F);
+    dttm->month  = (buf[5] >> 4) * 10 + (buf[5] & 0x0F);
+    dttm->year   = (buf[6] >> 4) * 10 + (buf[6] & 0x0F);
+    dttm->year  += 2000;
+    return (TRUE);
+}
+
+#endif  /* !__no_rx8025_get_time */
+
+#if !defined(__no_rx8025_set_time)
+/*
+=======================================
+    RX-8025 设置时间
+=======================================
+*/
+CR_API bool_t
+rx8025_set_time (
+  __CR_IN__ const sDATETIME*    dttm
+    )
+{
+    byte_t  buf[7];
+
+    if (dttm->year < 2000 || dttm->year > 2099)
+        return (FALSE);
+    buf[0] = (byte_t)(((dttm->second /  10) << 4) | (dttm->second % 10));
+    buf[1] = (byte_t)(((dttm->minute /  10) << 4) | (dttm->minute % 10));
+    buf[2] = (byte_t)(((dttm->hour   /  10) << 4) | (dttm->hour   % 10));
+    buf[3] = (byte_t)  (dttm->week);
+    buf[4] = (byte_t)(((dttm->day    /  10) << 4) | (dttm->day    % 10));
+    buf[5] = (byte_t)(((dttm->month  /  10) << 4) | (dttm->month  % 10));
+    buf[6] = (byte_t)  (dttm->year -  2000);
+    buf[6] = (byte_t)(((      buf[6] /  10) << 4) | (      buf[6] % 10));
+    return ((i2c_write_device(RX8025_DEV, 0, buf, 7) != 7) ? FALSE : TRUE);
+}
+
+#endif  /* !__no_rx8025_set_time */
+
+/*****************************************************************************/
+/* _________________________________________________________________________ */
+/* uBMAzRBoAKAHaACQD6FoAIAPqbgA/7rIA+5CM9uKw8D4Au7u7mSIJ0t18mYz0mYz9rAQZCgHc */
+/* wRIZIgHZovGBXUAZg+v0GbB+gRmgcJ7BAAAisIlAwB1Av7LSHUC/s9IdQL+w0h1Av7HZkZmgf */
+/* 4JLgIAdb262gPsqAh0+zP/uQB9ZYsFZYktq+L3sMi/AAK7gAKJAUtLdfq5IANXvT8BiQzfBIv */
+/* FLaAAweAEmff53wb+Adjx3kQE2xwy5Io8ithkigcFgACJBN8E3sneNvwB2xyLHDkdfA2JHSyA */
+/* adtAAQPdZYgHR0dNdbZfSYP5UHWr/kQEtAHNFg+Eef/DWAKgDw== |~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ >>> END OF FILE <<< */
+/*****************************************************************************/

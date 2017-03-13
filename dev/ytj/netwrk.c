@@ -90,7 +90,7 @@ netwrk_init (
     hash = hash_crc16h_total(cpuid, sizeof(cpuid));
     mac[0] = 0x00;
     mac[1] = 0x04;
-    mac[2] = 0xA3;
+    mac[2] = 0xA5;
     mac[3] = (byte_t)(hash >> 8);
     mac[4] = (byte_t)(hash);
     mac[5] = 0x00;

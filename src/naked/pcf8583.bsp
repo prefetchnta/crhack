@@ -29,26 +29,6 @@
 
 #include "24cxx.inl"
 
-#if !defined(__no_pcf8583_init_time)
-/*
-=======================================
-    PCF8583 初始设置
-=======================================
-*/
-CR_API bool_t
-pcf8583_init_time (
-  __CR_IN__ byte_t  devs
-    )
-{
-    byte_t  val = 0x00;
-
-    if (i2c_write_device(devs, 0, &val, 1) != 1)
-        return (FALSE);
-    return (TRUE);
-}
-
-#endif  /* !__no_pcf8583_init_time */
-
 #if !defined(__no_pcf8583_get_time)
 /*
 =======================================
@@ -65,6 +45,7 @@ pcf8583_get_time (
 
     if (i2c_read_device(devs, 2, buf, 5) != 5)
         return (FALSE);
+    dttm->year = buf[3] >> 6;
     dttm->week = buf[4] >> 5;
     buf[2] &= 0x3F; buf[3] &= 0x3F; buf[4] &= 0x1F;
     dttm->second = (buf[0] >> 4) * 10 + (buf[0] & 0x0F);
@@ -98,7 +79,7 @@ pcf8583_set_time (
     buf[4]  = (byte_t)(((dttm->day    /  10) << 4) | (dttm->day    % 10));
     buf[4] |= (byte_t) ((dttm->year   &   3) << 6);
     buf[5]  = (byte_t)(((dttm->month  /  10) << 4) | (dttm->month  % 10));
-    buf[5] |= (byte_t)  (date_get_week(dttm) << 5);
+    buf[5] |= (byte_t)  (dttm->week          << 5);
     return ((i2c_write_device(devs, 1, buf, 6) != 6) ? FALSE : TRUE);
 }
 

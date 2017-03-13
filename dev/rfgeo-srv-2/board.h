@@ -20,7 +20,7 @@
 #ifndef __CR_BOARD_H__
 #define __CR_BOARD_H__
 
-#include "defs.h"
+#include "msclib.h"
 
 /*****************************************************************************/
 /*                              接口 SPI0 配置                               */
@@ -98,6 +98,38 @@ CR_API void_t   spi2_send_send (const void_t *send1_data, leng_t send1_size,
                                 const void_t *send2_data, leng_t send2_size);
 
 /*****************************************************************************/
+/*                              接口 I2C0 配置                               */
+/*****************************************************************************/
+
+/* 连接 RX-8025 */
+#if     defined(_SRV2_I2C0_)
+
+    /***** 管脚操作定义 *****/
+    #define _I2C_256B_
+    #define _I2C_INIT_          i2c0_gpio_init();
+    #define I2C_SDA_DIRO        GPIOB->CRH |=  (0x06 << 12);
+    #define I2C_SDA_DIRI        GPIOB->CRH &= ~(0x03 << 12);
+    #define I2C_SCL_DIRO        GPIOB->CRH |=  (0x06 <<  8);
+    #define I2C_SDA_GETB        GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11)
+    #define I2C_SDA_SETB        GPIOB->BSRR = GPIO_Pin_11;
+    #define I2C_SDA_CLRB        GPIOB->BRR = GPIO_Pin_11;
+    #define I2C_SCL_SETB        GPIOB->BSRR = GPIO_Pin_10;
+    #define I2C_SCL_CLRB        GPIOB->BRR = GPIO_Pin_10;
+
+    /***** 函数的重映射 *****/
+    #define i2c_init            i2c0_init
+    #define i2c_read_device     i2c0_read_device
+    #define i2c_write_device    i2c0_write_device
+
+#endif  /* _SRV2_I2C0_ */
+
+CR_API void_t   i2c0_init (void_t);
+CR_API byte_t   i2c0_read_device (byte_t devs, byte_t addr,
+                                  void_t *data, byte_t size);
+CR_API byte_t   i2c0_write_device (byte_t devs, byte_t addr,
+                            const void_t *data, byte_t size);
+
+/*****************************************************************************/
 /*                              接口 GPIO 配置                               */
 /*****************************************************************************/
 
@@ -110,6 +142,11 @@ CR_API void_t   gpio_output (byte_t out);
 /*****************************************************************************/
 
 CR_API void_t   nvic_init (void_t);
+
+/* 驱动宏定义 */
+#define I2C_DELAY_GET_EX    delay32(20);
+#define I2C_DELAY_4___US    delay32(20);
+#define I2C_DELAY_4_7_US    delay32(20);
 
 #endif  /* !__CR_BOARD_H__ */
 

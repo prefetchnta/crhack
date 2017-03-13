@@ -178,7 +178,7 @@ The STM32F107 allows computing and verifying the IP, UDP, TCP and ICMP checksums
    ---------- Debugging options ----------
    ---------------------------------------
 */
-#if defined(YTJ_DEBUG)
+#if 0 && defined(YTJ_DEBUG)
     #include <stdio.h>
     #include <stdlib.h>
     #define LWIP_DEBUG
