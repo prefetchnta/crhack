@@ -20,6 +20,7 @@
 #ifndef __CR_BOARD_H__
 #define __CR_BOARD_H__
 
+#include "memlib.h"
 #include "msclib.h"
 
 /*****************************************************************************/
@@ -133,6 +134,18 @@ CR_API byte_t   i2c0_write_device (byte_t devs, byte_t addr,
 /*                              接口 GPIO 配置                               */
 /*****************************************************************************/
 
+#define ctl_set()   GPIOA->BSRR = GPIO_Pin_1
+#define ctl_clr()   GPIOA->BRR = GPIO_Pin_1
+#define oc1_set()   GPIOE->BSRR = GPIO_Pin_2
+#define oc1_clr()   GPIOE->BRR = GPIO_Pin_2
+#define oc2_set()   GPIOE->BSRR = GPIO_Pin_3
+#define oc2_clr()   GPIOE->BRR = GPIO_Pin_3
+#define oc3_set()   GPIOE->BSRR = GPIO_Pin_4
+#define oc3_clr()   GPIOE->BRR = GPIO_Pin_4
+#define oc4_set()   GPIOE->BSRR = GPIO_Pin_5
+#define oc4_clr()   GPIOE->BRR = GPIO_Pin_5
+#define led_xon()   GPIOE->BSRR = GPIO_Pin_6
+#define led_off()   GPIOE->BRR = GPIO_Pin_6
 CR_API void_t   gpio_init (void_t);
 CR_API byte_t   gpio_input (void_t);
 CR_API void_t   gpio_output (byte_t out);
@@ -143,10 +156,32 @@ CR_API void_t   gpio_output (byte_t out);
 
 CR_API void_t   nvic_init (void_t);
 
+/* 异步串口0 */
+CR_API bool_t   uart0_init (int32u baud);
+CR_API void_t   uart0_write (const void_t *data, leng_t size);
+#define uart0_send_str(str) uart0_write(str, str_lenA(str))
+CR_API uint_t   uart0_rx_size (void_t);
+CR_API void_t   uart0_rx_flush (void_t);
+CR_API void_t   uart0_throw (uint_t size);
+CR_API uint_t   uart0_peek (void_t *data, uint_t size);
+CR_API uint_t   uart0_read (void_t *data, uint_t size);
+
 /* 驱动宏定义 */
 #define I2C_DELAY_GET_EX    delay32(20);
 #define I2C_DELAY_4___US    delay32(20);
 #define I2C_DELAY_4_7_US    delay32(20);
+
+/* 调试相关的配置 */
+#if defined(SRV2_DEBUG)
+    #include <stdio.h>
+    #define DBG_PRINT   printf
+    #define WDT_FEED
+    #define WDT_TOUT(t)
+#else
+    #define DBG_PRINT
+    #define WDT_FEED    wdg_feed(0)
+    #define WDT_TOUT(t) wdg_timeout(0, t)
+#endif
 
 #endif  /* !__CR_BOARD_H__ */
 

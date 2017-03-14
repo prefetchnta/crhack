@@ -60,6 +60,65 @@ nvic_init (void_t)
     /* SysTick 优先级最高（定时用） */
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     NVIC_SetPriority(SysTick_IRQn, 0);
+    nvic.NVIC_IRQChannel = USART2_IRQn;
+    nvic.NVIC_IRQChannelPreemptionPriority = 1;
+    nvic.NVIC_IRQChannelSubPriority = 0;
+    nvic.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&nvic);
+    USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
+}
+
+/*
+=======================================
+    异步串口0初始化
+=======================================
+*/
+CR_API bool_t
+uart0_init (
+  __CR_IN__ int32u  baud
+    )
+{
+    GPIO_InitTypeDef    gpio;
+    USART_InitTypeDef   uart;
+
+    /* UART 端口配置 */
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+    gpio.GPIO_Speed = GPIO_Speed_10MHz;
+    gpio.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+    gpio.GPIO_Pin = GPIO_Pin_3;
+    GPIO_Init(GPIOA, &gpio);
+    gpio.GPIO_Mode = GPIO_Mode_AF_PP;
+    gpio.GPIO_Pin = GPIO_Pin_2;
+    GPIO_Init(GPIOA, &gpio);
+
+    /* UART 外设配置 */
+    uart.USART_BaudRate = baud;
+    uart.USART_WordLength = USART_WordLength_8b;
+    uart.USART_StopBits = USART_StopBits_1;
+    uart.USART_Parity = USART_Parity_No;
+    uart.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    uart.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+    USART_Init(USART2, &uart);
+    USART_Cmd(USART2, ENABLE);
+}
+
+/*
+=======================================
+    异步串口0写入数据 (阻塞式)
+=======================================
+*/
+CR_API void_t
+uart0_write (
+  __CR_IN__ const void_t*   data,
+  __CR_IN__ leng_t          size
+    )
+{
+    for (; size != 0; size--) {
+        while (USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET);
+        USART_SendData(USART2, *(byte_t*)data);
+        data = (byte_t*)data + 1;
+    }
 }
 
 #if defined(SRV2_DEBUG)

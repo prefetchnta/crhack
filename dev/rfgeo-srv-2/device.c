@@ -13,13 +13,17 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>> RFGEO-SRV-2 采集器储存器读写函数库 <<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>>>>>> RFGEO-SRV-2 设备驱动函数库 <<<<<<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
 #include "ff.h"
 #include "device.h"
 #include "stm32f10x_conf.h"
+
+/*****************************************************************************/
+/*                                    储存                                   */
+/*****************************************************************************/
 
 /* NOR FLASH 配置 */
 #define nor_addr_t          int32u
@@ -111,6 +115,45 @@ store_write (
             return (TRUE);
     }
     return (FALSE);
+}
+
+/*****************************************************************************/
+/*                                    串口                                   */
+/*****************************************************************************/
+
+/* 环形队列大小 */
+#define RX_SIZE CR_K2B(20)
+
+/* 函数的重映射 */
+#define uart_rx_size    uart0_rx_size
+#define uart_rx_flush   uart0_rx_flush
+#define uart_throw      uart0_throw
+#define uart_peek       uart0_peek
+#define uart_read       uart0_read
+
+#include "uart.inl"
+
+/*
+=======================================
+    UART2 中断处理
+=======================================
+*/
+CR_API void_t
+USART2_IRQHandler (void_t)
+{
+    if (USART_GetITStatus(USART2, USART_IT_RXNE)) {
+        USART_ClearITPendingBit(USART2, USART_IT_RXNE);
+        s_fifo.rx_buf[s_fifo.rx_tl++] = USART_ReceiveData(USART2);
+        if (s_fifo.rx_tl >= RX_SIZE)
+            s_fifo.rx_tl = 0;
+    }
+    if (USART_GetITStatus(USART2, USART_IT_ORE)) {
+        s_fifo.rx_buf[s_fifo.rx_tl++] = USART_ReceiveData(USART2);
+        if (s_fifo.rx_tl >= RX_SIZE)
+            s_fifo.rx_tl = 0;
+    }
+    if (USART_GetITStatus(USART2, USART_IT_LBD))
+        USART_ClearITPendingBit(USART2, USART_IT_LBD);
 }
 
 /*****************************************************************************/

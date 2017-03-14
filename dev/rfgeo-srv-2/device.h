@@ -47,6 +47,32 @@ CR_API retc_t   rx8025_get_time (sDATETIME *dttm);
 CR_API retc_t   rx8025_set_time (const sDATETIME *dttm);
 
 /*****************************************************************************/
+/*                                  RS-485                                   */
+/*****************************************************************************/
+
+CR_API bool_t   rs485_baud (int32u baud);
+CR_API void_t   rs485_write (const void_t *data, leng_t size);
+#define rs485_send_str(str) rs485_write(str, str_lenA(str))
+CR_API uint_t   rs485_rx_size (void_t);
+CR_API void_t   rs485_rx_flush (void_t);
+CR_API void_t   rs485_throw (uint_t size);
+CR_API uint_t   rs485_peek (void_t *data, uint_t size);
+CR_API uint_t   rs485_read (void_t *data, uint_t size);
+
+/*****************************************************************************/
+/*                                  RS-232                                   */
+/*****************************************************************************/
+
+CR_API bool_t   rs232_baud (int32u baud);
+CR_API void_t   rs232_write (const void_t *data, leng_t size);
+#define rs232_send_str(str) rs232_write(str, str_lenA(str))
+CR_API uint_t   rs232_rx_size (void_t);
+CR_API void_t   rs232_rx_flush (void_t);
+CR_API void_t   rs232_throw (uint_t size);
+CR_API uint_t   rs232_peek (void_t *data, uint_t size);
+CR_API uint_t   rs232_read (void_t *data, uint_t size);
+
+/*****************************************************************************/
 /*                                储存器读写                                 */
 /*****************************************************************************/
 

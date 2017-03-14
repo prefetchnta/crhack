@@ -63,12 +63,13 @@ a lot of data that needs to be copied, this should be set high. */
    segments. */
 #define MEMP_NUM_TCP_SEG        12
 
+#if 0
 /* Enable mem_malloc() and mem_free() protect. */
 #define SYS_ARCH_DECL_PROTECT(lev)
 #define SYS_ARCH_PROTECT(lev)   __disable_irq()
 #define SYS_ARCH_UNPROTECT(lev) __enable_irq()
 #define LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT  1
-
+#endif
 
 /* ---------- Pbuf options ---------- */
 /* PBUF_POOL_SIZE: the number of buffers in the pbuf pool. */

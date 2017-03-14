@@ -20,6 +20,7 @@
 #include "applib.h"
 #include "device.h"
 #include "devlib.h"
+#include "stm32f10x_conf.h"
 
 /*****************************************************************************/
 /*                                   RTC                                     */
@@ -103,10 +104,12 @@ thread_sleep (
 {
     int32u  base = timer_get32();
 
-    while (timer_delta32(base) < time_ms)
-    {
-        /* 喂狗操作 */
-        /************/
+    while (timer_delta32(base) < time_ms) {
+        led_xon();
+        delay32(256);
+        WDT_FEED;
+        led_off();
+        delay32(256);
     }
 }
 
