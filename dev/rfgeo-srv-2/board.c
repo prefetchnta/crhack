@@ -101,6 +101,7 @@ uart0_init (
     uart.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
     USART_Init(USART2, &uart);
     USART_Cmd(USART2, ENABLE);
+    return (TRUE);
 }
 
 /*

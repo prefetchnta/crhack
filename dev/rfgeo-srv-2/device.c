@@ -18,7 +18,9 @@
 /*****************************************************************************/
 
 #include "ff.h"
+#include "hash.h"
 #include "device.h"
+#include "morder.h"
 #include "stm32f10x_conf.h"
 
 /*****************************************************************************/
@@ -154,6 +156,157 @@ USART2_IRQHandler (void_t)
     }
     if (USART_GetITStatus(USART2, USART_IT_LBD))
         USART_ClearITPendingBit(USART2, USART_IT_LBD);
+}
+
+/*****************************************************************************/
+/*                                    桥接                                   */
+/*****************************************************************************/
+
+/* 桥接最大数据包 */
+#define BRIDGE_MAX  4096
+
+/* 临时缓冲区 */
+static uint8_t  s_temp[BRIDGE_MAX + 2];
+
+/*
+---------------------------------------
+    查找一帧桥接数据
+---------------------------------------
+*/
+static uint_t
+bridge_recv (
+  __CR_OT__ void_t* data
+    )
+{
+    byte_t  hd[3], *pntr;
+    int16u  crc1, crc2, length;
+    uint_t  count = uart0_rx_size();
+
+    /* 查找有效的头 */
+    if (count <= sizeof(hd))
+        return (0);
+    uart0_peek(hd, sizeof(hd));
+    if (hd[0] != 0xAA) {
+        uart0_throw(1);
+        return (0);
+    }
+    length  = hd[1];
+    length <<= 8;
+    length |= hd[2];
+    if (length <= 2 ||
+        length > BRIDGE_MAX - sizeof(hd)) {
+        uart0_throw(1);
+        return (0);
+    }
+
+    /* 后续数据没有跟上 */
+    if (length > count - sizeof(hd))
+        return (0);
+
+    /* 校验 CRC16 是否正确 */
+    pntr = (byte_t*)data;
+    uart0_peek(data, length + sizeof(hd));
+    pntr += 1;
+    crc1  = hash_crc16h_total(pntr, length);
+    pntr += length;
+    crc2  = pntr[0];
+    crc2 <<= 8;
+    crc2 |= pntr[1];
+    if (crc1 != crc2) {
+        uart0_throw(1);
+        return (0);
+    }
+
+    /* 一包正常的数据 */
+    uart0_throw(length + sizeof(hd));
+    length -= 2;
+    mem_move(data, (byte_t*)data + sizeof(hd), length);
+    return (length);
+}
+
+/*
+---------------------------------------
+    发送一帧桥接数据
+---------------------------------------
+*/
+static void_t
+bridge_send (
+  __CR_IN__ const void_t*   data,
+  __CR_IN__ uint_t          size
+    )
+{
+    byte_t  hd[3];
+    int16u  crc = 0xFFFF;
+
+    size += 2;
+    hd[0] = 0xAA;
+    hd[1] = (byte_t)(size >> 8);
+    hd[2] = (byte_t)(size);
+    size -= 2;
+    crc = hash_crc16h_update(crc, &hd[1], 2);
+    crc = hash_crc16h_update(crc, data, size);
+    crc = WORD_BE(crc);
+    uart0_write(hd, sizeof(hd));
+    uart0_write(data, size);
+    uart0_write(&crc, sizeof(crc));
+}
+
+/*
+=======================================
+    桥接板波特率设置
+=======================================
+*/
+CR_API bool_t
+bridge_baud (
+  __CR_IN__ byte_t  port,
+  __CR_IN__ int32u  baud
+    )
+{
+
+}
+
+/*
+=======================================
+    桥接板复位
+=======================================
+*/
+CR_API bool_t
+bridge_reset (void_t)
+{
+
+}
+
+/*
+=======================================
+    桥接板电平控制
+=======================================
+*/
+CR_API bool_t
+bridge_gpio (
+  __CR_IN__ byte_t  level
+    )
+{
+
+}
+
+/*
+=======================================
+    桥接板透传
+=======================================
+*/
+CR_API void_t
+bridge_commit (
+  __CR_IN__ byte_t          port,
+  __CR_IN__ const void_t*   data,
+  __CR_IN__ uint_t          size
+    )
+{
+    if (size == 0 || size >= BRIDGE_MAX)
+        return;
+    s_temp[0] = BRIDGE_SEND;
+    s_temp[1] = port;
+    mem_cpy(&s_temp[2], data, size);
+    bridge_send(s_temp, size + 2);
 }
 
 /*****************************************************************************/

@@ -124,13 +124,13 @@ CR_API void_t   nvic_init (void_t);
 /* 调试相关的配置 */
 #if defined(YTJ_DEBUG)
     #include <stdio.h>
-    #define DBG_PRINT   printf
     #define WDT_FEED
     #define WDT_TOUT(t)
+    #define DBG_PRINT   printf
 #else
-    #define DBG_PRINT
     #define WDT_FEED    wdg_feed(0)
     #define WDT_TOUT(t) wdg_timeout(0, t)
+    #define DBG_PRINT()
 #endif
 
 #endif  /* !__CR_BOARD_H__ */

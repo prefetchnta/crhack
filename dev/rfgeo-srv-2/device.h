@@ -73,6 +73,35 @@ CR_API uint_t   rs232_peek (void_t *data, uint_t size);
 CR_API uint_t   rs232_read (void_t *data, uint_t size);
 
 /*****************************************************************************/
+/*                                  桥接板                                   */
+/*****************************************************************************/
+
+/* 通讯命令字 */
+#define BRIDGE_SEND     0x00    /* 数据的转发：端口(1B) + 数据(NB)
+                                                0x00 - CAN
+                                                0x01 - 485
+                                                0x02 - 桥接
+                                                0x03 - 主板
+                                */
+#define BRIDGE_BAUD     0x01    /* 设置波特率：端口(1B) + 波特率(4B) */
+#define BRIDGE_RESET    0x02    /* 复位 */
+#define BRIDGE_GPIO     0x03    /* CTRL 管脚控制：电平(1B) */
+
+/* 端口的类型 */
+#define PORT_TYPE_CAN   0x00
+#define PORT_TYPE_485   0x01
+#define PORT_TYPE_PSS   0x02
+#define PORT_TYPE_BRD   0x03
+
+/* 命令返回值 */
+#define RETURN_OKAY     0x00
+
+CR_API bool_t   bridge_baud (byte_t port, int32u baud);
+CR_API bool_t   bridge_reset (void_t);
+CR_API bool_t   bridge_gpio (byte_t level);
+CR_API void_t   bridge_commit (byte_t port, const void_t *data, uint_t size);
+
+/*****************************************************************************/
 /*                                储存器读写                                 */
 /*****************************************************************************/
 
