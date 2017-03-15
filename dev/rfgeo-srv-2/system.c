@@ -118,15 +118,47 @@ thread_sleep (
   __CR_IN__ uint_t  time_ms
     )
 {
-    int32u  base = timer_get32();
+    byte_t  led_flag = FALSE;
+    int32u  led_base = timer_get32();
+    int32u  base = led_base;
 
-    while (timer_delta32(base) < time_ms) {
-        led_xon();
-        delay32(256);
-        WDT_FEED;
-        led_off();
-        delay32(256);
+    for (;;)
+    {
+        /* 等待时间到 */
+        if (timer_delta32(base) >= time_ms)
+            break;
+
+        /* LED 与喂狗 */
+        if (timer_delta32(led_base) >= 333) {
+            led_base = timer_get32();
+            if (led_flag)
+                led_xon();
+            else
+                led_off();
+            led_flag = !led_flag;
+            WDT_FEED;
+        }
     }
+}
+
+/*
+=======================================
+    加载串口库
+=======================================
+*/
+CR_API void_t
+sio_init (void_t)
+{
+}
+
+/*
+=======================================
+    释放串口库
+=======================================
+*/
+CR_API void_t
+sio_free (void_t)
+{
 }
 
 /*****************************************************************************/

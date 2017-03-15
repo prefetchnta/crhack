@@ -119,6 +119,15 @@ CR_API void_t   spi2_send_send (const void_t *send1_data, leng_t send1_size,
 
     /***** 函数的重映射 *****/
     #define i2c_init            i2c0_init
+    #define i2c_enter           i2c0_enter
+    #define i2c_leave           i2c0_leave
+    #define i2c_send_ack        i2c0_send_ack
+    #define i2c_send_nack       i2c0_send_nack
+    #define i2c_test_ack        i2c0_test_ack
+    #define i2c_recv_byte       i2c0_recv_byte
+    #define i2c_send_byte       i2c0_send_byte
+    #define i2c_send_slave      i2c0_send_slave
+    #define i2c_send_address    i2c0_send_address
     #define i2c_read_device     i2c0_read_device
     #define i2c_write_device    i2c0_write_device
 

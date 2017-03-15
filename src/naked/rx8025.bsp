@@ -17,6 +17,8 @@
 /*  =======================================================================  */
 /*****************************************************************************/
 
+#include "rtclib.h"
+
 #undef  _I2C_PAGE_
 #define _I2C_SIZE_  16
 
@@ -30,24 +32,6 @@
 #include "24cxx.inl"
 
 #define RX8025_DEV  0x64
-
-#if !defined(__no_rx8025_init_time)
-/*
-=======================================
-    RX-8025 初始设置
-=======================================
-*/
-CR_API retc_t
-rx8025_init_time (void_t)
-{
-    byte_t  ctl[2] = { 0x20, 0x00 };
-
-    if (i2c_write_device(RX8025_DEV, 14, ctl, 2) != 2)
-        return (FALSE);
-    return (TRUE);
-}
-
-#endif  /* !__no_rx8025_init_time */
 
 #if !defined(__no_rx8025_get_time)
 /*
@@ -104,6 +88,39 @@ rx8025_set_time (
 }
 
 #endif  /* !__no_rx8025_set_time */
+
+#if !defined(__no_rx8025_init_time)
+/*
+=======================================
+    RX-8025 初始设置
+=======================================
+*/
+CR_API retc_t
+rx8025_init_time (void_t)
+{
+    byte_t  state;
+    byte_t  ctl[2] = { 0x20, 0x00 };
+    /* ----------- */
+    sDATETIME   temp;
+
+    if (i2c_read_device(RX8025_DEV, 15, &state, 1) != 1)
+        return (FALSE);
+    if (i2c_write_device(RX8025_DEV, 14, ctl, 2) != 2)
+        return (FALSE);
+    if (state & 0x10) {
+        temp.year = 2010;
+        temp.month = 3;
+        temp.day = 22;
+        temp.hour = 0;
+        temp.minute = 0;
+        temp.second = 0;
+        temp.week = 1;
+        rx8025_set_time(&temp);
+    }
+    return (TRUE);
+}
+
+#endif  /* !__no_rx8025_init_time */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */

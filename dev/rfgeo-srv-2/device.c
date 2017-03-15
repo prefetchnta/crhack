@@ -19,6 +19,7 @@
 
 #include "ff.h"
 #include "hash.h"
+#include "applib.h"
 #include "device.h"
 #include "morder.h"
 #include "stm32f10x_conf.h"
@@ -171,6 +172,8 @@ static byte_t   s_send[BRIDGE_MAX + 2];
 static byte_t   s_okay[2] = { 0xFF, 0xFF };
 
 /* 内部使用的函数 */
+CR_API uint_t   bridge_rs232_rx_size (void_t);
+CR_API void_t   bridge_rs232_throw (uint_t size);
 CR_API void_t   bridge_rs232_input (const void_t *data, uint_t size);
 CR_API void_t   bridge_rs485_input (const void_t *data, uint_t size);
 
@@ -226,7 +229,7 @@ bridge_recv (
     /* 一包正常的数据 */
     uart0_throw(length + sizeof(hd));
     length -= 2;
-    mem_move(data, (byte_t*)data + sizeof(hd), length);
+    mem_mov(data, (byte_t*)data + sizeof(hd), length);
     return (length);
 }
 
@@ -309,16 +312,28 @@ bridge_wait (
   __CR_IN__ uint_t  timeout
     )
 {
-    int32u  base = timer_get32();
+    byte_t  led_flag = FALSE;
+    int32u  led_base = timer_get32();
+    int32u  base = led_base;
 
-    while (timer_delta32(base) < timeout) {
-        led_xon();
-        delay32(20);
-        WDT_FEED;
-        led_off();
-        delay32(20);
+    for (;;)
+    {
+        /* 等待结果和超时 */
         if (s_okay[1] == RETURN_OKAY)
             return (TRUE);
+        if (timer_delta32(base) >= timeout)
+            break;
+
+        /* LED 与喂狗 */
+        if (timer_delta32(led_base) >= 333) {
+            led_base = timer_get32();
+            if (led_flag)
+                led_xon();
+            else
+                led_off();
+            led_flag = !led_flag;
+            WDT_FEED;
+        }
     }
     return (FALSE);
 }
@@ -426,6 +441,7 @@ bridge_gpio (
   __CR_IN__ byte_t  level
     )
 {
+    uint_t  idx;
     byte_t  buf[2];
 
     /* 填充命令 */
