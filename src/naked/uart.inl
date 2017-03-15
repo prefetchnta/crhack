@@ -121,6 +121,25 @@ uart_read (
     return (size);
 }
 
+/*
+=======================================
+    输入缓冲区数据
+=======================================
+*/
+CR_API void_t
+uart_input (
+  __CR_IN__ const void_t*   data,
+  __CR_IN__ uint_t          size
+    )
+{
+    for (; size != 0; size--) {
+        s_fifo.rx_buf[s_fifo.rx_tl++] = *(byte_t*)data;
+        if (s_fifo.rx_tl >= RX_SIZE)
+            s_fifo.rx_tl = 0;
+        data = (byte_t*)data + 1;
+    }
+}
+
 #endif  /* RX_SIZE */
 
 /* 发送区的实现 */

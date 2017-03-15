@@ -160,7 +160,7 @@ screen_refresh (void_t)
 CR_API void_t
 TIM2_IRQHandler (void_t)
 {
-    if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) {
+    if (TIM_GetITStatus(TIM2, TIM_IT_Update)) {
         TIM_ClearITPendingBit(TIM2, TIM_FLAG_Update);
         screen_refresh();
     }

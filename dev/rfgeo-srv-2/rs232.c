@@ -28,6 +28,7 @@
 #define uart_throw      bridge_rs232_throw
 #define uart_peek       bridge_rs232_peek
 #define uart_read       bridge_rs232_read
+#define uart_input      bridge_rs232_input
 
 #include "uart.inl"
 

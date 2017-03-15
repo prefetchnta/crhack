@@ -60,12 +60,20 @@ nvic_init (void_t)
     /* SysTick 优先级最高（定时用） */
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     NVIC_SetPriority(SysTick_IRQn, 0);
+
+    /* USART2 用于通讯模块 */
     nvic.NVIC_IRQChannel = USART2_IRQn;
     nvic.NVIC_IRQChannelPreemptionPriority = 1;
     nvic.NVIC_IRQChannelSubPriority = 0;
     nvic.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&nvic);
-    USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
+
+    /* TIM2 用于桥接板线程 */
+    nvic.NVIC_IRQChannel = TIM2_IRQn;
+    nvic.NVIC_IRQChannelPreemptionPriority = 1;
+    nvic.NVIC_IRQChannelSubPriority = 1;
+    nvic.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&nvic);
 }
 
 /*
@@ -101,6 +109,7 @@ uart0_init (
     uart.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
     USART_Init(USART2, &uart);
     USART_Cmd(USART2, ENABLE);
+    USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
     return (TRUE);
 }
 

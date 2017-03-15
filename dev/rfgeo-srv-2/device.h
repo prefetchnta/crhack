@@ -96,6 +96,7 @@ CR_API uint_t   rs232_read (void_t *data, uint_t size);
 /* 命令返回值 */
 #define RETURN_OKAY     0x00
 
+CR_API void_t   bridge_init (void_t);
 CR_API bool_t   bridge_baud (byte_t port, int32u baud);
 CR_API bool_t   bridge_reset (void_t);
 CR_API bool_t   bridge_gpio (byte_t level);

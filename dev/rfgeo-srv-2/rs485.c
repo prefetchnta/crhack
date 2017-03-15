@@ -28,6 +28,7 @@
 #define uart_throw      bridge_rs485_throw
 #define uart_peek       bridge_rs485_peek
 #define uart_read       bridge_rs485_read
+#define uart_input      bridge_rs485_input
 
 #include "uart.inl"
 

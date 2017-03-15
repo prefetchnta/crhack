@@ -166,7 +166,13 @@ USART2_IRQHandler (void_t)
 #define BRIDGE_MAX  4096
 
 /* 临时缓冲区 */
-static uint8_t  s_temp[BRIDGE_MAX + 2];
+static byte_t   s_recv[BRIDGE_MAX + 2];
+static byte_t   s_send[BRIDGE_MAX + 2];
+static byte_t   s_okay[2] = { 0xFF, 0xFF };
+
+/* 内部使用的函数 */
+CR_API void_t   bridge_rs232_input (const void_t *data, uint_t size);
+CR_API void_t   bridge_rs485_input (const void_t *data, uint_t size);
 
 /*
 ---------------------------------------
@@ -252,6 +258,99 @@ bridge_send (
 }
 
 /*
+---------------------------------------
+    桥接板分发任务
+---------------------------------------
+*/
+static void_t
+bridge_task (void_t)
+{
+    uint_t  back;
+
+    back = bridge_recv(s_recv);
+    if (back > 2 && s_recv[0] == BRIDGE_SEND)
+    {
+        /* 向不同的缓冲区转发数据 */
+        back -= 2;
+        switch (s_recv[1])
+        {
+            default:
+            case PORT_TYPE_BRD: /* 主板 */
+                break;
+
+            case PORT_TYPE_CAN: /* CAN */
+                break;
+
+            case PORT_TYPE_485: /* 485 */
+                bridge_rs485_input(&s_recv[2], back);
+                break;
+
+            case PORT_TYPE_PSS: /* 桥接 */
+                bridge_rs232_input(&s_recv[2], back);
+                break;
+        }
+    }
+    else
+    if (back == 2)
+    {
+        /* 命令的响应 */
+        if (s_recv[0] == s_okay[0] && s_recv[0] == RETURN_OKAY)
+            s_okay[1] = RETURN_OKAY;
+    }
+}
+
+/*
+---------------------------------------
+    桥接板等待回应
+---------------------------------------
+*/
+static bool_t
+bridge_wait (
+  __CR_IN__ uint_t  timeout
+    )
+{
+    int32u  base = timer_get32();
+
+    while (timer_delta32(base) < timeout) {
+        led_xon();
+        delay32(20);
+        WDT_FEED;
+        led_off();
+        delay32(20);
+        if (s_okay[1] == RETURN_OKAY)
+            return (TRUE);
+    }
+    return (FALSE);
+}
+
+/*
+=======================================
+    桥接板初始化
+=======================================
+*/
+CR_API void_t
+bridge_init (void_t)
+{
+    TIM_TimeBaseInitTypeDef sttb;
+
+    /* 标志清空 */
+    s_okay[0] = 0xFF;
+    s_okay[1] = 0xFF;
+
+    /* 每 50ms 执行一次桥接板任务 */
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+    TIM_DeInit(TIM2);
+    sttb.TIM_Period = 3599;
+    sttb.TIM_Prescaler = 999;
+    sttb.TIM_ClockDivision = TIM_CKD_DIV1;
+    sttb.TIM_CounterMode = TIM_CounterMode_Up;
+    TIM_TimeBaseInit(TIM2, &sttb);
+    TIM_ClearFlag(TIM2, TIM_FLAG_Update);
+    TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+    TIM_Cmd(TIM2, ENABLE);
+}
+
+/*
 =======================================
     桥接板波特率设置
 =======================================
@@ -262,7 +361,30 @@ bridge_baud (
   __CR_IN__ int32u  baud
     )
 {
+    uint_t  idx;
+    byte_t  buf[6];
 
+    /* 填充命令 */
+    buf[0] = BRIDGE_BAUD;
+    buf[1] = port;
+    buf[2] = (byte_t)(baud >> 24);
+    buf[3] = (byte_t)(baud >> 16);
+    buf[4] = (byte_t)(baud >>  8);
+    buf[5] = (byte_t)(baud);
+    s_okay[0] = BRIDGE_BAUD;
+
+    /* 重试三次 */
+    for (idx = 0; idx < 3; idx++)
+    {
+        /* 发送命令 */
+        s_okay[1] = 0xFF;
+        bridge_send(buf, sizeof(buf));
+
+        /* 等待响应 */
+        if (bridge_wait(1000))
+            return (TRUE);
+    }
+    return (FALSE);
 }
 
 /*
@@ -273,7 +395,25 @@ bridge_baud (
 CR_API bool_t
 bridge_reset (void_t)
 {
+    uint_t  idx;
+    byte_t  cmd;
 
+    /* 填充命令 */
+    cmd = BRIDGE_RESET;
+    s_okay[0] = BRIDGE_RESET;
+
+    /* 重试三次 */
+    for (idx = 0; idx < 3; idx++)
+    {
+        /* 发送命令 */
+        s_okay[1] = 0xFF;
+        bridge_send(&cmd, sizeof(cmd));
+
+        /* 等待响应 */
+        if (bridge_wait(1000))
+            return (TRUE);
+    }
+    return (FALSE);
 }
 
 /*
@@ -286,7 +426,25 @@ bridge_gpio (
   __CR_IN__ byte_t  level
     )
 {
+    byte_t  buf[2];
 
+    /* 填充命令 */
+    buf[0] = BRIDGE_GPIO;
+    buf[1] = level;
+    s_okay[0] = BRIDGE_GPIO;
+
+    /* 重试三次 */
+    for (idx = 0; idx < 3; idx++)
+    {
+        /* 发送命令 */
+        s_okay[1] = 0xFF;
+        bridge_send(buf, sizeof(buf));
+
+        /* 等待响应 */
+        if (bridge_wait(1000))
+            return (TRUE);
+    }
+    return (FALSE);
 }
 
 /*
@@ -303,10 +461,45 @@ bridge_commit (
 {
     if (size == 0 || size >= BRIDGE_MAX)
         return;
-    s_temp[0] = BRIDGE_SEND;
-    s_temp[1] = port;
-    mem_cpy(&s_temp[2], data, size);
-    bridge_send(s_temp, size + 2);
+    s_send[0] = BRIDGE_SEND;
+    s_send[1] = port;
+    mem_cpy(&s_send[2], data, size);
+    bridge_send(s_send, size + 2);
+}
+
+/*
+=======================================
+    TIM2 中断处理
+=======================================
+*/
+CR_API void_t
+TIM2_IRQHandler (void_t)
+{
+    uint_t          temp;
+    static int32u   base = 0;
+    static uint_t   cnts = 0;
+
+    if (TIM_GetITStatus(TIM2, TIM_IT_Update))
+    {
+        /* 桥接板任务 */
+        TIM_ClearITPendingBit(TIM2, TIM_FLAG_Update);
+        bridge_task();
+
+        /* 长时间没接收到命令就清缓存 */
+        temp = bridge_rs232_rx_size();
+        if (temp != cnts) {
+            cnts = temp;
+            base = timer_get32();
+        }
+        else
+        if (temp != 0) {
+            if (timer_delta32(base) > 1000) {
+                bridge_rs232_throw(temp);
+                cnts = bridge_rs232_rx_size();
+                base = timer_get32();
+            }
+        }
+    }
 }
 
 /*****************************************************************************/

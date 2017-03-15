@@ -185,7 +185,7 @@ audio_is_over (void_t)
 CR_API void_t
 TIM4_IRQHandler (void_t)
 {
-    if (TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)
+    if (TIM_GetITStatus(TIM4, TIM_IT_Update))
     {
         /* 从环形队列里取一个字节播放 */
         TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
