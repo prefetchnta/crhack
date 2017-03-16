@@ -128,6 +128,7 @@ store_write (
 #define RX_SIZE CR_K2B(20)
 
 /* 函数的重映射 */
+#define uart_zero       uart0_zero
 #define uart_rx_size    uart0_rx_size
 #define uart_rx_flush   uart0_rx_flush
 #define uart_throw      uart0_throw
@@ -135,6 +136,53 @@ store_write (
 #define uart_read       uart0_read
 
 #include "uart.inl"
+
+/*
+=======================================
+    异步串口0等待接收数据
+=======================================
+*/
+CR_API uint_t
+uart0_wait (
+  __CR_OT__ void_t* data,
+  __CR_IN__ uint_t  step,
+  __CR_IN__ uint_t  tout
+    )
+{
+    WDT_DECL
+    int32u  stp_base = led_base;
+    int32u  tot_base = led_base;
+    uint_t  count, cnt_base = 0;
+
+    for (;;) {
+        count = uart0_rx_size();
+        if (count != cnt_base)
+        {
+            /* 有数据在来更新计时 */
+            cnt_base = count;
+            stp_base = timer_get32();
+            tot_base = stp_base;
+        }
+        else
+        if (count != 0)
+        {
+            /* 一段时间没有来数据表示断流, 返回之 */
+            if (timer_delta32(stp_base) > step) {
+                if (data == NULL)
+                    return (count);
+                return (uart0_read(data, count));
+            }
+        }
+        else
+        {
+            /* 长时间数据为空返回超时 */
+            if (timer_delta32(tot_base) > tout)
+                break;
+        }
+        WDT_FUNC
+    }
+    return (0);
+}
 
 /*
 =======================================
@@ -167,13 +215,11 @@ USART2_IRQHandler (void_t)
 #define BRIDGE_MAX  4096
 
 /* 临时缓冲区 */
+static byte_t   s_okay[2];
 static byte_t   s_recv[BRIDGE_MAX + 2];
 static byte_t   s_send[BRIDGE_MAX + 2];
-static byte_t   s_okay[2] = { 0xFF, 0xFF };
 
 /* 内部使用的函数 */
-CR_API uint_t   bridge_rs232_rx_size (void_t);
-CR_API void_t   bridge_rs232_throw (uint_t size);
 CR_API void_t   bridge_rs232_input (const void_t *data, uint_t size);
 CR_API void_t   bridge_rs485_input (const void_t *data, uint_t size);
 
@@ -312,8 +358,7 @@ bridge_wait (
   __CR_IN__ uint_t  timeout
     )
 {
-    byte_t  led_flag = FALSE;
-    int32u  led_base = timer_get32();
+    WDT_DECL
     int32u  base = led_base;
 
     for (;;)
@@ -323,17 +368,7 @@ bridge_wait (
             return (TRUE);
         if (timer_delta32(base) >= timeout)
             break;
-
-        /* LED 与喂狗 */
-        if (timer_delta32(led_base) >= 333) {
-            led_base = timer_get32();
-            if (led_flag)
-                led_xon();
-            else
-                led_off();
-            led_flag = !led_flag;
-            WDT_FEED;
-        }
+        WDT_FUNC
     }
     return (FALSE);
 }
@@ -396,8 +431,11 @@ bridge_baud (
         bridge_send(buf, sizeof(buf));
 
         /* 等待响应 */
-        if (bridge_wait(1000))
+        if (bridge_wait(1000)) {
+            if (port == PORT_TYPE_BRD)
+                uart0_init(baud);
             return (TRUE);
+        }
     }
     return (FALSE);
 }
@@ -502,7 +540,7 @@ TIM2_IRQHandler (void_t)
         bridge_task();
 
         /* 长时间没接收到命令就清缓存 */
-        temp = bridge_rs232_rx_size();
+        temp = uart0_rx_size();
         if (temp != cnts) {
             cnts = temp;
             base = timer_get32();
@@ -510,8 +548,8 @@ TIM2_IRQHandler (void_t)
         else
         if (temp != 0) {
             if (timer_delta32(base) > 1000) {
-                bridge_rs232_throw(temp);
-                cnts = bridge_rs232_rx_size();
+                uart0_throw(temp);
+                cnts = uart0_rx_size();
                 base = timer_get32();
             }
         }

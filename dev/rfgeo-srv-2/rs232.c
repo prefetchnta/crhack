@@ -17,12 +17,15 @@
 /*  =======================================================================  */
 /*****************************************************************************/
 
+#include "applib.h"
 #include "device.h"
+#include "stm32f10x_conf.h"
 
 /* 环形队列大小 */
 #define RX_SIZE CR_K2B(12)
 
 /* 函数的重映射 */
+#define uart_zero       rs232_zero
 #define uart_rx_size    bridge_rs232_rx_size
 #define uart_rx_flush   bridge_rs232_rx_flush
 #define uart_throw      bridge_rs232_throw
@@ -34,6 +37,53 @@
 
 /* 是否通过桥接板 */
 extern bool_t   g_is_bridge;
+
+/*
+=======================================
+    RS232 等待接收数据 (桥接)
+=======================================
+*/
+CR_API uint_t
+bridge_rs232_wait (
+  __CR_OT__ void_t* data,
+  __CR_IN__ uint_t  step,
+  __CR_IN__ uint_t  tout
+    )
+{
+    WDT_DECL
+    int32u  stp_base = led_base;
+    int32u  tot_base = led_base;
+    uint_t  count, cnt_base = 0;
+
+    for (;;) {
+        count = bridge_rs232_rx_size();
+        if (count != cnt_base)
+        {
+            /* 有数据在来更新计时 */
+            cnt_base = count;
+            stp_base = timer_get32();
+            tot_base = stp_base;
+        }
+        else
+        if (count != 0)
+        {
+            /* 一段时间没有来数据表示断流, 返回之 */
+            if (timer_delta32(stp_base) > step) {
+                if (data == NULL)
+                    return (count);
+                return (bridge_rs232_read(data, count));
+            }
+        }
+        else
+        {
+            /* 长时间数据为空返回超时 */
+            if (timer_delta32(tot_base) > tout)
+                break;
+        }
+        WDT_FUNC
+    }
+    return (0);
+}
 
 /*
 =======================================
@@ -196,6 +246,33 @@ rs232_read (
     {
         /* 走本地接口 */
         back = uart0_read(data, size);
+    }
+    return (back);
+}
+
+/*
+=======================================
+    RS232 等待接收数据
+=======================================
+*/
+CR_API uint_t
+rs232_wait (
+  __CR_OT__ void_t* data,
+  __CR_IN__ uint_t  step,
+  __CR_IN__ uint_t  tout
+    )
+{
+    uint_t  back;
+
+    if (g_is_bridge)
+    {
+        /* 走桥接板 */
+        back = bridge_rs232_wait(data, step, tout);
+    }
+    else
+    {
+        /* 走本地接口 */
+        back = uart0_wait(data, step, tout);
     }
     return (back);
 }

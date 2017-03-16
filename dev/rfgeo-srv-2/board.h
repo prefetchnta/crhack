@@ -169,11 +169,13 @@ CR_API void_t   nvic_init (void_t);
 CR_API bool_t   uart0_init (int32u baud);
 CR_API void_t   uart0_write (const void_t *data, leng_t size);
 #define uart0_send_str(str) uart0_write(str, str_lenA(str))
+CR_API void_t   uart0_zero (void_t);
 CR_API uint_t   uart0_rx_size (void_t);
 CR_API void_t   uart0_rx_flush (void_t);
 CR_API void_t   uart0_throw (uint_t size);
 CR_API uint_t   uart0_peek (void_t *data, uint_t size);
 CR_API uint_t   uart0_read (void_t *data, uint_t size);
+CR_API uint_t   uart0_wait (void_t *data, uint_t step, uint_t tout);
 
 /* 驱动宏定义 */
 #define I2C_DELAY_GET_EX    delay32(20);
@@ -191,6 +193,21 @@ CR_API uint_t   uart0_read (void_t *data, uint_t size);
     #define WDT_TOUT(t) wdg_timeout(0, t)
     #define DBG_PRINT()
 #endif
+
+/* LED & 喂狗简化宏 */
+#define WDT_DECL \
+    byte_t  led_flag = FALSE; \
+    int32u  led_base = timer_get32();
+#define WDT_FUNC \
+    if (timer_delta32(led_base) >= 333) { \
+        led_base = timer_get32(); \
+        if (led_flag) \
+            led_xon(); \
+        else \
+            led_off(); \
+        led_flag = !led_flag; \
+        WDT_FEED; \
+    }
 
 #endif  /* !__CR_BOARD_H__ */
 

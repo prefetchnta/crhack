@@ -164,6 +164,13 @@ CR_API void_t   boot_jump (int32u addr);
 CR_API void_t   boot_goon (int32u addr);
 CR_API void_t   boot_reset (void_t);
 
+/* AT CMD */
+CR_API ansi_t*  at_iorw (ansi_t *out, const ansi_t *inp,
+                         uint_t size, uint_t tout);
+CR_API bool_t   at_check (uint_t tout);
+CR_API bool_t   at_cgmm (ansi_t *out, uint_t size, uint_t tout);
+CR_API bool_t   at_csq (uint_t *rssi, uint_t tout);
+
 /*****************************************************************************/
 /*                                块设备接口                                 */
 /*****************************************************************************/

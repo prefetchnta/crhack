@@ -53,11 +53,13 @@ CR_API retc_t   rx8025_set_time (const sDATETIME *dttm);
 CR_API bool_t   rs485_baud (int32u baud);
 CR_API void_t   rs485_write (const void_t *data, leng_t size);
 #define rs485_send_str(str) rs485_write(str, str_lenA(str))
+CR_API void_t   rs485_zero (void_t);
 CR_API uint_t   rs485_rx_size (void_t);
 CR_API void_t   rs485_rx_flush (void_t);
 CR_API void_t   rs485_throw (uint_t size);
 CR_API uint_t   rs485_peek (void_t *data, uint_t size);
 CR_API uint_t   rs485_read (void_t *data, uint_t size);
+CR_API uint_t   rs485_wait (void_t *data, uint_t step, uint_t tout);
 
 /*****************************************************************************/
 /*                                  RS-232                                   */
@@ -66,11 +68,13 @@ CR_API uint_t   rs485_read (void_t *data, uint_t size);
 CR_API bool_t   rs232_baud (int32u baud);
 CR_API void_t   rs232_write (const void_t *data, leng_t size);
 #define rs232_send_str(str) rs232_write(str, str_lenA(str))
+CR_API void_t   rs232_zero (void_t);
 CR_API uint_t   rs232_rx_size (void_t);
 CR_API void_t   rs232_rx_flush (void_t);
 CR_API void_t   rs232_throw (uint_t size);
 CR_API uint_t   rs232_peek (void_t *data, uint_t size);
 CR_API uint_t   rs232_read (void_t *data, uint_t size);
+CR_API uint_t   rs232_wait (void_t *data, uint_t step, uint_t tout);
 
 /*****************************************************************************/
 /*                                  桥接板                                   */
@@ -101,6 +105,18 @@ CR_API bool_t   bridge_baud (byte_t port, int32u baud);
 CR_API bool_t   bridge_reset (void_t);
 CR_API bool_t   bridge_gpio (byte_t level);
 CR_API void_t   bridge_commit (byte_t port, const void_t *data, uint_t size);
+
+/*****************************************************************************/
+/*                                 通讯模块                                  */
+/*****************************************************************************/
+
+/* 模块类型 */
+#define SRV2NET_NONE        0
+#define SRV2NET_SIM7100     1
+#define SRV2NET_SIM6320     2
+#define SRV2NET_SIM5360     3
+
+/* SIMCOM */
 
 /*****************************************************************************/
 /*                                储存器读写                                 */

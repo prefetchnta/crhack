@@ -34,6 +34,17 @@ typedef struct
 
 static sFIFO    s_fifo;
 
+/*
+=======================================
+    初始化环形队列
+=======================================
+*/
+CR_API void_t
+uart_zero (void_t)
+{
+    mem_zero(&s_fifo, sizeof(s_fifo));
+}
+
 /* 接收区的实现 */
 #if defined(RX_SIZE)
 /*

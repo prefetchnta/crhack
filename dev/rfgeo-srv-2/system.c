@@ -20,6 +20,7 @@
 #include "applib.h"
 #include "device.h"
 #include "devlib.h"
+#include "strlib.h"
 #include "stm32f10x_conf.h"
 
 /*****************************************************************************/
@@ -118,8 +119,7 @@ thread_sleep (
   __CR_IN__ uint_t  time_ms
     )
 {
-    byte_t  led_flag = FALSE;
-    int32u  led_base = timer_get32();
+    WDT_DECL
     int32u  base = led_base;
 
     for (;;)
@@ -127,17 +127,7 @@ thread_sleep (
         /* 等待时间到 */
         if (timer_delta32(base) >= time_ms)
             break;
-
-        /* LED 与喂狗 */
-        if (timer_delta32(led_base) >= 333) {
-            led_base = timer_get32();
-            if (led_flag)
-                led_xon();
-            else
-                led_off();
-            led_flag = !led_flag;
-            WDT_FEED;
-        }
+        WDT_FUNC
     }
 }
 
@@ -165,6 +155,9 @@ sio_free (void_t)
 /*                                   NET                                     */
 /*****************************************************************************/
 
+/* 通讯板类型 */
+byte_t  g_net_type = SRV2NET_NONE;
+
 /* 是否通过桥接板 */
 bool_t  g_is_bridge = FALSE;
 
@@ -176,9 +169,42 @@ bool_t  g_is_bridge = FALSE;
 CR_API bool_t
 socket_init (void_t)
 {
-    /* 桥接板判断 */
-    /**************/
-    return (TRUE);
+    ansi_t  buf[128];
+
+    /* 判断是否有通讯板 */
+    g_is_bridge = FALSE;
+    if (!at_check(2000))
+        return (FALSE);
+
+    /* 是否切换到桥接板 */
+    if (!at_cgmm(buf, sizeof(buf), 2000))
+        return (FALSE);
+    if (str_strA(buf, "RFGEO_LN-BRIDGE") != NULL) {
+        g_is_bridge = TRUE;
+        bridge_init();
+        thread_sleep(500);
+
+        /* 再次判断通讯板类型 */
+        if (!at_check(2000))
+            return (FALSE);
+        if (!at_cgmm(buf, sizeof(buf), 2000))
+            return (FALSE);
+    }
+
+    /* SIMCOM 系列 */
+    if (str_strA(buf, "SIMCOM_SIM7100") != NULL) {
+        g_net_type = SRV2NET_SIM7100;
+        return (TRUE);
+    }
+    if (str_strA(buf, "SIMCOM_SIM6320") != NULL) {
+        g_net_type = SRV2NET_SIM6320;
+        return (TRUE);
+    }
+    if (str_strA(buf, "SIMCOM_SIM5360") != NULL) {
+        g_net_type = SRV2NET_SIM5360;
+        return (TRUE);
+    }
+    return (FALSE);
 }
 
 /*
