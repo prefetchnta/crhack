@@ -21,8 +21,8 @@
 #include "strlib.h"
 
 /* 断流的默认时间 (50ms) */
-#if !defined(AT_STEP_TIME)
-    #define AT_STEP_TIME    50
+#if !defined(CUT_DOWN_TIME)
+    #define CUT_DOWN_TIME   50
 #endif
 
 /*
@@ -42,7 +42,7 @@ at_iorw (
 
     uart_rx_flush();
     uart_send_str(inp);
-    count = uart_wait(NULL, AT_STEP_TIME, tout);
+    count = uart_wait(NULL, CUT_DOWN_TIME, tout);
     if (count == 0 || count + 1 > size)
         return (NULL);
     uart_read(out, count);

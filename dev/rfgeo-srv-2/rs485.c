@@ -50,10 +50,9 @@ bridge_rs485_wait (
   __CR_IN__ uint_t  tout
     )
 {
-    WDT_DECL
-    int32u  stp_base = led_base;
-    int32u  tot_base = led_base;
     uint_t  count, cnt_base = 0;
+    int32u  stp_base = timer_get32();
+    int32u  tot_base = stp_base;
 
     for (;;) {
         count = bridge_rs485_rx_size();
@@ -80,7 +79,7 @@ bridge_rs485_wait (
             if (timer_delta32(tot_base) > tout)
                 break;
         }
-        WDT_FUNC
+        wdt_task();
     }
     return (0);
 }

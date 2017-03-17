@@ -119,15 +119,14 @@ thread_sleep (
   __CR_IN__ uint_t  time_ms
     )
 {
-    WDT_DECL
-    int32u  base = led_base;
+    int32u  base = timer_get32();
 
     for (;;)
     {
         /* 等待时间到 */
         if (timer_delta32(base) >= time_ms)
             break;
-        WDT_FUNC
+        wdt_task();
     }
 }
 

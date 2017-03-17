@@ -194,20 +194,8 @@ CR_API uint_t   uart0_wait (void_t *data, uint_t step, uint_t tout);
     #define DBG_PRINT()
 #endif
 
-/* LED & 喂狗简化宏 */
-#define WDT_DECL \
-    byte_t  led_flag = FALSE; \
-    int32u  led_base = timer_get32();
-#define WDT_FUNC \
-    if (timer_delta32(led_base) >= 333) { \
-        led_base = timer_get32(); \
-        if (led_flag) \
-            led_xon(); \
-        else \
-            led_off(); \
-        led_flag = !led_flag; \
-        WDT_FEED; \
-    }
+/* LED & 喂狗 */
+CR_API void_t   wdt_task (void_t);
 
 #endif  /* !__CR_BOARD_H__ */
 

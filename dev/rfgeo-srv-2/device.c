@@ -149,10 +149,9 @@ uart0_wait (
   __CR_IN__ uint_t  tout
     )
 {
-    WDT_DECL
-    int32u  stp_base = led_base;
-    int32u  tot_base = led_base;
     uint_t  count, cnt_base = 0;
+    int32u  stp_base = timer_get32();
+    int32u  tot_base = stp_base;
 
     for (;;) {
         count = uart0_rx_size();
@@ -179,7 +178,7 @@ uart0_wait (
             if (timer_delta32(tot_base) > tout)
                 break;
         }
-        WDT_FUNC
+        wdt_task();
     }
     return (0);
 }
@@ -358,8 +357,7 @@ bridge_wait (
   __CR_IN__ uint_t  timeout
     )
 {
-    WDT_DECL
-    int32u  base = led_base;
+    int32u  base = timer_get32();
 
     for (;;)
     {
@@ -368,7 +366,7 @@ bridge_wait (
             return (TRUE);
         if (timer_delta32(base) >= timeout)
             break;
-        WDT_FUNC
+        wdt_task();
     }
     return (FALSE);
 }
@@ -548,7 +546,7 @@ TIM2_IRQHandler (void_t)
         else
         if (temp != 0) {
             if (timer_delta32(base) > 1000) {
-                uart0_throw(temp);
+                uart0_throw(1);
                 cnts = uart0_rx_size();
                 base = timer_get32();
             }

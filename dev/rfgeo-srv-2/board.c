@@ -18,6 +18,7 @@
 /*****************************************************************************/
 
 #include "board.h"
+#include "applib.h"
 #include "stm32f10x_conf.h"
 
 /*
@@ -128,6 +129,28 @@ uart0_write (
         while (USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET);
         USART_SendData(USART2, *(byte_t*)data);
         data = (byte_t*)data + 1;
+    }
+}
+
+/*
+=======================================
+    看门狗的任务
+=======================================
+*/
+CR_API void_t
+wdt_task (void_t)
+{
+    static int32u   led_base = 0;
+    static byte_t   led_flag = FALSE;
+
+    if (timer_delta32(led_base) >= 333) {
+        led_base = timer_get32();
+        if (led_flag)
+            led_xon();
+        else
+            led_off();
+        led_flag = !led_flag;
+        WDT_FEED;
     }
 }
 
