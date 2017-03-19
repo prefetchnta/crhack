@@ -27,27 +27,67 @@
 
 /*
 =======================================
-    命令收发
+    清接收区
+=======================================
+*/
+CR_API void_t
+at_flush (void_t)
+{
+    uart_rx_flush();
+}
+
+/*
+=======================================
+    数据发送
+=======================================
+*/
+CR_API void_t
+at_send (
+  __CR_IN__ const void_t*   data,
+  __CR_IN__ uint_t          size
+    )
+{
+    uart_write(data, size);
+}
+
+/*
+=======================================
+    命令等待
 =======================================
 */
 CR_API ansi_t*
-at_iorw (
-  __CR_OT__ ansi_t*         out,
-  __CR_IN__ const ansi_t*   inp,
-  __CR_IN__ uint_t          size,
-  __CR_IN__ uint_t          tout
+at_wait (
+  __CR_OT__ ansi_t* out,
+  __CR_IN__ uint_t  size,
+  __CR_IN__ uint_t  tout
     )
 {
     uint_t  count;
 
-    uart_rx_flush();
-    uart_send_str(inp);
     count = uart_wait(NULL, CUT_DOWN_TIME, tout);
     if (count == 0 || count + 1 > size)
         return (NULL);
     uart_read(out, count);
     out[count] = 0x00;
     return (out);
+}
+
+/*
+=======================================
+    命令收发
+=======================================
+*/
+CR_API ansi_t*
+at_iorw (
+  __CR_OT__ ansi_t*         out,
+  __CR_IN__ uint_t          size,
+  __CR_IN__ const ansi_t*   inp,
+  __CR_IN__ uint_t          tout
+    )
+{
+    uart_rx_flush();
+    uart_send_str(inp);
+    return (at_wait(out, size, tout));
 }
 
 /*
@@ -63,7 +103,7 @@ at_check (
     ansi_t  buf[16];
 
     /* AT 命令测试 */
-    if (at_iorw(buf, "AT\r", sizeof(buf), tout) == NULL)
+    if (at_iorw(buf, sizeof(buf), "AT\r", tout) == NULL)
         return (FALSE);
     if (str_strA(buf, "OK") == NULL)
         return (FALSE);
@@ -83,7 +123,7 @@ at_cgmm (
     )
 {
     /* 返回模块类型 */
-    if (at_iorw(out, "AT+CGMM\r", size, tout) == NULL)
+    if (at_iorw(out, size, "AT+CGMM\r", tout) == NULL)
         return (FALSE);
     return (TRUE);
 }
@@ -102,7 +142,7 @@ at_csq (
     ansi_t  buf[32], *ptr;
 
     /* 返回信号质量 */
-    if (at_iorw(buf, "AT+CSQ\r", sizeof(buf), tout) == NULL)
+    if (at_iorw(buf, sizeof(buf), "AT+CSQ\r", tout) == NULL)
         return (FALSE);
     ptr = str_strA(buf, "+CSQ: ");
     if (ptr == NULL)

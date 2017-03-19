@@ -17,7 +17,6 @@
 /*  =======================================================================  */
 /*****************************************************************************/
 
-#include "applib.h"
 #include "device.h"
 #include "stm32f10x_conf.h"
 
@@ -32,57 +31,15 @@
 #define uart_peek       bridge_rs485_peek
 #define uart_read       bridge_rs485_read
 #define uart_input      bridge_rs485_input
+#define uart_wait       bridge_rs485_wait
+
+/* 等待中的空闲 */
+#define USART_YIELD     wdt_task();
 
 #include "uart.inl"
 
 /* 是否通过桥接板 */
 extern bool_t   g_is_bridge;
-
-/*
-=======================================
-    RS485 等待接收数据 (桥接)
-=======================================
-*/
-CR_API uint_t
-bridge_rs485_wait (
-  __CR_OT__ void_t* data,
-  __CR_IN__ uint_t  step,
-  __CR_IN__ uint_t  tout
-    )
-{
-    uint_t  count, cnt_base = 0;
-    int32u  stp_base = timer_get32();
-    int32u  tot_base = stp_base;
-
-    for (;;) {
-        count = bridge_rs485_rx_size();
-        if (count != cnt_base)
-        {
-            /* 有数据在来更新计时 */
-            cnt_base = count;
-            stp_base = timer_get32();
-            tot_base = stp_base;
-        }
-        else
-        if (count != 0)
-        {
-            /* 一段时间没有来数据表示断流, 返回之 */
-            if (timer_delta32(stp_base) > step) {
-                if (data == NULL)
-                    return (count);
-                return (bridge_rs485_read(data, count));
-            }
-        }
-        else
-        {
-            /* 长时间数据为空返回超时 */
-            if (timer_delta32(tot_base) > tout)
-                break;
-        }
-        wdt_task();
-    }
-    return (0);
-}
 
 /*
 =======================================
@@ -97,7 +54,7 @@ rs485_baud (
     /* 只支持桥接板 */
     if (!g_is_bridge)
         return (FALSE);
-    return (bridge_baud(PORT_TYPE_485, baud));
+    return (bridge_baud(CR_BRIDGE_PORT_485, baud));
 }
 
 /*
@@ -114,7 +71,7 @@ rs485_write (
     /* 只支持桥接板 */
     if (!g_is_bridge)
         return;
-    bridge_commit(PORT_TYPE_485, data, size);
+    bridge_commit(CR_BRIDGE_PORT_485, data, size);
 }
 
 /*

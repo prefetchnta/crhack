@@ -18,10 +18,7 @@
 /*****************************************************************************/
 
 #include "ff.h"
-#include "hash.h"
-#include "applib.h"
 #include "device.h"
-#include "morder.h"
 #include "stm32f10x_conf.h"
 
 /*****************************************************************************/
@@ -134,54 +131,13 @@ store_write (
 #define uart_throw      uart0_throw
 #define uart_peek       uart0_peek
 #define uart_read       uart0_read
+#define uart_input      uart0_input
+#define uart_wait       uart0_wait
+
+/* 等待中的空闲 */
+#define USART_YIELD     wdt_task();
 
 #include "uart.inl"
-
-/*
-=======================================
-    异步串口0等待接收数据
-=======================================
-*/
-CR_API uint_t
-uart0_wait (
-  __CR_OT__ void_t* data,
-  __CR_IN__ uint_t  step,
-  __CR_IN__ uint_t  tout
-    )
-{
-    uint_t  count, cnt_base = 0;
-    int32u  stp_base = timer_get32();
-    int32u  tot_base = stp_base;
-
-    for (;;) {
-        count = uart0_rx_size();
-        if (count != cnt_base)
-        {
-            /* 有数据在来更新计时 */
-            cnt_base = count;
-            stp_base = timer_get32();
-            tot_base = stp_base;
-        }
-        else
-        if (count != 0)
-        {
-            /* 一段时间没有来数据表示断流, 返回之 */
-            if (timer_delta32(stp_base) > step) {
-                if (data == NULL)
-                    return (count);
-                return (uart0_read(data, count));
-            }
-        }
-        else
-        {
-            /* 长时间数据为空返回超时 */
-            if (timer_delta32(tot_base) > tout)
-                break;
-        }
-        wdt_task();
-    }
-    return (0);
-}
 
 /*
 =======================================
@@ -210,166 +166,17 @@ USART2_IRQHandler (void_t)
 /*                                    桥接                                   */
 /*****************************************************************************/
 
-/* 桥接最大数据包 */
-#define BRIDGE_MAX  4096
+/* 函数的重映射 */
+#define uart_init       uart0_init
+#define uart_write      uart0_write
 
-/* 临时缓冲区 */
-static byte_t   s_okay[2];
-static byte_t   s_recv[BRIDGE_MAX + 2];
-static byte_t   s_send[BRIDGE_MAX + 2];
+/* 等待中的空闲 */
+#define BRIDGE_YIELD    wdt_task();
 
-/* 内部使用的函数 */
-CR_API void_t   bridge_rs232_input (const void_t *data, uint_t size);
-CR_API void_t   bridge_rs485_input (const void_t *data, uint_t size);
+#include "bridge.inl"
 
-/*
----------------------------------------
-    查找一帧桥接数据
----------------------------------------
-*/
-static uint_t
-bridge_recv (
-  __CR_OT__ void_t* data
-    )
-{
-    byte_t  hd[3], *pntr;
-    int16u  crc1, crc2, length;
-    uint_t  count = uart0_rx_size();
-
-    /* 查找有效的头 */
-    if (count <= sizeof(hd))
-        return (0);
-    uart0_peek(hd, sizeof(hd));
-    if (hd[0] != 0xAA) {
-        uart0_throw(1);
-        return (0);
-    }
-    length  = hd[1];
-    length <<= 8;
-    length |= hd[2];
-    if (length <= 2 ||
-        length > BRIDGE_MAX - sizeof(hd)) {
-        uart0_throw(1);
-        return (0);
-    }
-
-    /* 后续数据没有跟上 */
-    if (length > count - sizeof(hd))
-        return (0);
-
-    /* 校验 CRC16 是否正确 */
-    pntr = (byte_t*)data;
-    uart0_peek(data, length + sizeof(hd));
-    pntr += 1;
-    crc1  = hash_crc16h_total(pntr, length);
-    pntr += length;
-    crc2  = pntr[0];
-    crc2 <<= 8;
-    crc2 |= pntr[1];
-    if (crc1 != crc2) {
-        uart0_throw(1);
-        return (0);
-    }
-
-    /* 一包正常的数据 */
-    uart0_throw(length + sizeof(hd));
-    length -= 2;
-    mem_mov(data, (byte_t*)data + sizeof(hd), length);
-    return (length);
-}
-
-/*
----------------------------------------
-    发送一帧桥接数据
----------------------------------------
-*/
-static void_t
-bridge_send (
-  __CR_IN__ const void_t*   data,
-  __CR_IN__ uint_t          size
-    )
-{
-    byte_t  hd[3];
-    int16u  crc = 0xFFFF;
-
-    size += 2;
-    hd[0] = 0xAA;
-    hd[1] = (byte_t)(size >> 8);
-    hd[2] = (byte_t)(size);
-    size -= 2;
-    crc = hash_crc16h_update(crc, &hd[1], 2);
-    crc = hash_crc16h_update(crc, data, size);
-    crc = WORD_BE(crc);
-    uart0_write(hd, sizeof(hd));
-    uart0_write(data, size);
-    uart0_write(&crc, sizeof(crc));
-}
-
-/*
----------------------------------------
-    桥接板分发任务
----------------------------------------
-*/
-static void_t
-bridge_task (void_t)
-{
-    uint_t  back;
-
-    back = bridge_recv(s_recv);
-    if (back > 2 && s_recv[0] == BRIDGE_SEND)
-    {
-        /* 向不同的缓冲区转发数据 */
-        back -= 2;
-        switch (s_recv[1])
-        {
-            default:
-            case PORT_TYPE_BRD: /* 主板 */
-                break;
-
-            case PORT_TYPE_CAN: /* CAN */
-                break;
-
-            case PORT_TYPE_485: /* 485 */
-                bridge_rs485_input(&s_recv[2], back);
-                break;
-
-            case PORT_TYPE_PSS: /* 桥接 */
-                bridge_rs232_input(&s_recv[2], back);
-                break;
-        }
-    }
-    else
-    if (back == 2)
-    {
-        /* 命令的响应 */
-        if (s_recv[0] == s_okay[0] && s_recv[0] == RETURN_OKAY)
-            s_okay[1] = RETURN_OKAY;
-    }
-}
-
-/*
----------------------------------------
-    桥接板等待回应
----------------------------------------
-*/
-static bool_t
-bridge_wait (
-  __CR_IN__ uint_t  timeout
-    )
-{
-    int32u  base = timer_get32();
-
-    for (;;)
-    {
-        /* 等待结果和超时 */
-        if (s_okay[1] == RETURN_OKAY)
-            return (TRUE);
-        if (timer_delta32(base) >= timeout)
-            break;
-        wdt_task();
-    }
-    return (FALSE);
-}
+/* 是否通过桥接板 */
+bool_t  g_is_bridge = FALSE;
 
 /*
 =======================================
@@ -393,6 +200,7 @@ bridge_init (void_t)
     sttb.TIM_ClockDivision = TIM_CKD_DIV1;
     sttb.TIM_CounterMode = TIM_CounterMode_Up;
     TIM_TimeBaseInit(TIM2, &sttb);
+    g_is_bridge = TRUE;
     TIM_ClearFlag(TIM2, TIM_FLAG_Update);
     TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
     TIM_Cmd(TIM2, ENABLE);
@@ -400,123 +208,16 @@ bridge_init (void_t)
 
 /*
 =======================================
-    桥接板波特率设置
-=======================================
-*/
-CR_API bool_t
-bridge_baud (
-  __CR_IN__ byte_t  port,
-  __CR_IN__ int32u  baud
-    )
-{
-    uint_t  idx;
-    byte_t  buf[6];
-
-    /* 填充命令 */
-    buf[0] = BRIDGE_BAUD;
-    buf[1] = port;
-    buf[2] = (byte_t)(baud >> 24);
-    buf[3] = (byte_t)(baud >> 16);
-    buf[4] = (byte_t)(baud >>  8);
-    buf[5] = (byte_t)(baud);
-    s_okay[0] = BRIDGE_BAUD;
-
-    /* 重试三次 */
-    for (idx = 0; idx < 3; idx++)
-    {
-        /* 发送命令 */
-        s_okay[1] = 0xFF;
-        bridge_send(buf, sizeof(buf));
-
-        /* 等待响应 */
-        if (bridge_wait(1000)) {
-            if (port == PORT_TYPE_BRD)
-                uart0_init(baud);
-            return (TRUE);
-        }
-    }
-    return (FALSE);
-}
-
-/*
-=======================================
-    桥接板复位
-=======================================
-*/
-CR_API bool_t
-bridge_reset (void_t)
-{
-    uint_t  idx;
-    byte_t  cmd;
-
-    /* 填充命令 */
-    cmd = BRIDGE_RESET;
-    s_okay[0] = BRIDGE_RESET;
-
-    /* 重试三次 */
-    for (idx = 0; idx < 3; idx++)
-    {
-        /* 发送命令 */
-        s_okay[1] = 0xFF;
-        bridge_send(&cmd, sizeof(cmd));
-
-        /* 等待响应 */
-        if (bridge_wait(1000))
-            return (TRUE);
-    }
-    return (FALSE);
-}
-
-/*
-=======================================
-    桥接板电平控制
-=======================================
-*/
-CR_API bool_t
-bridge_gpio (
-  __CR_IN__ byte_t  level
-    )
-{
-    uint_t  idx;
-    byte_t  buf[2];
-
-    /* 填充命令 */
-    buf[0] = BRIDGE_GPIO;
-    buf[1] = level;
-    s_okay[0] = BRIDGE_GPIO;
-
-    /* 重试三次 */
-    for (idx = 0; idx < 3; idx++)
-    {
-        /* 发送命令 */
-        s_okay[1] = 0xFF;
-        bridge_send(buf, sizeof(buf));
-
-        /* 等待响应 */
-        if (bridge_wait(1000))
-            return (TRUE);
-    }
-    return (FALSE);
-}
-
-/*
-=======================================
-    桥接板透传
+    桥接板关闭
 =======================================
 */
 CR_API void_t
-bridge_commit (
-  __CR_IN__ byte_t          port,
-  __CR_IN__ const void_t*   data,
-  __CR_IN__ uint_t          size
-    )
+bridge_kill (void_t)
 {
-    if (size == 0 || size >= BRIDGE_MAX)
-        return;
-    s_send[0] = BRIDGE_SEND;
-    s_send[1] = port;
-    mem_cpy(&s_send[2], data, size);
-    bridge_send(s_send, size + 2);
+    g_is_bridge = FALSE;
+    TIM_Cmd(TIM2, DISABLE);
+    TIM_ITConfig(TIM2, TIM_IT_Update, DISABLE);
+    TIM_ClearFlag(TIM2, TIM_FLAG_Update);
 }
 
 /*
@@ -527,30 +228,9 @@ bridge_commit (
 CR_API void_t
 TIM2_IRQHandler (void_t)
 {
-    uint_t          temp;
-    static int32u   base = 0;
-    static uint_t   cnts = 0;
-
-    if (TIM_GetITStatus(TIM2, TIM_IT_Update))
-    {
-        /* 桥接板任务 */
+    if (TIM_GetITStatus(TIM2, TIM_IT_Update)) {
         TIM_ClearITPendingBit(TIM2, TIM_FLAG_Update);
         bridge_task();
-
-        /* 长时间没接收到命令就清缓存 */
-        temp = uart0_rx_size();
-        if (temp != cnts) {
-            cnts = temp;
-            base = timer_get32();
-        }
-        else
-        if (temp != 0) {
-            if (timer_delta32(base) > 1000) {
-                uart0_throw(1);
-                cnts = uart0_rx_size();
-                base = timer_get32();
-            }
-        }
     }
 }
 

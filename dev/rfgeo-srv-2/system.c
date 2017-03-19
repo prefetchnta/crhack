@@ -19,9 +19,8 @@
 
 #include "applib.h"
 #include "device.h"
-#include "devlib.h"
+#include "mtplib.h"
 #include "strlib.h"
-#include "stm32f10x_conf.h"
 
 /*****************************************************************************/
 /*                                   RTC                                     */
@@ -90,6 +89,114 @@ datetime_set (
 }
 
 /*****************************************************************************/
+/*                                   NET                                     */
+/*****************************************************************************/
+
+/* 通讯超时 */
+#define AT_TIMEOUT  1000
+
+/* 通讯板类型 */
+byte_t  g_net_type = SRV2NET_NONE;
+
+#define NAKED_INL
+iSOCKET g_socket;
+#include "socket.c"
+
+/*
+=======================================
+    初始化网络库
+=======================================
+*/
+CR_API bool_t
+socket_init (void_t)
+{
+    ansi_t  *bak;
+    ansi_t  buf[128];
+
+    /* 判断是否有通讯板 */
+    bridge_kill();
+    g_net_type = SRV2NET_NONE;
+    mem_zero(&g_socket, sizeof(g_socket));
+    if (!at_check(AT_TIMEOUT)) {
+        bridge_reset();
+        thread_sleep(AT_TIMEOUT);
+        if (!at_check(AT_TIMEOUT))
+            return (FALSE);
+    }
+
+    /* 是否切换到桥接板 */
+    if (!at_cgmm(buf, sizeof(buf), AT_TIMEOUT))
+        return (FALSE);
+    if (str_strA(buf, "RFGEO_LN-BRIDGE") != NULL) {
+        bridge_init();
+        thread_sleep(AT_TIMEOUT);
+
+        /* 再次判断通讯板类型 */
+        if (!at_check(AT_TIMEOUT))
+            return (FALSE);
+        if (!at_cgmm(buf, sizeof(buf), AT_TIMEOUT))
+            return (FALSE);
+    }
+
+    /* SIMCOM 系列 */
+    bak = str_strA(buf, "SIMCOM_");
+    if (bak != NULL) {
+        if (!simcom_socket_init())
+            return (FALSE);
+        g_socket.socket_close       = simcom_socket_close;
+        g_socket.socket_input_size  = simcom_socket_input_size;
+        g_socket.socket_input_size2 = simcom_socket_input_size2;
+        g_socket.client_tcp_open    = simcom_client_tcp_open;
+        g_socket.client_tcp_open2   = simcom_client_tcp_open2;
+        g_socket.client_udp_open    = simcom_client_udp_open;
+        g_socket.client_udp_open2   = simcom_client_udp_open2;
+        g_socket.socket_tcp_send    = simcom_socket_tcp_send;
+        g_socket.socket_udp_send    = simcom_socket_udp_send;
+        g_socket.socket_tcp_recv    = simcom_socket_tcp_recv;
+        g_socket.socket_tcp_peek    = simcom_socket_tcp_peek;
+        g_socket.socket_udp_recv    = simcom_socket_udp_recv;
+        g_socket.socket_udp_peek    = simcom_socket_udp_peek;
+        g_socket.socket_set_timeout = simcom_socket_set_timeout;
+        if (str_strA(&bak[7], "SIM7100") != NULL) {
+            g_net_type = SRV2NET_SIM7100;
+            return (TRUE);
+        }
+        if (str_strA(&bak[7], "SIM6320") != NULL) {
+            g_net_type = SRV2NET_SIM6320;
+            return (TRUE);
+        }
+        if (str_strA(&bak[7], "SIM5360") != NULL) {
+            g_net_type = SRV2NET_SIM5360;
+            return (TRUE);
+        }
+        return (FALSE);
+    }
+
+    /* 未知模块 */
+    return (FALSE);
+}
+
+/*
+=======================================
+    释放网络库
+=======================================
+*/
+CR_API void_t
+socket_free (void_t)
+{
+    /* 清空虚表 */
+    mem_zero(&g_socket, sizeof(g_socket));
+
+    /* SIMCOM 系列 */
+    if (g_net_type == SRV2NET_SIM7100 ||
+        g_net_type == SRV2NET_SIM6320 ||
+        g_net_type == SRV2NET_SIM5360) {
+        simcom_socket_free();
+        return;
+    }
+}
+
+/*****************************************************************************/
 /*                                   MISC                                    */
 /*****************************************************************************/
 
@@ -147,72 +254,6 @@ sio_init (void_t)
 */
 CR_API void_t
 sio_free (void_t)
-{
-}
-
-/*****************************************************************************/
-/*                                   NET                                     */
-/*****************************************************************************/
-
-/* 通讯板类型 */
-byte_t  g_net_type = SRV2NET_NONE;
-
-/* 是否通过桥接板 */
-bool_t  g_is_bridge = FALSE;
-
-/*
-=======================================
-    初始化网络库
-=======================================
-*/
-CR_API bool_t
-socket_init (void_t)
-{
-    ansi_t  buf[128];
-
-    /* 判断是否有通讯板 */
-    g_is_bridge = FALSE;
-    if (!at_check(2000))
-        return (FALSE);
-
-    /* 是否切换到桥接板 */
-    if (!at_cgmm(buf, sizeof(buf), 2000))
-        return (FALSE);
-    if (str_strA(buf, "RFGEO_LN-BRIDGE") != NULL) {
-        g_is_bridge = TRUE;
-        bridge_init();
-        thread_sleep(500);
-
-        /* 再次判断通讯板类型 */
-        if (!at_check(2000))
-            return (FALSE);
-        if (!at_cgmm(buf, sizeof(buf), 2000))
-            return (FALSE);
-    }
-
-    /* SIMCOM 系列 */
-    if (str_strA(buf, "SIMCOM_SIM7100") != NULL) {
-        g_net_type = SRV2NET_SIM7100;
-        return (TRUE);
-    }
-    if (str_strA(buf, "SIMCOM_SIM6320") != NULL) {
-        g_net_type = SRV2NET_SIM6320;
-        return (TRUE);
-    }
-    if (str_strA(buf, "SIMCOM_SIM5360") != NULL) {
-        g_net_type = SRV2NET_SIM5360;
-        return (TRUE);
-    }
-    return (FALSE);
-}
-
-/*
-=======================================
-    释放网络库
-=======================================
-*/
-CR_API void_t
-socket_free (void_t)
 {
 }
 

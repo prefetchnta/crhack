@@ -17,7 +17,13 @@
 /*  =======================================================================  */
 /*****************************************************************************/
 
+#include "applib.h"
 #include "memlib.h"
+
+/* 默认定义 */
+#ifndef USART_YIELD
+    #define USART_YIELD
+#endif
 
 /* 环形队列 */
 typedef struct
@@ -47,6 +53,8 @@ uart_zero (void_t)
 
 /* 接收区的实现 */
 #if defined(RX_SIZE)
+
+#if defined(uart_rx_size)
 /*
 =======================================
     读取缓冲区内数据长度
@@ -61,6 +69,9 @@ uart_rx_size (void_t)
     return (RX_SIZE - s_fifo.rx_hd + s_fifo.rx_tl);
 }
 
+#endif  /* uart_rx_size */
+
+#if defined(uart_rx_flush)
 /*
 =======================================
     清空接收缓冲区
@@ -72,6 +83,9 @@ uart_rx_flush (void_t)
     s_fifo.rx_hd = s_fifo.rx_tl;
 }
 
+#endif  /* uart_rx_flush */
+
+#if defined(uart_throw)
 /*
 =======================================
     丢掉接收缓冲一组字节
@@ -88,6 +102,9 @@ uart_throw (
         s_fifo.rx_hd -= RX_SIZE;
 }
 
+#endif  /* uart_throw */
+
+#if defined(uart_peek)
 /*
 =======================================
     偷窥缓冲区数据
@@ -115,6 +132,9 @@ uart_peek (
     return (size);
 }
 
+#endif  /* uart_peek */
+
+#if defined(uart_read)
 /*
 =======================================
     读取缓冲区数据
@@ -132,6 +152,9 @@ uart_read (
     return (size);
 }
 
+#endif  /* uart_read */
+
+#if defined(uart_input)
 /*
 =======================================
     输入缓冲区数据
@@ -151,10 +174,63 @@ uart_input (
     }
 }
 
+#endif  /* uart_input */
+
+#if defined(uart_wait)
+/*
+=======================================
+    等待接收数据
+=======================================
+*/
+CR_API uint_t
+uart_wait (
+  __CR_OT__ void_t* data,
+  __CR_IN__ uint_t  step,
+  __CR_IN__ uint_t  tout
+    )
+{
+    uint_t  count, cnt_base = 0;
+    int32u  stp_base = timer_get32();
+    int32u  tot_base = stp_base;
+
+    for (;;) {
+        count = uart_rx_size();
+        if (count != cnt_base)
+        {
+            /* 有数据在来更新计时 */
+            cnt_base = count;
+            stp_base = timer_get32();
+            tot_base = stp_base;
+        }
+        else
+        if (count != 0)
+        {
+            /* 一段时间没有来数据表示断流, 返回之 */
+            if (timer_delta32(stp_base) > step) {
+                if (data == NULL)
+                    return (count);
+                return (uart_read(data, count));
+            }
+        }
+        else
+        {
+            /* 长时间数据为空返回超时 */
+            if (timer_delta32(tot_base) > tout)
+                break;
+        }
+        USART_YIELD
+    }
+    return (0);
+}
+
+#endif  /* uart_wait */
+
 #endif  /* RX_SIZE */
 
 /* 发送区的实现 */
 #if defined(TX_SIZE)
+
+#if defined(uart_tx_flush)
 /*
 =======================================
     清空发送缓冲区
@@ -166,6 +242,9 @@ uart_tx_flush (void_t)
     s_fifo.tx_hd = s_fifo.tx_tl;
 }
 
+#endif  /* uart_tx_flush */
+
+#if defined(uart_tx_free)
 /*
 =======================================
     返回缓冲区剩余空间
@@ -185,6 +264,9 @@ uart_tx_free (void_t)
     return (TX_SIZE - count);
 }
 
+#endif  /* uart_tx_free */
+
+#if defined(uart_commit)
 /*
 =======================================
     写入缓冲区数据
@@ -214,6 +296,8 @@ uart_commit (
     }
     return (size);
 }
+
+#endif  /* uart_commit */
 
 #endif  /* TX_SIZE */
 
