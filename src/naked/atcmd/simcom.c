@@ -42,9 +42,7 @@ typedef struct
         uint_t  linknum;        /* 连接编号 */
         int32u  recv_tout;      /* 接收超时 */
         int32u  send_tout;      /* 发送超时 */
-        int16u  local_port;     /* 本地端口 */
         int16u  remote_port;    /* 远程端口 */
-        ansi_t  local_ip[16];   /* 本地地址 */
         ansi_t* remote_addr;    /* 远程地址 */
         uint_t  head, tail;     /* 队列头尾 */
         byte_t* fifo_buffer;    /* 队列数据 */
@@ -119,11 +117,12 @@ simcom_socket_find (void_t)
     获取本地 IP 地址
 ---------------------------------------
 */
+#if 0
 static bool_t
 simcom_socket_ip (
-  __CR_IN__ ansi_t*     ret,
-  __CR_IN__ uint_t      size,
-  __CR_IO__ sSIMCOM*    netw
+  __CR_OT__ ansi_t* ip,
+  __CR_IN__ ansi_t* ret,
+  __CR_IN__ uint_t  size
     )
 {
     ansi_t* bak;
@@ -140,15 +139,16 @@ simcom_socket_ip (
     for (idx = 0; idx < 15; idx++) {
         if (bak[idx] == CR_AC('\r') ||
             bak[idx] == CR_AC('\n')) {
-            netw->local_ip[idx] = 0x00;
+            ip[idx] = 0x00;
             break;
         }
-        netw->local_ip[idx] = bak[idx];
+        ip[idx] = bak[idx];
     }
     if (idx >= 15)
-        netw->local_ip[15] = 0x00;
+        ip[15] = 0x00;
     return (TRUE);
 }
+#endif
 
 /*
 ---------------------------------------
@@ -164,6 +164,36 @@ simcom_rx_size (
     if (netw->tail >= netw->head)
         return (netw->tail - netw->head);
     return (SIMCOM_BUF_SIZE - netw->head + netw->tail);
+}
+
+/*
+---------------------------------------
+    判断连接是否断开
+---------------------------------------
+*/
+static bool_t
+simcom_is_close (
+  __CR_IN__ const sSIMCOM*  netw
+    )
+{
+    uint_t  idx;
+    ansi_t* bak;
+    ansi_t  ret[64];
+
+    /* 发查询命令 */
+    bak = at_iorw(ret, sizeof(ret), "AT+CIPCLOSE?\r", SIMCOM_AT_TOUT);
+    if (bak == NULL)
+        return (FALSE);
+    bak = str_strA(bak, "+CIPCLOSE: ");
+    if (bak == NULL)
+        return (FALSE);
+    bak += 11;
+    if (str_lenA(bak) < 19)
+        return (FALSE);
+    idx = netw->linknum * 2;
+    if (idx < 18 && bak[idx + 1] != CR_AC(','))
+        return (FALSE);
+    return ((bak[idx] == 0x30) ? TRUE : FALSE);
 }
 
 /*****************************************************************************/
@@ -215,18 +245,18 @@ simcom_client_tcp_open_int (
         goto _failure;
     bak = at_iorw(ret, sizeof(ret), str, SIMCOM_AT_TOUT);
     mem_free(str);
-    if (bak == NULL || str_strA(bak, "OK") == NULL)
+    if (bak == NULL || str_strA(bak, "ERROR") != NULL)
         goto _failure;
     bak = str_strA(bak, "+CIPOPEN: ");
     if (bak == NULL)
     {
-        /* 等待返回 */
+_retry: /* 等待返回 */
         bak = at_wait(ret, sizeof(ret), SIMCOM_TIMEOUT(time));
-        if (bak == NULL)
+        if (bak == NULL || str_strA(bak, "ERROR") != NULL)
             goto _failure;
         bak = str_strA(bak, "+CIPOPEN: ");
         if (bak == NULL)
-            goto _failure;
+            goto _retry;
     }
     bak += 10;
     if (num != (uint_t)(*bak) - 0x30)
@@ -240,10 +270,8 @@ simcom_client_tcp_open_int (
     s_simcom[num].fifo_buffer = dat;
     s_simcom[num].recv_tout = 120000UL;
     s_simcom[num].send_tout = 120000UL;
-    s_simcom[num].local_port = lport;
     s_simcom[num].remote_port = port;
     s_simcom[num].remote_addr = str_dupA(addr);
-    simcom_socket_ip(ret, sizeof(ret), &s_simcom[num]);
     return ((socket_t)(&s_simcom[num]));
 
 _failure:
@@ -323,18 +351,18 @@ simcom_client_udp_open_int (
         goto _failure;
     bak = at_iorw(ret, sizeof(ret), str, SIMCOM_AT_TOUT);
     mem_free(str);
-    if (bak == NULL || str_strA(bak, "OK") == NULL)
+    if (bak == NULL || str_strA(bak, "ERROR") != NULL)
         goto _failure;
     bak = str_strA(bak, "+CIPOPEN: ");
     if (bak == NULL)
     {
-        /* 等待返回 */
+_retry: /* 等待返回 */
         bak = at_wait(ret, sizeof(ret), SIMCOM_DEF_TOUT);
-        if (bak == NULL)
+        if (bak == NULL || str_strA(bak, "ERROR") != NULL)
             goto _failure;
         bak = str_strA(bak, "+CIPOPEN: ");
         if (bak == NULL)
-            goto _failure;
+            goto _retry;
     }
     bak += 10;
     if (num != (uint_t)(*bak) - 0x30)
@@ -348,10 +376,8 @@ simcom_client_udp_open_int (
     s_simcom[num].fifo_buffer = dat;
     s_simcom[num].recv_tout = 120000UL;
     s_simcom[num].send_tout = 120000UL;
-    s_simcom[num].local_port = lport;
     s_simcom[num].remote_port = port;
     s_simcom[num].remote_addr = str_dupA(addr);
-    simcom_socket_ip(ret, sizeof(ret), &s_simcom[num]);
     return ((socket_t)(&s_simcom[num]));
 
 _failure:
@@ -412,11 +438,11 @@ simcom_socket_close (
     str[13] = CR_AC('\r');
     str[14] = 0x00;
     bak = at_iorw(str, sizeof(str), str, SIMCOM_AT_TOUT);
-    if (bak == NULL || str_strA(bak, "OK") == NULL)
-        return;
-    bak = str_strA(bak, "+CIPCLOSE: ");
-    if (bak == NULL)
-        at_wait(str, sizeof(str), SIMCOM_DEF_TOUT);
+    if (bak != NULL) {
+        bak = str_strA(bak, "+CIPCLOSE: ");
+        if (bak == NULL)
+            at_wait(str, sizeof(str), SIMCOM_DEF_TOUT);
+    }
 
     /* 需要时复位结构成员 */
     if (real->fifo_buffer == NULL)
@@ -424,9 +450,7 @@ simcom_socket_close (
     SAFE_FREE(real->remote_addr);
     real->recv_tout = 120000UL;
     real->send_tout = 120000UL;
-    real->local_port  = 0;
     real->remote_port = 0;
-    mem_zero(real->local_ip, 16);
     real->head = real->tail = 0;
     mem_free(real->fifo_buffer);
     real->fifo_buffer = NULL;
@@ -456,6 +480,10 @@ simcom_socket_tcp_send (
     if (real->fifo_buffer == NULL || (sint_t)size < 0)
         return (CR_U_ERROR);
 
+    /* 判断连接是否断开 */
+    if (simcom_is_close(real))
+        return (CR_U_ERROR);
+
     /* 分块发送 */
     if (size == 0)
         return (0);
@@ -468,18 +496,18 @@ simcom_socket_tcp_send (
         at_send(str, 18);
         at_send(data, 1024);
         bak = at_wait(ret, sizeof(ret), SIMCOM_AT_TOUT);
-        if (bak == NULL || str_strA(bak, "OK") == NULL)
+        if (bak == NULL || str_strA(bak, "ERROR") != NULL)
             goto _failure;
         bak = str_strA(bak, "+CIPSEND: ");
         if (bak == NULL)
         {
-            /* 等待返回 */
+_retry1:    /* 等待返回 */
             bak = at_wait(ret, sizeof(ret), SIMCOM_TIMEOUT(real->send_tout));
-            if (bak == NULL)
+            if (bak == NULL || str_strA(bak, "ERROR") != NULL)
                 goto _failure;
             bak = str_strA(bak, "+CIPSEND: ");
             if (bak == NULL)
-                goto _failure;
+                goto _retry1;
         }
         bak += 10;
         if (real->linknum != (uint_t)(*bak) - 0x30)
@@ -504,18 +532,18 @@ simcom_socket_tcp_send (
         at_send(data, idx);
         mem_free(str);
         bak = at_wait(ret, sizeof(ret), SIMCOM_AT_TOUT);
-        if (bak == NULL || str_strA(bak, "OK") == NULL)
+        if (bak == NULL || str_strA(bak, "ERROR") != NULL)
             return (CR_U_ERROR);
         bak = str_strA(bak, "+CIPSEND: ");
         if (bak == NULL)
         {
-            /* 等待返回 */
+_retry2:    /* 等待返回 */
             bak = at_wait(ret, sizeof(ret), SIMCOM_TIMEOUT(real->send_tout));
-            if (bak == NULL)
+            if (bak == NULL || str_strA(bak, "ERROR") != NULL)
                 return (CR_U_ERROR);
             bak = str_strA(bak, "+CIPSEND: ");
             if (bak == NULL)
-                return (CR_U_ERROR);
+                goto _retry2;
         }
         bak += 10;
         if (real->linknum != (uint_t)(*bak) - 0x30)
@@ -582,18 +610,18 @@ simcom_socket_udp_send (
     at_send(data, size);
     mem_free(str);
     bak = at_wait(ret, sizeof(ret), SIMCOM_AT_TOUT);
-    if (bak == NULL || str_strA(bak, "OK") == NULL)
+    if (bak == NULL || str_strA(bak, "ERROR") != NULL)
         return (CR_U_ERROR);
     bak = str_strA(bak, "+CIPSEND: ");
     if (bak == NULL)
     {
-        /* 等待返回 */
+_retry: /* 等待返回 */
         bak = at_wait(ret, sizeof(ret), SIMCOM_TIMEOUT(real->send_tout));
-        if (bak == NULL)
+        if (bak == NULL || str_strA(bak, "ERROR") != NULL)
             return (CR_U_ERROR);
         bak = str_strA(bak, "+CIPSEND: ");
         if (bak == NULL)
-            return (CR_U_ERROR);
+            goto _retry;
     }
     bak += 10;
     if (real->linknum != (uint_t)(*bak) - 0x30)
@@ -774,8 +802,7 @@ simcom_socket_input_size2 (
     for (;;)
     {
         /* 返回缓冲区里的数据长度 */
-        if (!simcom_socket_input_size(netw, &leng))
-            return (FALSE);
+        simcom_socket_input_size(netw, &leng);
 
         /* 判断超时 */
         if (leng == 0) {
@@ -814,18 +841,28 @@ simcom_socket_tcp_peek (
         return (CR_U_ERROR);
 
     /* 直到数据搬完或超时为止 */
+    temp = 0;
     base = timer_get32();
     for (;;)
     {
         /* 返回缓冲区里的数据长度 */
-        if (!simcom_socket_input_size(netw, &leng))
-            return (CR_U_ERROR);
+        simcom_socket_input_size(netw, &leng);
+
+        /* 长度有变化就更新计时器 */
+        if (temp != leng) {
+            temp = leng;
+            base = timer_get32();
+        }
 
         /* 数据足够就出去了 */
         if (leng >= size) {
             leng = size;
             break;
         }
+
+        /* 判断连接是否断开 */
+        if (simcom_is_close(real))
+            return (CR_SOCKET_CLOSED);
 
         /* 判断超时 */
         if (timer_delta32(base) > real->recv_tout) {
@@ -956,6 +993,50 @@ simcom_socket_set_timeout (
         return;
     real->recv_tout = rd_time;
     real->send_tout = wr_time;
+}
+
+/*
+=======================================
+    设置 TCP 断线检测参数
+=======================================
+*/
+CR_API bool_t
+simcom_socket_tcp_set_alive (
+  __CR_IN__ socket_t    netw,
+  __CR_IN__ uint_t      idle,
+  __CR_IN__ uint_t      interval,
+  __CR_IN__ uint_t      count
+    )
+{
+    ansi_t* str;
+    ansi_t* bak;
+    ansi_t  ret[64];
+
+    /* 参数过滤 */
+    if ((int32u)idle < 60000UL)
+        idle = 1;
+    else
+    if ((int32u)idle > 7200000UL)
+        idle = 120;
+    else
+        idle /= 60000;
+    if (count < 1)
+        count = 1;
+    else
+    if (count > 10)
+        count = 10;
+
+    /* 发送 KeepAlive 指令 */
+    str = str_fmtA("AT+CTCPKA=1,%u,%u\r", idle, count);
+    if (str == NULL)
+        return (FALSE);
+    bak = at_iorw(ret, sizeof(ret), str, SIMCOM_AT_TOUT);
+    mem_free(str);
+    if (bak == NULL || str_strA(bak, "ERROR") != NULL)
+        return (FALSE);
+    CR_NOUSE(netw);
+    CR_NOUSE(interval);
+    return (TRUE);
 }
 
 /*****************************************************************************/

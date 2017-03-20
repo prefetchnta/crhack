@@ -43,11 +43,18 @@ typedef struct
         /* 响应部分 */
         sINIu*      res_ini;
         uint_t      res_len;
+        uint_t      res_max;
         void_t*     res_dat;
         ansi_t*     res_hdr;
         uint_t      res_ver;
         uint_t      res_num;
         ansi_t*     res_str;
+
+        /* 回调部分 */
+        void_t*         cb_parm;
+        uint_t          cb_size;
+        void_t*         cb_buff;
+        chttp_recv_t    cb_func;
 
 } sHTTPLIB;
 
@@ -139,12 +146,17 @@ chttp_open (
         socket_set_timeout(rett->netw, rett->wout, rett->rout);
     }
     rett->res_len = 0;
+    rett->res_max = ((uint_t)-1);
     rett->res_dat = NULL;
     rett->res_hdr = NULL;
     rett->res_ini = NULL;
     rett->res_ver = 0;
     rett->res_num = 0;
     rett->res_str = "";
+    rett->cb_parm = NULL;
+    rett->cb_size = 0;
+    rett->cb_buff = NULL;
+    rett->cb_func = NULL;
     return ((chttp_t)rett);
 
 _failure:
@@ -170,6 +182,7 @@ chttp_close (
         socket_close(real->netw);
     if (real->res_ini != NULL)
         ini_closeU(real->res_ini);
+    TRY_FREE(real->cb_buff);
     TRY_FREE(real->res_hdr);
     TRY_FREE(real->res_dat);
     mem_free(real->path);
@@ -229,6 +242,58 @@ chttp_restart (
 {
     chttp_head_rst(conn);
     chttp_disconn(conn);
+}
+
+/*
+=======================================
+    设置 HTTP 接收安全大小
+=======================================
+*/
+CR_API void_t
+chttp_safe_size (
+  __CR_IN__ chttp_t conn,
+  __CR_IN__ sint_t  size
+    )
+{
+    ((sHTTPLIB*)conn)->res_max = (uint_t)size;
+}
+
+/*
+=======================================
+    设置 HTTP 接收回调
+=======================================
+*/
+CR_API bool_t
+chttp_callback (
+  __CR_IN__ chttp_t         conn,
+  __CR_IN__ chttp_recv_t    func,
+  __CR_IN__ void_t*         param,
+  __CR_IN__ uint_t          cache
+    )
+{
+    void_t*     buff;
+    sHTTPLIB*   real;
+
+    /* 先释放之前的 */
+    real = (sHTTPLIB*)conn;
+    if (func == NULL || cache == 0) {
+        SAFE_FREE(real->cb_buff);
+        real->cb_parm = NULL;
+        real->cb_size = 0;
+        real->cb_func = NULL;
+        return (TRUE);
+    }
+
+    /* 新开一片缓冲区 */
+    buff = mem_malloc(cache);
+    if (buff == NULL)
+        return (FALSE);
+    TRY_FREE(real->cb_buff);
+    real->cb_buff = buff;
+    real->cb_parm = param;
+    real->cb_size = cache;
+    real->cb_func = func;
+    return (TRUE);
 }
 
 /*
@@ -455,6 +520,39 @@ chttp_do_head_cmd (
 }
 
 /*
+---------------------------------------
+    接收 HTTP 回调处理
+---------------------------------------
+*/
+static bool_t
+chttp_do_recv (
+  __CR_IN__ sHTTPLIB*   conn,
+  __CR_IN__ uint_t      size
+    )
+{
+    uint_t  idx;
+
+    /* 分块接收 */
+    idx = size / conn->cb_size;
+    for (; idx != 0; idx--) {
+        if (socket_tcp_recv(conn->netw, conn->cb_buff,
+                conn->cb_size) != conn->cb_size)
+            return (FALSE);
+        conn->cb_func(conn->cb_parm, conn->cb_buff,
+                      conn->cb_size, conn->res_len);
+    }
+
+    /* 处理剩余 */
+    idx = size % conn->cb_size;
+    if (idx != 0) {
+        if (socket_tcp_recv(conn->netw, conn->cb_buff, idx) != idx)
+            return (FALSE);
+        conn->cb_func(conn->cb_parm, conn->cb_buff, idx, conn->res_len);
+    }
+    return (TRUE);
+}
+
+/*
 =======================================
     发送 HTTP 请求 (二进制)
 =======================================
@@ -482,18 +580,27 @@ chttp_req_bin (
     if (path == NULL)
         path = real->path;
 
+    /* 检查用户头是否封闭 */
+    leng = (uint_t)dato_get_size(real->head);
+    if (leng == 0) {
+        chttp_head_fin(conn);
+    }
+    else {
+        head = CR_VCALL(real->head)->flush(real->head);
+        if (head[leng - 1] != 0x00)
+            chttp_head_fin(conn);
+    }
+
     /* 合成命令头 */
+    head = CR_VCALL(real->head)->flush(real->head);
     if (data == NULL) {
-        head = str_fmtA("%s %s %s\r\nHost: %s\r\n%s\r\n",
-                        s_http_cmd[method], path, s_http_ver[real->vers],
-                        real->host, CR_VCALL(real->head)->flush(real->head));
+        head = str_fmtA("%s %s %s\r\nHost: %s\r\n%s\r\n", s_http_cmd[method],
+                        path, s_http_ver[real->vers], real->host, head);
     }
     else {
         head = str_fmtA("%s %s %s\r\nHost: %s\r\n%s"
-                        "Content-Length: %u\r\n\r\n",
-                        s_http_cmd[method], path, s_http_ver[real->vers],
-                        real->host, CR_VCALL(real->head)->flush(real->head),
-                        size);
+                        "Content-Length: %u\r\n\r\n", s_http_cmd[method],
+                        path, s_http_ver[real->vers], real->host, head, size);
     }
     if (head == NULL)
         return (FALSE);
@@ -592,34 +699,59 @@ chttp_req_bin (
     /* HEAD 方法直接返回 */
     if (method != HTTPLIB_HEAD)
     {
+        /* 安全检查 */
+        if (real->res_len > real->res_max)
+            goto _failure3;
+
         /* 读取剩余的主体数据 */
-        if (real->res_len != 0) {
-            real->res_dat = mem_malloc(real->res_len + 1);
-            if (real->res_dat == NULL) {
-                real->res_len = 0;
-                goto _failure2;
-            }
+        if (real->res_len != 0)
+        {
+            /* 获取之前在收头的时候收到的数据 */
             leng = (uint_t)dato_get_size(buff) - size;
             if (real->res_len < leng)
                 goto _failure3;
-            if (leng != 0)
-                mem_cpy(real->res_dat, (byte_t*)temp + size, leng);
-            size = real->res_len - leng;
-            if (size != 0) {
-                temp = (byte_t*)real->res_dat + leng;
-                if (socket_tcp_recv(real->netw, temp, size) != size)
+
+            /* 接收本体数据 */
+            if (real->cb_func == NULL)
+            {
+                /* 没有回调直接接收在内存里 */
+                real->res_dat = mem_malloc(real->res_len + 1);
+                if (real->res_dat == NULL)
                     goto _failure3;
+                if (leng != 0)
+                    mem_cpy(real->res_dat, (byte_t*)temp + size, leng);
+                size = real->res_len - leng;
+                if (size != 0) {
+                    temp = (byte_t*)real->res_dat + leng;
+                    if (socket_tcp_recv(real->netw, temp, size) != size)
+                        goto _failure4;
+                }
+                ((byte_t*)(real->res_dat))[real->res_len] = 0x00;
             }
-            ((byte_t*)(real->res_dat))[real->res_len] = 0x00;
+            else
+            {
+                /* 使用接收回调处理 */
+                if (leng != 0) {
+                    real->cb_func(real->cb_parm, (byte_t*)temp + size,
+                                  leng, real->res_len);
+                }
+                size = real->res_len - leng;
+                if (size != 0) {
+                    if (!chttp_do_recv(real, size))
+                        goto _failure3;
+                }
+                real->res_len = 0;
+            }
         }
     }
     CR_VCALL(buff)->release(buff);
     return (chttp_do_head_cmd(real));
 
-_failure3:
-    real->res_len = 0;
+_failure4:
     mem_free(real->res_dat);
     real->res_dat = NULL;
+_failure3:
+    real->res_len = 0;
 _failure2:
     CR_VCALL(buff)->release(buff);
 _failure1:

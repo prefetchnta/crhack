@@ -136,7 +136,7 @@ norflash_write (
     /* 整扇区写过去 */
     idx = size / sizeof(s_temp_buffer);
     for (; idx != 0; idx--) {
-        if (!norflash_erase(start, NORFLASH_ERASE_T1, NORFLASH_ERASE_T2))
+        if (!norflash_erase_int(start))
             return (FALSE);
         if (!norflash_write_int(start, data))
             return (FALSE);

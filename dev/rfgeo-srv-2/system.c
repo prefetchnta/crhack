@@ -143,20 +143,21 @@ socket_init (void_t)
     if (bak != NULL) {
         if (!simcom_socket_init())
             return (FALSE);
-        g_socket.socket_close       = simcom_socket_close;
-        g_socket.socket_input_size  = simcom_socket_input_size;
+        g_socket.socket_close = simcom_socket_close;
+        g_socket.socket_input_size = simcom_socket_input_size;
         g_socket.socket_input_size2 = simcom_socket_input_size2;
-        g_socket.client_tcp_open    = simcom_client_tcp_open;
-        g_socket.client_tcp_open2   = simcom_client_tcp_open2;
-        g_socket.client_udp_open    = simcom_client_udp_open;
-        g_socket.client_udp_open2   = simcom_client_udp_open2;
-        g_socket.socket_tcp_send    = simcom_socket_tcp_send;
-        g_socket.socket_udp_send    = simcom_socket_udp_send;
-        g_socket.socket_tcp_recv    = simcom_socket_tcp_recv;
-        g_socket.socket_tcp_peek    = simcom_socket_tcp_peek;
-        g_socket.socket_udp_recv    = simcom_socket_udp_recv;
-        g_socket.socket_udp_peek    = simcom_socket_udp_peek;
+        g_socket.client_tcp_open = simcom_client_tcp_open;
+        g_socket.client_tcp_open2 = simcom_client_tcp_open2;
+        g_socket.client_udp_open = simcom_client_udp_open;
+        g_socket.client_udp_open2 = simcom_client_udp_open2;
+        g_socket.socket_tcp_send = simcom_socket_tcp_send;
+        g_socket.socket_udp_send = simcom_socket_udp_send;
+        g_socket.socket_tcp_recv = simcom_socket_tcp_recv;
+        g_socket.socket_tcp_peek = simcom_socket_tcp_peek;
+        g_socket.socket_udp_recv = simcom_socket_udp_recv;
+        g_socket.socket_udp_peek = simcom_socket_udp_peek;
         g_socket.socket_set_timeout = simcom_socket_set_timeout;
+        g_socket.socket_tcp_set_alive = simcom_socket_tcp_set_alive;
         if (str_strA(&bak[7], "SIM7100") != NULL) {
             g_net_type = SRV2NET_SIM7100;
             return (TRUE);

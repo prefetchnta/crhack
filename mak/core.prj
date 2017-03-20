@@ -382,12 +382,14 @@ LINUX_CPPS=$(SRC_LNX)cr_spi.$(C) \
 NAKED_OBJS=$(OBJ)appnak.$(O) \
            $(OBJ)dllnak.$(O) \
            $(OBJ)strfmt.$(O) \
+           $(OBJ)socket.$(O) \
            $(OBJ)counter.$(O) \
            $(OBJ)codepage.$(O)
 
 NAKED_CPPS=$(SRC_NAK)appnak.$(C) \
            $(SRC_NAK)dllnak.$(C) \
            $(SRC_PSX)strfmt.$(C) \
+           $(SRC_NAK)socket.$(C) \
            $(SRC_NAK)counter.$(C) \
            $(SRC_NAK)codepage.$(C)
 
