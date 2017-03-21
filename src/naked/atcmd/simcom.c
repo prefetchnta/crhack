@@ -114,44 +114,6 @@ simcom_socket_find (void_t)
 
 /*
 ---------------------------------------
-    获取本地 IP 地址
----------------------------------------
-*/
-#if 0
-static bool_t
-simcom_socket_ip (
-  __CR_OT__ ansi_t* ip,
-  __CR_IN__ ansi_t* ret,
-  __CR_IN__ uint_t  size
-    )
-{
-    ansi_t* bak;
-    ufast_t idx;
-
-    /* 获取本地 IP 地址 */
-    bak = at_iorw(ret, size, "AT+IPADDR\r", SIMCOM_AT_TOUT);
-    if (bak == NULL)
-        return (FALSE);
-    bak = str_strA(bak, "+IPADDR: ");
-    if (bak == NULL)
-        return (FALSE);
-    bak += 9;
-    for (idx = 0; idx < 15; idx++) {
-        if (bak[idx] == CR_AC('\r') ||
-            bak[idx] == CR_AC('\n')) {
-            ip[idx] = 0x00;
-            break;
-        }
-        ip[idx] = bak[idx];
-    }
-    if (idx >= 15)
-        ip[15] = 0x00;
-    return (TRUE);
-}
-#endif
-
-/*
----------------------------------------
     环形队列长度
 ---------------------------------------
 */
@@ -466,6 +428,7 @@ simcom_socket_tcp_send (
   __CR_IN__ uint_t          size
     )
 {
+    uint_t  len;
     uint_t  idx;
     ansi_t* str;
     ansi_t* bak;
@@ -493,6 +456,7 @@ simcom_socket_tcp_send (
         at_flush();
         at_send(str, 18);
         at_send(data, 1024);
+        at_throw(18 + 1 + 1024, SIMCOM_AT_TOUT);
         bak = at_wait(ret, sizeof(ret), SIMCOM_AT_TOUT);
         if (bak == NULL || str_strA(bak, "ERROR") != NULL)
             goto _failure;
@@ -525,10 +489,12 @@ _retry1:    /* 等待返回 */
         str = str_fmtA("AT+CIPSEND=%u,%u\r", real->linknum, idx);
         if (str == NULL)
             return (CR_U_ERROR);
+        len = (uint_t)str_lenA(str);
         at_flush();
-        at_send_str(str);
+        at_send(str, len);
         at_send(data, idx);
         mem_free(str);
+        at_throw(len + 1 + idx, SIMCOM_AT_TOUT);
         bak = at_wait(ret, sizeof(ret), SIMCOM_AT_TOUT);
         if (bak == NULL || str_strA(bak, "ERROR") != NULL)
             return (CR_U_ERROR);
@@ -573,6 +539,7 @@ simcom_socket_udp_send (
   __CR_IN__ uint_t          size
     )
 {
+    uint_t  len;
     ansi_t* str;
     ansi_t* bak;
     ansi_t  ret[64];
@@ -603,10 +570,12 @@ simcom_socket_udp_send (
                     size, real->remote_addr, real->remote_port);
     if (str == NULL)
         return (CR_U_ERROR);
+    len = (uint_t)str_lenA(str);
     at_flush();
-    at_send_str(str);
+    at_send(str, len);
     at_send(data, size);
     mem_free(str);
+    at_throw(len + 1 + size, SIMCOM_AT_TOUT);
     bak = at_wait(ret, sizeof(ret), SIMCOM_AT_TOUT);
     if (bak == NULL || str_strA(bak, "ERROR") != NULL)
         return (CR_U_ERROR);

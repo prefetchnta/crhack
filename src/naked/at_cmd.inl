@@ -52,6 +52,22 @@ at_send (
 
 /*
 =======================================
+    丢弃数据
+=======================================
+*/
+CR_API void_t
+at_throw (
+  __CR_IN__ uint_t  size,
+  __CR_IN__ uint_t  tout
+    )
+{
+    count = uart_wait(NULL, CUT_DOWN_TIME, tout);
+    if (count >= size)
+        uart_throw(size);
+}
+
+/*
+=======================================
     命令等待
 =======================================
 */
@@ -65,8 +81,11 @@ at_wait (
     uint_t  count;
 
     count = uart_wait(NULL, CUT_DOWN_TIME, tout);
-    if (count == 0 || count + 1 > size)
+    if (count == 0)
         return (NULL);
+    size -= 1;
+    if (count > size)
+        count = size;
     uart_read(out, count);
     out[count] = 0x00;
     return (out);
@@ -85,8 +104,12 @@ at_iorw (
   __CR_IN__ uint_t          tout
     )
 {
+    uint_t  len;
+
+    len = (uint_t)str_lenA(inp);
     uart_rx_flush();
-    uart_send_str(inp);
+    uart_write(inp, len);
+    at_throw(len, tout);
     return (at_wait(out, size, tout));
 }
 

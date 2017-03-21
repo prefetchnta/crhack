@@ -35,8 +35,8 @@ extern bool_t   g_is_bridge;
 #define uart_wait       rs232_wait
 #define uart_read       rs232_read
 #define uart_write      rs232_write
+#define uart_throw      rs232_throw
 #define uart_rx_flush   rs232_rx_flush
-#define uart_send_str   rs232_send_str
 
 #include "at_cmd.inl"
 
