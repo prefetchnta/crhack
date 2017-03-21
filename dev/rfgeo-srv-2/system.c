@@ -98,9 +98,7 @@ datetime_set (
 /* 通讯板类型 */
 byte_t  g_net_type = SRV2NET_NONE;
 
-#define NAKED_INL
 iSOCKET g_socket;
-#include "socket.c"
 
 /*
 =======================================

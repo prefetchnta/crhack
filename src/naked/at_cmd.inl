@@ -61,6 +61,8 @@ at_throw (
   __CR_IN__ uint_t  tout
     )
 {
+    uint_t  count;
+
     count = uart_wait(NULL, CUT_DOWN_TIME, tout);
     if (count >= size)
         uart_throw(size);
