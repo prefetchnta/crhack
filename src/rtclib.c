@@ -677,6 +677,7 @@ datetime_attr (
 #endif  /* !__no_datetime_attr */
 
 #if !defined(_CR_RTC_NO_STRING_)
+
 #if !defined(__no_str2datetimeA)
 /*
 =======================================
@@ -747,6 +748,8 @@ str2datetimeA (
 
 #endif  /* !__no_str2datetimeA */
 
+#if !defined(_CR_NAKED_NO_WSTRING_)
+
 #if !defined(__no_str2datetimeW)
 /*
 =======================================
@@ -816,6 +819,9 @@ str2datetimeW (
 }
 
 #endif  /* !__no_str2datetimeW */
+
+#endif  /* !_CR_NAKED_NO_WSTRING_ */
+
 #endif  /* !_CR_RTC_NO_STRING_ */
 
 /*****************************************************************************/

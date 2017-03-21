@@ -76,6 +76,8 @@ file_raw_openA (
     return (rett);
 }
 
+#if !defined(_CR_NAKED_NO_WSTRING_)
+
 /*
 =======================================
     文件打开W
@@ -97,6 +99,8 @@ file_raw_openW (
     mem_free(ansi);
     return (file);
 }
+
+#endif  /* !_CR_NAKED_NO_WSTRING_ */
 
 /*
 =======================================

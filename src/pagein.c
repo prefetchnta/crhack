@@ -124,6 +124,8 @@ _failure2:
     return (NULL);
 }
 
+#if !defined(_CR_NAKED_NO_WSTRING_)
+
 /*
 =======================================
     生成内存映射文件接口W
@@ -168,6 +170,8 @@ _failure2:
     mem_free(page);
     return (NULL);
 }
+
+#endif  /* !_CR_NAKED_NO_WSTRING_ */
 
 #endif  /* !_CR_NO_VPAGE_ */
 

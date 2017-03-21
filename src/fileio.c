@@ -506,6 +506,8 @@ file_existA (
     return (TRUE);
 }
 
+#if !defined(_CR_NAKED_NO_WSTRING_)
+
 /*
 =======================================
     检查文件是否存在W
@@ -524,6 +526,8 @@ file_existW (
     file_raw_close(file);
     return (TRUE);
 }
+
+#endif  /* !_CR_NAKED_NO_WSTRING_ */
 
 /*
 =======================================
@@ -547,6 +551,8 @@ file_sizeA (
     return (size);
 }
 
+#if !defined(_CR_NAKED_NO_WSTRING_)
+
 /*
 =======================================
     获取文件大小W
@@ -568,6 +574,8 @@ file_sizeW (
     file_raw_close(file);
     return (size);
 }
+
+#endif  /* !_CR_NAKED_NO_WSTRING_ */
 
 /*
 =======================================
@@ -614,6 +622,8 @@ _failure:
     return (NULL);
 }
 
+#if !defined(_CR_NAKED_NO_WSTRING_)
+
 /*
 =======================================
     把整个文件当字符串读入W
@@ -658,6 +668,8 @@ _failure:
     file_raw_close(file);
     return (NULL);
 }
+
+#endif  /* !_CR_NAKED_NO_WSTRING_ */
 
 /*
 =======================================
@@ -706,6 +718,8 @@ _failure:
     return (NULL);
 }
 
+#if !defined(_CR_NAKED_NO_WSTRING_)
+
 /*
 =======================================
     读入整个文件W
@@ -753,6 +767,8 @@ _failure:
     return (NULL);
 }
 
+#endif  /* !_CR_NAKED_NO_WSTRING_ */
+
 /*
 =======================================
     生成一个文件A
@@ -781,6 +797,8 @@ file_saveA (
     return (TRUE);
 }
 
+#if !defined(_CR_NAKED_NO_WSTRING_)
+
 /*
 =======================================
     生成一个文件W
@@ -808,6 +826,8 @@ file_saveW (
     }
     return (TRUE);
 }
+
+#endif  /* !_CR_NAKED_NO_WSTRING_ */
 
 /*
 ---------------------------------------
@@ -935,6 +955,8 @@ _failure1:
     return (CR_F_ERROR);
 }
 
+#if !defined(_CR_NAKED_NO_WSTRING_)
+
 /*
 =======================================
     替换文件内容W
@@ -1027,6 +1049,8 @@ _failure1:
     return (CR_F_ERROR);
 }
 
+#endif  /* !_CR_NAKED_NO_WSTRING_ */
+
 /*
 =======================================
     替换文件内容A (支持数据处理)
@@ -1114,6 +1138,8 @@ _failure1:
     return (CR_F_ERROR);
 }
 
+#if !defined(_CR_NAKED_NO_WSTRING_)
+
 /*
 =======================================
     替换文件内容W (支持数据处理)
@@ -1200,6 +1226,8 @@ _failure1:
     file_raw_close(i_file);
     return (CR_F_ERROR);
 }
+
+#endif  /* !_CR_NAKED_NO_WSTRING_ */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */

@@ -216,8 +216,7 @@ simcom_client_tcp_open_int (
     sint_t  num;
     ansi_t* str;
     ansi_t* bak;
-    byte_t* dat;
-    ansi_t  ret[64];
+    ansi_t* dat;
 
     /* 查找是否有空闲连接 */
     num = simcom_socket_find();
@@ -228,7 +227,7 @@ simcom_client_tcp_open_int (
     simcom_socket_close((socket_t)(&s_simcom[num]));
 
     /* 环形队列分配 */
-    dat = (byte_t*)mem_malloc(SIMCOM_BUF_SIZE);
+    dat = (ansi_t*)mem_malloc(SIMCOM_BUF_SIZE);
     if (dat == NULL)
         return (NULL);
 
@@ -243,7 +242,7 @@ simcom_client_tcp_open_int (
     }
     if (str == NULL)
         goto _failure;
-    bak = at_iorw(ret, sizeof(ret), str, SIMCOM_AT_TOUT);
+    bak = at_iorw(dat, SIMCOM_BUF_SIZE, str, SIMCOM_AT_TOUT);
     mem_free(str);
     if (bak == NULL || str_strA(bak, "ERROR") != NULL)
         goto _failure;
@@ -251,7 +250,7 @@ simcom_client_tcp_open_int (
     if (bak == NULL)
     {
 _retry: /* 等待返回 */
-        bak = at_wait(ret, sizeof(ret), SIMCOM_TIMEOUT(time));
+        bak = at_wait(dat, SIMCOM_BUF_SIZE, SIMCOM_TIMEOUT(time));
         if (bak == NULL || str_strA(bak, "ERROR") != NULL)
             goto _failure;
         bak = str_strA(bak, "+CIPOPEN: ");
@@ -267,7 +266,7 @@ _retry: /* 等待返回 */
     /* 连接成功 */
     s_simcom[num].head = 0;
     s_simcom[num].tail = 0;
-    s_simcom[num].fifo_buffer = dat;
+    s_simcom[num].fifo_buffer = (byte_t*)dat;
     s_simcom[num].recv_tout = 120000UL;
     s_simcom[num].send_tout = 120000UL;
     s_simcom[num].remote_port = port;
@@ -327,8 +326,7 @@ simcom_client_udp_open_int (
     sint_t  num;
     ansi_t* str;
     ansi_t* bak;
-    byte_t* dat;
-    ansi_t  ret[64];
+    ansi_t* dat;
 
     /* 查找是否有空闲连接 */
     num = simcom_socket_find();
@@ -339,7 +337,7 @@ simcom_client_udp_open_int (
     simcom_socket_close((socket_t)(&s_simcom[num]));
 
     /* 环形队列分配 */
-    dat = (byte_t*)mem_malloc(SIMCOM_BUF_SIZE);
+    dat = (ansi_t*)mem_malloc(SIMCOM_BUF_SIZE);
     if (dat == NULL)
         return (NULL);
 
@@ -349,7 +347,7 @@ simcom_client_udp_open_int (
     str = str_fmtA("AT+CIPOPEN=%u,\"UDP\",,,%u\r", num, lport);
     if (str == NULL)
         goto _failure;
-    bak = at_iorw(ret, sizeof(ret), str, SIMCOM_AT_TOUT);
+    bak = at_iorw(dat, SIMCOM_BUF_SIZE, str, SIMCOM_AT_TOUT);
     mem_free(str);
     if (bak == NULL || str_strA(bak, "ERROR") != NULL)
         goto _failure;
@@ -357,7 +355,7 @@ simcom_client_udp_open_int (
     if (bak == NULL)
     {
 _retry: /* 等待返回 */
-        bak = at_wait(ret, sizeof(ret), SIMCOM_DEF_TOUT);
+        bak = at_wait(dat, SIMCOM_BUF_SIZE, SIMCOM_DEF_TOUT);
         if (bak == NULL || str_strA(bak, "ERROR") != NULL)
             goto _failure;
         bak = str_strA(bak, "+CIPOPEN: ");
@@ -373,7 +371,7 @@ _retry: /* 等待返回 */
     /* 连接成功 */
     s_simcom[num].head = 0;
     s_simcom[num].tail = 0;
-    s_simcom[num].fifo_buffer = dat;
+    s_simcom[num].fifo_buffer = (byte_t*)dat;
     s_simcom[num].recv_tout = 120000UL;
     s_simcom[num].send_tout = 120000UL;
     s_simcom[num].remote_port = port;

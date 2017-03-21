@@ -364,6 +364,8 @@ create_disk_outA (
     return ((iDATOT*)disk);
 }
 
+#if !defined(_CR_NAKED_NO_WSTRING_)
+
 /*
 =======================================
     生成磁盘文件写入接口W
@@ -392,6 +394,8 @@ create_disk_outW (
     disk->datot.__vptr__ = &s_datot_vtbl;
     return ((iDATOT*)disk);
 }
+
+#endif  /* !_CR_NAKED_NO_WSTRING_ */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */

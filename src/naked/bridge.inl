@@ -32,6 +32,9 @@
 #ifndef BRIDGE_TIMEOUT
     #define BRIDGE_TIMEOUT  1000
 #endif
+#ifndef BRIDGE_CLR_TOUT
+    #define BRIDGE_CLR_TOUT 1000
+#endif
 
 /* 临时缓冲区 */
 static byte_t   s_okay[2];
@@ -201,7 +204,7 @@ bridge_task (void_t)
     }
     else
     if (temp != 0) {
-        if (timer_delta32(base) > BRIDGE_TIMEOUT) {
+        if (timer_delta32(base) > BRIDGE_CLR_TOUT) {
             uart_throw(1);
             cnts = uart_rx_size();
             base = timer_get32();

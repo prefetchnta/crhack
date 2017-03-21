@@ -80,6 +80,8 @@ create_file_inA (
     return (create_disk_inA(name));
 }
 
+#if !defined(_CR_NAKED_NO_WSTRING_)
+
 /*
 =======================================
     可选择生成文件读取接口W
@@ -140,6 +142,8 @@ create_file_inW (
     return (create_disk_inW(name));
 }
 
+#endif  /* !_CR_NAKED_NO_WSTRING_ */
+
 /*
 =======================================
     通用的文件加载
@@ -158,9 +162,11 @@ create_file_inX (
             datin = create_file_inA(loader->name.ansi, loader->smem);
             break;
 
+#if !defined(_CR_NAKED_NO_WSTRING_)
         case CR_LDR_WIDE:
             datin = create_file_inW(loader->name.wide, loader->smem);
             break;
+#endif  /* !_CR_NAKED_NO_WSTRING_ */
 
         case CR_LDR_BUFF:
             datin = create_buff_in(loader->buff.data, loader->buff.size,FALSE);

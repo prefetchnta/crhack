@@ -1,6 +1,6 @@
 @echo off
 cd ..\mak
-echo C_ADDONS=--cpu Cortex-M3 -D_BJNETCOMM_SMALL_ROM_ > conf.inc
+echo C_ADDONS=--cpu Cortex-M3 -D_BJNETCOMM_SMALL_ROM_ -D_CR_NAKED_NO_WSTRING_ > conf.inc
 echo A_ADDONS= >> conf.inc
 echo ALL_OBJS=$(ARMCC_NAKED_ARM_OBJS) >> conf.inc
 echo ALL_CPPS=$(ARMCC_NAKED_ARM_CPPS) >> conf.inc
