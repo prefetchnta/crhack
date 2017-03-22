@@ -122,8 +122,8 @@ CR_API void_t   gpio_init (void_t);
 CR_API void_t   nvic_init (void_t);
 
 /* 调试相关的配置 */
+#include <stdio.h>
 #if defined(YTJ_DEBUG)
-    #include <stdio.h>
     #define WDT_FEED
     #define WDT_TOUT(t)
     #define DBG_PRINT   printf

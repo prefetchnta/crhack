@@ -31,8 +31,6 @@ CR_API void_t
 nvic_init (void_t)
 {
     NVIC_InitTypeDef    nvic;
-
-#if defined(SRV2_DEBUG)
     GPIO_InitTypeDef    gpio;
     USART_InitTypeDef   uart;
 
@@ -54,7 +52,7 @@ nvic_init (void_t)
     uart.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
     USART_Init(USART1, &uart);
     USART_Cmd(USART1, ENABLE);
-#endif
+
     /* 初始化 SysTick */
     SysTick_Config(SystemCoreClock / 1000);
 
@@ -155,10 +153,6 @@ wdt_task (void_t)
     }
 }
 
-#if defined(SRV2_DEBUG)
-
-#include <stdio.h>
-
 /*
 =======================================
     串口发送字符串
@@ -175,8 +169,6 @@ fputc (
     USART_SendData(USART1, (byte_t)ch);
     return (ch);
 }
-
-#endif  /* SRV2_DEBUG */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */

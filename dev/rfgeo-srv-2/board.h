@@ -183,8 +183,8 @@ CR_API uint_t   uart0_wait (void_t *data, uint_t step, uint_t tout);
 #define I2C_DELAY_4_7_US    delay32(20);
 
 /* 调试相关的配置 */
+#include <stdio.h>
 #if defined(SRV2_DEBUG)
-    #include <stdio.h>
     #define WDT_FEED
     #define WDT_TOUT(t)
     #define DBG_PRINT   printf
