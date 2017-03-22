@@ -55,9 +55,6 @@ flash_prog (
     /* ---------------- */
     const void_t*   ptr;
 
-    /* 只能按页写 */
-    if (addr % STM32FLASH_PAGE != 0)
-        return (FALSE);
     adr = addr;
     ptr = data;
 
