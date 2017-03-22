@@ -191,7 +191,7 @@ CR_API uint_t   uart0_wait (void_t *data, uint_t step, uint_t tout);
 #else
     #define WDT_FEED    wdg_feed(0)
     #define WDT_TOUT(t) wdg_timeout(0, t)
-    #define DBG_PRINT()
+    #define DBG_PRINT(...)
 #endif
 
 /* LED & 喂狗 */

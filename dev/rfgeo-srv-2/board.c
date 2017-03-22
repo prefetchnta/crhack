@@ -19,6 +19,7 @@
 
 #include "board.h"
 #include "applib.h"
+#include "devlib.h"
 #include "stm32f10x_conf.h"
 
 /*

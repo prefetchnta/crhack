@@ -130,7 +130,7 @@ CR_API void_t   nvic_init (void_t);
 #else
     #define WDT_FEED    wdg_feed(0)
     #define WDT_TOUT(t) wdg_timeout(0, t)
-    #define DBG_PRINT()
+    #define DBG_PRINT(...)
 #endif
 
 #endif  /* !__CR_BOARD_H__ */

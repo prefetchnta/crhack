@@ -33,13 +33,15 @@ boot_jump (
   __CR_IN__ int32u  addr
     )
 {
-    static int32u*      table = (int32u*)addr;
-    static boot_jump_t  jump = (boot_jump_t)table[1];
+    static int32u*      tbl;
+    static boot_jump_t  jmp;
 
     /* 自己保证地址的正确性 */
+    tbl = (int32u*)addr;
+    jmp = (boot_jump_t)tbl[1];
     irqx_disable();
-    __set_MSP(table[0]);
-    jump();
+    __set_MSP(tbl[0]);
+    jmp();
 }
 
 /*
