@@ -804,7 +804,7 @@ simcom_socket_tcp_peek (
     /* 有效性判断 */
     real = (sSIMCOM*)netw;
     if (real->fifo_buffer == NULL ||
-        (sint_t)size < 0 || size > SIMCOM_BUF_SIZE)
+        (sint_t)size < 0 || size >= SIMCOM_BUF_SIZE)
         return (CR_U_ERROR);
 
     /* 直到数据搬完或超时为止 */
@@ -872,11 +872,11 @@ simcom_socket_tcp_recv (
 
     /* 分块接收 */
     real = (sSIMCOM*)netw;
-    blks = size / SIMCOM_BUF_SIZE;
+    blks = size / (SIMCOM_BUF_SIZE / 2);
     for (tots = 0; blks != 0; blks--)
     {
         /* 出错直接返回 */
-        back = simcom_socket_tcp_peek(netw, data, SIMCOM_BUF_SIZE);
+        back = simcom_socket_tcp_peek(netw, data, SIMCOM_BUF_SIZE / 2);
         if ((sint_t)back < 0)
             return (back);
 
@@ -887,13 +887,13 @@ simcom_socket_tcp_recv (
         tots += back;
 
         /* 是否断流了 */
-        if (back != SIMCOM_BUF_SIZE)
+        if (back != SIMCOM_BUF_SIZE / 2)
             return (tots);
         data = (byte_t*)data + back;
     }
 
     /* 接收剩余 */
-    blks = size % SIMCOM_BUF_SIZE;
+    blks = size % (SIMCOM_BUF_SIZE / 2);
     if (blks != 0)
     {
         /* 出错直接返回 */
