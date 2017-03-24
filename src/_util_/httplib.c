@@ -100,17 +100,17 @@ chttp_open (
     rett->urls = str_url_splitA(host, NULL, NULL, NULL, &rett->host,
                                 &rett->port, &rett->path, NULL, NULL);
     if (rett->urls == NULL)
-        goto _failure;
+        goto _failure1;
     if (rett->path == NULL) {
         rett->path = str_dupA("/");
         if (rett->path == NULL)
-            goto _failure;
+            goto _failure2;
     }
     else {
         size = str_sizeA(rett->path);
         temp = str_allocA(size + 1);
         if (temp == NULL)
-            goto _failure;
+            goto _failure2;
         temp[0] = CR_AC('/');
         mem_cpy(temp + 1, rett->path, size);
         rett->path = temp;
@@ -125,10 +125,8 @@ chttp_open (
     rett->wout = 5000;
     rett->rout = 60000;
     rett->head = create_buff_out(128);
-    if (rett->head == NULL) {
-        mem_free(rett->path);
-        goto _failure;
-    }
+    if (rett->head == NULL)
+        goto _failure3;
 
     /* 连接到主机 */
     if (vers == 0) {
@@ -138,10 +136,8 @@ chttp_open (
     else {                  /* HTTP1.1 默认长连接 */
         rett->netw = client_tcp_open(rett->host, (int16u)rett->port,
                                      timeout);
-        if (rett->netw == NULL) {
-            mem_free(rett->path);
-            goto _failure;
-        }
+        if (rett->netw == NULL)
+            goto _failure4;
         rett->keep = TRUE;
         socket_set_timeout(rett->netw, rett->wout, rett->rout);
     }
@@ -159,7 +155,13 @@ chttp_open (
     rett->cb_func = NULL;
     return ((chttp_t)rett);
 
-_failure:
+_failure4:
+    CR_VCALL(rett->head)->release(rett->head);
+_failure3:
+    mem_free(rett->path);
+_failure2:
+    mem_free(rett->urls);
+_failure1:
     mem_free(rett);
     return (NULL);
 }
@@ -484,8 +486,11 @@ chttp_do_head_cmd (
     conn->res_ini = ini_parseU(conn->res_hdr);
     if (conn->res_ini == NULL)
         return (FALSE);
-    if (conn->res_ini->count < 3)
+    if (conn->res_ini->count < 3) {
+        ini_closeU(conn->res_ini);
+        conn->res_ini = NULL;
         return (FALSE);
+    }
     shut = !conn->keep;
     conn->res_ini->count -= 2;
     for (idx = 0; idx < conn->res_ini->count; idx++)
@@ -506,13 +511,18 @@ chttp_do_head_cmd (
 
     /* 解析响应行 */
     line = conn->res_ini->lines[0];
-    if (chr_cmpA(line, "HTTP/1.1 ", 9) == 0)
+    if (chr_cmpA(line, "HTTP/1.1 ", 9) == 0) {
         conn->res_ver = 1;
+    }
     else
-    if (chr_cmpA(line, "HTTP/1.0 ", 9) == 0)
+    if (chr_cmpA(line, "HTTP/1.0 ", 9) == 0) {
         conn->res_ver = 0;
-    else
+    }
+    else {
+        ini_closeU(conn->res_ini);
+        conn->res_ini = NULL;
         return (FALSE);
+    }
     line += 9;
     conn->res_num = str2intA(line, &idx);
     conn->res_str = skip_spaceA(line + idx);
@@ -751,6 +761,8 @@ _failure4:
     mem_free(real->res_dat);
     real->res_dat = NULL;
 _failure3:
+    mem_free(real->res_hdr);
+    real->res_hdr = NULL;
     real->res_len = 0;
 _failure2:
     CR_VCALL(buff)->release(buff);

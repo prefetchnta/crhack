@@ -91,6 +91,7 @@ store_read (
   __CR_IN__ leng_t  size
     )
 {
+    wdt_task();
     if (mx25l16_fread(addr, data, size) != 0)
         return (TRUE);
     return (FALSE);
@@ -111,6 +112,7 @@ store_write (
     ufast_t idx;
 
     for (idx = 0; idx < 3; idx++) {
+        wdt_task();
         if (norflash_write(addr, data, size))
             return (TRUE);
     }
@@ -173,7 +175,7 @@ USART2_IRQHandler (void_t)
 /* 等待中的空闲 */
 #define BRIDGE_YIELD    wdt_task();
 
-#include "bridge.inl"
+#include "bridge.bsp"
 
 /* 是否通过桥接板 */
 bool_t  g_is_bridge = FALSE;

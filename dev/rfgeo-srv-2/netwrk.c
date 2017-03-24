@@ -47,7 +47,7 @@ extern bool_t   g_is_bridge;
 /* 喂狗与不要发得太快 */
 #define SIMCOM_YIELD    { delayms(100); wdt_task(); }
 
-#include "atcmd/simcom.c"
+#include "atcmd/simcom.bsp"
 
 /*****************************************************************************/
 /*                                  NETWRK                                   */

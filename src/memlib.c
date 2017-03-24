@@ -350,6 +350,7 @@ mem_realloc (
     buf = (uchar*)mem_malloc(new_size);
     if (buf != NULL)
         mem_cpy(buf, ptr, CR_MIN(new_size, hdr->alloc_size));
+    mem_free(ptr);
     return ((void_t*)buf);
 }
 
