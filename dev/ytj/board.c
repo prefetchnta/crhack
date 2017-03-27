@@ -18,6 +18,8 @@
 /*****************************************************************************/
 
 #include "board.h"
+#include "applib.h"
+#include "devlib.h"
 #include "stm32f10x_conf.h"
 
 /*
@@ -86,6 +88,28 @@ nvic_init (void_t)
     nvic.NVIC_IRQChannelSubPriority = 1;
     nvic.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&nvic);
+}
+
+/*
+=======================================
+    看门狗的任务
+=======================================
+*/
+CR_API void_t
+wdt_task (void_t)
+{
+    static int32u   led_base = 0;
+    static byte_t   led_flag = FALSE;
+
+    if (timer_delta32(led_base) >= 333) {
+        led_base = timer_get32();
+        if (led_flag)
+            led_xon();
+        else
+            led_off();
+        led_flag = !led_flag;
+        WDT_FEED;
+    }
 }
 
 /*

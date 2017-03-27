@@ -58,9 +58,6 @@ CR_API retc_t   audio_is_over (void_t);
 /*                                  SCREEN                                   */
 /*****************************************************************************/
 
-/* LED 灯控制 */
-#define led_xon()   GPIOC->BRR = GPIO_Pin_13
-#define led_off()   GPIOC->BSRR = GPIO_Pin_13
 CR_API void_t   screen_init (void_t);
 CR_API byte_t*  screen_flip (void_t);
 CR_API byte_t*  screen_main (void_t);

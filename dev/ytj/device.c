@@ -87,6 +87,7 @@ store_read (
   __CR_IN__ leng_t  size
     )
 {
+    wdt_task();
     mx25l16_wrdi();
     if (mx25l16_fread(addr, data, size) != 0)
         return (TRUE);
@@ -109,6 +110,7 @@ store_write (
 
     mx25l16_wren();
     for (idx = 0; idx < 3; idx++) {
+        wdt_task();
         if (norflash_write(addr, data, size)) {
             mx25l16_wrdi();
             return (TRUE);

@@ -113,6 +113,8 @@ CR_API void_t   hs08_init (void_t);
 /*                              接口 GPIO 配置                               */
 /*****************************************************************************/
 
+#define led_xon()   GPIOC->BRR = GPIO_Pin_13
+#define led_off()   GPIOC->BSRR = GPIO_Pin_13
 CR_API void_t   gpio_init (void_t);
 
 /*****************************************************************************/
@@ -132,6 +134,9 @@ CR_API void_t   nvic_init (void_t);
     #define WDT_TOUT(t) wdg_timeout(0, t)
     #define DBG_PRINT(...)
 #endif
+
+/* LED & 喂狗 */
+CR_API void_t   wdt_task (void_t);
 
 #endif  /* !__CR_BOARD_H__ */
 
