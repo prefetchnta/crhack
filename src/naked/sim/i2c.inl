@@ -94,6 +94,7 @@ i2c_enter (void_t)
     I2C_SDA_CLRB
     I2C_DELAY_4___US
     I2C_SCL_CLRB
+    I2C_DELAY_4_7_US
 }
 #endif  /* i2c_enter */
 
@@ -115,6 +116,7 @@ i2c_leave (void_t)
     I2C_SDA_SETB
     I2C_DELAY_4_7_US
     I2C_SCL_CLRB
+    I2C_DELAY_4___US
 }
 #endif  /* i2c_leave */
 
@@ -135,6 +137,7 @@ i2c_send_ack (void_t)
     I2C_DELAY_4___US
     I2C_SCL_CLRB
     I2C_SDA_SETB
+    I2C_DELAY_4_7_US
 }
 #endif  /* i2c_send_ack */
 
@@ -155,6 +158,7 @@ i2c_send_nack (void_t)
     I2C_DELAY_4___US
     I2C_SCL_CLRB
     I2C_SDA_CLRB
+    I2C_DELAY_4_7_US
 }
 #endif  /* i2c_send_nack */
 
@@ -179,7 +183,9 @@ i2c_test_ack (void_t)
         ack = FALSE;
     else
         ack = TRUE;
+    I2C_DELAY_4_7_US
     I2C_SCL_CLRB
+    I2C_DELAY_4___US
     return (ack);
 }
 #endif  /* i2c_test_ack */
@@ -208,8 +214,10 @@ i2c_recv_byte (void_t)
         val <<= 1;
         if (I2C_SDA_GETB)
             val |= 1;
+        I2C_DELAY_4___US
     }
     I2C_SCL_CLRB
+    I2C_DELAY_4_7_US
     return (val);
 }
 #endif  /* i2c_recv_byte */
@@ -240,6 +248,7 @@ i2c_send_byte (
         I2C_SCL_SETB
         I2C_DELAY_4___US
         I2C_SCL_CLRB
+        I2C_DELAY_4_7_US
     }
     return (i2c_test_ack());
 }

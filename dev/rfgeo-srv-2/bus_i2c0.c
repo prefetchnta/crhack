@@ -33,7 +33,7 @@ i2c0_gpio_init (void_t)
 
     /* I2C 端口配置 */
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
-    gpio.GPIO_Speed = GPIO_Speed_2MHz;
+    gpio.GPIO_Speed = GPIO_Speed_10MHz;
     gpio.GPIO_Mode = GPIO_Mode_Out_OD;
     gpio.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11;
     GPIO_Init(GPIOB, &gpio);

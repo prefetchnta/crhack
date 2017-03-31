@@ -108,9 +108,6 @@ CR_API void_t   spi2_send_send (const void_t *send1_data, leng_t send1_size,
     /***** 管脚操作定义 *****/
     #define _I2C_256B_
     #define _I2C_INIT_          i2c0_gpio_init();
-    #define I2C_SDA_DIRO        GPIOB->CRH |=  (0x06 << 12);
-    #define I2C_SDA_DIRI        GPIOB->CRH &= ~(0x03 << 12);
-    #define I2C_SCL_DIRO        GPIOB->CRH |=  (0x06 <<  8);
     #define I2C_SDA_GETB        GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11)
     #define I2C_SDA_SETB        GPIOB->BSRR = GPIO_Pin_11;
     #define I2C_SDA_CLRB        GPIOB->BRR = GPIO_Pin_11;
@@ -178,9 +175,9 @@ CR_API uint_t   uart0_read (void_t *data, uint_t size);
 CR_API uint_t   uart0_wait (void_t *data, uint_t step, uint_t tout);
 
 /* 驱动宏定义 */
-#define I2C_DELAY_GET_EX    delay32(20);
-#define I2C_DELAY_4___US    delay32(20);
-#define I2C_DELAY_4_7_US    delay32(20);
+#define I2C_DELAY_GET_EX    delay32(30);
+#define I2C_DELAY_4___US    delay32(30);
+#define I2C_DELAY_4_7_US    delay32(30);
 
 /* 调试相关的配置 */
 #include <stdio.h>

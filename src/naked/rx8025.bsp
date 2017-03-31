@@ -103,9 +103,9 @@ rx8025_init_time (void_t)
     /* ----------- */
     sDATETIME   temp;
 
-    if (i2c_read_device(RX8025_DEV, 15, &state, 1) != 1)
+    if (i2c_read_device(RX8025_DEV, 0xF0, &state, 1) != 1)
         return (FALSE);
-    if (i2c_write_device(RX8025_DEV, 14, ctl, 2) != 2)
+    if (i2c_write_device(RX8025_DEV, 0xE0, ctl, 2) != 2)
         return (FALSE);
     if (state & 0x10) {
         temp.year = 2010;
