@@ -1012,6 +1012,34 @@ simcom_socket_tcp_set_alive (
 
 /*
 =======================================
+    SIM7100 虚表建立
+=======================================
+*/
+CR_API void_t
+sim7100_setup (
+  __CR_OT__ iSOCKET*    vtbl
+    )
+{
+    mem_zero(vtbl, sizeof(iSOCKET));
+    vtbl->socket_close = simcom_socket_close;
+    vtbl->socket_input_size = simcom_socket_input_size;
+    vtbl->socket_input_size2 = simcom_socket_input_size2;
+    vtbl->client_tcp_open = simcom_client_tcp_open;
+    vtbl->client_tcp_open2 = simcom_client_tcp_open2;
+    vtbl->client_udp_open = simcom_client_udp_open;
+    vtbl->client_udp_open2 = simcom_client_udp_open2;
+    vtbl->socket_tcp_send = simcom_socket_tcp_send;
+    vtbl->socket_udp_send = simcom_socket_udp_send;
+    vtbl->socket_tcp_recv = simcom_socket_tcp_recv;
+    vtbl->socket_tcp_peek = simcom_socket_tcp_peek;
+    vtbl->socket_udp_recv = simcom_socket_udp_recv;
+    vtbl->socket_udp_peek = simcom_socket_udp_peek;
+    vtbl->socket_set_timeout = simcom_socket_set_timeout;
+    vtbl->socket_tcp_set_alive = simcom_socket_tcp_set_alive;
+}
+
+/*
+=======================================
     SIM7100 上线拨号
 =======================================
 */
@@ -1104,6 +1132,19 @@ sim7100_online (
 /*****************************************************************************/
 /*                                 SIM6320                                   */
 /*****************************************************************************/
+
+/*
+=======================================
+    SIM6320 虚表建立
+=======================================
+*/
+CR_API void_t
+sim6320_setup (
+  __CR_OT__ iSOCKET*    vtbl
+    )
+{
+    sim7100_setup(vtbl);
+}
 
 /*
 =======================================
