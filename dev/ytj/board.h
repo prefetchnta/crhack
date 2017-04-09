@@ -62,6 +62,7 @@ CR_API void_t   aud0_zero (void_t);
 
 /* 连接 RTL8201CP/DP83848I */
 CR_API void_t   eth0_init (void_t);
+CR_API retc_t   eth0_linked (void_t);
 
 /*****************************************************************************/
 /*                              接口 HS08 配置                               */

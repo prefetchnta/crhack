@@ -61,6 +61,16 @@ CR_API retc_t   audio_is_over (void_t);
 CR_API void_t   screen_init (void_t);
 CR_API byte_t*  screen_flip (void_t);
 CR_API byte_t*  screen_main (void_t);
+CR_API byte_t*  screen_back (void_t);
+
+/* 像素颜色 */
+#define DOT_BL  0x00    /* 黑色 */
+#define DOT_GG  0x01    /* 绿色 */
+#define DOT_RR  0x02    /* 红色 */
+#define DOT_YY  0x03    /* 黄色 */
+
+CR_API byte_t   pixel_get02z (sint_t x, sint_t y);
+CR_API void_t   pixel_set02z (sint_t x, sint_t y, byte_t c);
 
 /* 屏幕缓冲区的参数 */
 #define SCREEN_BPL      (16)
@@ -73,7 +83,7 @@ CR_API byte_t*  screen_main (void_t);
 /*****************************************************************************/
 
 /* IP(4B) + MASK(4B) + GATEWAY(4B) */
-CR_API void_t   netwrk_init (const int32u *cfg);
+CR_API void_t   netwrk_init (const void_t *cfg);
 CR_API void_t   netwrk_func (void_t);
 
 /*****************************************************************************/

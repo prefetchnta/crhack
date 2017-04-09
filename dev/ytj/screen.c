@@ -22,8 +22,9 @@
 #include "memlib.h"
 #include "stm32f10x_conf.h"
 
-/* 当前的前台缓冲区 */
+/* 前后台缓冲区 */
 static byte_t*  s_front;
+static byte_t*  s_backs;
 
 /* 三色 64x64 显示区 */
 static byte_t   s_screen1[SCREEN_SIZE];
@@ -43,6 +44,7 @@ screen_init (void_t)
     mem_zero(s_screen1, sizeof(s_screen1));
     mem_zero(s_screen2, sizeof(s_screen2));
     s_front = s_screen1;
+    s_backs = s_screen2;
 
     /* 初始化刷屏定时器 (0.5ms) */
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
@@ -67,10 +69,12 @@ screen_flip (void_t)
 {
     if (s_front == s_screen1) {
         s_front = s_screen2;
+        s_backs = s_screen1;
         mem_zero(s_screen1, sizeof(s_screen1));
         return (s_screen1);
     }
     s_front = s_screen1;
+    s_backs = s_screen2;
     mem_zero(s_screen2, sizeof(s_screen2));
     return (s_screen2);
 }
@@ -87,6 +91,61 @@ screen_main (void_t)
 }
 
 /*
+=======================================
+    返回后台缓冲区
+=======================================
+*/
+CR_API byte_t*
+screen_back (void_t)
+{
+    return (s_backs);
+}
+
+/*
+=======================================
+    读点
+=======================================
+*/
+CR_API byte_t
+pixel_get02z (
+  __CR_IN__ sint_t  x,
+  __CR_IN__ sint_t  y
+    )
+{
+    leng_t  line, offs;
+
+    if (x < 0 || x >= SCREEN_WIDTH ||
+        y < 0 || y >= SCREEN_HEIGHT)
+        return (DOT_BL);
+    line = (leng_t)(y * SCREEN_BPL + (x / 4));
+    offs = (leng_t)(6 - (x % 4) * 2);
+    return ((s_backs[line] >> offs) & 3);
+}
+
+/*
+=======================================
+    写点
+=======================================
+*/
+CR_API void_t
+pixel_set02z (
+  __CR_IN__ sint_t  x,
+  __CR_IN__ sint_t  y,
+  __CR_IN__ byte_t  c
+    )
+{
+    leng_t  line, offs;
+
+    if (x < 0 || x >= SCREEN_WIDTH ||
+        y < 0 || y >= SCREEN_HEIGHT)
+        return;
+    line = (leng_t)(y * SCREEN_BPL + (x / 4));
+    offs = (leng_t)(6 - (x % 4) * 2);
+    s_backs[line] &= ~(3 << offs);
+    s_backs[line] |= ((c & 3) << offs);
+}
+
+/*
 ---------------------------------------
     刷新显示
 ---------------------------------------
@@ -94,9 +153,9 @@ screen_main (void_t)
 static void_t
 screen_refresh (void_t)
 {
-    byte_t          tmp[4];
     uint_t          ii, jj;
     uint_t          line_ee;
+    byte_t          tmp[4] = {0};
     static uint_t   line_ss = 0;
 
     line_ee = line_ss + SCREEN_BPL;

@@ -63,6 +63,9 @@
     #define is_fullduplex(reg)  (TRUE)
 #endif
 
+/* 界面的钩子 */
+CR_API void_t   gui_no_network (void_t);
+
 /*
 =======================================
     PHY 初始化
@@ -89,6 +92,8 @@ phy_init (
         for (;;) {
             if (ETH_ReadPHYRegister(address, PHY_BSR) & PHY_LINKED_STATUS)
                 break;
+            wdt_task();
+            gui_no_network();
         }
 
         /* 开启自适应模式 */
@@ -99,6 +104,7 @@ phy_init (
         for (;;) {
             if (ETH_ReadPHYRegister(address, PHY_BSR) & PHY_AUTONEGO_COMPLETE)
                 break;
+            wdt_task();
         }
 
         /* 读取网络的模式 */
@@ -204,6 +210,19 @@ eth0_init (void_t)
     seth.ETH_DMAArbitration = ETH_DMAArbitration_RoundRobin_RxTx_2_1;
     ETH_Init(&seth, PHY_ADDRESS);
     ETH_DMAITConfig(ETH_DMA_IT_NIS | ETH_DMA_IT_R, ENABLE);
+}
+
+/*
+=======================================
+    ETH0 网线是否插上
+=======================================
+*/
+CR_API retc_t
+eth0_linked (void_t)
+{
+    if (ETH_ReadPHYRegister(PHY_ADDRESS, PHY_BSR) & PHY_LINKED_STATUS)
+        return (TRUE);
+    return (FALSE);
 }
 
 /*****************************************************************************/

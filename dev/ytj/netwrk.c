@@ -35,6 +35,7 @@
 #include <lwip/dhcp.h>
 #include <lwip/udp.h>
 #include <lwip/tcp.h>
+#include <lwip/igmp.h>
 #include <lwip/priv/tcp_priv.h>
 #include <netif/etharp.h>
 #include "ethernetif.h"
@@ -47,6 +48,7 @@ static ip4_addr_t   s_gw;
 /* 任务用的计数器 */
 static int32u   s_base_tcp = 0;
 static int32u   s_base_arp = 0;
+static int32u   s_base_igmp = 0;
 static int32u   s_base_dhcp = 0;
 static int32u   s_base_dhcp_coarse = 0;
 
@@ -60,7 +62,7 @@ struct netif    g_netif;
 */
 CR_API void_t
 netwrk_init (
-  __CR_IN__ const int32u*   cfg
+  __CR_IN__ const void_t*   cfg
     )
 {
     uint_t  idx;
@@ -69,6 +71,7 @@ netwrk_init (
     byte_t  mac[6], *ptr;
 
     /* 初始化 */
+    eth0_init();
     lwip_init();
 
     /* 参数为空表示 DHCP */
@@ -78,9 +81,10 @@ netwrk_init (
         s_gw.addr = 0;
     }
     else {
-        s_ip.addr = cfg[0];
-        s_msk.addr = cfg[1];
-        s_gw.addr = cfg[2];
+        mem_cpy(cpuid, cfg, sizeof(cpuid));
+        s_ip.addr = cpuid[0];
+        s_msk.addr = cpuid[1];
+        s_gw.addr = cpuid[2];
     }
 
     /* MAC 地址设置 */
@@ -110,6 +114,7 @@ netwrk_init (
     /* 计数值置值 */
     s_base_tcp = timer_get32();
     s_base_arp = s_base_tcp;
+    s_base_igmp = s_base_tcp;
     s_base_dhcp = s_base_tcp;
     s_base_dhcp_coarse = s_base_tcp;
 }
@@ -132,6 +137,12 @@ netwrk_func (void_t)
     if (timer_delta32(s_base_arp) >= ARP_TMR_INTERVAL) {
         s_base_arp = timer_get32();
         etharp_tmr();
+    }
+
+    /* IGMP */
+    if (timer_delta32(s_base_igmp) >= IGMP_TMR_INTERVAL) {
+        s_base_igmp = timer_get32();
+        igmp_tmr();
     }
 
     /* DHCP */
