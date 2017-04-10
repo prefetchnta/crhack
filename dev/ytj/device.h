@@ -65,8 +65,8 @@ CR_API byte_t*  screen_back (void_t);
 
 /* 像素颜色 */
 #define DOT_BL  0x00    /* 黑色 */
-#define DOT_GG  0x01    /* 绿色 */
-#define DOT_RR  0x02    /* 红色 */
+#define DOT_RR  0x01    /* 红色 */
+#define DOT_GG  0x02    /* 绿色 */
 #define DOT_YY  0x03    /* 黄色 */
 
 CR_API byte_t   pixel_get02z (sint_t x, sint_t y);

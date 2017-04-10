@@ -169,22 +169,22 @@ screen_refresh (void_t)
         tmp[2] = s_front[0x200 + ii];
         tmp[3] = s_front[0x300 + ii];
         for (jj = 4; jj != 0; jj--) {
-            if (tmp[0] & 0x80) HS08_R1A_SETB
-            else               HS08_R1A_CLRB
-            if (tmp[0] & 0x40) HS08_G1A_SETB
+            if (tmp[0] & 0x80) HS08_G1A_SETB
             else               HS08_G1A_CLRB
-            if (tmp[1] & 0x80) HS08_R2A_SETB
-            else               HS08_R2A_CLRB
-            if (tmp[1] & 0x40) HS08_G2A_SETB
+            if (tmp[0] & 0x40) HS08_R1A_SETB
+            else               HS08_R1A_CLRB
+            if (tmp[1] & 0x80) HS08_G2A_SETB
             else               HS08_G2A_CLRB
-            if (tmp[2] & 0x80) HS08_R1B_SETB
-            else               HS08_R1B_CLRB
-            if (tmp[2] & 0x40) HS08_G1B_SETB
+            if (tmp[1] & 0x40) HS08_R2A_SETB
+            else               HS08_R2A_CLRB
+            if (tmp[2] & 0x80) HS08_G1B_SETB
             else               HS08_G1B_CLRB
-            if (tmp[3] & 0x80) HS08_R2B_SETB
-            else               HS08_R2B_CLRB
-            if (tmp[3] & 0x40) HS08_G2B_SETB
+            if (tmp[2] & 0x40) HS08_R1B_SETB
+            else               HS08_R1B_CLRB
+            if (tmp[3] & 0x80) HS08_G2B_SETB
             else               HS08_G2B_CLRB
+            if (tmp[3] & 0x40) HS08_R2B_SETB
+            else               HS08_R2B_CLRB
             HS08_SK_SETB
             tmp[0] <<= 2;
             tmp[1] <<= 2;
