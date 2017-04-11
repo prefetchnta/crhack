@@ -70,12 +70,10 @@ screen_flip (void_t)
     if (s_front == s_screen1) {
         s_front = s_screen2;
         s_backs = s_screen1;
-        mem_zero(s_screen1, sizeof(s_screen1));
         return (s_screen1);
     }
     s_front = s_screen1;
     s_backs = s_screen2;
-    mem_zero(s_screen2, sizeof(s_screen2));
     return (s_screen2);
 }
 
