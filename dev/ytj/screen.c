@@ -61,6 +61,17 @@ screen_init (void_t)
 
 /*
 =======================================
+    显示后台缓冲
+=======================================
+*/
+CR_API void_t
+screen_copy (void_t)
+{
+    mem_cpy(s_front, s_backs, SCREEN_SIZE);
+}
+
+/*
+=======================================
     前后台切换
 =======================================
 */
@@ -141,6 +152,108 @@ pixel_set02z (
     offs = (leng_t)(6 - (x % 4) * 2);
     s_backs[line] &= ~(3 << offs);
     s_backs[line] |= ((c & 3) << offs);
+}
+
+/*
+=======================================
+    像素填充
+=======================================
+*/
+CR_API void_t
+line_fill (
+  __CR_IN__ uint_t  line,
+  __CR_IN__ byte_t  c
+    )
+{
+    /* 颜色扩展到1个字节 */
+    c &= 3;
+    c |= (c << 2);
+    c |= (c << 4);
+
+    /* 填充整个屏幕 */
+    if (line >= 4) {
+        mem_set(s_backs, c, SCREEN_SIZE);
+        return;
+    }
+
+    /* 只填充一行 */
+    line *= (SCREEN_BPL * 16);
+    mem_set(&s_backs[line], c, SCREEN_BPL * 16);
+}
+
+/*
+=======================================
+    像素滚动
+=======================================
+*/
+CR_API void_t
+line_scroll (
+  __CR_IN__ uint_t  line,
+  __CR_IN__ uint_t  type
+    )
+{
+    sint_t  xx, yy;
+    sint_t  height;
+
+    /* 决定滚动的范围 */
+    if (line >= 4) {
+        line = 0;
+        height = SCREEN_HEIGHT;
+    }
+    else {
+        line *= (SCREEN_BPL * 16);
+        height = 16;
+    }
+
+    /* 根据滚动类型滚动 */
+    switch (type)
+    {
+        default:
+            break;
+
+        case SCRLL_LEFT:    /* 左滚 */
+            for (yy = 0; yy < height; yy++) {
+                s_backs[line] <<= 2;
+                for (xx = 1; xx < SCREEN_BPL; xx++) {
+                    s_backs[line + xx - 1] |= (s_backs[line + xx] >> 6);
+                    s_backs[line + xx] <<= 2;
+                }
+                line += SCREEN_BPL;
+            }
+            break;
+
+        case SCRLL_RIGHT:   /* 右滚 */
+            for (yy = 0; yy < height; yy++) {
+                s_backs[line + SCREEN_BPL - 1] >>= 2;
+                for (xx = SCREEN_BPL - 2; xx >= 0; xx--) {
+                    s_backs[line + xx + 1] |= (s_backs[line + xx] << 6);
+                    s_backs[line + xx] >>= 2;
+                }
+                line += SCREEN_BPL;
+            }
+            break;
+
+        case SCRLL_UP:      /* 上滚 */
+            for (yy = 0; yy < height - 1; yy++) {
+                mem_cpy(&s_backs[line],
+                        &s_backs[line + SCREEN_BPL],
+                        SCREEN_BPL);
+                line += SCREEN_BPL;
+            }
+            mem_zero(&s_backs[line], SCREEN_BPL);
+            break;
+
+        case SCRLL_DOWN:    /* 下滚 */
+            line += (height - 1) * SCREEN_BPL;
+            for (yy = 0; yy < height - 1; yy++) {
+                mem_cpy(&s_backs[line],
+                        &s_backs[line - SCREEN_BPL],
+                        SCREEN_BPL);
+                line -= SCREEN_BPL;
+            }
+            mem_zero(&s_backs[line], SCREEN_BPL);
+            break;
+    }
 }
 
 /*

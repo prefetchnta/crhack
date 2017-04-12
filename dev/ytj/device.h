@@ -58,7 +58,14 @@ CR_API retc_t   audio_is_over (void_t);
 /*                                  SCREEN                                   */
 /*****************************************************************************/
 
+/* 屏幕缓冲区的参数 */
+#define SCREEN_BPL      (16)
+#define SCREEN_WIDTH    (64)
+#define SCREEN_HEIGHT   (64)
+#define SCREEN_SIZE     (SCREEN_BPL * SCREEN_HEIGHT)
+
 CR_API void_t   screen_init (void_t);
+CR_API void_t   screen_copy (void_t);
 CR_API byte_t*  screen_flip (void_t);
 CR_API byte_t*  screen_main (void_t);
 CR_API byte_t*  screen_back (void_t);
@@ -72,11 +79,15 @@ CR_API byte_t*  screen_back (void_t);
 CR_API byte_t   pixel_get02z (sint_t x, sint_t y);
 CR_API void_t   pixel_set02z (sint_t x, sint_t y, byte_t c);
 
-/* 屏幕缓冲区的参数 */
-#define SCREEN_BPL      (16)
-#define SCREEN_WIDTH    (64)
-#define SCREEN_HEIGHT   (64)
-#define SCREEN_SIZE     (SCREEN_BPL * SCREEN_HEIGHT)
+/* 滚屏类型 */
+#define LINE_FULL   0xFF    /* 全屏 */
+#define SCRLL_LEFT  0x00    /* 左滚 */
+#define SCRLL_RIGHT 0x01    /* 右滚 */
+#define SCRLL_UP    0x02    /* 上滚 */
+#define SCRLL_DOWN  0x03    /* 下滚 */
+
+CR_API void_t   line_fill (uint_t line, byte_t c);
+CR_API void_t   line_scroll (uint_t line, uint_t type);
 
 /*****************************************************************************/
 /*                                 NETWORK                                   */

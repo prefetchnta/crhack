@@ -63,9 +63,6 @@
     #define is_fullduplex(reg)  (TRUE)
 #endif
 
-/* 界面的钩子 */
-CR_API void_t   gui_no_network (void_t);
-
 /*
 =======================================
     PHY 初始化
@@ -93,7 +90,6 @@ phy_init (
             if (ETH_ReadPHYRegister(address, PHY_BSR) & PHY_LINKED_STATUS)
                 break;
             wdt_task();
-            gui_no_network();
         }
 
         /* 开启自适应模式 */
