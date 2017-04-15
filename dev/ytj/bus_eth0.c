@@ -187,7 +187,7 @@ eth0_init (void_t)
     seth.ETH_LoopbackMode = ETH_LoopbackMode_Disable;
     seth.ETH_RetryTransmission = ETH_RetryTransmission_Disable;
     seth.ETH_AutomaticPadCRCStrip = ETH_AutomaticPadCRCStrip_Disable;
-    seth.ETH_ReceiveAll = ETH_ReceiveAll_Disable;
+    seth.ETH_ReceiveAll = ETH_ReceiveAll_Enable;
     seth.ETH_BroadcastFramesReception = ETH_BroadcastFramesReception_Enable;
     seth.ETH_PromiscuousMode = ETH_PromiscuousMode_Disable;
     seth.ETH_MulticastFramesFilter = ETH_MulticastFramesFilter_Perfect;
