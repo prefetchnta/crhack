@@ -97,23 +97,6 @@ simcom_socket_free (void_t)
 
 /*
 ---------------------------------------
-    查找空闲的接连
----------------------------------------
-*/
-static sint_t
-simcom_socket_find (void_t)
-{
-    ufast_t idx;
-
-    for (idx = 0; idx < cntsof(s_simcom); idx++) {
-        if (s_simcom[idx].fifo_buffer == NULL)
-            return (idx);
-    }
-    return (-1);
-}
-
-/*
----------------------------------------
     环形队列长度
 ---------------------------------------
 */
@@ -156,6 +139,28 @@ simcom_is_close (
     if (idx < 18 && bak[idx + 1] != CR_AC(','))
         return (FALSE);
     return ((bak[idx] == 0x30) ? TRUE : FALSE);
+}
+
+/*
+---------------------------------------
+    查找空闲的接连
+---------------------------------------
+*/
+static sint_t
+simcom_socket_find (void_t)
+{
+    ufast_t idx;
+    sSIMCOM netw;
+
+    mem_zero(&netw, sizeof(netw));
+    for (idx = 0; idx < cntsof(s_simcom); idx++) {
+        if (s_simcom[idx].fifo_buffer == NULL) {
+            netw.linknum = idx;
+            if (simcom_is_close(&netw))
+                return (idx);
+        }
+    }
+    return (-1);
 }
 
 /*****************************************************************************/

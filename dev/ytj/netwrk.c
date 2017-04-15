@@ -50,10 +50,18 @@ static int32u   s_base_tcp = 0;
 static int32u   s_base_arp = 0;
 static int32u   s_base_igmp = 0;
 static int32u   s_base_dhcp = 0;
+static int32u   s_base_dhcp_do = 0;
 static int32u   s_base_dhcp_coarse = 0;
 
 /* 网卡上下文 */
 struct netif    g_netif;
+
+/* DHCP 启用标志 */
+static retc_t   s_is_dhcp;
+
+/* DHCP 相关参数 */
+#define DHCP_MAX_TRIES      8
+#define DHCP_TIMER_MSECS    250
 
 /*
 =======================================
@@ -79,12 +87,14 @@ netwrk_init (
         s_ip.addr = 0;
         s_msk.addr = 0;
         s_gw.addr = 0;
+        s_is_dhcp = TRUE;
     }
     else {
         mem_cpy(cpuid, cfg, sizeof(cpuid));
         s_ip.addr = cpuid[0];
         s_msk.addr = cpuid[1];
         s_gw.addr = cpuid[2];
+        s_is_dhcp = FALSE;
     }
 
     /* MAC 地址设置 */
@@ -107,8 +117,6 @@ netwrk_init (
     netif_add(&g_netif, &s_ip, &s_msk, &s_gw, NULL,
         &ethernetif_init, &ethernet_input);
     netif_set_default(&g_netif);
-    if (cfg == NULL)
-        dhcp_start(&g_netif);
     netif_set_up(&g_netif);
 
     /* 计数值置值 */
@@ -116,6 +124,7 @@ netwrk_init (
     s_base_arp = s_base_tcp;
     s_base_igmp = s_base_tcp;
     s_base_dhcp = s_base_tcp;
+    s_base_dhcp_do = s_base_tcp;
     s_base_dhcp_coarse = s_base_tcp;
 }
 
@@ -146,7 +155,7 @@ netwrk_func (void_t)
     }
 
     /* DHCP */
-    if (s_ip.addr != 0)
+    if (!s_is_dhcp || s_ip.addr != 0)
         return;
     if (timer_delta32(s_base_dhcp) >= DHCP_FINE_TIMER_MSECS) {
         s_base_dhcp = timer_get32();
@@ -156,6 +165,78 @@ netwrk_func (void_t)
         s_base_dhcp_coarse = timer_get32();
         dhcp_coarse_tmr();
     }
+}
+
+/*
+=======================================
+    判断网络是否上线
+=======================================
+*/
+CR_API bool_t
+netwrk_online (
+  __CR_OT__ byte_t* ip,
+  __CR_OT__ uint_t* type
+    )
+{
+    static bool_t   linked = FALSE;
+
+    *type = DHCP_STT_NONE;
+
+    /* 断线后要清 IP 重新获取 */
+    if (!eth0_linked()) {
+        linked = FALSE;
+        return (FALSE);
+    }
+    if (!linked) {
+        linked = TRUE;
+        if (s_is_dhcp) {
+            s_ip.addr = 0;
+            s_msk.addr = 0;
+            s_gw.addr = 0;
+            netif_set_addr(&g_netif, &s_ip, &s_msk, &s_gw);
+            netif_set_up(&g_netif);
+            dhcp_start(&g_netif);
+        }
+        else {
+            *type = DHCP_STT_NSTATIC;
+        }
+    }
+
+    /* 处理 DHCP 过程 */
+    if (s_is_dhcp) {
+        if (timer_delta32(s_base_dhcp_do) >= DHCP_TIMER_MSECS) {
+            s_base_dhcp_do = timer_get32();
+            if (s_ip.addr != g_netif.ip_addr.addr)
+            {
+                /* 获取到了新的 IP 地址 */
+                s_ip.addr = g_netif.ip_addr.addr;
+                s_msk.addr = g_netif.netmask.addr;
+                s_gw.addr = g_netif.gw.addr;
+                *type = DHCP_STT_ALLDONE;
+            }
+            else
+            if (s_ip.addr == 0)
+            {
+                /* 重试几次不成功后转默认的静态 IP 地址 */
+                if (netif_dhcp_data(&g_netif)->tries > DHCP_MAX_TRIES) {
+                    dhcp_stop(&g_netif);
+                    IP4_ADDR(&s_ip, 192, 168, 10, 111);
+                    IP4_ADDR(&s_msk, 255, 255, 255, 0);
+                    IP4_ADDR(&s_gw, 192, 168, 10, 254);
+                    netif_set_addr(&g_netif, &s_ip, &s_msk, &s_gw);
+                    s_is_dhcp = FALSE;
+                    *type = DHCP_STT_NSTATIC;
+                }
+                else {
+                    *type = DHCP_STT_RUNNING;
+                }
+            }
+        }
+    }
+
+    /* 返回当前 IP 地址 */
+    mem_cpy(ip, &s_ip.addr, sizeof(int32u));
+    return (TRUE);
 }
 
 /*

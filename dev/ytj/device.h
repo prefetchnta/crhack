@@ -93,9 +93,16 @@ CR_API void_t   line_scroll (uint_t line, uint_t type);
 /*                                 NETWORK                                   */
 /*****************************************************************************/
 
+/* DHCP 状态 */
+#define DHCP_STT_NONE       0   /* 状态无变 */
+#define DHCP_STT_RUNNING    1   /* DHCP 中 */
+#define DHCP_STT_ALLDONE    2   /* DHCP 完成 */
+#define DHCP_STT_NSTATIC    3   /* 静态地址 */
+
 /* IP(4B) + MASK(4B) + GATEWAY(4B) */
 CR_API void_t   netwrk_init (const void_t *cfg);
 CR_API void_t   netwrk_func (void_t);
+CR_API bool_t   netwrk_online (byte_t *ip, uint_t *type);
 
 /*****************************************************************************/
 /*                                储存器读写                                 */
