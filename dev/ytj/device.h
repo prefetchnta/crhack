@@ -65,10 +65,10 @@ CR_API retc_t   audio_is_over (void_t);
 #define SCREEN_SIZE     (SCREEN_BPL * SCREEN_HEIGHT)
 
 CR_API void_t   screen_init (void_t);
-CR_API void_t   screen_copy (void_t);
 CR_API byte_t*  screen_flip (void_t);
 CR_API byte_t*  screen_main (void_t);
 CR_API byte_t*  screen_back (void_t);
+CR_API void_t   screen_copy (uint_t line);
 
 /* 像素颜色 */
 #define DOT_BL  0x00    /* 黑色 */

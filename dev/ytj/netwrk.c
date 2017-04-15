@@ -180,7 +180,11 @@ netwrk_online (
 {
     static bool_t   linked = FALSE;
 
-    *type = DHCP_STT_NONE;
+    /* 没有 IP 地址表示在 DHCP 中 */
+    if (s_ip.addr == 0)
+        *type = DHCP_STT_RUNNING;
+    else
+        *type = DHCP_STT_NONE;
 
     /* 断线后要清 IP 重新获取 */
     if (!eth0_linked()) {
@@ -226,9 +230,6 @@ netwrk_online (
                     netif_set_addr(&g_netif, &s_ip, &s_msk, &s_gw);
                     s_is_dhcp = FALSE;
                     *type = DHCP_STT_NSTATIC;
-                }
-                else {
-                    *type = DHCP_STT_RUNNING;
                 }
             }
         }

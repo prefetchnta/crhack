@@ -61,17 +61,6 @@ screen_init (void_t)
 
 /*
 =======================================
-    显示后台缓冲
-=======================================
-*/
-CR_API void_t
-screen_copy (void_t)
-{
-    mem_cpy(s_front, s_backs, SCREEN_SIZE);
-}
-
-/*
-=======================================
     前后台切换
 =======================================
 */
@@ -108,6 +97,27 @@ CR_API byte_t*
 screen_back (void_t)
 {
     return (s_backs);
+}
+
+/*
+=======================================
+    显示后台缓冲
+=======================================
+*/
+CR_API void_t
+screen_copy (
+  __CR_IN__ uint_t  line
+    )
+{
+    /* 更新整个屏幕 */
+    if (line >= 4) {
+        mem_cpy(s_front, s_backs, SCREEN_SIZE);
+        return;
+    }
+
+    /* 只更新一行 */
+    line *= (SCREEN_BPL * 16);
+    mem_cpy(&s_front[line], &s_backs[line], SCREEN_BPL * 16);
 }
 
 /*
