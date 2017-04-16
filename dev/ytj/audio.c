@@ -25,7 +25,7 @@
 uint_t  g_volume = 1;
 
 /* 音频数据环形队列 */
-#define AUDIO_BUF_SIZE  2048
+#define AUDIO_BUF_SIZE  4096
 static leng_t   s_head, s_tail, s_size;
 static byte_t   s_audio[AUDIO_BUF_SIZE + 1];
 
