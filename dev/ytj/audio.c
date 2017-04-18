@@ -29,6 +29,9 @@ uint_t  g_volume = 1;
 static leng_t   s_head, s_tail, s_size;
 static byte_t   s_audio[AUDIO_BUF_SIZE + 1];
 
+/* 读取音频数据的回调 */
+static audio_read_t s_audio_read;
+
 /*
 =======================================
     音频初始化
@@ -41,6 +44,7 @@ audio_init (void_t)
 
     /* 初始化全局变量 */
     g_volume = 1;
+    s_audio_read = NULL;
     s_size = s_head = s_tail = 0;
 
     /* 使用 TIM4 作为音频中断 (16KHz 采样) */
@@ -79,21 +83,19 @@ audio_volume (
 */
 CR_API leng_t
 audio_play (
-  __CR_IN__ const void_t*   data,
-  __CR_IN__ leng_t          size,
+  __CR_IN__ audio_read_t    func,
   __CR_IN__ leng_t          total
     )
 {
     /* 复制初始数据 */
     if (s_size != 0 ||
-        total == 0 || size > total)
+        total == 0 || func == NULL)
         return (0);
-    s_size = total;
-    if (size > AUDIO_BUF_SIZE)
-        size = AUDIO_BUF_SIZE;
     s_head = 0;
     s_tail = AUDIO_BUF_SIZE;
-    mem_cpy(s_audio, data, size);
+    s_size = total;
+    s_audio_read = func;
+    total = s_audio_read(s_audio, AUDIO_BUF_SIZE);
 
     /* 开始播放 */
     audio_xon();
@@ -101,7 +103,7 @@ audio_play (
 #if !defined(YTJ_NEW)
     TIM_Cmd(TIM1, ENABLE);
 #endif
-    return (size);
+    return (total);
 }
 
 /*
@@ -115,14 +117,15 @@ audio_stop (void_t)
     audio_off();
     TIM_Cmd(TIM4, DISABLE);
     aud0_zero();
+    s_audio_read = NULL;
 }
 
 /*
-=======================================
+---------------------------------------
     返回剩余空间
-=======================================
+---------------------------------------
 */
-CR_API leng_t
+static leng_t
 audio_space (void_t)
 {
     leng_t  count;
@@ -142,27 +145,31 @@ audio_space (void_t)
 =======================================
 */
 CR_API leng_t
-audio_append (
-  __CR_IN__ const void_t*   data,
-  __CR_IN__ leng_t          size
-    )
+audio_append (void_t)
 {
-    leng_t  count;
+    leng_t  temp, size, count;
+    byte_t  buf[AUDIO_BUF_SIZE];
+
+    /* 安全检查 */
+    if (s_audio_read == NULL)
+        return (0);
 
     /* 能添加多少是多少 */
-    if (size == 0)
-        return (0);
     count = audio_space();
-    if (count == 0)
-        return (0);
-    if (size > count)
-        size = count;
-    for (count = size; count != 0; count--) {
-        s_audio[s_tail++] = *(byte_t*)data;
-        if (s_tail >= sizeof(s_audio))
-            s_tail = 0;
-        data = (byte_t*)data + 1;
+    if (count > sizeof(buf))
+        count = sizeof(buf);
+    size = s_audio_read(buf, count);
+    temp = sizeof(s_audio) - s_tail;
+    if (size <= temp) {
+        mem_cpy(&s_audio[s_tail], buf, size);
     }
+    else {
+        mem_cpy(&s_audio[s_tail], buf, temp);
+        mem_cpy(&s_audio[0], &buf[temp], size - temp);
+    }
+    s_tail += size;
+    if (s_tail >= sizeof(s_audio))
+        s_tail -= sizeof(s_audio);
     return (size);
 }
 

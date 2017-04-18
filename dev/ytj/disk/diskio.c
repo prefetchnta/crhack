@@ -92,7 +92,7 @@ DRESULT disk_ioctl (
             break;
 
         case GET_SECTOR_COUNT:
-            *(DWORD*)buff = MX25L16_CHIP_SIZE / _MAX_SS;
+            *(DWORD*)buff = CR_K2B(512) / _MAX_SS;
             break;
 
         case GET_SECTOR_SIZE:

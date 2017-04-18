@@ -46,12 +46,12 @@ CR_API leng_t   mx25l16_program (int32u addr, const void_t *data,
 /* 音频总开关 */
 #define audio_xon()     GPIOB->BSRR = GPIO_Pin_0
 #define audio_off()     GPIOB->BRR = GPIO_Pin_0
+typedef leng_t  (*audio_read_t) (void_t*, leng_t);
 CR_API void_t   audio_init (void_t);
 CR_API void_t   audio_volume (uint_t value);
-CR_API leng_t   audio_play (const void_t *data, leng_t size, leng_t total);
+CR_API leng_t   audio_play (audio_read_t func, leng_t total);
 CR_API void_t   audio_stop (void_t);
-CR_API leng_t   audio_space (void_t);
-CR_API leng_t   audio_append (const void_t *data, leng_t size);
+CR_API leng_t   audio_append (void_t);
 CR_API retc_t   audio_is_over (void_t);
 
 /*****************************************************************************/
