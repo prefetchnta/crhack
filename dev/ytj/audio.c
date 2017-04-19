@@ -117,7 +117,6 @@ audio_stop (void_t)
     audio_off();
     TIM_Cmd(TIM4, DISABLE);
     aud0_zero();
-    s_audio_read = NULL;
 }
 
 /*
@@ -149,10 +148,6 @@ audio_append (void_t)
 {
     leng_t  temp, size, count;
     byte_t  buf[AUDIO_BUF_SIZE];
-
-    /* 安全检查 */
-    if (s_audio_read == NULL)
-        return (0);
 
     /* 能添加多少是多少 */
     count = audio_space();

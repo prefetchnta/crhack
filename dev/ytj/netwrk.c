@@ -155,7 +155,7 @@ netwrk_func (void_t)
     }
 
     /* DHCP */
-    if (!s_is_dhcp || s_ip.addr != 0)
+    if (!s_is_dhcp)
         return;
     if (timer_delta32(s_base_dhcp) >= DHCP_FINE_TIMER_MSECS) {
         s_base_dhcp = timer_get32();
