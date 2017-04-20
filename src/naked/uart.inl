@@ -24,6 +24,12 @@
 #ifndef USART_YIELD
     #define USART_YIELD
 #endif
+#ifndef USART_LOCK_ENTER
+    #define USART_LOCK_ENTER
+#endif
+#ifndef USART_LOCK_LEAVE
+    #define USART_LOCK_LEAVE
+#endif
 
 /* 环形队列 */
 typedef struct
@@ -63,10 +69,17 @@ uart_zero (void_t)
 CR_API uint_t
 uart_rx_size (void_t)
 {
+    uint_t  head, tail;
+
+    head = s_fifo.rx_hd;
+    USART_LOCK_ENTER
+    tail = s_fifo.rx_tl;
+    USART_LOCK_LEAVE
+
     /* 这里假设处理的很快永远不会满 */
-    if (s_fifo.rx_tl >= s_fifo.rx_hd)
-        return (s_fifo.rx_tl - s_fifo.rx_hd);
-    return (RX_SIZE - s_fifo.rx_hd + s_fifo.rx_tl);
+    if (tail >= head)
+        return (tail - head);
+    return (RX_SIZE - head + tail);
 }
 
 #endif  /* uart_rx_size */
@@ -239,7 +252,7 @@ uart_wait (
 CR_API void_t
 uart_tx_flush (void_t)
 {
-    s_fifo.tx_hd = s_fifo.tx_tl;
+    s_fifo.tx_tl = s_fifo.tx_hd;
 }
 
 #endif  /* uart_tx_flush */
@@ -254,11 +267,17 @@ CR_API uint_t
 uart_tx_free (void_t)
 {
     uint_t  count;
+    uint_t  head, tail;
 
-    if (s_fifo.tx_tl >= s_fifo.tx_hd)
-        count = s_fifo.tx_tl - s_fifo.tx_hd;
+    USART_LOCK_ENTER
+    head = s_fifo.tx_hd;
+    USART_LOCK_LEAVE
+    tail = s_fifo.tx_tl;
+
+    if (tail >= head)
+        count = tail - head;
     else
-        count = sizeof(s_fifo.tx_buf) - s_fifo.tx_hd + s_fifo.tx_tl;
+        count = sizeof(s_fifo.tx_buf) - head + tail;
     if (count >= TX_SIZE)
         return (0);
     return (TX_SIZE - count);
