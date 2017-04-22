@@ -17,20 +17,15 @@
 /*  =======================================================================  */
 /*****************************************************************************/
 
-#include "safe.h"
 #include "enclib.h"
 #include "ex3rd/zlib/zlib.h"
 
 /* Z_SOLO 需要自己声明函数 */
 uLong ZEXPORT compressBound (uLong sourceLen);
-int ZEXPORT compress2 (Bytef *dest, uIntf *destLen,
-                       const Bytef *source, uInt sourceLen, int level);
-int ZEXPORT uncompress (Bytef *dest, uIntf *destLen,
-                        const Bytef *source, uInt sourceLen);
-int ZEXPORT compress2_raw (Bytef *dest, uIntf *destLen,
-                           const Bytef *source, uInt sourceLen, int level);
-int ZEXPORT uncompress_raw (Bytef *dest, uIntf *destLen,
-                            const Bytef *source, uInt sourceLen);
+int ZEXPORT compress2 (Bytef *dest, uLongf *destLen, const Bytef *source,
+                       uLong sourceLen, int level, int isRaw);
+int ZEXPORT uncompress (Bytef *dest, uLongf *destLen, const Bytef *source,
+                        uLong sourceLen, int isRaw);
 /*
 =======================================
     ZLib 压缩
@@ -45,19 +40,21 @@ compr_zlib (
   __CR_IN__ uint_t          level
     )
 {
-    uint_t  ssize, dsize;
+    uLong   ssize, dsize;
 
-    if (cut_size(&ssize, srclen))
+    ssize = (uLong)srclen;
+    if (ssize != srclen)
         return (0);
 
     if (dst == NULL)
         return (compressBound(ssize));
 
-    if (cut_size(&dsize, dstlen))
+    dsize = (uLong)dstlen;
+    if (dsize != dstlen)
         return (0);
 
-    if (compress2((Bytef*)dst, (uIntf*)(&dsize),
-            (const Bytef*)src, ssize, level) != Z_OK)
+    if (compress2((Bytef*)dst, &dsize, (const Bytef*)src,
+                    ssize, level, FALSE) != Z_OK)
         return (0);
     return (dsize);
 }
@@ -75,15 +72,17 @@ uncompr_zlib (
   __CR_IN__ leng_t          srclen
     )
 {
-    uint_t  ssize, dsize;
+    uLong   ssize, dsize;
 
-    if (cut_size(&ssize, srclen))
+    ssize = (uLong)srclen;
+    if (ssize != srclen)
         return (0);
-    if (cut_size(&dsize, dstlen))
+    dsize = (uLong)dstlen;
+    if (dsize != dstlen)
         return (0);
 
-    if (uncompress((Bytef*)dst, (uIntf*)(&dsize),
-            (const Bytef*)src, ssize) != Z_OK)
+    if (uncompress((Bytef*)dst, &dsize, (const Bytef*)src,
+                    ssize, FALSE) != Z_OK)
         return (0);
     return (dsize);
 }
@@ -102,19 +101,21 @@ compr_flate (
   __CR_IN__ uint_t          level
     )
 {
-    uint_t  ssize, dsize;
+    uLong   ssize, dsize;
 
-    if (cut_size(&ssize, srclen))
+    ssize = (uLong)srclen;
+    if (ssize != srclen)
         return (0);
 
     if (dst == NULL)
         return (compressBound(ssize));
 
-    if (cut_size(&dsize, dstlen))
+    dsize = (uLong)dstlen;
+    if (dsize != dstlen)
         return (0);
 
-    if (compress2_raw((Bytef*)dst, (uIntf*)(&dsize),
-            (const Bytef*)src, ssize, level) != Z_OK)
+    if (compress2((Bytef*)dst, &dsize, (const Bytef*)src,
+                    ssize, level, TRUE) != Z_OK)
         return (0);
     return (dsize);
 }
@@ -132,15 +133,17 @@ uncompr_flate (
   __CR_IN__ leng_t          srclen
     )
 {
-    uint_t  ssize, dsize;
+    uLong   ssize, dsize;
 
-    if (cut_size(&ssize, srclen))
+    ssize = (uLong)srclen;
+    if (ssize != srclen)
         return (0);
-    if (cut_size(&dsize, dstlen))
+    dsize = (uLong)dstlen;
+    if (dsize != dstlen)
         return (0);
 
-    if (uncompress_raw((Bytef*)dst, (uIntf*)(&dsize),
-            (const Bytef*)src, ssize) != Z_OK)
+    if (uncompress((Bytef*)dst, &dsize, (const Bytef*)src,
+                    ssize, TRUE) != Z_OK)
         return (0);
     return (dsize);
 }

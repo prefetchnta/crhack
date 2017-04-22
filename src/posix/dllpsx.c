@@ -96,7 +96,7 @@ sbin_testA (
   __CR_IN__ const ansi_t*   name
     )
 {
-#if (defined(_CR_OS_ANDROID_) && (ANDROID_API <= 19)) || \
+#if (defined(_CR_NDK_LOW_)) || \
     (!defined(_CR_OS_ANDROID_) && !defined(RTLD_NOLOAD))
     CR_NOUSE(name);
     return (NULL);
@@ -115,7 +115,7 @@ sbin_testW (
   __CR_IN__ const wide_t*   name
     )
 {
-#if (defined(_CR_OS_ANDROID_) && (ANDROID_API <= 19)) || \
+#if (defined(_CR_NDK_LOW_)) || \
     (!defined(_CR_OS_ANDROID_) && !defined(RTLD_NOLOAD))
     CR_NOUSE(name);
     return (NULL);

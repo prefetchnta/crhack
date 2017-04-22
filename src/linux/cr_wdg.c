@@ -19,7 +19,7 @@
 
 #include "devlib.h"
 
-#if !defined(_CR_OS_ANDROID_) || (ANDROID_API > 19)
+#if !defined(_CR_NDK_LOW_)
 
 #include <linux/types.h>
 #include <linux/ioctl.h>
@@ -84,7 +84,7 @@ wdg_feed (
     ioctl(wdg, WDIOC_KEEPALIVE);
 }
 
-#endif  /* !_CR_OS_ANDROID_ || ANDROID_API > 19 */
+#endif  /* !_CR_NDK_LOW_ */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */

@@ -1,5 +1,5 @@
 /* compress.c -- compress a memory buffer
- * Copyright (C) 1995-2005 Jean-loup Gailly.
+ * Copyright (C) 1995-2005, 2014, 2016 Jean-loup Gailly, Mark Adler
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
@@ -19,83 +19,53 @@
    memory, Z_BUF_ERROR if there was not enough room in the output buffer,
    Z_STREAM_ERROR if the level parameter is invalid.
 */
-int ZEXPORT compress2 (dest, destLen, source, sourceLen, level)
+int ZEXPORT compress2 (dest, destLen, source, sourceLen, level, isRaw)
     Bytef *dest;
-    uIntf *destLen;
+    uLongf *destLen;
     const Bytef *source;
-    uInt sourceLen;
+    uLong sourceLen;
     int level;
+    int isRaw;
 {
     z_stream stream;
     int err;
+    const uInt max = (uInt)-1;
+    uLong left;
 
-    stream.next_in = (z_const Bytef *)source;
-    stream.avail_in = (uInt)sourceLen;
-#ifdef MAXSEG_64K
-    /* Check for source > 64K on 16-bit machine: */
-    if ((uLong)stream.avail_in != sourceLen) return Z_BUF_ERROR;
-#endif
-    stream.next_out = dest;
-    stream.avail_out = (uInt)*destLen;
-    if ((uLong)stream.avail_out != *destLen) return Z_BUF_ERROR;
+    left = *destLen;
+    *destLen = 0;
 
     stream.zalloc = (alloc_func)zcalloc;
     stream.zfree = (free_func)zcfree;
     stream.opaque = (voidpf)0;
 
-    err = deflateInit(&stream, level);
+    if (isRaw)
+        err = deflateInit2(&stream, level, Z_DEFLATED, -MAX_WBITS,
+                                    MAX_MEM_LEVEL, Z_DEFAULT_STRATEGY);
+    else
+        err = deflateInit(&stream, level);
     if (err != Z_OK) return err;
 
-    err = deflate(&stream, Z_FINISH);
-    if (err != Z_STREAM_END) {
-        deflateEnd(&stream);
-        return err == Z_OK ? Z_BUF_ERROR : err;
-    }
-    *destLen = (uInt)stream.total_out;
-
-    err = deflateEnd(&stream);
-    return err;
-}
-
-/* ===========================================================================
- */
-int ZEXPORT compress2_raw (dest, destLen, source, sourceLen, level)
-    Bytef *dest;
-    uIntf *destLen;
-    const Bytef *source;
-    uInt sourceLen;
-    int level;
-{
-    z_stream stream;
-    int err;
-
-    stream.next_in = (z_const Bytef *)source;
-    stream.avail_in = (uInt)sourceLen;
-#ifdef MAXSEG_64K
-    /* Check for source > 64K on 16-bit machine: */
-    if ((uLong)stream.avail_in != sourceLen) return Z_BUF_ERROR;
-#endif
     stream.next_out = dest;
-    stream.avail_out = (uInt)*destLen;
-    if ((uLong)stream.avail_out != *destLen) return Z_BUF_ERROR;
+    stream.avail_out = 0;
+    stream.next_in = (z_const Bytef *)source;
+    stream.avail_in = 0;
 
-    stream.zalloc = (alloc_func)zcalloc;
-    stream.zfree = (free_func)zcfree;
-    stream.opaque = (voidpf)0;
+    do {
+        if (stream.avail_out == 0) {
+            stream.avail_out = left > (uLong)max ? max : (uInt)left;
+            left -= stream.avail_out;
+        }
+        if (stream.avail_in == 0) {
+            stream.avail_in = sourceLen > (uLong)max ? max : (uInt)sourceLen;
+            sourceLen -= stream.avail_in;
+        }
+        err = deflate(&stream, sourceLen ? Z_NO_FLUSH : Z_FINISH);
+    } while (err == Z_OK);
 
-    err = deflateInit2(&stream, level, Z_DEFLATED, -MAX_WBITS,
-                                MAX_MEM_LEVEL, Z_DEFAULT_STRATEGY);
-    if (err != Z_OK) return err;
-
-    err = deflate(&stream, Z_FINISH);
-    if (err != Z_STREAM_END) {
-        deflateEnd(&stream);
-        return err == Z_OK ? Z_BUF_ERROR : err;
-    }
-    *destLen = (uInt)stream.total_out;
-
-    err = deflateEnd(&stream);
-    return err;
+    *destLen = stream.total_out;
+    deflateEnd(&stream);
+    return err == Z_STREAM_END ? Z_OK : err;
 }
 
 /* ===========================================================================

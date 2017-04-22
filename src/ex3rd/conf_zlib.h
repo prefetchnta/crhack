@@ -38,6 +38,7 @@
     #pragma warn -8004
     #pragma warn -8008
     #pragma warn -8012
+    #pragma warn -8065
     #pragma warn -8066
 
 #elif   defined(_CR_CC_MSC_)

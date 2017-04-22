@@ -37,6 +37,12 @@
    (defined(_CR_AR_X86_) || defined(_CR_AR_X64_) || defined(_CR_AR_IA64_))
     #include <intrin.h>
 
+    #undef  InterlockedExchange
+    #undef  InterlockedIncrement
+    #undef  InterlockedDecrement
+    #undef  InterlockedExchangeAdd
+    #undef  InterlockedExchangeAdd64
+
     #define InterlockedExchange         _InterlockedExchange
     #define InterlockedIncrement        _InterlockedIncrement
     #define InterlockedDecrement        _InterlockedDecrement

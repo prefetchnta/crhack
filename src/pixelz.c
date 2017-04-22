@@ -611,6 +611,7 @@ img_idx1_to_32 (
     dist_t  sbpl;
     uint_t  cnts;
     uint_t  rest;
+    uint_t  rtmp;
     uint_t  wtmp;
     uint_t  htmp;
     int32u* dtmp;
@@ -640,10 +641,12 @@ img_idx1_to_32 (
         }
 
         /* 处理尾部一个字节 */
-        bits = stmp[x / 8];
-        for (cnts = 7; rest != 0; rest--, cnts--, x++)
-            dtmp[x] = src->pal[(bits >> cnts) & 1];
-
+        if (rest != 0) {
+            rtmp = rest;
+            bits = stmp[x / 8];
+            for (cnts = 7; rtmp != 0; rtmp--, cnts--, x++)
+                dtmp[x] = src->pal[(bits >> cnts) & 1];
+        }
         dtmp = (int32u*)((uchar*)dtmp + dbpl);
         stmp = (byte_t*)((uchar*)stmp + sbpl);
     }

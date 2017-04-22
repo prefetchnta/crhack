@@ -23,8 +23,8 @@
 #include "mtplib.h"
 
 /* 内存的分配器 */
-static cr_alloc_t   s_alloc = NULL;
-static cr_mfree_t   s_mfree = NULL;
+static cr_malloc_t  s_alloc = NULL;
+static cr_free_t    s_mfree = NULL;
 
 /* 指针前结构体 */
 typedef struct
@@ -49,8 +49,8 @@ static sint_t   s_dbg_cnts = 0; /* 已分配的次数 */
 */
 CR_API void_t
 mem_init (
-  __CR_IN__ cr_alloc_t  alloc,
-  __CR_IN__ cr_mfree_t  mfree
+  __CR_IN__ cr_malloc_t alloc,
+  __CR_IN__ cr_free_t   mfree
     )
 {
     if (alloc == NULL ||

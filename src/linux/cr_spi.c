@@ -20,7 +20,7 @@
 #include "devlib.h"
 #include "memlib.h"
 
-#if !defined(_CR_OS_ANDROID_) || (ANDROID_API > 19)
+#if !defined(_CR_NDK_LOW_)
 
 #include <linux/types.h>
 #include <linux/ioctl.h>
@@ -138,7 +138,7 @@ spi_iorw (
     return (TRUE);
 }
 
-#endif  /* !_CR_OS_ANDROID_ || ANDROID_API > 19 */
+#endif  /* !_CR_NDK_LOW_ */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */
