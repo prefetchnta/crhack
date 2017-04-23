@@ -655,6 +655,63 @@ img_idx1_to_32 (
 
 /*
 =======================================
+    索引2to8888
+=======================================
+*/
+CR_API sIMAGE*
+img_idx2_to_32 (
+  __CR_IO__ sIMAGE*         dst,
+  __CR_IN__ uint_t          dx,
+  __CR_IN__ uint_t          dy,
+  __CR_IN__ const sIMAGE*   src
+    )
+{
+    byte_t  bits;
+    uint_t  x, y;
+    dist_t  dbpl;
+    dist_t  sbpl;
+    uint_t  cnts;
+    uint_t  rest;
+    uint_t  rtmp;
+    uint_t  wtmp;
+    uint_t  htmp;
+    int32u* dtmp;
+    byte_t* stmp;
+
+    dst = safe_convert(dst, CR_ARGB8888, src, CR_INDEX2,
+                       &dx, &dy, &wtmp, &htmp);
+    if (dst == NULL)
+        return (NULL);
+
+    CR_MAKE_SRC(00, 00, 1);
+    CR_MAKE_DST(dx, dy, 4);
+
+    rest = wtmp % 4;
+    wtmp = wtmp - rest;
+    for (y = htmp; y != 0; y--) {
+        for (x = 0; x < wtmp; x += 4) {
+            bits = stmp[x / 4];
+            dtmp[x + 0] = src->pal[(bits >> 6) & 3];
+            dtmp[x + 1] = src->pal[(bits >> 4) & 3];
+            dtmp[x + 2] = src->pal[(bits >> 2) & 3];
+            dtmp[x + 3] = src->pal[(bits >> 0) & 3];
+        }
+
+        /* 处理尾部一个字节 */
+        if (rest != 0) {
+            rtmp = rest;
+            bits = stmp[x / 4];
+            for (cnts = 6; rtmp != 0; rtmp--, cnts -= 2, x++)
+                dtmp[x] = src->pal[(bits >> cnts) & 3];
+        }
+        dtmp = (int32u*)((uchar*)dtmp + dbpl);
+        stmp = (byte_t*)((uchar*)stmp + sbpl);
+    }
+    return ((sIMAGE*)dst);
+}
+
+/*
+=======================================
     索引4to8888
 =======================================
 */
@@ -980,8 +1037,9 @@ img_dxtc_to_32 (
     color4  clr[4];
 
     /* 安全检查 */
-    if (src->fmt == CR_UNKNOWN || src->fmt > CR_DXT5 ||
-        src->position.ww % 4 != 0 || src->position.hh % 4 != 0)
+    if (!isCrTypeDXTC(src->fmt) ||
+        src->position.ww % 4 != 0 ||
+        src->position.hh % 4 != 0)
         return (NULL);
 
     dst = safe_convert(dst, CR_ARGB8888, src, src->fmt,
@@ -1206,6 +1264,9 @@ img_auto_to_32 (
         case CR_INDEX1:
             return (img_idx1_to_32(dst, dx, dy, src));
 
+        case CR_INDEX2:
+            return (img_idx2_to_32(dst, dx, dy, src));
+
         case CR_INDEX4:
             return (img_idx4_to_32(dst, dx, dy, src));
 
@@ -1288,6 +1349,13 @@ img_auto_to_xx (
                 line = wtmp / 8;
             else
                 line = wtmp / 8 + 1;
+        }
+        else
+        if (src->fmt == CR_INDEX2) {
+            if (wtmp % 4 == 0)
+                line = wtmp / 4;
+            else
+                line = wtmp / 4 + 1;
         }
         else
         if (src->fmt == CR_INDEX4) {

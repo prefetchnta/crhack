@@ -218,7 +218,7 @@ image_info (
 {
     leng_t  bpc;
 
-    if (img->fmt != 0)
+    if (img->fmt != CR_UNKNOWN)
     {
         /* 已填充了数据, 取现有数据 */
         bpc = img->bpc;
@@ -236,6 +236,15 @@ image_info (
                     w = w / 8;
                 else
                     w = w / 8 + 1;
+                bpc = 1;
+                img->bpc = 1;
+                break;
+
+            case CR_INDEX2:
+                if (w % 4 == 0)
+                    w = w / 4;
+                else
+                    w = w / 4 + 1;
                 bpc = 1;
                 img->bpc = 1;
                 break;
@@ -481,7 +490,7 @@ image_flp (
     byte_t* img1;
     byte_t* img2;
 
-    if (img->fmt < CR_INDEX1)
+    if (isCrTypeCompr(img->fmt))
         return;
     wtmp = img->bpl;
     img1 = img->data;
@@ -819,6 +828,13 @@ img_tile2line (
         tile_w /= 2;
     }
     else
+    if (img->fmt == CR_INDEX2)
+    {
+        if (tile_w % 4 != 0)
+            return (FALSE);
+        tile_w /= 4;
+    }
+    else
     if (img->fmt == CR_INDEX1)
     {
         if (tile_w % 8 != 0)
@@ -880,6 +896,13 @@ img_line2tile (
         if (tile_w % 2 != 0)
             return (FALSE);
         tile_w /= 2;
+    }
+    else
+    if (img->fmt == CR_INDEX2)
+    {
+        if (tile_w % 4 != 0)
+            return (FALSE);
+        tile_w /= 4;
     }
     else
     if (img->fmt == CR_INDEX1)
