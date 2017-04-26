@@ -370,10 +370,12 @@ POSIX_CPPS=$(SRC_NAK)appnak.$(C) \
 ###############################################################################
 
 LINUX_OBJS=$(OBJ)cr_spi.$(O) \
-           $(OBJ)cr_wdg.$(O)
+           $(OBJ)cr_wdg.$(O) \
+           $(OBJ)cr_gpio.$(O)
 
 LINUX_CPPS=$(SRC_LNX)cr_spi.$(C) \
-           $(SRC_LNX)cr_wdg.$(C)
+           $(SRC_LNX)cr_wdg.$(C) \
+           $(SRC_LNX)cr_gpio.$(C)
 
 ###############################################################################
 ##                                 NAKED OS                                  ##
