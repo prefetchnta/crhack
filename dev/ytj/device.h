@@ -59,6 +59,7 @@ CR_API retc_t   audio_is_over (void_t);
 /*****************************************************************************/
 
 /* 屏幕缓冲区的参数 */
+#define SCREEN_LINE     (4)
 #define SCREEN_BPL      (16)
 #define SCREEN_WIDTH    (64)
 #define SCREEN_HEIGHT   (64)

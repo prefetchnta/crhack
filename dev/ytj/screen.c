@@ -110,7 +110,7 @@ screen_copy (
     )
 {
     /* 更新整个屏幕 */
-    if (line >= 4) {
+    if (line >= SCREEN_LINE) {
         mem_cpy(s_front, s_backs, SCREEN_SIZE);
         return;
     }
@@ -181,7 +181,7 @@ line_fill (
     c |= (c << 4);
 
     /* 填充整个屏幕 */
-    if (line >= 4) {
+    if (line >= SCREEN_LINE) {
         mem_set(s_backs, c, SCREEN_SIZE);
         return;
     }
@@ -206,7 +206,7 @@ line_scroll (
     sint_t  height;
 
     /* 决定滚动的范围 */
-    if (line >= 4) {
+    if (line >= SCREEN_LINE) {
         line = 0;
         height = SCREEN_HEIGHT;
     }
@@ -274,9 +274,10 @@ line_scroll (
 static void_t
 screen_refresh (void_t)
 {
-    uint_t          ii, jj;
-    uint_t          line_ee;
-    byte_t          tmp[4] = {0};
+    uint_t  ii, jj;
+    uint_t  line_ee;
+    byte_t  tmp[SCREEN_LINE] = {0};
+    /* ------------------------- */
     static uint_t   line_ss = 0;
 
     line_ee = line_ss + SCREEN_BPL;
@@ -289,7 +290,7 @@ screen_refresh (void_t)
         tmp[1] = s_front[0x100 + ii];
         tmp[2] = s_front[0x200 + ii];
         tmp[3] = s_front[0x300 + ii];
-        for (jj = 4; jj != 0; jj--) {
+        for (jj = SCREEN_LINE; jj != 0; jj--) {
             if (tmp[0] & 0x80) HS08_G1A_SETB
             else               HS08_G1A_CLRB
             if (tmp[0] & 0x40) HS08_R1A_SETB
