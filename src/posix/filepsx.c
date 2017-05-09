@@ -64,7 +64,7 @@ file_raw_openA (
     mode &= (~CR_FO_SEQ);
     if (mode > CR_FO_AW)
         return (NULL);
-    return ((fraw_t)((leng_t)open(name, s_open_mode[mode])));
+    return ((fraw_t)((leng_t)open(name, s_open_mode[mode], 0777)));
 }
 
 /*
@@ -87,7 +87,7 @@ file_raw_openW (
     ansi = utf16_to_local(CR_LOCAL, name);
     if (ansi == NULL)
         return (NULL);
-    file = open(ansi, s_open_mode[mode]);
+    file = open(ansi, s_open_mode[mode], 0777);
     mem_free(ansi);
     return ((fraw_t)((leng_t)file));
 }
