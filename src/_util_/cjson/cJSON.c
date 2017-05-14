@@ -71,7 +71,7 @@ CJSON_PUBLIC(const char *) cJSON_GetErrorPtr(void)
 }
 
 /* This is a safeguard to prevent copy-pasters from using incompatible C and header files */
-#if (CJSON_VERSION_MAJOR != 1) || (CJSON_VERSION_MINOR != 5) || (CJSON_VERSION_PATCH != 1)
+#if (CJSON_VERSION_MAJOR != 1) || (CJSON_VERSION_MINOR != 5) || (CJSON_VERSION_PATCH != 2)
     #error cJSON.h and cJSON.c have different versions. Make sure that both have the same.
 #endif
 
@@ -674,7 +674,7 @@ static cJSON_bool parse_string(cJSON * const item, parse_buffer * const input_bu
         /* calculate approximate size of the output (overestimate) */
         size_t allocation_length = 0;
         size_t skipped_bytes = 0;
-        while ((*input_end != '\"') && ((size_t)(input_end - input_buffer->content) < input_buffer->length))
+        while (((size_t)(input_end - input_buffer->content) < input_buffer->length) && (*input_end != '\"'))
         {
             /* is escape sequence */
             if (input_end[0] == '\\')
@@ -689,7 +689,7 @@ static cJSON_bool parse_string(cJSON * const item, parse_buffer * const input_bu
             }
             input_end++;
         }
-        if (*input_end != '\"')
+        if (((size_t)(input_end - input_buffer->content) >= input_buffer->length) || (*input_end != '\"'))
         {
             goto fail; /* string ended unexpectedly */
         }
@@ -2577,16 +2577,18 @@ CJSON_PUBLIC(cJSON_bool) cJSON_Compare(const cJSON * const a, const cJSON * cons
 
         case cJSON_Array:
         {
-            cJSON *a_element = NULL;
-            cJSON *b_element = NULL;
-            for (a_element = a->child, b_element = b->child;
-                    (a_element != NULL) && (b_element != NULL);
-                    a_element = a_element->next, b_element = b_element->next)
+            cJSON *a_element = a->child;
+            cJSON *b_element = b->child;
+
+            for (; (a_element != NULL) && (b_element != NULL);)
             {
                 if (!cJSON_Compare(a_element, b_element, case_sensitive))
                 {
                     return false;
                 }
+
+                a_element = a_element->next;
+                b_element = b_element->next;
             }
 
             return true;
