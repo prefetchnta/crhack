@@ -146,13 +146,12 @@ norflash_write (
     }
 
     /* 写入剩下的数据 */
-    idx = size % sizeof(s_temp_buffer);
-    if (idx != 0)
+    if (size != 0)
     {
         /* 改写数据并写入 */
         if (!norflash_erase_int(start))
             return (FALSE);
-        mem_cpy(s_temp_buffer, data, idx);
+        mem_cpy(s_temp_buffer, data, size);
         if (!norflash_write_int(start, NULL))
             return (FALSE);
     }
