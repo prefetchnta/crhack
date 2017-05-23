@@ -53,6 +53,7 @@ typedef struct
 static sSIMCOM  s_simcom[10];
 
 /* 一些有用的宏 */
+#define SIMCOM_FOREVER      (120000UL)
 #define SIMCOM_TIMEOUT(x)   ((x) +  100)
 #define SIMCOM_TCP_PORT(x)  ((x) + 6500)
 #define SIMCOM_UDP_PORT(x)  ((x) + 6600)
@@ -74,8 +75,8 @@ simcom_socket_init (void_t)
     mem_zero(s_simcom, sizeof(s_simcom));
     for (idx = 0; idx < cntsof(s_simcom); idx++) {
         s_simcom[idx].linknum = idx;
-        s_simcom[idx].recv_tout = 120000UL;
-        s_simcom[idx].send_tout = 120000UL;
+        s_simcom[idx].recv_tout = SIMCOM_FOREVER;
+        s_simcom[idx].send_tout = SIMCOM_FOREVER;
     }
     return (TRUE);
 }
@@ -234,8 +235,8 @@ _retry: /* 等待返回 */
     s_simcom[num].head = 0;
     s_simcom[num].tail = 0;
     s_simcom[num].fifo_buffer = (byte_t*)dat;
-    s_simcom[num].recv_tout = 120000UL;
-    s_simcom[num].send_tout = 120000UL;
+    s_simcom[num].recv_tout = SIMCOM_FOREVER;
+    s_simcom[num].send_tout = SIMCOM_FOREVER;
     s_simcom[num].remote_port = port;
     s_simcom[num].remote_addr = str_dupA(addr);
     return ((socket_t)(&s_simcom[num]));
@@ -257,6 +258,8 @@ simcom_client_tcp_open (
   __CR_IN__ int32s          time
     )
 {
+    if (time < 0)
+        time = SIMCOM_FOREVER;
     return (simcom_client_tcp_open_int(addr, port, time, 0));
 }
 
@@ -275,6 +278,8 @@ simcom_client_tcp_open2 (
     )
 {
     CR_NOUSE(laddr);
+    if (time < 0)
+        time = SIMCOM_FOREVER;
     return (simcom_client_tcp_open_int(addr, port, time, lport));
 }
 
@@ -339,8 +344,8 @@ _retry: /* 等待返回 */
     s_simcom[num].head = 0;
     s_simcom[num].tail = 0;
     s_simcom[num].fifo_buffer = (byte_t*)dat;
-    s_simcom[num].recv_tout = 120000UL;
-    s_simcom[num].send_tout = 120000UL;
+    s_simcom[num].recv_tout = SIMCOM_FOREVER;
+    s_simcom[num].send_tout = SIMCOM_FOREVER;
     s_simcom[num].remote_port = port;
     s_simcom[num].remote_addr = str_dupA(addr);
     return ((socket_t)(&s_simcom[num]));
@@ -413,8 +418,8 @@ simcom_socket_close (
     if (real->fifo_buffer == NULL)
         return;
     SAFE_FREE(real->remote_addr);
-    real->recv_tout = 120000UL;
-    real->send_tout = 120000UL;
+    real->recv_tout = SIMCOM_FOREVER;
+    real->send_tout = SIMCOM_FOREVER;
     real->remote_port = 0;
     real->head = real->tail = 0;
     mem_free(real->fifo_buffer);

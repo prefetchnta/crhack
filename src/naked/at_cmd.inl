@@ -111,7 +111,9 @@ at_iorw (
     len = (uint_t)str_lenA(inp);
     uart_rx_flush();
     uart_write(inp, len);
+#if !defined(_CR_AT_NO_ECHO_)
     at_throw(len, tout);
+#endif
     return (at_wait(out, size, tout));
 }
 
