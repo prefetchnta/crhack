@@ -1976,6 +1976,74 @@ d3d8_util_create_sprite (
     return (rett);
 }
 
+/*
+=======================================
+    计算包围盒
+=======================================
+*/
+CR_API void_t
+d3d8_util_bound_aabb (
+  __CR_OT__ sAABB*          aabb,
+  __CR_IN__ int32u          fvf,
+  __CR_IN__ const vec3d_t*  pos,
+  __CR_IN__ uint_t          count
+    )
+{
+    D3DXVECTOR3 min, max;
+
+    D3DXComputeBoundingBox((PVOID)pos, count, fvf, &min, &max);
+
+    aabb->v[0].x = max.x;
+    aabb->v[0].y = max.y;
+    aabb->v[0].z = max.z;
+
+    aabb->v[1].x = max.x;
+    aabb->v[1].y = max.y;
+    aabb->v[1].z = min.z;
+
+    aabb->v[2].x = max.x;
+    aabb->v[2].y = min.y;
+    aabb->v[2].z = max.z;
+
+    aabb->v[3].x = max.x;
+    aabb->v[3].y = min.y;
+    aabb->v[3].z = min.z;
+
+    aabb->v[4].x = min.x;
+    aabb->v[4].y = max.y;
+    aabb->v[4].z = max.z;
+
+    aabb->v[5].x = min.x;
+    aabb->v[5].y = max.y;
+    aabb->v[5].z = min.z;
+
+    aabb->v[6].x = min.x;
+    aabb->v[6].y = min.y;
+    aabb->v[6].z = max.z;
+
+    aabb->v[7].x = min.x;
+    aabb->v[7].y = min.y;
+    aabb->v[7].z = min.z;
+}
+
+/*
+=======================================
+    计算包围球
+=======================================
+*/
+CR_API void_t
+d3d8_util_bound_ball (
+  __CR_OT__ sSPHERE*        ball,
+  __CR_IN__ int32u          fvf,
+  __CR_IN__ const vec3d_t*  pos,
+  __CR_IN__ uint_t          count
+    )
+{
+    D3DXComputeBoundingSphere((PVOID)pos, count, fvf,
+                              (D3DXVECTOR3*)(&ball->center),
+                                    (FLOAT*)(&ball->radius));
+}
+
 /*****************************************************************************/
 /*                                 接口导出                                  */
 /*****************************************************************************/
@@ -2053,6 +2121,8 @@ static const sD3D8_CALL s_d3d8call =
     d3d8_util_intersect_ball,
     d3d8_util_intersect_tri,
     d3d8_util_create_sprite,
+    d3d8_util_bound_aabb,
+    d3d8_util_bound_ball,
 };
 
 /*
