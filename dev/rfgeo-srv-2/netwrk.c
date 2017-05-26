@@ -91,7 +91,6 @@ netwrk_online (
     switch (g_net_type)
     {
         default:
-        case SRV2NET_SIM5360:
             break;
 
         case SRV2NET_SIM7100:
@@ -99,6 +98,9 @@ netwrk_online (
 
         case SRV2NET_SIM6320:
             return (sim6320_online(user, password, timeout));
+
+        case SRV2NET_SIM5360:
+            return (sim5360_online(apn, timeout));
     }
 
     /* 未知模块 */

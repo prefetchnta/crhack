@@ -165,7 +165,7 @@ simcom_socket_find (void_t)
 }
 
 /*****************************************************************************/
-/*                             SIM7100/SIM6320                               */
+/*                         SIM7100/SIM6320/SIM5360                           */
 /*****************************************************************************/
 
 /*
@@ -1212,6 +1212,117 @@ sim6320_online (
             return (FALSE);
         bak = at_iorw(ret, sizeof(ret), str, SIMCOM_AT_TOUT);
         mem_free(str);
+        if (bak == NULL || str_strA(bak, "OK") == NULL)
+            return (FALSE);
+    }
+
+    /* 减少超时时间 */
+    bak = at_iorw(ret, sizeof(ret), "AT+CIPTIMEOUT=4000,4000,4000\r",
+                  SIMCOM_AT_TOUT);
+    if (bak == NULL || str_strA(bak, "OK") == NULL)
+        return (FALSE);
+
+    /* 非透传模式 */
+    bak = at_iorw(ret, sizeof(ret), "AT+CIPMODE=0\r", SIMCOM_AT_TOUT);
+    if (bak == NULL || str_strA(bak, "OK") == NULL)
+        return (FALSE);
+
+    /* 手动接收模式 */
+    bak = at_iorw(ret, sizeof(ret), "AT+CIPRXGET=1\r", SIMCOM_AT_TOUT);
+    if (bak == NULL || str_strA(bak, "OK") == NULL)
+        return (FALSE);
+
+    /* 打开网络 */
+    bak = at_iorw(ret, sizeof(ret), "AT+NETOPEN\r", SIMCOM_AT_TOUT);
+    if (bak == NULL || str_strA(bak, "OK") == NULL)
+        return (FALSE);
+    base = timer_get32();
+    for (;;)
+    {
+        /* 不停询问是否打开成功 */
+        bak = at_iorw(ret, sizeof(ret), "AT+NETOPEN?\r", SIMCOM_AT_TOUT);
+        if (bak == NULL)
+            return (FALSE);
+        bak = str_strA(bak, "+NETOPEN: 1");
+        if (bak != NULL)
+            break;
+        if (timer_delta32(base) > timeout)
+            return (FALSE);
+        SIMCOM_YIELD
+    }
+
+    /* 拨号成功 */
+    return (TRUE);
+}
+
+/*****************************************************************************/
+/*                                 SIM5360                                   */
+/*****************************************************************************/
+
+/*
+=======================================
+    SIM5360 虚表建立
+=======================================
+*/
+CR_API void_t
+sim5360_setup (
+  __CR_OT__ iSOCKET*    vtbl
+    )
+{
+    sim7100_setup(vtbl);
+}
+
+/*
+=======================================
+    SIM5360 上线拨号
+=======================================
+*/
+CR_API bool_t
+sim5360_online (
+  __CR_IN__ const ansi_t*   apn,
+  __CR_IN__ int32u          timeout
+    )
+{
+    ansi_t* str;
+    ansi_t* bak;
+    int32u  base;
+    ansi_t  ret[64];
+
+    /* 把网络先关了 */
+    simcom_socket_free();
+
+    /* 网络注册 */
+    bak = at_iorw(ret, sizeof(ret), "AT+CGREG=1\r", SIMCOM_AT_TOUT);
+    if (bak == NULL || str_strA(bak, "OK") == NULL)
+        return (FALSE);
+    base = timer_get32();
+    for (;;)
+    {
+        /* 不停询问是否注册成功 */
+        bak = at_iorw(ret, sizeof(ret), "AT+CGREG?\r", SIMCOM_AT_TOUT);
+        if (bak == NULL)
+            return (FALSE);
+        bak = str_strA(bak, "+CGREG: 1,");
+        if (bak != NULL) {
+            bak += 10;
+            if (*bak == 0x31 || *bak == 0x35)
+                break;
+        }
+        if (timer_delta32(base) > timeout)
+            return (FALSE);
+        SIMCOM_YIELD
+    }
+
+    /* 设置 APN 参数 */
+    if (apn != NULL) {
+        str = str_fmtA("AT+CGSOCKCONT=1,\"IP\",\"%s\"\r", apn);
+        if (str == NULL)
+            return (FALSE);
+        bak = at_iorw(ret, sizeof(ret), str, SIMCOM_AT_TOUT);
+        mem_free(str);
+        if (bak == NULL || str_strA(bak, "OK") == NULL)
+            return (FALSE);
+        bak = at_iorw(ret, sizeof(ret), "AT+CSOCKSETPN=1\r", SIMCOM_AT_TOUT);
         if (bak == NULL || str_strA(bak, "OK") == NULL)
             return (FALSE);
     }

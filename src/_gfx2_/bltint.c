@@ -40,11 +40,14 @@ pixel_cnvt01 (
 
     cnvt.val = 0UL;
     lerp = (byte_t*)(&color);
-    if (color == pal[1])
+    if (color == pal[1]) {
         cnvt.c08.idx = 0x01;
-    else
-    if (color == pal[0])
         cnvt.c08.lrp = lerp[3];
+    }
+    else
+    if (color == pal[0]) {
+        cnvt.c08.lrp = lerp[3];
+    }
     return (cnvt);
 }
 

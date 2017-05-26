@@ -121,6 +121,10 @@ socket_vtbl_init (void_t)
         case SRV2NET_SIM6320:
             sim6320_setup(&g_socket);
             break;
+
+        case SRV2NET_SIM5360:
+            sim5360_setup(&g_socket);
+            break;
     }
 }
 
