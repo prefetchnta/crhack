@@ -47,7 +47,7 @@ pixel_get01n (
     byte_t* addr;
 
     addr = pixel_addr1(dst, ((uint_t)x) / 8, CR_PIXEL_Y);
-    return ((addr[0] >> (7 - (((uint_t)x) % 8))) & 1);
+    return ((byte_t)((addr[0] >> (7 - (((uint_t)x) % 8))) & 1));
 }
 
 /*
@@ -69,7 +69,7 @@ pixel_get02n (
     byte_t* addr;
 
     addr = pixel_addr1(dst, ((uint_t)x) / 4, CR_PIXEL_Y);
-    return ((addr[0] >> (6 - (((uint_t)x) % 4) * 2)) & 3);
+    return ((byte_t)((addr[0] >> (6 - (((uint_t)x) % 4) * 2)) & 3));
 }
 
 /*
@@ -91,7 +91,7 @@ pixel_get04n (
     byte_t* addr;
 
     addr = pixel_addr1(dst, ((uint_t)x) / 2, CR_PIXEL_Y);
-    return ((addr[0] >> (4 - (((uint_t)x) % 2) * 4)) & 15);
+    return ((byte_t)((addr[0] >> (4 - (((uint_t)x) % 2) * 4)) & 15));
 }
 
 /*
@@ -158,9 +158,7 @@ pixel_get24n (
     byte_t* addr;
 
     addr = pixel_addr3(dst, x, CR_PIXEL_Y);
-    dots.c32.bbb = addr[0];
-    dots.c32.ggg = addr[1];
-    dots.c32.rrr = addr[2];
+    mem_cpy(&dots, addr, 3);
     dots.c32.lrp = 0xFF;
     return (dots.val);
 }
