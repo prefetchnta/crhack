@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		11026EDA1CBE66D40003E386 /* holidays.c in Sources */ = {isa = PBXBuildFile; fileRef = 11026ED91CBE66D40003E386 /* holidays.c */; };
+		11092B3F1EE28BB700CEC35E /* filelib.c in Sources */ = {isa = PBXBuildFile; fileRef = 11092B3E1EE28BB700CEC35E /* filelib.c */; };
 		112B130D1E6D451F00BA7848 /* crc16h.c in Sources */ = {isa = PBXBuildFile; fileRef = 112B130C1E6D451F00BA7848 /* crc16h.c */; };
 		1144871F1D2B947A00D89DF2 /* pf_astar.c in Sources */ = {isa = PBXBuildFile; fileRef = 1144871E1D2B947A00D89DF2 /* pf_astar.c */; };
 		117FCB881CA2ACF900490097 /* appnak.c in Sources */ = {isa = PBXBuildFile; fileRef = 117FC09D1CA2ACF600490097 /* appnak.c */; };
@@ -250,6 +251,7 @@
 
 /* Begin PBXFileReference section */
 		11026ED91CBE66D40003E386 /* holidays.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = holidays.c; sourceTree = "<group>"; };
+		11092B3E1EE28BB700CEC35E /* filelib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = filelib.c; sourceTree = "<group>"; };
 		112B130C1E6D451F00BA7848 /* crc16h.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = crc16h.c; path = ../../../src/crc16h.c; sourceTree = "<group>"; };
 		1144871E1D2B947A00D89DF2 /* pf_astar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pf_astar.c; sourceTree = "<group>"; };
 		117FC09D1CA2ACF600490097 /* appnak.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = appnak.c; sourceTree = "<group>"; };
@@ -503,6 +505,7 @@
 			isa = PBXGroup;
 			children = (
 				119AA8CD1CBB4B3100BCB9DB /* bjnetcomm.c */,
+				11092B3E1EE28BB700CEC35E /* filelib.c */,
 				11026ED91CBE66D40003E386 /* holidays.c */,
 			);
 			name = _util_;
@@ -1110,6 +1113,7 @@
 				11A474271C9FE90F00CFC25E /* errs.c in Sources */,
 				11A475051C9FEE7000CFC25E /* tgl_pac.c in Sources */,
 				11A474F21C9FEE7000CFC25E /* ego_gdat.c in Sources */,
+				11092B3F1EE28BB700CEC35E /* filelib.c in Sources */,
 				11A475251C9FEFE100CFC25E /* btfont.c in Sources */,
 				11A475EF1C9FF0BA00CFC25E /* z_infback.c in Sources */,
 				11A4743F1C9FE90F00CFC25E /* mltbyte.c in Sources */,
