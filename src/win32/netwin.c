@@ -375,7 +375,7 @@ server_tcp_open (
         return (NULL);
     opts = TRUE;
     if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
-                    (char*)(&opts), sizeof(opts)) < 0)
+            (char*)(&opts), sizeof(opts)) == SOCKET_ERROR)
         goto _failure;
 
     /* 绑定套接字并监听端口 */
@@ -460,7 +460,7 @@ client_tcp_open (
             slct = 0;
             size = sizeof(slct);
             if (getsockopt(temp.socket, SOL_SOCKET, SO_ERROR,
-                            (char*)(&slct), &size) < 0)
+                    (char*)(&slct), &size) == SOCKET_ERROR)
                 goto _failure;
             if (slct != 0)
                 goto _failure;
@@ -522,7 +522,7 @@ client_tcp_open2 (
         return (NULL);
     opts = TRUE;
     if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
-                    (char*)(&opts), sizeof(opts)) < 0)
+            (char*)(&opts), sizeof(opts)) == SOCKET_ERROR)
         goto _failure;
 
     /* 绑定本地地址和端口 */
@@ -563,7 +563,7 @@ client_tcp_open2 (
             slct = 0;
             size = sizeof(slct);
             if (getsockopt(temp.socket, SOL_SOCKET, SO_ERROR,
-                            (char*)(&slct), &size) < 0)
+                    (char*)(&slct), &size) == SOCKET_ERROR)
                 goto _failure;
             if (slct != 0)
                 goto _failure;
@@ -617,7 +617,7 @@ server_udp_open (
         return (NULL);
     opts = TRUE;
     if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
-                    (char*)(&opts), sizeof(opts)) < 0)
+            (char*)(&opts), sizeof(opts)) == SOCKET_ERROR)
         goto _failure;
 
     /* 绑定套接字到本地地址 */
@@ -699,7 +699,7 @@ client_udp_open2 (
         return (NULL);
     opts = TRUE;
     if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
-                    (char*)(&opts), sizeof(opts)) < 0)
+            (char*)(&opts), sizeof(opts)) == SOCKET_ERROR)
         goto _failure;
 
     /* 绑定本地地址和端口 */

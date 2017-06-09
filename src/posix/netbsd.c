@@ -323,7 +323,7 @@ server_tcp_open (
         return (NULL);
     opts = TRUE;
     if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
-                        &opts, sizeof(opts)) < 0)
+                        &opts, sizeof(opts)) != 0)
         goto _failure;
 
     /* 绑定套接字并监听端口 */
@@ -408,7 +408,7 @@ client_tcp_open (
             slct = 0;
             size = sizeof(slct);
             if (getsockopt(temp.socket, SOL_SOCKET, SO_ERROR,
-                                &slct, &size) < 0)
+                                &slct, &size) != 0)
                 goto _failure;
             if (slct != 0)
                 goto _failure;
@@ -470,7 +470,7 @@ client_tcp_open2 (
         return (NULL);
     opts = TRUE;
     if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
-                        &opts, sizeof(opts)) < 0)
+                        &opts, sizeof(opts)) != 0)
         goto _failure;
 
     /* 绑定本地地址和端口 */
@@ -511,7 +511,7 @@ client_tcp_open2 (
             slct = 0;
             size = sizeof(slct);
             if (getsockopt(temp.socket, SOL_SOCKET, SO_ERROR,
-                                &slct, &size) < 0)
+                                &slct, &size) != 0)
                 goto _failure;
             if (slct != 0)
                 goto _failure;
@@ -565,7 +565,7 @@ server_udp_open (
         return (NULL);
     opts = TRUE;
     if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
-                        &opts, sizeof(opts)) < 0)
+                        &opts, sizeof(opts)) != 0)
         goto _failure;
 
     /* 绑定套接字到本地地址 */
@@ -647,7 +647,7 @@ client_udp_open2 (
         return (NULL);
     opts = TRUE;
     if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
-                        &opts, sizeof(opts)) < 0)
+                        &opts, sizeof(opts)) != 0)
         goto _failure;
 
     /* 绑定本地地址和端口 */
@@ -1344,7 +1344,7 @@ netcard_get_info (
     if (ip != NULL) {
         str_cpyNA(ifrq.ifr_name, name, IFNAMSIZ);
         ifrq.ifr_name[IFNAMSIZ - 1] = 0;
-        if (ioctl(sock, SIOCGIFADDR, &ifrq) < 0)
+        if (ioctl(sock, SIOCGIFADDR, &ifrq) != 0)
             goto _failure;
         mem_cpy(&sain, &ifrq.ifr_addr, sizeof(sain));
         str_cpyA(ip, inet_ntoa(sain.sin_addr));
@@ -1354,7 +1354,7 @@ netcard_get_info (
     if (msk != NULL) {
         str_cpyNA(ifrq.ifr_name, name, IFNAMSIZ);
         ifrq.ifr_name[IFNAMSIZ - 1] = 0;
-        if (ioctl(sock, SIOCGIFNETMASK, &ifrq) < 0)
+        if (ioctl(sock, SIOCGIFNETMASK, &ifrq) != 0)
             goto _failure;
         mem_cpy(&sain, &ifrq.ifr_netmask, sizeof(sain));
         str_cpyA(msk, inet_ntoa(sain.sin_addr));
@@ -1368,7 +1368,7 @@ netcard_get_info (
     if (mac != NULL) {
         str_cpyNA(ifrq.ifr_name, name, IFNAMSIZ);
         ifrq.ifr_name[IFNAMSIZ - 1] = 0;
-        if (ioctl(sock, SIOCGIFHWADDR, &ifrq) < 0)
+        if (ioctl(sock, SIOCGIFHWADDR, &ifrq) != 0)
             goto _failure;
         mem_cpy(&sadr, &ifrq.ifr_hwaddr, sizeof(sain));
         mem_cpy(mac, sadr.sa_data, 6);
