@@ -206,8 +206,8 @@ socket_input_size2 (
   __CR_OT__ uint_t*     size
     )
 {
-    fd_set      rset;
     sint_t      rett;
+    fd_set      rset;
     TIMEVAL     tout;
     sSOCKET*    real;
 
@@ -244,8 +244,8 @@ server_tcp_accept (
   __CR_IN__ socket_t    netw
     )
 {
-    fd_set      rset;
     sint_t      errs;
+    fd_set      rset;
     TIMEVAL     tout;
     sSOCKET     temp;
     sSOCKET*    real;
@@ -308,6 +308,7 @@ server_tcp_open (
   __CR_IN__ int16u          port
     )
 {
+    sint_t      opts;
     sSOCKET     temp;
     sSOCKET*    rett;
 
@@ -320,6 +321,10 @@ server_tcp_open (
     temp.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (temp.socket < 0)
         return (NULL);
+    opts = TRUE;
+    if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
+                        &opts, sizeof(opts)) < 0)
+        goto _failure;
 
     /* 绑定套接字并监听端口 */
     if (bind(temp.socket, (SOCKADDR*)(&temp.local_addr),
@@ -352,12 +357,13 @@ client_tcp_open (
   __CR_IN__ int32s          time
     )
 {
-    sint_t      ul;
-    fd_set      wset;
     sint_t      slct;
+    sint_t      opts;
+    fd_set      wset;
     TIMEVAL     tout;
     sSOCKET     temp;
     sSOCKET*    rett;
+    socklen_t   size;
 
     /* 填充远程连接结构 */
     struct_zero(&temp, sSOCKET);
@@ -380,8 +386,8 @@ client_tcp_open (
     else
     {
         /* 超时模式 */
-        ul = TRUE;
-        if (ioctl(temp.socket, FIONBIO, &ul) != 0)
+        opts = TRUE;
+        if (ioctl(temp.socket, FIONBIO, &opts) != 0)
             goto _failure;
         FD_ZERO(&wset);
         FD_SET(temp.socket, &wset);
@@ -396,8 +402,24 @@ client_tcp_open (
         /* 超时发生 */
         if (slct == 0)
             goto _failure;
-        ul = FALSE;
-        if (ioctl(temp.socket, FIONBIO, &ul) != 0)
+
+        /* 判断是否是出错 */
+        if (FD_ISSET(temp.socket, &wset)) {
+            slct = 0;
+            size = sizeof(slct);
+            if (getsockopt(temp.socket, SOL_SOCKET, SO_ERROR,
+                                &slct, &size) < 0)
+                goto _failure;
+            if (slct != 0)
+                goto _failure;
+        }
+        else {
+            goto _failure;
+        }
+
+        /* 恢复阻塞 */
+        opts = FALSE;
+        if (ioctl(temp.socket, FIONBIO, &opts) != 0)
             goto _failure;
     }
 
@@ -427,12 +449,13 @@ client_tcp_open2 (
   __CR_IN__ int16u          lport
     )
 {
-    sint_t      ul;
-    fd_set      wset;
     sint_t      slct;
+    sint_t      opts;
+    fd_set      wset;
     TIMEVAL     tout;
     sSOCKET     temp;
     sSOCKET*    rett;
+    socklen_t   size;
 
     /* 填充远程 & 本地连接结构 */
     struct_zero(&temp, sSOCKET);
@@ -445,6 +468,10 @@ client_tcp_open2 (
     temp.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (temp.socket < 0)
         return (NULL);
+    opts = TRUE;
+    if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
+                        &opts, sizeof(opts)) < 0)
+        goto _failure;
 
     /* 绑定本地地址和端口 */
     if (bind(temp.socket, (SOCKADDR*)(&temp.local_addr),
@@ -462,8 +489,8 @@ client_tcp_open2 (
     else
     {
         /* 超时模式 */
-        ul = TRUE;
-        if (ioctl(temp.socket, FIONBIO, &ul) != 0)
+        opts = TRUE;
+        if (ioctl(temp.socket, FIONBIO, &opts) != 0)
             goto _failure;
         FD_ZERO(&wset);
         FD_SET(temp.socket, &wset);
@@ -478,8 +505,24 @@ client_tcp_open2 (
         /* 超时发生 */
         if (slct == 0)
             goto _failure;
-        ul = FALSE;
-        if (ioctl(temp.socket, FIONBIO, &ul) != 0)
+
+        /* 判断是否是出错 */
+        if (FD_ISSET(temp.socket, &wset)) {
+            slct = 0;
+            size = sizeof(slct);
+            if (getsockopt(temp.socket, SOL_SOCKET, SO_ERROR,
+                                &slct, &size) < 0)
+                goto _failure;
+            if (slct != 0)
+                goto _failure;
+        }
+        else {
+            goto _failure;
+        }
+
+        /* 恢复阻塞 */
+        opts = FALSE;
+        if (ioctl(temp.socket, FIONBIO, &opts) != 0)
             goto _failure;
     }
 
@@ -507,6 +550,7 @@ server_udp_open (
   __CR_IN__ int16u          port
     )
 {
+    sint_t      opts;
     sSOCKET     temp;
     sSOCKET*    rett;
 
@@ -519,6 +563,10 @@ server_udp_open (
     temp.socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (temp.socket < 0)
         return (NULL);
+    opts = TRUE;
+    if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
+                        &opts, sizeof(opts)) < 0)
+        goto _failure;
 
     /* 绑定套接字到本地地址 */
     if (bind(temp.socket, (SOCKADDR*)(&temp.local_addr),
@@ -582,6 +630,7 @@ client_udp_open2 (
   __CR_IN__ int16u          lport
     )
 {
+    sint_t      opts;
     sSOCKET     temp;
     sSOCKET*    rett;
 
@@ -596,6 +645,10 @@ client_udp_open2 (
     temp.socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (temp.socket < 0)
         return (NULL);
+    opts = TRUE;
+    if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
+                        &opts, sizeof(opts)) < 0)
+        goto _failure;
 
     /* 绑定本地地址和端口 */
     if (bind(temp.socket, (SOCKADDR*)(&temp.local_addr),
@@ -865,9 +918,9 @@ socket_tcp_peek (
   __CR_IN__ uint_t      size
     )
 {
+    sint_t      rett;
     fd_set      rset;
     SOCKET      sock;
-    sint_t      rett;
     TIMEVAL     tout;
     sSOCKET*    real;
 
@@ -924,9 +977,9 @@ socket_udp_recv (
   __CR_IN__ uint_t      size
     )
 {
+    sint_t      rett;
     fd_set      rset;
     SOCKET      sock;
-    sint_t      rett;
     TIMEVAL     tout;
     sSOCKET*    real;
     SOCKADDR*   from;
@@ -992,9 +1045,9 @@ socket_udp_peek (
   __CR_IN__ uint_t      size
     )
 {
+    sint_t      rett;
     fd_set      rset;
     SOCKET      sock;
-    sint_t      rett;
     TIMEVAL     tout;
     sSOCKET*    real;
     SOCKADDR*   from;
@@ -1143,10 +1196,11 @@ socket_tcp_set_alive (
     CR_NOUSE(count);
     return (FALSE);
 #else
-    sint_t  value, ul = TRUE;
+    sint_t  value, opts = TRUE;
     SOCKET  sock = ((sSOCKET*)netw)->socket;
 
-    if (setsockopt(sock, SOL_SOCKET, SO_KEEPALIVE, &ul, sizeof(ul)) != 0)
+    if (setsockopt(sock, SOL_SOCKET, SO_KEEPALIVE,
+                    &opts, sizeof(opts)) != 0)
         return (FALSE);
     value = idle / 1000;
     setsockopt(sock, SOL_TCP, TCP_KEEPIDLE, &value, sizeof(value));

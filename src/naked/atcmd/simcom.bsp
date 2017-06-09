@@ -1100,6 +1100,12 @@ sim7100_online (
             return (FALSE);
     }
 
+    /* DNS 查询时间 */
+    bak = at_iorw(ret, sizeof(ret), "AT+CIPDNSSET=1,3000,3\r",
+                  SIMCOM_AT_TOUT);
+    if (bak == NULL || str_strA(bak, "OK") == NULL)
+        return (FALSE);
+
     /* 减少超时时间 */
     bak = at_iorw(ret, sizeof(ret), "AT+CIPTIMEOUT=4000,4000,4000\r",
                   SIMCOM_AT_TOUT);
@@ -1216,6 +1222,12 @@ sim6320_online (
             return (FALSE);
     }
 
+    /* DNS 查询时间 */
+    bak = at_iorw(ret, sizeof(ret), "AT+CIPDNSSET=1,3000,3\r",
+                  SIMCOM_AT_TOUT);
+    if (bak == NULL || str_strA(bak, "OK") == NULL)
+        return (FALSE);
+
     /* 减少超时时间 */
     bak = at_iorw(ret, sizeof(ret), "AT+CIPTIMEOUT=4000,4000,4000\r",
                   SIMCOM_AT_TOUT);
@@ -1326,6 +1338,12 @@ sim5360_online (
         if (bak == NULL || str_strA(bak, "OK") == NULL)
             return (FALSE);
     }
+
+    /* DNS 查询时间 */
+    bak = at_iorw(ret, sizeof(ret), "AT+CIPDNSSET=1,3000,3\r",
+                  SIMCOM_AT_TOUT);
+    if (bak == NULL || str_strA(bak, "OK") == NULL)
+        return (FALSE);
 
     /* 减少超时时间 */
     bak = at_iorw(ret, sizeof(ret), "AT+CIPTIMEOUT=4000,4000,4000\r",
