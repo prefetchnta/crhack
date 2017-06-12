@@ -23,10 +23,10 @@
 #include <sys/time.h>
 #include <time.h>
 
-#if defined(_CR_OS_MACOSX_)
+#if defined(_CR_NO_API_CLOCK_GETTIME_)
 /*
 ---------------------------------------
-    MacOSX 没有这个函数
+    clock_gettime() 的替代函数
 ---------------------------------------
 */
 static int
@@ -53,7 +53,7 @@ counter_get (
     #define counter_get(tp) clock_gettime(CLOCK_MONOTONIC, tp)
 #endif
 
-#endif  /* _CR_OS_MACOSX_ */
+#endif  /* _CR_NO_API_CLOCK_GETTIME_ */
 
 /* 定时器内部结构 */
 typedef struct

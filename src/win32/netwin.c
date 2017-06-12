@@ -135,7 +135,7 @@ socket_set_addr (
     else
     {
         /* 判断地址是否为域名 */
-        if (is_alphaA(addr[0])) {
+        if (!str2ip4addrA(addr, NULL)) {
             host = gethostbyname(addr);
             if (host == NULL)
                 return (FALSE);

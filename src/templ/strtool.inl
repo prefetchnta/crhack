@@ -807,6 +807,51 @@ CR_FAW(str_url_split) (
     return (str);
 }
 
+/*
+=======================================
+    解析 IPv4 字符串T
+=======================================
+*/
+CR_API bool_t
+CR_FAW(str2ip4addr) (
+  __CR_IN__ const XCHAR*    str,
+  __CR_OT__ byte_t*         val
+    )
+{
+    leng_t  skip;
+    sint_t  idx, ip[4];
+
+    /* 解析三个数字 */
+    for (idx = 0; idx < 3; idx++) {
+        ip[idx] = CR_FAW(str2int)(str, &skip);
+        if (skip == 0 || skip > 3)
+            return (FALSE);
+        if (ip[idx] < 0 || ip[idx] > 255)
+            return (FALSE);
+        str += skip;
+        if (*str != CR_XC('.'))
+            return (FALSE);
+        str += 1;
+    }
+
+    /* 解析第四个数字 */
+    ip[idx] = CR_FAW(str2int)(str, &skip);
+    if (skip == 0 || skip > 3)
+        return (FALSE);
+    if (ip[idx] < 0 || ip[idx] > 255)
+        return (FALSE);
+    str += skip;
+    if (*str != CR_XN(NIL))
+        return (FALSE);
+
+    /* 返回 IPv4 地址 */
+    if (val != NULL) {
+        for (idx = 0; idx < 4; idx++)
+            val[idx] = (byte_t)(ip[idx] & 0xFF);
+    }
+    return (TRUE);
+}
+
 /*****************************************************************************/
 /* _________________________________________________________________________ */
 /* uBMAzRBoAKAHaACQD6FoAIAPqbgA/7rIA+5CM9uKw8D4Au7u7mSIJ0t18mYz0mYz9rAQZCgHc */

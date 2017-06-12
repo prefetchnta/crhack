@@ -72,11 +72,55 @@ typedef struct
 
 } sSOCKET;
 
+/* DNS 查询的锁 */
+#if defined(_CR_NO_API_GETHOSTBYNAME_R_)
+    #include "mtplib.h"
+    static lock_t   s_dns_lock = FALSE;
+#endif
+
 /* 关闭连接收发模式 */
 static const int s_shut_mode[] =
 {
     SHUT_RD, SHUT_WR, SHUT_RDWR,
 };
+
+/*
+---------------------------------------
+    域名转 IP 地址
+---------------------------------------
+*/
+static bool_t
+socket_dns_lookup (
+  __CR_OT__ SOCKADDR_IN*    dest,
+  __CR_IN__ const ansi_t*   addr
+    )
+{
+    HOSTENT*    host;
+
+#if !defined(_CR_NO_API_GETHOSTBYNAME_R_)
+    sint_t      rett;
+    HOSTENT     info;
+    /* ----------- */
+    ansi_t  buf[1024];
+
+    host = NULL;
+    if (gethostbyname_r(addr, &info, buf, sizeof(buf), &host, &rett) != 0)
+        return (FALSE);
+    if (host == NULL)
+        return (FALSE);
+    dest->sin_addr.s_addr = *(in_addr_t*)host->h_addr_list[0];
+    return (TRUE);
+#else
+    bool_t  rett;
+
+    mtlock_acquire(&s_dns_lock);
+    host = gethostbyname(addr);
+    rett = (host == NULL) ? FALSE : TRUE;
+    dest->sin_addr.s_addr = *(in_addr_t*)host->h_addr_list[0];
+    mtlock_release(&s_dns_lock);
+    return (rett);
+#endif
+}
 
 /*
 ---------------------------------------
@@ -90,8 +134,6 @@ socket_set_addr (
   __CR_IN__ int16u          port
     )
 {
-    HOSTENT*    host;
-
     if (addr == NULL)
     {
         /* 可以连接所有地址 */
@@ -100,11 +142,9 @@ socket_set_addr (
     else
     {
         /* 判断地址是否为域名 */
-        if (is_alphaA(addr[0])) {
-            host = gethostbyname(addr);
-            if (host == NULL)
+        if (!str2ip4addrA(addr, NULL)) {
+            if (!socket_dns_lookup(dest, addr))
                 return (FALSE);
-            dest->sin_addr.s_addr = *(in_addr_t*)host->h_addr_list[0];
         }
         else {
             /* 直接的 IP 地址 */
@@ -126,6 +166,9 @@ socket_set_addr (
 CR_API bool_t
 socket_init (void_t)
 {
+#if defined(_CR_NO_API_GETHOSTBYNAME_R_)
+    mtlock_init(&s_dns_lock);
+#endif
     return (TRUE);
 }
 
@@ -137,6 +180,9 @@ socket_init (void_t)
 CR_API void_t
 socket_free (void_t)
 {
+#if defined(_CR_NO_API_GETHOSTBYNAME_R_)
+    mtlock_free(&s_dns_lock);
+#endif
 }
 
 /*

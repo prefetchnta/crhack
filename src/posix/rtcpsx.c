@@ -33,21 +33,20 @@ datetime_get (
     )
 {
     time_t      tm;
-    struct tm*  dt;
+    struct tm   dt;
 
     tm = time(NULL);
     if (tm == (time_t)-1)
         return (FALSE);
-    dt = localtime(&tm);
-    if (dt == NULL)
+    if (localtime_r(&tm, &dt) == NULL)
         return (FALSE);
-    datetime->year   = ( uint_t)dt->tm_year + 1900;
-    datetime->month  = (ufast_t)dt->tm_mon + 1;
-    datetime->day    = (ufast_t)dt->tm_mday;
-    datetime->hour   = (ufast_t)dt->tm_hour;
-    datetime->minute = (ufast_t)dt->tm_min;
-    datetime->second = (ufast_t)dt->tm_sec;
-    datetime->week   = (ufast_t)dt->tm_wday;
+    datetime->year   = ( uint_t)dt.tm_year + 1900;
+    datetime->month  = (ufast_t)dt.tm_mon + 1;
+    datetime->day    = (ufast_t)dt.tm_mday;
+    datetime->hour   = (ufast_t)dt.tm_hour;
+    datetime->minute = (ufast_t)dt.tm_min;
+    datetime->second = (ufast_t)dt.tm_sec;
+    datetime->week   = (ufast_t)dt.tm_wday;
     return (TRUE);
 }
 
@@ -62,7 +61,7 @@ datetime_set (
     )
 {
     time_t          tm;
-    struct tm*      dt;
+    struct tm       dt;
     struct timeval  tv;
     struct timezone tz;
 
@@ -71,16 +70,15 @@ datetime_set (
     tm = time(NULL);
     if (tm == (time_t)-1)
         return (FALSE);
-    dt = localtime(&tm);
-    if (dt == NULL)
+    if (localtime_r(&tm, &dt) == NULL)
         return (FALSE);
-    dt->tm_year = (int)datetime->year - 1900;
-    dt->tm_mon  = (int)datetime->month - 1;
-    dt->tm_mday = (int)datetime->day;
-    dt->tm_hour = (int)datetime->hour;
-    dt->tm_min  = (int)datetime->minute;
-    dt->tm_sec  = (int)datetime->second;
-    tm = mktime(dt);
+    dt.tm_year = (int)datetime->year - 1900;
+    dt.tm_mon  = (int)datetime->month - 1;
+    dt.tm_mday = (int)datetime->day;
+    dt.tm_hour = (int)datetime->hour;
+    dt.tm_min  = (int)datetime->minute;
+    dt.tm_sec  = (int)datetime->second;
+    tm = mktime(&dt);
     if (tm == (time_t)-1)
         return (FALSE);
     if (gettimeofday(&tv, &tz) != 0)
