@@ -295,15 +295,16 @@ static cJSON *get_item_from_pointer(cJSON * const object, const char * pointer, 
             {
                 current_element = current_element->next;
             }
-            /* skip to the next path token or end of string */
-            while ((pointer[0] != '\0') && (pointer[0] != '/'))
-            {
-                pointer++;
-            }
         }
         else
         {
             return NULL;
+        }
+
+        /* skip to the next path token or end of string */
+        while ((pointer[0] != '\0') && (pointer[0] != '/'))
+        {
+            pointer++;
         }
     }
 
@@ -958,7 +959,14 @@ static int apply_patch(cJSON *object, const cJSON *patch, const cJSON_bool case_
     }
     else if (cJSON_IsObject(parent))
     {
-        cJSON_DeleteItemFromObject(parent, (char*)child_pointer);
+        if (case_sensitive)
+        {
+            cJSON_DeleteItemFromObjectCaseSensitive(parent, (char*)child_pointer);
+        }
+        else
+        {
+            cJSON_DeleteItemFromObject(parent, (char*)child_pointer);
+        }
         cJSON_AddItemToObject(parent, (char*)child_pointer, value);
         value = NULL;
     }
