@@ -211,10 +211,10 @@ str_ccp2uni (
             pntr += sizeof(ansi_t);
         }
         else {
-            temp = pntr[0];
+            temp = (byte_t)pntr[0];
             if (move == 2) {
                 temp <<= 8;
-                temp |= pntr[1];
+                temp |= (byte_t)pntr[1];
             }
             pntr += move;
             back[dstlen++] = ff_oem2uni(temp, FF_CODE_PAGE);
