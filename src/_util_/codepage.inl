@@ -18,8 +18,8 @@
 /*****************************************************************************/
 
 /* 骗过 FatFS 的头文件包含 */
-#define _FATFS      1
-#define _USE_LFN    1
+#define FF_DEFINED  1
+#define FF_USE_LFN  1
 
 #include "memlib.h"
 #include "strlib.h"
@@ -27,124 +27,141 @@
 #include "../ex3rd/fatfs/integer.h"
 
 /* 根据指定编码值重映射函数 */
-#if     (_CODE_PAGE == 932)
-    #define ff_convert  ff_convert_932
+#if     (FF_CODE_PAGE == 932)
+    #define ff_uni2oem  ff_uni2oem_932
+    #define ff_oem2uni  ff_oem2uni_932
     #define ff_wtoupper ff_wtoupper_932
     #define str_offset  offset_sjis
     #define str_ccp2uni str_cp932_to_uni
     #define str_uni2ccp str_uni_to_cp932
-    #include "../ex3rd/fatfs/option/cc932.c"
-#elif   (_CODE_PAGE == 936)
-    #define ff_convert  ff_convert_936
+#elif   (FF_CODE_PAGE == 936)
+    #define ff_uni2oem  ff_uni2oem_936
+    #define ff_oem2uni  ff_oem2uni_936
     #define ff_wtoupper ff_wtoupper_936
     #define str_offset  offset_gbk
     #define str_ccp2uni str_cp936_to_uni
     #define str_uni2ccp str_uni_to_cp936
-    #include "../ex3rd/fatfs/option/cc936.c"
-#elif   (_CODE_PAGE == 949)
-    #define ff_convert  ff_convert_949
+#elif   (FF_CODE_PAGE == 949)
+    #define ff_uni2oem  ff_uni2oem_949
+    #define ff_oem2uni  ff_oem2uni_949
     #define ff_wtoupper ff_wtoupper_949
     #define str_offset  offset_gb2312
     #define str_ccp2uni str_cp949_to_uni
     #define str_uni2ccp str_uni_to_cp949
-    #include "../ex3rd/fatfs/option/cc949.c"
-#elif   (_CODE_PAGE == 950)
-    #define ff_convert  ff_convert_950
+#elif   (FF_CODE_PAGE == 950)
+    #define ff_uni2oem  ff_uni2oem_950
+    #define ff_oem2uni  ff_oem2uni_950
     #define ff_wtoupper ff_wtoupper_950
     #define str_offset  offset_big5
     #define str_ccp2uni str_cp950_to_uni
     #define str_uni2ccp str_uni_to_cp950
-    #include "../ex3rd/fatfs/option/cc950.c"
 #else
-#if     (_CODE_PAGE == 437)
-    #define ff_convert  ff_convert_437
+#if     (FF_CODE_PAGE == 437)
+    #define ff_uni2oem  ff_uni2oem_437
+    #define ff_oem2uni  ff_oem2uni_437
     #define ff_wtoupper ff_wtoupper_437
     #define str_ccp2uni str_cp437_to_uni
     #define str_uni2ccp str_uni_to_cp437
-#elif   (_CODE_PAGE == 720)
-    #define ff_convert  ff_convert_720
+#elif   (FF_CODE_PAGE == 720)
+    #define ff_uni2oem  ff_uni2oem_720
+    #define ff_oem2uni  ff_oem2uni_720
     #define ff_wtoupper ff_wtoupper_720
     #define str_ccp2uni str_cp720_to_uni
     #define str_uni2ccp str_uni_to_cp720
-#elif   (_CODE_PAGE == 737)
-    #define ff_convert  ff_convert_737
+#elif   (FF_CODE_PAGE == 737)
+    #define ff_uni2oem  ff_uni2oem_737
+    #define ff_oem2uni  ff_oem2uni_737
     #define ff_wtoupper ff_wtoupper_737
     #define str_ccp2uni str_cp737_to_uni
     #define str_uni2ccp str_uni_to_cp737
-#elif   (_CODE_PAGE == 771)
-    #define ff_convert  ff_convert_771
+#elif   (FF_CODE_PAGE == 771)
+    #define ff_uni2oem  ff_uni2oem_771
+    #define ff_oem2uni  ff_oem2uni_771
     #define ff_wtoupper ff_wtoupper_771
     #define str_ccp2uni str_cp771_to_uni
     #define str_uni2ccp str_uni_to_cp771
-#elif   (_CODE_PAGE == 775)
-    #define ff_convert  ff_convert_775
+#elif   (FF_CODE_PAGE == 775)
+    #define ff_uni2oem  ff_uni2oem_775
+    #define ff_oem2uni  ff_oem2uni_775
     #define ff_wtoupper ff_wtoupper_775
     #define str_ccp2uni str_cp775_to_uni
     #define str_uni2ccp str_uni_to_cp775
-#elif   (_CODE_PAGE == 850)
-    #define ff_convert  ff_convert_850
+#elif   (FF_CODE_PAGE == 850)
+    #define ff_uni2oem  ff_uni2oem_850
+    #define ff_oem2uni  ff_oem2uni_850
     #define ff_wtoupper ff_wtoupper_850
     #define str_ccp2uni str_cp850_to_uni
     #define str_uni2ccp str_uni_to_cp850
-#elif   (_CODE_PAGE == 852)
-    #define ff_convert  ff_convert_852
+#elif   (FF_CODE_PAGE == 852)
+    #define ff_uni2oem  ff_uni2oem_852
+    #define ff_oem2uni  ff_oem2uni_852
     #define ff_wtoupper ff_wtoupper_852
     #define str_ccp2uni str_cp852_to_uni
     #define str_uni2ccp str_uni_to_cp852
-#elif   (_CODE_PAGE == 855)
-    #define ff_convert  ff_convert_855
+#elif   (FF_CODE_PAGE == 855)
+    #define ff_uni2oem  ff_uni2oem_855
+    #define ff_oem2uni  ff_oem2uni_855
     #define ff_wtoupper ff_wtoupper_855
     #define str_ccp2uni str_cp855_to_uni
     #define str_uni2ccp str_uni_to_cp855
-#elif   (_CODE_PAGE == 857)
-    #define ff_convert  ff_convert_857
+#elif   (FF_CODE_PAGE == 857)
+    #define ff_uni2oem  ff_uni2oem_857
+    #define ff_oem2uni  ff_oem2uni_857
     #define ff_wtoupper ff_wtoupper_857
     #define str_ccp2uni str_cp857_to_uni
     #define str_uni2ccp str_uni_to_cp857
-#elif   (_CODE_PAGE == 860)
-    #define ff_convert  ff_convert_860
+#elif   (FF_CODE_PAGE == 860)
+    #define ff_uni2oem  ff_uni2oem_860
+    #define ff_oem2uni  ff_oem2uni_860
     #define ff_wtoupper ff_wtoupper_860
     #define str_ccp2uni str_cp860_to_uni
     #define str_uni2ccp str_uni_to_cp860
-#elif   (_CODE_PAGE == 861)
-    #define ff_convert  ff_convert_861
+#elif   (FF_CODE_PAGE == 861)
+    #define ff_uni2oem  ff_uni2oem_861
+    #define ff_oem2uni  ff_oem2uni_861
     #define ff_wtoupper ff_wtoupper_861
     #define str_ccp2uni str_cp861_to_uni
     #define str_uni2ccp str_uni_to_cp861
-#elif   (_CODE_PAGE == 862)
-    #define ff_convert  ff_convert_862
+#elif   (FF_CODE_PAGE == 862)
+    #define ff_uni2oem  ff_uni2oem_862
+    #define ff_oem2uni  ff_oem2uni_862
     #define ff_wtoupper ff_wtoupper_862
     #define str_ccp2uni str_cp862_to_uni
     #define str_uni2ccp str_uni_to_cp862
-#elif   (_CODE_PAGE == 863)
-    #define ff_convert  ff_convert_863
+#elif   (FF_CODE_PAGE == 863)
+    #define ff_uni2oem  ff_uni2oem_863
+    #define ff_oem2uni  ff_oem2uni_863
     #define ff_wtoupper ff_wtoupper_863
     #define str_ccp2uni str_cp863_to_uni
     #define str_uni2ccp str_uni_to_cp863
-#elif   (_CODE_PAGE == 864)
-    #define ff_convert  ff_convert_864
+#elif   (FF_CODE_PAGE == 864)
+    #define ff_uni2oem  ff_uni2oem_864
+    #define ff_oem2uni  ff_oem2uni_864
     #define ff_wtoupper ff_wtoupper_864
     #define str_ccp2uni str_cp864_to_uni
     #define str_uni2ccp str_uni_to_cp864
-#elif   (_CODE_PAGE == 865)
-    #define ff_convert  ff_convert_865
+#elif   (FF_CODE_PAGE == 865)
+    #define ff_uni2oem  ff_uni2oem_865
+    #define ff_oem2uni  ff_oem2uni_865
     #define ff_wtoupper ff_wtoupper_865
     #define str_ccp2uni str_cp865_to_uni
     #define str_uni2ccp str_uni_to_cp865
-#elif   (_CODE_PAGE == 866)
-    #define ff_convert  ff_convert_866
+#elif   (FF_CODE_PAGE == 866)
+    #define ff_uni2oem  ff_uni2oem_866
+    #define ff_oem2uni  ff_oem2uni_866
     #define ff_wtoupper ff_wtoupper_866
     #define str_ccp2uni str_cp866_to_uni
     #define str_uni2ccp str_uni_to_cp866
-#elif   (_CODE_PAGE == 869)
-    #define ff_convert  ff_convert_869
+#elif   (FF_CODE_PAGE == 869)
+    #define ff_uni2oem  ff_uni2oem_869
+    #define ff_oem2uni  ff_oem2uni_869
     #define ff_wtoupper ff_wtoupper_869
     #define str_ccp2uni str_cp869_to_uni
     #define str_uni2ccp str_uni_to_cp869
 #endif
     #define str_offset  offset_ascii
-    #include "../ex3rd/fatfs/option/ccsbcs.c"
 #endif
+#include "../ex3rd/fatfs/ffunicode.c"
 
 /*
 =======================================
@@ -200,7 +217,7 @@ str_ccp2uni (
                 temp |= pntr[1];
             }
             pntr += move;
-            back[dstlen++] = ff_convert(temp, 1);
+            back[dstlen++] = ff_oem2uni(temp, FF_CODE_PAGE);
         }
     } while (save != 0);
 
@@ -255,7 +272,7 @@ str_uni2ccp (
             }
             else {
                 if (ucs4 <= 0xFFFF) {
-                    temp = ff_convert((WCHAR)ucs4, 0);
+                    temp = ff_uni2oem((WCHAR)ucs4, FF_CODE_PAGE);
                     if (temp <= 0xFF)
                         dstlen += 1;
                     else
@@ -284,7 +301,7 @@ str_uni2ccp (
             }
             else {
                 if (ucs4 <= 0xFFFF) {
-                    temp = ff_convert((WCHAR)ucs4, 0);
+                    temp = ff_uni2oem((WCHAR)ucs4, FF_CODE_PAGE);
                     if (temp > 0xFF)
                         back[dstlen++] = (ansi_t)(temp >> 8);
                     back[dstlen++] = (ansi_t)(temp);
@@ -308,7 +325,7 @@ str_uni2ccp (
             }
             else {
                 if (ucs4 <= 0xFFFF) {
-                    temp = ff_convert((WCHAR)ucs4, 0);
+                    temp = ff_uni2oem((WCHAR)ucs4, FF_CODE_PAGE);
                     if (temp <= 0xFF)
                         dstlen += 1;
                     else
@@ -337,7 +354,7 @@ str_uni2ccp (
             }
             else {
                 if (ucs4 <= 0xFFFF) {
-                    temp = ff_convert((WCHAR)ucs4, 0);
+                    temp = ff_uni2oem((WCHAR)ucs4, FF_CODE_PAGE);
                     if (temp > 0xFF)
                         back[dstlen++] = (ansi_t)(temp >> 8);
                     back[dstlen++] = (ansi_t)(temp);

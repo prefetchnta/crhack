@@ -2,8 +2,8 @@
 /* Integer type definitions for FatFs module */
 /*-------------------------------------------*/
 
-#ifndef _FF_INTEGER
-#define _FF_INTEGER
+#ifndef FF_INTEGER
+#define FF_INTEGER
 
 /* These types MUST be 16-bit or 32-bit */
 typedef int				INT;
@@ -21,7 +21,7 @@ typedef unsigned short	WCHAR;
 typedef long			LONG;
 typedef unsigned long	DWORD;
 
-#if _FATFS != 1
+#if FF_DEFINED != 1
 /* This type MUST be 64-bit (Remove this for ANSI C (C89) compatibility) */
 typedef unsigned long long QWORD;
 #endif

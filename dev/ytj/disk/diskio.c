@@ -47,8 +47,8 @@ DRESULT disk_read (
     UINT count      /* Number of sectors to read */
 )
 {
-    count  *= _MAX_SS;
-    sector *= _MAX_SS;
+    count  *= FF_MAX_SS;
+    sector *= FF_MAX_SS;
     if (store_read(sector, buff, count))
         return (RES_OK);
     pdrv = pdrv;
@@ -65,8 +65,8 @@ DRESULT disk_write (
     UINT count          /* Number of sectors to write */
 )
 {
-    count  *= _MAX_SS;
-    sector *= _MAX_SS;
+    count  *= FF_MAX_SS;
+    sector *= FF_MAX_SS;
     if (store_write(sector, buff, count))
         return (RES_OK);
     pdrv = pdrv;
@@ -92,15 +92,15 @@ DRESULT disk_ioctl (
             break;
 
         case GET_SECTOR_COUNT:
-            *(DWORD*)buff = CR_K2B(512) / _MAX_SS;
+            *(DWORD*)buff = CR_K2B(512) / FF_MAX_SS;
             break;
 
         case GET_SECTOR_SIZE:
-            *(WORD*)buff = _MAX_SS;
+            *(WORD*)buff = FF_MAX_SS;
             break;
 
         case GET_BLOCK_SIZE:
-            *(DWORD*)buff = MX25LXX_SSEC_SIZE / _MAX_SS;
+            *(DWORD*)buff = MX25LXX_SSEC_SIZE / FF_MAX_SS;
             break;
     }
     pdrv = pdrv;

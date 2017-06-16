@@ -77,8 +77,8 @@ CR_API void_t   screen_copy (uint_t line);
 #define DOT_GG  0x02    /* 绿色 */
 #define DOT_YY  0x03    /* 黄色 */
 
-CR_API byte_t   pixel_get02z (sint_t x, sint_t y);
-CR_API void_t   pixel_set02z (sint_t x, sint_t y, byte_t c);
+CR_API byte_t   dot_get02z (sint_t x, sint_t y);
+CR_API void_t   dot_set02z (sint_t x, sint_t y, byte_t c);
 
 /* 滚屏类型 */
 #define LINE_FULL   0xFF    /* 全屏 */

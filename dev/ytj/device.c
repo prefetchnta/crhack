@@ -46,7 +46,7 @@ static FATFS    s_fs;
 CR_API retc_t
 store_init (void_t)
 {
-    byte_t  work[_MAX_SS * 2];
+    byte_t  work[FF_MAX_SS * 2];
 
     /* 初始化文件系统 */
     if (f_mount(&s_fs, "", 1) != FR_OK) {

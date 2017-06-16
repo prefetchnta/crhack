@@ -126,7 +126,7 @@ screen_copy (
 =======================================
 */
 CR_API byte_t
-pixel_get02z (
+dot_get02z (
   __CR_IN__ sint_t  x,
   __CR_IN__ sint_t  y
     )
@@ -147,7 +147,7 @@ pixel_get02z (
 =======================================
 */
 CR_API void_t
-pixel_set02z (
+dot_set02z (
   __CR_IN__ sint_t  x,
   __CR_IN__ sint_t  y,
   __CR_IN__ byte_t  c
