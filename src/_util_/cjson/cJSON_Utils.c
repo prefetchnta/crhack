@@ -178,6 +178,11 @@ CJSON_PUBLIC(char *) cJSONUtils_FindPointerFromObjectTo(const cJSON * const obje
     size_t child_index = 0;
     cJSON *current_child = 0;
 
+    if ((object == NULL) || (target == NULL))
+    {
+        return NULL;
+    }
+
     if (object == target)
     {
         /* found */
@@ -273,6 +278,12 @@ static cJSON_bool decode_array_index_from_pointer(const unsigned char * const po
 static cJSON *get_item_from_pointer(cJSON * const object, const char * pointer, const cJSON_bool case_sensitive)
 {
     cJSON *current_element = object;
+
+    if (pointer == NULL)
+    {
+        return NULL;
+    }
+
     /* follow path of the pointer */
     while ((pointer[0] == '/') && (current_element != NULL))
     {
@@ -555,6 +566,10 @@ static cJSON *sort_list(cJSON *list, const cJSON_bool case_sensitive)
 
 static void sort_object(cJSON * const object, const cJSON_bool case_sensitive)
 {
+    if (object == NULL)
+    {
+        return;
+    }
     object->child = sort_list(object->child, case_sensitive);
 }
 
@@ -1044,7 +1059,14 @@ CJSON_PUBLIC(int) cJSONUtils_ApplyPatchesCaseSensitive(cJSON * const object, con
 
 static void compose_patch(cJSON * const patches, const unsigned char * const operation, const unsigned char * const path, const unsigned char *suffix, const cJSON * const value)
 {
-    cJSON *patch = cJSON_CreateObject();
+    cJSON *patch = NULL;
+
+    if ((patches == NULL) || (operation == NULL) || (path == NULL))
+    {
+        return;
+    }
+
+    patch = cJSON_CreateObject();
     if (patch == NULL)
     {
         return;
@@ -1222,7 +1244,14 @@ static void create_patches(cJSON * const patches, const unsigned char * const pa
 
 CJSON_PUBLIC(cJSON *) cJSONUtils_GeneratePatches(cJSON * const from, cJSON * const to)
 {
-    cJSON *patches = cJSON_CreateArray();
+    cJSON *patches = NULL;
+
+    if ((from == NULL) || (to == NULL))
+    {
+        return NULL;
+    }
+
+    patches = cJSON_CreateArray();
     create_patches(patches, (const unsigned char*)"", from, to, false);
 
     return patches;
@@ -1230,7 +1259,14 @@ CJSON_PUBLIC(cJSON *) cJSONUtils_GeneratePatches(cJSON * const from, cJSON * con
 
 CJSON_PUBLIC(cJSON *) cJSONUtils_GeneratePatchesCaseSensitive(cJSON * const from, cJSON * const to)
 {
-    cJSON *patches = cJSON_CreateArray();
+    cJSON *patches = NULL;
+
+    if ((from == NULL) || (to == NULL))
+    {
+        return NULL;
+    }
+
+    patches = cJSON_CreateArray();
     create_patches(patches, (const unsigned char*)"", from, to, true);
 
     return patches;
