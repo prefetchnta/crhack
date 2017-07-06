@@ -53,19 +53,15 @@ astar_clear_nodes (
 {
     asNode* temp;
 
-    if (as->pOpen != NULL) {
-        while (as->pOpen != NULL) {
-            temp = as->pOpen->next;
-            mem_free(as->pOpen);
-            as->pOpen = temp;
-        }
+    while (as->pOpen != NULL) {
+        temp = as->pOpen->next;
+        mem_free(as->pOpen);
+        as->pOpen = temp;
     }
-    if (as->pClosed != NULL) {
-        while (as->pClosed != NULL) {
-            temp = as->pClosed->next;
-            mem_free(as->pClosed);
-            as->pClosed = temp;
-        }
+    while (as->pClosed != NULL) {
+        temp = as->pClosed->next;
+        mem_free(as->pClosed);
+        as->pClosed = temp;
     }
 }
 
