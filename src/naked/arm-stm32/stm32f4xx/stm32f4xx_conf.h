@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32f4xx_conf.h  
   * @author  MCD Application Team
-  * @version V1.7.1
-  * @date    20-May-2016
+  * @version V1.8.0
+  * @date    04-November-2016
   * @brief   Library configuration file.
   ******************************************************************************
   * @attention
@@ -124,6 +124,17 @@
 #include "stm32f4xx_fsmc.h"
 #include "stm32f4xx_dfsdm.h"
 #endif /* STM32F412xG */
+
+#if defined(STM32F413_423xx)
+#include "stm32f4xx_cryp.h"
+#include "stm32f4xx_fmpi2c.h"
+#include "stm32f4xx_rng.h"
+#include "stm32f4xx_can.h"
+#include "stm32f4xx_qspi.h"
+#include "stm32f4xx_rng.h"
+#include "stm32f4xx_fsmc.h"
+#include "stm32f4xx_dfsdm.h"
+#endif /* STM32F413_423xx */
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/

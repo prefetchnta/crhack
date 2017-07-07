@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file      startup_stm32f412xg.s
   * @author    MCD Application Team
-  * @version   V1.7.0
-  * @date      22-April-2015
+  * @version   V1.8.0
+  * @date      09-November-2016
   * @brief     STM32F412xG Devices vector table for GCC based toolchains. 
   *            This module performs:
   *                - Set the initial SP
