@@ -62,7 +62,7 @@ OBJS=$(OBJ)math.$(O) \
      $(OBJ)line_ops.$(O) \
      $(OBJ)rect_ops.$(O) \
      $(OBJ)text_ops.$(O) \
-     $(OBJ)hcg_cmp.$(O) \
+     $(OBJ)pregnant.$(O) \
      $(OBJ)pf_astar.$(O) \
      $(OBJ)vmaggeo.$(O)
 
@@ -103,7 +103,7 @@ CPPS=$(SRC)math.$(C) \
      $(SRC)line_ops.$(C) \
      $(SRC)rect_ops.$(C) \
      $(SRC)text_ops.$(C) \
-     $(SRC)hcg_cmp.$(C) \
+     $(SRC)pregnant.$(C) \
      $(SRC)pf_astar.$(C) \
      $(SRC)vmaggeo.$(C)
 

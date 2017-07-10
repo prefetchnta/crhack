@@ -14,7 +14,7 @@
 		117FCB881CA2ACF900490097 /* appnak.c in Sources */ = {isa = PBXBuildFile; fileRef = 117FC09D1CA2ACF600490097 /* appnak.c */; };
 		117FD11E1CA5096D00490097 /* siopsx.c in Sources */ = {isa = PBXBuildFile; fileRef = 117FD11D1CA5096D00490097 /* siopsx.c */; };
 		118A50661D0405600091E1AC /* bspace.c in Sources */ = {isa = PBXBuildFile; fileRef = 118A50651D0405600091E1AC /* bspace.c */; };
-		1199AB801D8100E800B271B9 /* hcg_cmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 1199AB7F1D8100E800B271B9 /* hcg_cmp.c */; };
+		1199AB801D8100E800B271B9 /* pregnant.c in Sources */ = {isa = PBXBuildFile; fileRef = 1199AB7F1D8100E800B271B9 /* pregnant.c */; };
 		119AA8CE1CBB4B3100BCB9DB /* bjnetcomm.c in Sources */ = {isa = PBXBuildFile; fileRef = 119AA8CD1CBB4B3100BCB9DB /* bjnetcomm.c */; };
 		119E46461DC45D7400AA2AD7 /* vmaggeo.c in Sources */ = {isa = PBXBuildFile; fileRef = 119E46451DC45D7400AA2AD7 /* vmaggeo.c */; };
 		11A473F61C9FE90F00CFC25E /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = 11A4738E1C9FE90F00CFC25E /* adler32.c */; };
@@ -257,7 +257,7 @@
 		117FC09D1CA2ACF600490097 /* appnak.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = appnak.c; sourceTree = "<group>"; };
 		117FD11D1CA5096D00490097 /* siopsx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = siopsx.c; sourceTree = "<group>"; };
 		118A50651D0405600091E1AC /* bspace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bspace.c; sourceTree = "<group>"; };
-		1199AB7F1D8100E800B271B9 /* hcg_cmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hcg_cmp.c; sourceTree = "<group>"; };
+		1199AB7F1D8100E800B271B9 /* pregnant.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pregnant.c; sourceTree = "<group>"; };
 		119AA8CD1CBB4B3100BCB9DB /* bjnetcomm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bjnetcomm.c; sourceTree = "<group>"; };
 		119E46451DC45D7400AA2AD7 /* vmaggeo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vmaggeo.c; sourceTree = "<group>"; };
 		11A473821C9FE8A600CFC25E /* libCrHack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCrHack.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -515,8 +515,8 @@
 		11A473791C9FE8A600CFC25E = {
 			isa = PBXGroup;
 			children = (
-				11A473841C9FE8A600CFC25E /* Sources */,
 				11A473831C9FE8A600CFC25E /* Products */,
+				11A473841C9FE8A600CFC25E /* Sources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -651,14 +651,6 @@
 		11A4745E1C9FEE7000CFC25E /* _fmtz_ */ = {
 			isa = PBXGroup;
 			children = (
-				11A4749C1C9FEE7000CFC25E /* ego */,
-				11A4749E1C9FEE7000CFC25E /* expand */,
-				11A474A11C9FEE7000CFC25E /* falcom */,
-				11A474B41C9FEE7000CFC25E /* kirikiri */,
-				11A474B71C9FEE7000CFC25E /* nscripter */,
-				11A474BB1C9FEE7000CFC25E /* syn */,
-				11A474C11C9FEE7000CFC25E /* tgl */,
-				11A474C91C9FEE7000CFC25E /* tjpgdec */,
 				11A4745F1C9FEE7000CFC25E /* cr_bmp.c */,
 				11A474601C9FEE7000CFC25E /* cr_dds.c */,
 				11A474611C9FEE7000CFC25E /* cr_jpg.c */,
@@ -674,6 +666,14 @@
 				11A4748E1C9FEE7000CFC25E /* e_nscripter.c */,
 				11A474951C9FEE7000CFC25E /* e_syn.c */,
 				11A474991C9FEE7000CFC25E /* e_tgl.c */,
+				11A4749C1C9FEE7000CFC25E /* ego */,
+				11A4749E1C9FEE7000CFC25E /* expand */,
+				11A474A11C9FEE7000CFC25E /* falcom */,
+				11A474B41C9FEE7000CFC25E /* kirikiri */,
+				11A474B71C9FEE7000CFC25E /* nscripter */,
+				11A474BB1C9FEE7000CFC25E /* syn */,
+				11A474C11C9FEE7000CFC25E /* tgl */,
+				11A474C91C9FEE7000CFC25E /* tjpgdec */,
 			);
 			name = _fmtz_;
 			path = ../../../src/_fmtz_;
@@ -797,19 +797,19 @@
 				11A4755E1C9FF07100CFC25E /* cu50_r2t.c */,
 				11A4755F1C9FF07100CFC25E /* cu50_t2r.c */,
 				11A475601C9FF07100CFC25E /* form_nxn.c */,
-				1199AB7F1D8100E800B271B9 /* hcg_cmp.c */,
 				11A475611C9FF07100CFC25E /* ifc67.c */,
-				11A475621C9FF07100CFC25E /* iif97.c */,
 				11A475631C9FF07100CFC25E /* iif97_1.c */,
-				11A475641C9FF07100CFC25E /* iif97_2.c */,
 				11A475651C9FF07100CFC25E /* iif97_2_3.c */,
+				11A475641C9FF07100CFC25E /* iif97_2.c */,
 				11A475661C9FF07100CFC25E /* iif97_3.c */,
 				11A475671C9FF07100CFC25E /* iif97_4.c */,
 				11A475681C9FF07100CFC25E /* iif97_5.c */,
+				11A475621C9FF07100CFC25E /* iif97.c */,
 				11A475691C9FF07100CFC25E /* imgbin.c */,
 				11A4756A1C9FF07100CFC25E /* imgclr.c */,
 				11A4756B1C9FF07100CFC25E /* line_ops.c */,
 				1144871E1D2B947A00D89DF2 /* pf_astar.c */,
+				1199AB7F1D8100E800B271B9 /* pregnant.c */,
 				11A4756D1C9FF07100CFC25E /* pt100_r2t.c */,
 				11A4756E1C9FF07100CFC25E /* pt100_t2r.c */,
 				11A4756F1C9FF07100CFC25E /* rect_ops.c */,
@@ -1013,7 +1013,7 @@
 				11A474311C9FE90F00CFC25E /* idea.c in Sources */,
 				11A475FF1C9FF28E00CFC25E /* codepage.c in Sources */,
 				11A4745A1C9FE90F00CFC25E /* xmlcall.c in Sources */,
-				1199AB801D8100E800B271B9 /* hcg_cmp.c in Sources */,
+				1199AB801D8100E800B271B9 /* pregnant.c in Sources */,
 				11A4759F1C9FF07100CFC25E /* tr_mv2t.c in Sources */,
 				11A474E01C9FEE7000CFC25E /* e_expand.c in Sources */,
 				11A475241C9FEFE100CFC25E /* bltint.c in Sources */,
