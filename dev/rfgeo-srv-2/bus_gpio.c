@@ -58,7 +58,7 @@ gpio_input (void_t)
 {
     int16u  pins;
 
-    pins = GPIO_ReadOutputData(GPIOG);
+    pins = GPIO_ReadInputData(GPIOG);
     return ((pins >> 11) & 0x0F);
 }
 
@@ -86,6 +86,48 @@ gpio_output (
 
     if (pins_s != 0)
         GPIO_SetBits(GPIOE, pins_s);
+    if (pins_r != 0)
+        GPIO_ResetBits(GPIOE, pins_r);
+}
+
+/*
+=======================================
+    GPIO OC 输出 (置位)
+=======================================
+*/
+CR_API void_t
+gpio_setb (
+  __CR_IN__ byte_t  out
+    )
+{
+    int16u  pins_s = 0;
+
+    if (out & 0x01) pins_s |= GPIO_Pin_2;
+    if (out & 0x02) pins_s |= GPIO_Pin_3;
+    if (out & 0x04) pins_s |= GPIO_Pin_4;
+    if (out & 0x08) pins_s |= GPIO_Pin_5;
+
+    if (pins_s != 0)
+        GPIO_SetBits(GPIOE, pins_s);
+}
+
+/*
+=======================================
+    GPIO OC 输出 (清位)
+=======================================
+*/
+CR_API void_t
+gpio_clrb (
+  __CR_IN__ byte_t  out
+    )
+{
+    int16u  pins_r = 0;
+
+    if (out & 0x01) pins_r |= GPIO_Pin_2;
+    if (out & 0x02) pins_r |= GPIO_Pin_3;
+    if (out & 0x04) pins_r |= GPIO_Pin_4;
+    if (out & 0x08) pins_r |= GPIO_Pin_5;
+
     if (pins_r != 0)
         GPIO_ResetBits(GPIOE, pins_r);
 }

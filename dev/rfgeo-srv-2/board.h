@@ -155,6 +155,8 @@ CR_API byte_t   i2c0_write_device (byte_t devs, byte_t addr,
 CR_API void_t   gpio_init (void_t);
 CR_API byte_t   gpio_input (void_t);
 CR_API void_t   gpio_output (byte_t out);
+CR_API void_t   gpio_setb (byte_t out);
+CR_API void_t   gpio_clrb (byte_t out);
 
 /*****************************************************************************/
 /*                                 公用配置                                  */
