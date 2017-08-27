@@ -1,7 +1,7 @@
 
 ## 【构 建】
 Command | Platform
-- | -
+------- | --------
 mak/bcb60.bat | Borland C++ Builder 6.0 (Win32-X86)
 mak/bcb2006.bat | Borland Developer Studio 2006 (Win32-X86)
 mak/bcb2007.bat | CodeGear RAD Studio 2007 (Win32-X86)
