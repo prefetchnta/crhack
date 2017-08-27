@@ -27,8 +27,8 @@ prj/xcode/build.sh | Apple Clang (iOS-ALL)
 usr/arm-fsl-linux-gnueabi.sh | GCC (Linux for Freescale i.MX6)
 usr/arm-linux-gnueabihf.sh | GCC (Linux ARM32 Hard Float ABI)
 usr/mibiao.sh | GCC (Linux for Nuvoton N3292x)
-usr/ndk-gcc-api14.bat | Android NDK GCC 4.9 (for API14)
-usr/ndk-gcc-api24.bat | Android NDK GCC 4.9 (for API24)
+usr/ndk-gcc-api14.bat | Android NDK GCC 4.9 (for API-14)
+usr/ndk-gcc-api24.bat | Android NDK GCC 4.9 (for API-24)
 usr/rfgeo-srv-2.bat | Keil MDK 4.0+ ARMCC (for ARM Cortex-M3)
 
 ## 【废 话】
