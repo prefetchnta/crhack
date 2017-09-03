@@ -123,7 +123,8 @@ astar_step_init (
 {
     asNode* temp;
 
-    if (as->udCost == NULL || as->udValid == NULL)
+    if (as->udHeuristic == NULL ||
+        as->udCost == NULL || as->udValid == NULL)
         return (FALSE);
     temp = struct_new(asNode);
     if (temp == NULL)
@@ -136,15 +137,8 @@ astar_step_init (
     as->iDY = dy;
     as->iDNum = ASTAR_COORD2NUM(dx, dy);
 
-    if (as->udHeuristic == NULL) {
-        dx -= sx;
-        dy -= sy;
-        temp->h = CR_ABS(dx) + CR_ABS(dy);
-    }
-    else {
-        temp->h = as->udHeuristic(NULL, temp, 0, as->cbData);
-    }
     temp->g = 0;
+    temp->h = as->udHeuristic(NULL, temp, 0, as->cbData);
     temp->f = temp->g + temp->h;
     temp->number = ASTAR_COORD2NUM(sx, sy);
 
@@ -418,15 +412,8 @@ astar_link_child (
             msg_stopA("struct_new() failure", "crhack");
         astar_node_init(newnode, xx, yy);
         newnode->parent = node;
-        if (as->udHeuristic == NULL) {
-            xx -= as->iDX;
-            yy -= as->iDY;
-            newnode->h = CR_ABS(xx) + CR_ABS(yy);
-        }
-        else {
-            newnode->h = as->udHeuristic(node, newnode, 0, as->cbData);
-        }
         newnode->g = gg;
+        newnode->h = as->udHeuristic(node, newnode, 0, as->cbData);
         newnode->f = newnode->g + newnode->h;
         newnode->number = num;
         astar_add2open(as, newnode);
@@ -508,7 +495,7 @@ astar_find_path (
 
     if (!astar_step_init(as, sx, sy, dx, dy))
         return (FALSE);
-    for (retc = 0; retc != 0; retc = astar_step_next(as));
+    for (retc = 0; retc == 0; retc = astar_step_next(as));
     if (retc < 0 || as->pBest == NULL) {
         as->pBest = NULL;
         return (FALSE);
