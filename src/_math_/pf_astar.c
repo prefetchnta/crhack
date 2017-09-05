@@ -22,7 +22,7 @@
 #include "phylib.h"
 
 /* 坐标转编号 */
-#define ASTAR_COORD2NUM(x, y)   (as->iRows * (x) + (y))
+#define ASTAR_COORD2NUM(x, y)   (as->iCols * (y) + (x))
 
 /*
 =======================================
@@ -323,12 +323,13 @@ astar_update_parents (
     )
 {
     asNode  *kid, *parent;
-    sint_t  ii, gg = node->g, cc = node->numchildren;
+    sint_t  cost, ii, gg = node->g, cc = node->numchildren;
 
     for (ii = 0; ii < cc; ii++) {
         kid = node->children[ii];
-        if (gg + 1 < kid->g) {
-            kid->g = gg + 1;
+        cost = as->udCost(node, kid, 0, as->cbData);
+        if (gg + cost < kid->g) {
+            kid->g = gg + cost;
             kid->f = kid->g + kid->h;
             kid->parent = node;
             astar_push(as, kid);
@@ -340,8 +341,9 @@ astar_update_parents (
         cc = parent->numchildren;
         for (ii = 0; ii < cc; ii++) {
             kid = parent->children[ii];
-            if (parent->g + 1 < kid->g) {
-                kid->g = parent->g + as->udCost(parent, kid, 0, as->cbData);
+            cost = as->udCost(parent, kid, 0, as->cbData);
+            if (parent->g + cost < kid->g) {
+                kid->g = parent->g + cost;
                 kid->f = kid->g + kid->h;
                 kid->parent = parent;
                 astar_push(as, kid);
