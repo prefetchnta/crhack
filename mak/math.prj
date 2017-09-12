@@ -64,6 +64,7 @@ OBJS=$(OBJ)math.$(O) \
      $(OBJ)text_ops.$(O) \
      $(OBJ)pregnant.$(O) \
      $(OBJ)pf_astar.$(O) \
+     $(OBJ)pf_dijkstra.$(O) \
      $(OBJ)vmaggeo.$(O)
 
 CPPS=$(SRC)math.$(C) \
@@ -105,6 +106,7 @@ CPPS=$(SRC)math.$(C) \
      $(SRC)text_ops.$(C) \
      $(SRC)pregnant.$(C) \
      $(SRC)pf_astar.$(C) \
+     $(SRC)pf_dijkstra.$(C) \
      $(SRC)vmaggeo.$(C)
 
 ###############################################################################

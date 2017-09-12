@@ -210,7 +210,7 @@ path_buildA (
     for (; *ptr != CR_AC(NIL); ptr++) {
         if (is_slashA(*ptr)) {
             *ptr = CR_AC('\0');
-            mkdir(dir, S_IRWXG);
+            mkdir(dir, 0777);
             *ptr = CR_AC('\\');
         }
     }

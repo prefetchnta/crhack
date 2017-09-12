@@ -18,7 +18,6 @@
 /*****************************************************************************/
 
 #include "blit.h"
-#include "memlib.h"
 #include "phylib.h"
 #include "pixels.h"
 

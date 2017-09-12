@@ -17,7 +17,6 @@
 /*  =======================================================================  */
 /*****************************************************************************/
 
-#include "memlib.h"
 #include "phylib.h"
 
 #ifndef _CR_NO_STDC_
@@ -173,6 +172,62 @@ line_hough_free (
     )
 {
     SAFE_FREE(hough->accum);
+}
+
+/*
+=======================================
+    线段方向倒转
+=======================================
+*/
+CR_API void_t
+line_swap (
+  __CR_IO__ sPNT2*  pnts,
+  __CR_IN__ leng_t  count
+    )
+{
+    sPNT2   tmp;
+    leng_t  idx, num = count / 2;
+
+    for (idx = 0; idx < num; idx++) {
+        struct_cpy(&tmp, &pnts[idx], sPNT2);
+        struct_cpy(&pnts[idx], &pnts[count - 1 - idx], sPNT2);
+        struct_cpy(&pnts[count - 1 - idx], &tmp, sPNT2);
+    }
+}
+
+/*
+=======================================
+    线段点集压缩
+=======================================
+*/
+CR_API leng_t
+line_compress (
+  __CR_IO__ sPNT2*  pnts,
+  __CR_IN__ leng_t  count
+    )
+{
+    sPNT2   dir;
+    sPNT2   tmp;
+    leng_t  idx;
+
+    if (count <= 2)
+        return (count);
+    dir.x = pnts[1].x - pnts[0].x;
+    dir.y = pnts[1].y - pnts[0].y;
+    for (idx = 1; idx < count - 1;) {
+        tmp.x = pnts[idx + 1].x - pnts[idx].x;
+        tmp.y = pnts[idx + 1].y - pnts[idx].y;
+        if (tmp.x == dir.x && tmp.y == dir.y) {
+            count -= 1;
+            mem_cpy(&pnts[idx], &pnts[idx + 1],
+                (count - idx) * sizeof(sPNT2));
+        }
+        else {
+            struct_cpy(&dir, &tmp, sPNT2);
+            idx += 1;
+        }
+    }
+    return (count);
 }
 
 /*****************************************************************************/

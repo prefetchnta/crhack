@@ -18,7 +18,6 @@
 /*****************************************************************************/
 
 #include "applib.h"
-#include "memlib.h"
 #include "phylib.h"
 
 /* 坐标转编号 */
@@ -520,6 +519,8 @@ astar_get_path (
     leng_t  cnts;
     asNode* best;
 
+    if (count != NULL)
+        *count = 0;
     if (as->pBest == NULL)
         return (NULL);
     cnts = 0;
@@ -529,6 +530,8 @@ astar_get_path (
         best = best->parent;
     } while (best != NULL);
 
+    if (count != NULL)
+        *count = cnts;
     list = mem_talloc(cnts, sPNT2);
     if (list == NULL)
         return (NULL);
@@ -542,8 +545,6 @@ astar_get_path (
         best = best->parent;
     } while (best != NULL);
 
-    if (count != NULL)
-        *count = cnts;
     return (list);
 }
 

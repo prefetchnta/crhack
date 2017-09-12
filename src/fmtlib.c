@@ -612,7 +612,7 @@ pack_find_fileU (
     if (idx >= node->__cnts__)
         return (FALSE);
     if (index != NULL)
-       *index  = unit->index;
+        *index = unit->index;
     return (TRUE);
 }
 
