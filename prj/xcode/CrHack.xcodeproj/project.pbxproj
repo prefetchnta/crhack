@@ -235,6 +235,7 @@
 		11BCB2CC1CC6462F00704F41 /* slist.c in Sources */ = {isa = PBXBuildFile; fileRef = 11BCB2CB1CC6462F00704F41 /* slist.c */; };
 		BA0D3E291CB1551E00BDA52D /* fsyspsx.c in Sources */ = {isa = PBXBuildFile; fileRef = BA0D3E281CB1551E00BDA52D /* fsyspsx.c */; };
 		BA0D3E2B1CB1552900BDA52D /* netbsd.c in Sources */ = {isa = PBXBuildFile; fileRef = BA0D3E2A1CB1552900BDA52D /* netbsd.c */; };
+		BAC0539D1F6963D90060907A /* pf_dijkstra.c in Sources */ = {isa = PBXBuildFile; fileRef = BAC0539C1F6963D90060907A /* pf_dijkstra.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -479,6 +480,7 @@
 		11BCB2CB1CC6462F00704F41 /* slist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = slist.c; path = ../../../src/slist.c; sourceTree = "<group>"; };
 		BA0D3E281CB1551E00BDA52D /* fsyspsx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fsyspsx.c; sourceTree = "<group>"; };
 		BA0D3E2A1CB1552900BDA52D /* netbsd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = netbsd.c; sourceTree = "<group>"; };
+		BAC0539C1F6963D90060907A /* pf_dijkstra.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pf_dijkstra.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -809,6 +811,7 @@
 				11A4756A1C9FF07100CFC25E /* imgclr.c */,
 				11A4756B1C9FF07100CFC25E /* line_ops.c */,
 				1144871E1D2B947A00D89DF2 /* pf_astar.c */,
+				BAC0539C1F6963D90060907A /* pf_dijkstra.c */,
 				1199AB7F1D8100E800B271B9 /* pregnant.c */,
 				11A4756D1C9FF07100CFC25E /* pt100_r2t.c */,
 				11A4756E1C9FF07100CFC25E /* pt100_t2r.c */,
@@ -1094,6 +1097,7 @@
 				11A475931C9FF07100CFC25E /* rect_ops.c in Sources */,
 				11A475011C9FEE7000CFC25E /* tgl_bmr.c in Sources */,
 				11A475851C9FF07100CFC25E /* ifc67.c in Sources */,
+				BAC0539D1F6963D90060907A /* pf_dijkstra.c in Sources */,
 				11A475001C9FEE7000CFC25E /* tgl_acf.c in Sources */,
 				11A4742E1C9FE90F00CFC25E /* hash.c in Sources */,
 				11A474F31C9FEE7000CFC25E /* sz20.c in Sources */,
