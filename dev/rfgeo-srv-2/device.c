@@ -160,8 +160,6 @@ USART2_IRQHandler (void_t)
         if (s_fifo.rx_tl >= RX_SIZE)
             s_fifo.rx_tl = 0;
     }
-    if (USART_GetITStatus(USART2, USART_IT_LBD))
-        USART_ClearITPendingBit(USART2, USART_IT_LBD);
 }
 
 /*****************************************************************************/
