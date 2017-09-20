@@ -155,10 +155,9 @@ USART2_IRQHandler (void_t)
         if (s_fifo.rx_tl >= RX_SIZE)
             s_fifo.rx_tl = 0;
     }
-    if (USART_GetITStatus(USART2, USART_IT_ORE)) {
-        s_fifo.rx_buf[s_fifo.rx_tl++] = USART_ReceiveData(USART2);
-        if (s_fifo.rx_tl >= RX_SIZE)
-            s_fifo.rx_tl = 0;
+    if (USART_GetFlagStatus(USART2, USART_FLAG_ORE)) {
+        s_fifo.rx_buf[s_fifo.rx_tl] = USART_ReceiveData(USART2);
+        USART_ClearFlag(USART2, USART_FLAG_ORE);
     }
 }
 
