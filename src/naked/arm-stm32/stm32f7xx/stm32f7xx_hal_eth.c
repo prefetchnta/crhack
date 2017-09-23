@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32f7xx_hal_eth.c
   * @author  MCD Application Team
-  * @version V1.1.0
-  * @date    22-April-2016
   * @brief   ETH HAL module driver.
   *          This file provides firmware functions to manage the following 
   *          functionalities of the Ethernet (ETH) peripheral:
@@ -68,7 +66,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2016 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT(c) 2017 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -108,6 +106,7 @@
   */
 
 #ifdef HAL_ETH_MODULE_ENABLED
+#if defined (ETH)
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -2031,6 +2030,7 @@ static void ETH_FlushTransmitFIFO(ETH_HandleTypeDef *heth)
   * @}
   */
 
+#endif /* ETH */
 #endif /* HAL_ETH_MODULE_ENABLED */
 /**
   * @}

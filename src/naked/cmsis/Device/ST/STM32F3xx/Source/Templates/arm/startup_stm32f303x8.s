@@ -1,8 +1,6 @@
 ;******************** (C) COPYRIGHT 2016 STMicroelectronics ********************
 ;* File Name          : startup_stm32f303x8.s
 ;* Author             : MCD Application Team
-;* Version            : V2.3.0
-;* Date               : 29-April-2015
 ;* Description        : STM32F303x6/x8 devices vector table for MDK-ARM toolchain.
 ;*                      This module performs:
 ;*                      - Set the initial SP

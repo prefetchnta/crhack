@@ -2,10 +2,8 @@
   ******************************************************************************
   * @file    stm32f7xx_it.c
   * @author  MCD Application Team
-  * @version V1.0.1
-  * @date    22-April-2016
   * @brief   Main Interrupt Service Routines.
-  *          This file provides template for all exceptions handler and
+  *          This file provides template for all exceptions handler and 
   *          peripherals interrupt service routine.
   ******************************************************************************
   * @attention
@@ -40,12 +38,12 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f7xx_it.h"
-
+   
 /** @addtogroup STM32F7xx_HAL_Examples
   * @{
   */
 
-/** @addtogroup ADC_RegularConversion_DMA
+/** @addtogroup Templates
   * @{
   */
 
@@ -53,6 +51,7 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -174,9 +173,13 @@ void SysTick_Handler(void)
 {
 }*/
 
+
+/**
+  * @}
+  */ 
+
 /**
   * @}
   */
-
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

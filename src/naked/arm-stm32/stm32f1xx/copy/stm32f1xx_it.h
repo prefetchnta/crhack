@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    stm32f1xx_it.h
   * @author  MCD Application Team
-  * @version V1.4.0
-  * @date    29-April-2016
+  * @version V1.5.0
+  * @date    14-April-2017
   * @brief   This file contains the headers of the interrupt handlers.
   ******************************************************************************
   * @attention

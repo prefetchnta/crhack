@@ -1,8 +1,6 @@
 ;/******************** (C) COPYRIGHT 2016 STMicroelectronics ********************
 ;* File Name          : startup_stm32f303xe.s
 ;* Author             : MCD Application Team
-;* Version            : V2.3.0
-;* Date               : 29-April-2015
 ;* Description        : STM32F303RE/STM32F303VE/STM32F303ZE devices vector table 
 ;*                      for EWARM toolchain.
 ;*                      This module performs:

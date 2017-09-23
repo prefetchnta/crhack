@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32l0xx_it.h 
   * @author  MCD Application Team
-  * @version V1.7.0
-  * @date    31-May-2016
   * @brief   This file contains the headers of the interrupt handlers.
   ******************************************************************************
   * @attention

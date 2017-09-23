@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32f7xx_hal_timebase_rtc_alarm_template.c 
   * @author  MCD Application Team
-  * @version V1.1.0
-  * @date    22-April-2016
   * @brief   HAL time base based on the hardware RTC_ALARM Template.
   *
   *          This file override the native HAL time base functions (defined as weak)
@@ -23,7 +21,7 @@
        HAL_RTC_MODULE_ENABLED define in stm32f7xx_hal_conf.h 
 
     [..]
-    (@) HAL RTC alarm and HAL RTC wakeup drivers can’t be used with low power modes:
+    (@) HAL RTC alarm and HAL RTC wakeup drivers cant be used with low power modes:
         The wake up capability of the RTC may be intrusive in case of prior low power mode
         configuration requiring different wake up sources.
         Application/Example behavior is no more guaranteed 
@@ -34,7 +32,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2016 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT(c) 2017 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -231,7 +229,6 @@ HAL_StatusTypeDef HAL_InitTick (uint32_t TickPriority)
 /**
   * @brief  Suspend Tick increment.
   * @note   Disable the tick increment by disabling RTC ALARM interrupt.
-  * @param  None
   * @retval None
   */
 void HAL_SuspendTick(void)
@@ -247,7 +244,6 @@ void HAL_SuspendTick(void)
 /**
   * @brief  Resume Tick increment.
   * @note   Enable the tick increment by Enabling RTC ALARM interrupt.
-  * @param  None
   * @retval None
   */
 void HAL_ResumeTick(void)
@@ -298,7 +294,6 @@ void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
 
 /**
   * @brief  This function handles RTC ALARM interrupt request.
-  * @param  None
   * @retval None
   */
 void RTC_Alarm_IRQHandler(void)
