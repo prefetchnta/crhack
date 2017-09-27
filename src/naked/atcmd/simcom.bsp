@@ -54,7 +54,6 @@ static sSIMCOM  s_simcom[10];
 
 /* 一些有用的宏 */
 #define SIMCOM_FOREVER      (120000UL)
-#define SIMCOM_TIMEOUT(x)   ((x) +  100)
 #define SIMCOM_TCP_PORT(x)  ((x) + 6500)
 #define SIMCOM_UDP_PORT(x)  ((x) + 6600)
 
@@ -218,7 +217,7 @@ simcom_client_tcp_open_int (
     if (bak == NULL)
     {
 _retry: /* 等待返回 */
-        bak = at_wait(dat, SIMCOM_BUF_SIZE, SIMCOM_TIMEOUT(time));
+        bak = at_wait(dat, SIMCOM_BUF_SIZE, time);
         if (bak == NULL || str_strA(bak, "ERROR") != NULL)
             goto _failure;
         bak = str_strA(bak, "+CIPOPEN: ");
@@ -458,40 +457,42 @@ simcom_socket_tcp_send (
     /* 分块发送 */
     if (size == 0)
         return (0);
-    str = str_fmtA("AT+CIPSEND=%u,1024\r", real->linknum);
-    if (str == NULL)
-        return (CR_U_ERROR);
     idx = size / 1024;
-    for (; idx != 0; idx--) {
-        at_flush();
-        at_send(str, 18);
-        at_send(data, 1024);
-        at_throw(18 + 1 + 1024, SIMCOM_AT_TOUT);
-        bak = at_wait(ret, sizeof(ret), SIMCOM_AT_TOUT);
-        if (bak == NULL || str_strA(bak, "ERROR") != NULL)
-            goto _failure;
-        bak = str_strA(bak, "+CIPSEND: ");
-        if (bak == NULL)
-        {
-_retry1:    /* 等待返回 */
-            bak = at_wait(ret, sizeof(ret), SIMCOM_TIMEOUT(real->send_tout));
+    if (idx != 0) {
+        str = str_fmtA("AT+CIPSEND=%u,1024\r", real->linknum);
+        if (str == NULL)
+            return (CR_U_ERROR);
+        for (; idx != 0; idx--) {
+            at_flush();
+            at_send(str, 18);
+            at_send(data, 1024);
+            at_throw(18 + 1 + 1024, SIMCOM_AT_TOUT);
+            bak = at_wait(ret, sizeof(ret), SIMCOM_AT_TOUT);
             if (bak == NULL || str_strA(bak, "ERROR") != NULL)
                 goto _failure;
             bak = str_strA(bak, "+CIPSEND: ");
             if (bak == NULL)
-                goto _retry1;
+            {
+_retry1:        /* 等待返回 */
+                bak = at_wait(ret, sizeof(ret), real->send_tout);
+                if (bak == NULL || str_strA(bak, "ERROR") != NULL)
+                    goto _failure;
+                bak = str_strA(bak, "+CIPSEND: ");
+                if (bak == NULL)
+                    goto _retry1;
+            }
+            bak += 10;
+            if (real->linknum != (uint_t)(*bak) - 0x30)
+                goto _failure;
+            bak = str_chrA(bak + 2, CR_AC(','));
+            if (bak == NULL)
+                goto _failure;
+            if (str2intA(bak + 1, NULL) != 1024)
+                goto _failure;
+            data = (byte_t*)data + 1024;
         }
-        bak += 10;
-        if (real->linknum != (uint_t)(*bak) - 0x30)
-            goto _failure;
-        bak = str_chrA(bak + 2, CR_AC(','));
-        if (bak == NULL)
-            goto _failure;
-        if (str2intA(bak + 1, NULL) != 1024)
-            goto _failure;
-        data = (byte_t*)data + 1024;
+        mem_free(str);
     }
-    mem_free(str);
 
     /* 发送剩余 */
     idx = size % 1024;
@@ -512,7 +513,7 @@ _retry1:    /* 等待返回 */
         if (bak == NULL)
         {
 _retry2:    /* 等待返回 */
-            bak = at_wait(ret, sizeof(ret), SIMCOM_TIMEOUT(real->send_tout));
+            bak = at_wait(ret, sizeof(ret), real->send_tout);
             if (bak == NULL || str_strA(bak, "ERROR") != NULL)
                 return (CR_U_ERROR);
             bak = str_strA(bak, "+CIPSEND: ");
@@ -593,7 +594,7 @@ simcom_socket_udp_send (
     if (bak == NULL)
     {
 _retry: /* 等待返回 */
-        bak = at_wait(ret, sizeof(ret), SIMCOM_TIMEOUT(real->send_tout));
+        bak = at_wait(ret, sizeof(ret), real->send_tout);
         if (bak == NULL || str_strA(bak, "ERROR") != NULL)
             return (CR_U_ERROR);
         bak = str_strA(bak, "+CIPSEND: ");
@@ -659,37 +660,39 @@ simcom_pull_data (
         count = total;
 
     /* 分块拉取 */
-    str = str_fmtA("AT+CIPRXGET=2,%u,1024\r", netw->linknum);
-    if (str == NULL)
-        return;
     tmp = (ansi_t*)mem_malloc(1024 + 64);
     if (tmp == NULL)
-        goto _failure1;
+        return;
     idx = count / 1024;
-    for (; idx != 0; idx--) {
-        bak = at_iorw(tmp, 1024 + 64, str, SIMCOM_AT_TOUT);
-        if (bak == NULL)
-            goto _failure2;
-        bak = str_strA(bak, "+CIPRXGET: 2,");
-        if (bak == NULL)
-            goto _failure2;
-        bak += 13;
-        if (netw->linknum != (uint_t)(*bak) - 0x30)
-            goto _failure2;
-        if (str2intA(bak + 2, NULL) != 1024)
-            goto _failure2;
+    if (idx != 0) {
+        str = str_fmtA("AT+CIPRXGET=2,%u,1024\r", netw->linknum);
+        if (str == NULL)
+            goto _failure1;
+        for (; idx != 0; idx--) {
+            bak = at_iorw(tmp, 1024 + 64, str, SIMCOM_AT_TOUT);
+            if (bak == NULL)
+                goto _failure2;
+            bak = str_strA(bak, "+CIPRXGET: 2,");
+            if (bak == NULL)
+                goto _failure2;
+            bak += 13;
+            if (netw->linknum != (uint_t)(*bak) - 0x30)
+                goto _failure2;
+            if (str2intA(bak + 2, NULL) != 1024)
+                goto _failure2;
 
-        /* 将数据放入自己的队列 */
-        bak = str_strA(bak + 2, "\r\n");
-        if (bak == NULL)
-            goto _failure2;
-        for (bak += 2, size = 1024; size != 0; size--) {
-            netw->fifo_buffer[netw->tail++] = *bak++;
-            if (netw->tail >= SIMCOM_BUF_SIZE)
-                netw->tail = 0;
+            /* 将数据放入自己的队列 */
+            bak = str_strA(bak + 2, "\r\n");
+            if (bak == NULL)
+                goto _failure2;
+            for (bak += 2, size = 1024; size != 0; size--) {
+                netw->fifo_buffer[netw->tail++] = *bak++;
+                if (netw->tail >= SIMCOM_BUF_SIZE)
+                    netw->tail = 0;
+            }
         }
+        mem_free(str);
     }
-    mem_free(str);
 
     /* 拉取剩余 */
     size = count % 1024;
@@ -724,9 +727,9 @@ simcom_pull_data (
     return;
 
 _failure2:
-    mem_free(tmp);
-_failure1:
     mem_free(str);
+_failure1:
+    mem_free(tmp);
     return;
 }
 
@@ -990,10 +993,10 @@ simcom_socket_tcp_set_alive (
     ansi_t  ret[64];
 
     /* 参数过滤 */
-    if ((int32u)idle < 60000UL)
+    if ((int32u)idle <= 60000UL)
         idle = 1;
     else
-    if ((int32u)idle > 7200000UL)
+    if ((int32u)idle >= 7200000UL)
         idle = 120;
     else
         idle /= 60000;
@@ -1109,6 +1112,14 @@ sim7100_online (
     /* 减少超时时间 */
     bak = at_iorw(ret, sizeof(ret), "AT+CIPTIMEOUT=4000,4000,4000\r",
                   SIMCOM_AT_TOUT);
+    if (bak == NULL || str_strA(bak, "OK") == NULL)
+        return (FALSE);
+
+    /* 关闭接收提示 */
+    bak = at_iorw(ret, sizeof(ret), "AT+CIPHEAD=0\r", SIMCOM_AT_TOUT);
+    if (bak == NULL || str_strA(bak, "OK") == NULL)
+        return (FALSE);
+    bak = at_iorw(ret, sizeof(ret), "AT+CIPSRIP=0\r", SIMCOM_AT_TOUT);
     if (bak == NULL || str_strA(bak, "OK") == NULL)
         return (FALSE);
 
@@ -1234,6 +1245,14 @@ sim6320_online (
     if (bak == NULL || str_strA(bak, "OK") == NULL)
         return (FALSE);
 
+    /* 关闭接收提示 */
+    bak = at_iorw(ret, sizeof(ret), "AT+CIPHEAD=0\r", SIMCOM_AT_TOUT);
+    if (bak == NULL || str_strA(bak, "OK") == NULL)
+        return (FALSE);
+    bak = at_iorw(ret, sizeof(ret), "AT+CIPSRIP=0\r", SIMCOM_AT_TOUT);
+    if (bak == NULL || str_strA(bak, "OK") == NULL)
+        return (FALSE);
+
     /* 非透传模式 */
     bak = at_iorw(ret, sizeof(ret), "AT+CIPMODE=0\r", SIMCOM_AT_TOUT);
     if (bak == NULL || str_strA(bak, "OK") == NULL)
@@ -1348,6 +1367,14 @@ sim5360_online (
     /* 减少超时时间 */
     bak = at_iorw(ret, sizeof(ret), "AT+CIPTIMEOUT=4000,4000,4000\r",
                   SIMCOM_AT_TOUT);
+    if (bak == NULL || str_strA(bak, "OK") == NULL)
+        return (FALSE);
+
+    /* 关闭接收提示 */
+    bak = at_iorw(ret, sizeof(ret), "AT+CIPHEAD=0\r", SIMCOM_AT_TOUT);
+    if (bak == NULL || str_strA(bak, "OK") == NULL)
+        return (FALSE);
+    bak = at_iorw(ret, sizeof(ret), "AT+CIPSRIP=0\r", SIMCOM_AT_TOUT);
     if (bak == NULL || str_strA(bak, "OK") == NULL)
         return (FALSE);
 

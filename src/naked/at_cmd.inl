@@ -171,10 +171,10 @@ at_csq (
     /* 返回信号质量 */
     if (at_iorw(buf, sizeof(buf), "AT+CSQ\r", tout) == NULL)
         return (FALSE);
-    ptr = str_strA(buf, "+CSQ: ");
+    ptr = str_strA(buf, "+CSQ:");
     if (ptr == NULL)
         return (FALSE);
-    *rssi = str2intA(ptr + 6, NULL);
+    *rssi = str2intA(ptr + 5, NULL);
     return (TRUE);
 }
 
