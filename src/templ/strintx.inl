@@ -19,41 +19,156 @@
 
 /*
 =======================================
+    整数转二进制串T
+=======================================
+*/
+CR_API XCHAR*
+#if     (TYPE_T == 16)
+CR_FAW(int2bstr) (
+#elif   (TYPE_T == 32)
+CR_FAW(int2bstr32) (
+#elif   (TYPE_T == 64)
+CR_FAW(int2bstr64) (
+#endif
+  __CR_OT__ XCHAR   name[65],
+  __CR_IN__ UINT_T  value
+    )
+{
+    XCHAR   tmp;
+    ufast_t idx, num, cnt = 0;
+
+    do {
+        name[cnt++] = s_hex2asc[value & 1];
+        value >>= 1;
+    } while (value != 0);
+
+    name[cnt] = 0x00;
+    num = cnt / 2;
+
+    for (idx = 0; idx < num; idx++) {
+        tmp = name[idx];
+        name[idx] = name[cnt - 1 - idx];
+        name[cnt - 1 - idx] = tmp;
+    }
+    return (name);
+}
+
+/*
+=======================================
+    整数转八进制串T
+=======================================
+*/
+CR_API XCHAR*
+#if     (TYPE_T == 16)
+CR_FAW(int2ostr) (
+#elif   (TYPE_T == 32)
+CR_FAW(int2ostr32) (
+#elif   (TYPE_T == 64)
+CR_FAW(int2ostr64) (
+#endif
+  __CR_OT__ XCHAR   name[23],
+  __CR_IN__ UINT_T  value
+    )
+{
+    XCHAR   tmp;
+    ufast_t idx, num, cnt = 0;
+
+    do {
+        name[cnt++] = s_hex2asc[value & 7];
+        value >>= 3;
+    } while (value != 0);
+
+    name[cnt] = 0x00;
+    num = cnt / 2;
+
+    for (idx = 0; idx < num; idx++) {
+        tmp = name[idx];
+        name[idx] = name[cnt - 1 - idx];
+        name[cnt - 1 - idx] = tmp;
+    }
+    return (name);
+}
+
+/*
+=======================================
+    整数转十进制串T
+=======================================
+*/
+CR_API XCHAR*
+#if     (TYPE_T == 16)
+CR_FAW(int2dstr) (
+#elif   (TYPE_T == 32)
+CR_FAW(int2dstr32) (
+#elif   (TYPE_T == 64)
+CR_FAW(int2dstr64) (
+#endif
+  __CR_OT__ XCHAR   name[21],
+  __CR_IN__ UINT_T  value,
+  __CR_IN__ bool_t  sign
+    )
+{
+    XCHAR   tmp;
+    ufast_t idx, num, cnt = 0;
+
+    if (sign) {
+        if ((SINT_T)value < 0)
+            value = 0 - value;
+        else
+            sign = FALSE;
+    }
+
+    do {
+        name[cnt++] = s_hex2asc[value % 10];
+        value /= 10;
+    } while (value != 0);
+
+    if (sign)
+        name[cnt++] = CR_XC('-');
+    name[cnt] = 0x00;
+    num = cnt / 2;
+
+    for (idx = 0; idx < num; idx++) {
+        tmp = name[idx];
+        name[idx] = name[cnt - 1 - idx];
+        name[cnt - 1 - idx] = tmp;
+    }
+    return (name);
+}
+
+/*
+=======================================
     整数转16进制串T
 =======================================
 */
 CR_API XCHAR*
 #if     (TYPE_T == 16)
-CR_FAW(int2str) (
+CR_FAW(int2hstr) (
 #elif   (TYPE_T == 32)
-CR_FAW(int2str32) (
+CR_FAW(int2hstr32) (
 #elif   (TYPE_T == 64)
-CR_FAW(int2str64) (
+CR_FAW(int2hstr64) (
 #endif
-  __CR_OT__ XCHAR   name[32],
+  __CR_OT__ XCHAR   name[17],
   __CR_IN__ UINT_T  value
     )
 {
-#if defined(_CR_ORDER_LE_)
-    UINT_T  temp;
+    XCHAR   tmp;
+    ufast_t idx, num, cnt = 0;
 
-#if     (TYPE_T == 16)
-    #if defined(_CR_SYS16_)
-    temp = xchg_int16u((int16u)value);
-    #else   /* (_CR_SYS32_) */
-            /* (_CR_SYS64_) */
-    temp = xchg_int32u((int32u)value);
-    #endif
-#elif   (TYPE_T == 32)
-    temp = xchg_int32u((int32u)value);
-#elif   (TYPE_T == 64)
-    temp = xchg_int64u((int64u)value);
-#endif
-    return (CR_FAW(hex2str)(name, &temp, sizeof(UINT_T)));
+    do {
+        name[cnt++] = s_hex2asc[value & 15];
+        value >>= 4;
+    } while (value != 0);
 
-#else   /* (_CR_ORDER_BE_) */
-    return (CR_FAW(hex2str)(name, &value, sizeof(UINT_T)));
-#endif
+    name[cnt] = 0x00;
+    num = cnt / 2;
+
+    for (idx = 0; idx < num; idx++) {
+        tmp = name[idx];
+        name[idx] = name[cnt - 1 - idx];
+        name[cnt - 1 - idx] = tmp;
+    }
+    return (name);
 }
 
 /*
