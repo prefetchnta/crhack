@@ -44,11 +44,12 @@ CR_FAW(int2bstr64) (
 
     name[cnt] = 0x00;
     num = cnt / 2;
+    cnt -= 1;
 
     for (idx = 0; idx < num; idx++) {
         tmp = name[idx];
-        name[idx] = name[cnt - 1 - idx];
-        name[cnt - 1 - idx] = tmp;
+        name[idx] = name[cnt - idx];
+        name[cnt - idx] = tmp;
     }
     return (name);
 }
@@ -80,11 +81,12 @@ CR_FAW(int2ostr64) (
 
     name[cnt] = 0x00;
     num = cnt / 2;
+    cnt -= 1;
 
     for (idx = 0; idx < num; idx++) {
         tmp = name[idx];
-        name[idx] = name[cnt - 1 - idx];
-        name[cnt - 1 - idx] = tmp;
+        name[idx] = name[cnt - idx];
+        name[cnt - idx] = tmp;
     }
     return (name);
 }
@@ -126,11 +128,12 @@ CR_FAW(int2dstr64) (
         name[cnt++] = CR_XC('-');
     name[cnt] = 0x00;
     num = cnt / 2;
+    cnt -= 1;
 
     for (idx = 0; idx < num; idx++) {
         tmp = name[idx];
-        name[idx] = name[cnt - 1 - idx];
-        name[cnt - 1 - idx] = tmp;
+        name[idx] = name[cnt - idx];
+        name[cnt - idx] = tmp;
     }
     return (name);
 }
@@ -162,11 +165,12 @@ CR_FAW(int2hstr64) (
 
     name[cnt] = 0x00;
     num = cnt / 2;
+    cnt -= 1;
 
     for (idx = 0; idx < num; idx++) {
         tmp = name[idx];
-        name[idx] = name[cnt - 1 - idx];
-        name[cnt - 1 - idx] = tmp;
+        name[idx] = name[cnt - idx];
+        name[cnt - idx] = tmp;
     }
     return (name);
 }
