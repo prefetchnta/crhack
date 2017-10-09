@@ -23,7 +23,9 @@
 /* cJSON */
 /* JSON parser in C. */
 #include "memlib.h"
-#include "util/cjson/cJSON.h"
+#ifndef _CR_NO_LOCALE_
+    #define ENABLE_LOCALES
+#endif
 #if     defined(_CR_CC_BCC_)
     #pragma warn -8004
     #pragma warn -8008
@@ -36,9 +38,20 @@
     #pragma diag_suppress 1293
 #endif
 
-#if defined(_CR_CC_GCC_)
+/* disable warnings about old C89 functions in MSVC */
+#if !defined(_CRT_SECURE_NO_DEPRECATE) && defined(_MSC_VER)
+#define _CRT_SECURE_NO_DEPRECATE
+#endif
+
+#ifdef __GNUC__
 #pragma GCC visibility push(default)
 #endif
+#if defined(_MSC_VER)
+#pragma warning (push)
+/* disable warning about single line comments in system headers */
+#pragma warning (disable : 4001)
+#endif
+
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
@@ -46,10 +59,20 @@
 #include <float.h>
 #include <limits.h>
 #include <ctype.h>
+
+#ifdef ENABLE_LOCALES
 #include <locale.h>
-#if defined(_CR_CC_GCC_)
+#endif
+
+#if defined(_MSC_VER)
+#pragma warning (pop)
+#endif
+#ifdef __GNUC__
 #pragma GCC visibility pop
 #endif
+
+#include "util/cjson/cJSON.h"
+
 /* replace it */
 #define malloc  (cr_malloc_t)mem_malloc
 #define free    (cr_free_t)mem_free
@@ -71,7 +94,7 @@ CJSON_PUBLIC(const char *) cJSON_GetErrorPtr(void)
 }
 
 /* This is a safeguard to prevent copy-pasters from using incompatible C and header files */
-#if (CJSON_VERSION_MAJOR != 1) || (CJSON_VERSION_MINOR != 5) || (CJSON_VERSION_PATCH != 9)
+#if (CJSON_VERSION_MAJOR != 1) || (CJSON_VERSION_MINOR != 6) || (CJSON_VERSION_PATCH != 0)
     #error cJSON.h and cJSON.c have different versions. Make sure that both have the same.
 #endif
 
@@ -114,7 +137,27 @@ typedef struct internal_hooks
     void *(*reallocate)(void *pointer, size_t size);
 } internal_hooks;
 
-static internal_hooks global_hooks = { malloc, free, realloc };
+#if defined(_MSC_VER)
+/* work around MSVC error C2322: '...' address of dillimport '...' is not static */
+static void *internal_malloc(size_t size)
+{
+    return mem_malloc((leng_t)size);
+}
+static void internal_free(void *pointer)
+{
+    mem_free(pointer);
+}
+static void *internal_realloc(void *pointer, size_t size)
+{
+    return mem_realloc(pointer, (leng_t)size);
+}
+#else
+#define internal_malloc malloc
+#define internal_free free
+#define internal_realloc realloc
+#endif
+
+static internal_hooks global_hooks = { internal_malloc, internal_free, internal_realloc };
 
 static unsigned char* cJSON_strdup(const unsigned char* string, const internal_hooks * const hooks)
 {
@@ -127,7 +170,8 @@ static unsigned char* cJSON_strdup(const unsigned char* string, const internal_h
     }
 
     length = strlen((const char*)string) + sizeof("");
-    if (!(copy = (unsigned char*)hooks->allocate(length)))
+    copy = (unsigned char*)hooks->allocate(length);
+    if (copy == NULL)
     {
         return NULL;
     }
@@ -206,11 +250,11 @@ CJSON_PUBLIC(void) cJSON_Delete(cJSON *item)
 /* get the decimal point character of the current locale */
 static unsigned char get_decimal_point(void)
 {
-#if defined(_CR_NO_LOCALE_)
-    return (unsigned char) '.';
-#else
+#ifdef ENABLE_LOCALES
     struct lconv *lconv = localeconv();
     return (unsigned char) lconv->decimal_point[0];
+#else
+    return '.';
 #endif
 }
 
@@ -225,7 +269,6 @@ typedef struct
 
 /* check if the given size is left to read in a given parse buffer (starting with 1) */
 #define can_read(buffer, size) ((buffer != NULL) && (((buffer)->offset + size) <= (buffer)->length))
-#define cannot_read(buffer, size) (!can_read(buffer, size))
 /* check if the buffer can be accessed at the given index (starting with 0) */
 #define can_access_at_index(buffer, index) ((buffer != NULL) && (((buffer)->offset + index) < (buffer)->length))
 #define cannot_access_at_index(buffer, index) (!can_access_at_index(buffer, index))
@@ -950,6 +993,22 @@ static parse_buffer *buffer_skip_whitespace(parse_buffer * const buffer)
     return buffer;
 }
 
+/* skip the UTF-8 BOM (byte order mark) if it is at the beginning of a buffer */
+static parse_buffer *skip_utf8_bom(parse_buffer * const buffer)
+{
+    if ((buffer == NULL) || (buffer->content == NULL) || (buffer->offset != 0))
+    {
+        return NULL;
+    }
+
+    if (can_access_at_index(buffer, 4) && (strncmp((const char*)buffer_at_offset(buffer), "\xEF\xBB\xBF", 3) == 0))
+    {
+        buffer->offset += 3;
+    }
+
+    return buffer;
+}
+
 /* Parse an object - create a new root, and populate. */
 CJSON_PUBLIC(cJSON *) cJSON_ParseWithOpts(const char *value, const char **return_parse_end, cJSON_bool require_null_terminated)
 {
@@ -976,7 +1035,7 @@ CJSON_PUBLIC(cJSON *) cJSON_ParseWithOpts(const char *value, const char **return
         goto fail;
     }
 
-    if (!parse_value(item, buffer_skip_whitespace(&buffer)))
+    if (!parse_value(item, buffer_skip_whitespace(skip_utf8_bom(&buffer))))
     {
         /* parse failure. ep is set. */
         goto fail;
@@ -1211,7 +1270,6 @@ static cJSON_bool parse_value(cJSON * const item, parse_buffer * const input_buf
     {
         return parse_object(item, input_buffer);
     }
-
 
     return false;
 }
@@ -1839,7 +1897,7 @@ CJSON_PUBLIC(void) cJSON_AddItemToObject(cJSON *object, const char *string, cJSO
     item->type &= ~cJSON_StringIsConst;
 }
 
-#if defined (__clang__) || ((__GNUC__)  && ((__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ > 5))))
+#if defined(__clang__) || (defined(__GNUC__)  && ((__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ > 5))))
     #pragma GCC diagnostic push
 #endif
 #ifdef __GNUC__
@@ -1861,7 +1919,7 @@ CJSON_PUBLIC(void) cJSON_AddItemToObjectCS(cJSON *object, const char *string, cJ
     item->type |= cJSON_StringIsConst;
     cJSON_AddItemToArray(object, item);
 }
-#if defined (__clang__) || ((__GNUC__)  && ((__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ > 5))))
+#if defined(__clang__) || (defined(__GNUC__)  && ((__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ > 5))))
     #pragma GCC diagnostic pop
 #endif
 

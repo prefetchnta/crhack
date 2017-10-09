@@ -21,7 +21,6 @@
 */
 
 #include "memlib.h"
-#include "util/cjson/cJSON_Utils.h"
 #if     defined(_CR_CC_BCC_)
     #pragma warn -8004
     #pragma warn -8008
@@ -34,17 +33,34 @@
     #pragma diag_suppress 1293
 #endif
 
-#if defined(_CR_CC_GCC_)
+/* disable warnings about old C89 functions in MSVC */
+#if !defined(_CRT_SECURE_NO_DEPRECATE) && defined(_MSC_VER)
+#define _CRT_SECURE_NO_DEPRECATE
+#endif
+
+#ifdef __GNUCC__
 #pragma GCC visibility push(default)
 #endif
+#if defined(_MSC_VER)
+#pragma warning (push)
+/* disable warning about single line comments in system headers */
+#pragma warning (disable : 4001)
+#endif
+
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <limits.h>
-#if defined(_CR_CC_GCC_)
+
+#if defined(_MSC_VER)
+#pragma warning (pop)
+#endif
+#ifdef __GNUCC__
 #pragma GCC visibility pop
 #endif
+
+#include "util/cjson/cJSON_Utils.h"
 
 /* define our own boolean type */
 #define true ((cJSON_bool)1)

@@ -38,7 +38,7 @@ CR_FAW(int2bstr64) (
     ufast_t idx, num, cnt = 0;
 
     do {
-        name[cnt++] = s_hex2asc[value & 1];
+        name[cnt++] = s_hex2asc[(ufast_t)(value & 1)];
         value >>= 1;
     } while (value != 0);
 
@@ -75,7 +75,7 @@ CR_FAW(int2ostr64) (
     ufast_t idx, num, cnt = 0;
 
     do {
-        name[cnt++] = s_hex2asc[value & 7];
+        name[cnt++] = s_hex2asc[(ufast_t)(value & 7)];
         value >>= 3;
     } while (value != 0);
 
@@ -120,7 +120,7 @@ CR_FAW(int2dstr64) (
     }
 
     do {
-        name[cnt++] = s_hex2asc[value % 10];
+        name[cnt++] = s_hex2asc[(ufast_t)(value % 10)];
         value /= 10;
     } while (value != 0);
 
@@ -159,7 +159,7 @@ CR_FAW(int2hstr64) (
     ufast_t idx, num, cnt = 0;
 
     do {
-        name[cnt++] = s_hex2asc[value & 15];
+        name[cnt++] = s_hex2asc[(ufast_t)(value & 15)];
         value >>= 4;
     } while (value != 0);
 
