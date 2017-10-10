@@ -99,7 +99,7 @@ CR_API retc_t
 rx8025_init_time (void_t)
 {
     byte_t  state;
-    byte_t  ctl[2] = { 0x20, 0x00 };
+    byte_t  ctl[2] = { 0x20, 0x20 };
     /* ----------- */
     sDATETIME   temp;
 

@@ -188,10 +188,11 @@ line_swap (
     sPNT2   tmp;
     leng_t  idx, num = count / 2;
 
+    count -= 1;
     for (idx = 0; idx < num; idx++) {
         struct_cpy(&tmp, &pnts[idx], sPNT2);
-        struct_cpy(&pnts[idx], &pnts[count - 1 - idx], sPNT2);
-        struct_cpy(&pnts[count - 1 - idx], &tmp, sPNT2);
+        struct_cpy(&pnts[idx], &pnts[count - idx], sPNT2);
+        struct_cpy(&pnts[count - idx], &tmp, sPNT2);
     }
 }
 
@@ -210,6 +211,7 @@ line_compress (
     sPNT2   tmp;
     leng_t  idx;
 
+    /* 合并方向一致的多余点 */
     if (count <= 2)
         return (count);
     dir.x = pnts[1].x - pnts[0].x;
@@ -228,6 +230,188 @@ line_compress (
         }
     }
     return (count);
+}
+
+/*
+---------------------------------------
+    线段点集分割 (内部)
+---------------------------------------
+*/
+static void_t
+line_split_int (
+  __CR_IO__ sPNT2*  pnts,
+  __CR_IN__ leng_t  count,
+  __CR_IN__ fp32_t  gate
+    )
+{
+    leng_t  idx, split;
+    fp32_t  aa, bb, cc;
+    fp32_t  len, max, dist;
+
+    /* 计算直线方程参数 */
+    if (count <= 2)
+        return;
+    aa = (fp32_t)(pnts[0].y - pnts[count - 1].y);
+    bb = (fp32_t)(pnts[count - 1].x - pnts[0].x);
+    cc = aa * (fp32_t)(pnts[0].x) + bb * (fp32_t)(pnts[0].y);
+    len = 1.0f / FSQRT(aa * aa + bb * bb);
+    max = -1.0f;
+    split = 0;
+
+    /* 找出点集到直线的最大距离 */
+    for (idx = 1; idx <= count - 2; idx++) {
+        dist = aa * (fp32_t)(pnts[idx].x) + bb * (fp32_t)(pnts[idx].y) + cc;
+        dist *= len;
+        if (dist < 0.0f)
+            dist = -dist;
+        if (dist > max) {
+            max = dist;
+            split = idx;
+        }
+    }
+
+    /* 最大距离小于阈值可视为一条直线 */
+    if (max < gate)
+    {
+        /* 中间所有点用起始点填充表示无效 */
+        for (idx = 1; idx <= count - 2; idx++) {
+            pnts[idx].x = pnts[0].x;
+            pnts[idx].y = pnts[0].y;
+        }
+    }
+    else
+    {
+        /* 递归处理分开的两段 */
+        line_split_int(&pnts[0], split + 1, gate);
+        line_split_int(&pnts[split], count - split, gate);
+    }
+}
+
+/*
+=======================================
+    删除无效的点
+=======================================
+*/
+CR_API leng_t
+line_clean (
+  __CR_IO__ sPNT2*  pnts,
+  __CR_IN__ leng_t  count
+    )
+{
+    leng_t  idx;
+
+    for (idx = 0; idx < count - 1;) {
+        if (pnts[idx].x == pnts[idx + 1].x &&
+            pnts[idx].y == pnts[idx + 1].y) {
+            count -= 1;
+            mem_cpy(&pnts[idx], &pnts[idx + 1],
+                (count - idx) * sizeof(sPNT2));
+        }
+        else {
+            idx += 1;
+        }
+    }
+    return (count);
+}
+
+/*
+=======================================
+    线段点集分割
+=======================================
+*/
+CR_API leng_t
+line_split (
+  __CR_IO__ sPNT2*  pnts,
+  __CR_IN__ leng_t  count,
+  __CR_IN__ fp32_t  gate
+    )
+{
+    if (count <= 2 || gate <= 0.0f)
+        return (count);
+    line_split_int(pnts, count, gate);
+    return (line_clean(pnts, count));
+}
+
+/*
+=======================================
+    直线直角修补
+=======================================
+*/
+CR_API leng_t
+line_corner (
+  __CR_IO__ sPNT2*  pnts,
+  __CR_IN__ leng_t  count,
+  __CR_IN__ sint_t  gmin,
+  __CR_IN__ sint_t  gmax
+    )
+{
+    sPNT2*  dir;
+    leng_t  idx;
+    leng_t  len;
+
+    /* 参数过滤 */
+    if (count <= 2 ||
+        gmin <= 0 || gmax <= 0)
+        return (count);
+
+    /* 计算线段的斜率 */
+    len = count - 1;
+    dir = mem_talloc(len, sPNT2);
+    if (dir == NULL)
+        return (count);
+    for (idx = 0; idx < len; idx++) {
+        dir[idx].x = pnts[idx + 1].x - pnts[idx].x;
+        dir[idx].y = pnts[idx + 1].y - pnts[idx].y;
+        if (dir[idx].x < 0)
+            dir[idx].x = -dir[idx].x;
+        if (dir[idx].y < 0)
+            dir[idx].y = -dir[idx].y;
+        if (dir[idx].x == 0 && dir[idx].y == 0) {
+            mem_free(dir);
+            return (count);
+        }
+    }
+
+    /* 查找符合条件的直角 */
+    for (idx = 0; idx < len - 2; idx++)
+    {
+        /* 首先, 必须是直角 */
+        if (dir[idx].x * dir[idx + 2].x == 0 &&
+            dir[idx].y * dir[idx + 2].y == 0)
+        {
+            /* 其次, 两条直边必须都长于一个阈值 */
+            if (dir[idx].x + dir[idx + 2].x <= gmax ||
+                dir[idx].y + dir[idx + 2].y <= gmax) {
+                idx += 1;
+                continue;
+            }
+
+            /* 最后, 中间斜边的倾斜必须大于一定程度 */
+            if (dir[idx + 1].x >= gmin || dir[idx + 1].y >= gmin) {
+                idx += 1;
+                continue;
+            }
+
+            /* 处理掉那个斜边拐角 */
+            if (dir[idx].x == 0)
+            {
+                /* 先竖再横 */
+                pnts[idx + 1].y = pnts[idx + 2].y;
+            }
+            else
+            {
+                /* 先横再竖 */
+                pnts[idx + 1].x = pnts[idx + 2].x;
+            }
+
+            /* 删掉下一个点 */
+            pnts[idx + 2].x = pnts[idx + 1].x;
+            pnts[idx + 2].y = pnts[idx + 1].y;
+            idx += 1;
+        }
+    }
+    mem_free(dir);
+    return (line_clean(pnts, count));
 }
 
 /*****************************************************************************/
