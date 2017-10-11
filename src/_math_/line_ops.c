@@ -260,7 +260,7 @@ line_split_int (
 
     /* 找出点集到直线的最大距离 */
     for (idx = 1; idx <= count - 2; idx++) {
-        dist = aa * (fp32_t)(pnts[idx].x) + bb * (fp32_t)(pnts[idx].y) + cc;
+        dist = aa * (fp32_t)(pnts[idx].x) + bb * (fp32_t)(pnts[idx].y) - cc;
         dist *= len;
         if (dist < 0.0f)
             dist = -dist;
@@ -350,8 +350,7 @@ line_corner (
     leng_t  len;
 
     /* 参数过滤 */
-    if (count <= 2 ||
-        gmin <= 0 || gmax <= 0)
+    if (count <= 2 || gmin <= 0 || gmax <= 0)
         return (count);
 
     /* 计算线段的斜率 */
