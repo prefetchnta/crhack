@@ -386,7 +386,7 @@ line_corner (
             }
 
             /* 最后, 中间斜边的倾斜必须大于一定程度 */
-            if (dir[idx + 1].x >= gmin || dir[idx + 1].y >= gmin) {
+            if (dir[idx + 1].x >= gmin && dir[idx + 1].y >= gmin) {
                 idx += 1;
                 continue;
             }
