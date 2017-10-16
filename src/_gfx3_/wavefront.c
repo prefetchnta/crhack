@@ -623,6 +623,7 @@ wfront_mtl_load (
             else
             if (line[1] == CR_AC('e')) {
                 vtmp = &mtmp.ke;
+                mtmp.flags |= WAVEFRONT_KE;
             }
             else {
                 goto _failure;

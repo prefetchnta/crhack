@@ -337,11 +337,14 @@ meshml_load (
                     mtmp.flags |= MESHML_KS;
                 }
                 value = xml_attr_bufferU(CR_AS("emit"), node);
-                if (value == NULL)
+                if (value == NULL) {
                     struct_zero(&mtmp.ke, vec3d_t);
-                else
-                if (meshml_parse_vecf(&mtmp.ke.x, value, 3) != 3)
-                    break;
+                }
+                else {
+                    if (meshml_parse_vecf(&mtmp.ke.x, value, 3) != 3)
+                        break;
+                    mtmp.flags |= MESHML_KE;
+                }
                 mtmp.d = xml_attr_fp32U(CR_AS("opacity"), 1.0f, node);
                 mtmp.ns = xml_attr_fp32U(CR_AS("specular_level"), 0.0f, node);
                 mtmp.shine = xml_attr_fp32U(CR_AS("shininess"), 0.0f, node);
