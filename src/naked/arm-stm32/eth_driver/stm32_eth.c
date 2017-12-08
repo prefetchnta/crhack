@@ -564,6 +564,19 @@ uint32_t ETH_HandleRxPkt(uint8_t *ppkt)
 uint32_t ETH_GetRxPktSize(void)
 {
   uint32_t frameLength = 0;
+#if defined(_CR_SUPPORT_GD32_)
+  if((DMARxDescToGet->Status & ETH_DMARxDesc_OWN) != (uint32_t)RESET)
+  {
+    return 0;
+  }
+  if(((DMARxDescToGet->Status & ETH_DMARxDesc_ES) != (uint32_t)RESET) ||
+     ((DMARxDescToGet->Status & ETH_DMARxDesc_LS) == (uint32_t)RESET) ||
+     ((DMARxDescToGet->Status & ETH_DMARxDesc_FS) == (uint32_t)RESET))
+  {
+    ETH_DropRxPkt();
+    return 0;
+  }
+#endif
   if(((DMARxDescToGet->Status & ETH_DMARxDesc_OWN) == (uint32_t)RESET) &&
      ((DMARxDescToGet->Status & ETH_DMARxDesc_ES) == (uint32_t)RESET) &&
      ((DMARxDescToGet->Status & ETH_DMARxDesc_LS) != (uint32_t)RESET) &&

@@ -242,7 +242,7 @@ array_delete (
         that->free(pos);
     that->__cnts__--;
     if (that->__cnts__ > index)
-        mem_cpy(pos, pos + unit, (that->__cnts__ - index) * unit);
+        mem_mov(pos, pos + unit, (that->__cnts__ - index) * unit);
 }
 
 /*

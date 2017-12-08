@@ -181,6 +181,7 @@ OBJS=$(OBJ)tjpgd.$(O) \
      $(OBJ)cr_png.$(O) \
      $(OBJ)cr_tga.$(O) \
      $(OBJ)cr_zip.$(O) \
+     $(OBJ)cr_spak.$(O) \
      $(OBJ)e_crhack.$(O)
 
 CPPS=$(SRC)cr_bmp.$(C) \
@@ -190,6 +191,7 @@ CPPS=$(SRC)cr_bmp.$(C) \
      $(SRC)cr_png.$(C) \
      $(SRC)cr_tga.$(C) \
      $(SRC)cr_zip.$(C) \
+     $(SRC)cr_spak.$(C) \
      $(SRC)e_crhack.$(C) \
      $(SRC)tjpgdec$(L)tjpgd.$(C)
 

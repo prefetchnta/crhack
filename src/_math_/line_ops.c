@@ -221,7 +221,7 @@ line_compress (
         tmp.y = pnts[idx + 1].y - pnts[idx].y;
         if (tmp.x == dir.x && tmp.y == dir.y) {
             count -= 1;
-            mem_cpy(&pnts[idx], &pnts[idx + 1],
+            mem_mov(&pnts[idx], &pnts[idx + 1],
                 (count - idx) * sizeof(sPNT2));
         }
         else {
@@ -304,7 +304,7 @@ line_clean (
         if (pnts[idx].x == pnts[idx + 1].x &&
             pnts[idx].y == pnts[idx + 1].y) {
             count -= 1;
-            mem_cpy(&pnts[idx], &pnts[idx + 1],
+            mem_mov(&pnts[idx], &pnts[idx + 1],
                 (count - idx) * sizeof(sPNT2));
         }
         else {

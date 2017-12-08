@@ -111,9 +111,28 @@ at_iorw (
     len = (uint_t)str_lenA(inp);
     uart_rx_flush();
     uart_write(inp, len);
-#if !defined(_CR_AT_NO_ECHO_)
     at_throw(len, tout);
-#endif
+    return (at_wait(out, size, tout));
+}
+
+/*
+=======================================
+    命令收发 (无回显)
+=======================================
+*/
+CR_API ansi_t*
+at_iorw2 (
+  __CR_OT__ ansi_t*         out,
+  __CR_IN__ uint_t          size,
+  __CR_IN__ const ansi_t*   inp,
+  __CR_IN__ uint_t          tout
+    )
+{
+    uint_t  len;
+
+    len = (uint_t)str_lenA(inp);
+    uart_rx_flush();
+    uart_write(inp, len);
     return (at_wait(out, size, tout));
 }
 

@@ -74,6 +74,11 @@ static const sMATCHx _rom_ s_findx[] =
         NULL, CR_STR(".zip"),
         CR_VFUNC(load_cr_zip)
     },
+    {
+        CR_FMTZ_MASK_PAK,
+        NULL, CR_STR(".spak"),
+        CR_VFUNC(load_cr_spak)
+    },
     { 0, NULL, NULL, NULL },
 };
 #endif  /* !s_findx */
@@ -87,9 +92,10 @@ static const sTRY_LDRx _rom_ s_loadx[] =
     { CR_FMTZ_MASK_PIC, CR_VFUNC(load_cr_bmp), NULL },
     { CR_FMTZ_MASK_PIC, CR_VFUNC(load_cr_png), NULL },
     { CR_FMTZ_MASK_PIC, CR_VFUNC(load_cr_jpg), NULL },
-    { CR_FMTZ_MASK_PAK, CR_VFUNC(load_cr_zip), NULL },
     { CR_FMTZ_MASK_PIC, CR_VFUNC(load_cr_dds), NULL },
     { CR_FMTZ_MASK_PIC, CR_VFUNC(load_cr_pcx), NULL },
+    { CR_FMTZ_MASK_PAK, CR_VFUNC(load_cr_zip), NULL },
+    { CR_FMTZ_MASK_PAK, CR_VFUNC(load_cr_spak), NULL },
     { 0, NULL, NULL },
 };
 #endif  /* !s_loadx */

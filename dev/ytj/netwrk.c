@@ -259,10 +259,36 @@ sys_now (void_t)
 CR_API void_t
 ETH_IRQHandler (void_t)
 {
+#if !defined(_CR_SUPPORT_GD32_)
     while (ETH_GetRxPktSize() != 0)
         ethernetif_input(&g_netif);
     ETH_DMAClearITPendingBit(ETH_DMA_IT_R);
     ETH_DMAClearITPendingBit(ETH_DMA_IT_NIS);
+#else
+    uint_t  idx;
+
+    /* When Rx Buffer unavailable flag is set: clear it and resume reception */
+    if ((ETH->DMASR & ETH_DMASR_RBUS) != (u32)RESET) {
+        ETH_DMAClearITPendingBit(ETH_DMA_IT_RBU);
+        ETH_DMAClearITPendingBit(ETH_DMA_IT_AIS);
+        for (idx = 0; idx < 4; idx++)
+            ETH_DropRxPkt();
+        for (idx = 0; idx < 15; idx++);
+
+        /* Clear RBUS ETHERNET DMA flag */
+        ETH->DMASR = ETH_DMASR_RBUS;
+        /* Resume DMA reception */
+        ETH->DMARPDR = 0;
+        for (idx = 0; idx < 15; idx++);
+    }
+    else {
+        ETH_DMAClearITPendingBit(ETH_DMA_IT_R);
+        ETH_DMAClearITPendingBit(ETH_DMA_IT_RO);
+        ETH_DMAClearITPendingBit(ETH_DMA_IT_NIS);
+        while (ETH_GetRxPktSize() != 0)
+            ethernetif_input(&g_netif);
+    }
+#endif  /* !_CR_SUPPORT_GD32_ */
 }
 
 /*****************************************************************************/

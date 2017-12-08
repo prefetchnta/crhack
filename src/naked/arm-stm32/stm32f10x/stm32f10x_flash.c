@@ -83,8 +83,8 @@
 #define FLASH_BANK1_END_ADDRESS   ((uint32_t)0x807FFFF)
 
 /* Delay definition */   
-#define EraseTimeout          ((uint32_t)0x000B0000)
-#define ProgramTimeout        ((uint32_t)0x00002000)
+#define EraseTimeout          ((uint32_t)0x000FFFFF)
+#define ProgramTimeout        ((uint32_t)0x0000FFFF)
 /**
   * @}
   */ 
@@ -633,7 +633,7 @@ FLASH_Status FLASH_EraseOptionBytes(void)
     /* Authorize the small information block programming */
     FLASH->OPTKEYR = FLASH_KEY1;
     FLASH->OPTKEYR = FLASH_KEY2;
-    
+    __nop(); __nop();
     /* if the previous operation is completed, proceed to erase the option bytes */
     FLASH->CR |= CR_OPTER_Set;
     FLASH->CR |= CR_STRT_Set;
@@ -939,6 +939,7 @@ FLASH_Status FLASH_ProgramOptionByteData(uint32_t Address, uint8_t Data)
     /* Authorize the small information block programming */
     FLASH->OPTKEYR = FLASH_KEY1;
     FLASH->OPTKEYR = FLASH_KEY2;
+    __nop(); __nop();
     /* Enables the Option Bytes Programming operation */
     FLASH->CR |= CR_OPTPG_Set; 
     *(__IO uint16_t*)Address = Data;
@@ -996,6 +997,7 @@ FLASH_Status FLASH_EnableWriteProtection(uint32_t FLASH_Pages)
     /* Authorizes the small information block programming */
     FLASH->OPTKEYR = FLASH_KEY1;
     FLASH->OPTKEYR = FLASH_KEY2;
+    __nop(); __nop();
     FLASH->CR |= CR_OPTPG_Set;
     if(WRP0_Data != 0xFF)
     {
@@ -1058,6 +1060,7 @@ FLASH_Status FLASH_ReadOutProtection(FunctionalState NewState)
     /* Authorizes the small information block programming */
     FLASH->OPTKEYR = FLASH_KEY1;
     FLASH->OPTKEYR = FLASH_KEY2;
+    __nop(); __nop();
     FLASH->CR |= CR_OPTER_Set;
     FLASH->CR |= CR_STRT_Set;
     /* Wait for last operation to be completed */

@@ -20,6 +20,7 @@
 /* 骗过 FatFS 的头文件包含 */
 #define FF_DEFINED  1
 #define FF_USE_LFN  1
+#define FF_NO_QWORD 1
 
 #include "memlib.h"
 #include "strlib.h"
@@ -272,7 +273,7 @@ str_uni2ccp (
             }
             else {
                 if (ucs4 <= 0xFFFF) {
-                    temp = ff_uni2oem((WCHAR)ucs4, FF_CODE_PAGE);
+                    temp = ff_uni2oem(ucs4, FF_CODE_PAGE);
                     if (temp <= 0xFF)
                         dstlen += 1;
                     else
@@ -301,7 +302,7 @@ str_uni2ccp (
             }
             else {
                 if (ucs4 <= 0xFFFF) {
-                    temp = ff_uni2oem((WCHAR)ucs4, FF_CODE_PAGE);
+                    temp = ff_uni2oem(ucs4, FF_CODE_PAGE);
                     if (temp > 0xFF)
                         back[dstlen++] = (ansi_t)(temp >> 8);
                     back[dstlen++] = (ansi_t)(temp);
@@ -325,7 +326,7 @@ str_uni2ccp (
             }
             else {
                 if (ucs4 <= 0xFFFF) {
-                    temp = ff_uni2oem((WCHAR)ucs4, FF_CODE_PAGE);
+                    temp = ff_uni2oem(ucs4, FF_CODE_PAGE);
                     if (temp <= 0xFF)
                         dstlen += 1;
                     else
@@ -354,7 +355,7 @@ str_uni2ccp (
             }
             else {
                 if (ucs4 <= 0xFFFF) {
-                    temp = ff_uni2oem((WCHAR)ucs4, FF_CODE_PAGE);
+                    temp = ff_uni2oem(ucs4, FF_CODE_PAGE);
                     if (temp > 0xFF)
                         back[dstlen++] = (ansi_t)(temp >> 8);
                     back[dstlen++] = (ansi_t)(temp);

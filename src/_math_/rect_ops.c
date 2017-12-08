@@ -51,7 +51,7 @@ rect_clean (
                 break;
         }
         size = (count - jj) * sizeof(sRECT);
-        mem_cpy(&result[ii], &result[jj], size);
+        mem_mov(&result[ii], &result[jj], size);
         count -= (jj - ii);
     }
     return (count);

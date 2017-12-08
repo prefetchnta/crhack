@@ -21,7 +21,7 @@ typedef unsigned short	WCHAR;
 typedef long			LONG;
 typedef unsigned long	DWORD;
 
-#if FF_DEFINED != 1
+#ifndef FF_NO_QWORD
 /* This type MUST be 64-bit (Remove this for ANSI C (C89) compatibility) */
 typedef unsigned long long QWORD;
 #endif

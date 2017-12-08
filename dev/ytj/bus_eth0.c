@@ -195,17 +195,24 @@ eth0_init (void_t)
     seth.ETH_ChecksumOffload = ETH_ChecksumOffload_Enable;
     seth.ETH_DropTCPIPChecksumErrorFrame = ETH_DropTCPIPChecksumErrorFrame_Enable;
     seth.ETH_ReceiveStoreForward = ETH_ReceiveStoreForward_Enable;
+    seth.ETH_FlushReceivedFrame = ETH_FlushReceivedFrame_Enable;
     seth.ETH_TransmitStoreForward = ETH_TransmitStoreForward_Enable;
     seth.ETH_ForwardErrorFrames = ETH_ForwardErrorFrames_Disable;
     seth.ETH_ForwardUndersizedGoodFrames = ETH_ForwardUndersizedGoodFrames_Disable;
+#if !defined(_CR_SUPPORT_GD32_)
     seth.ETH_SecondFrameOperate = ETH_SecondFrameOperate_Enable;
+#endif
     seth.ETH_AddressAlignedBeats = ETH_AddressAlignedBeats_Enable;
     seth.ETH_FixedBurst = ETH_FixedBurst_Enable;
     seth.ETH_RxDMABurstLength = ETH_RxDMABurstLength_32Beat;
     seth.ETH_TxDMABurstLength = ETH_TxDMABurstLength_32Beat;
     seth.ETH_DMAArbitration = ETH_DMAArbitration_RoundRobin_RxTx_2_1;
     ETH_Init(&seth, PHY_ADDRESS);
+#if !defined(_CR_SUPPORT_GD32_)
     ETH_DMAITConfig(ETH_DMA_IT_NIS | ETH_DMA_IT_R, ENABLE);
+#else
+    ETH_DMAITConfig(ETH_DMA_IT_NIS | ETH_DMA_IT_R | ETH_DMA_IT_RO | ETH_DMA_IT_RBU, ENABLE);
+#endif
 }
 
 /*
