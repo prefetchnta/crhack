@@ -468,6 +468,108 @@ mem_replace (
     return (new_data);
 }
 
+/*
+=======================================
+    设置数据缓冲
+=======================================
+*/
+CR_API bool_t
+buffer_init (
+  __CR_OT__ sBUFFER*        buff,
+  __CR_IN__ const void_t*   data,
+  __CR_IN__ leng_t          size,
+  __CR_IN__ bool_t          is_free
+    )
+{
+    if (data == NULL) {
+        data = mem_malloc(size);
+        if (data == NULL)
+            return (FALSE);
+        is_free = TRUE;
+    }
+    if (!is_free)
+        buff->size = (dist_t)(size - 0);
+    else
+        buff->size = (dist_t)(0 - size);
+    buff->data = (void_t*)data;
+    return (TRUE);
+}
+
+/*
+=======================================
+    释放数据缓冲
+=======================================
+*/
+CR_API void_t
+buffer_free (
+  __CR_IN__ const sBUFFER*  buff
+    )
+{
+    if (buff->size < 0)
+        mem_free(buff->data);
+}
+
+/*
+=======================================
+    获取数据大小
+=======================================
+*/
+CR_API leng_t
+buffer_size (
+  __CR_IN__ const sBUFFER*  buff
+    )
+{
+    if (buff->size < 0)
+        return ((leng_t)(-buff->size));
+    return ((leng_t)buff->size);
+}
+
+/*
+=======================================
+    把整个数据当字符串读入
+=======================================
+*/
+CR_API ansi_t*
+buffer_load_as_str (
+  __CR_IN__ const sBUFFER*  buff
+    )
+{
+    leng_t  size;
+    ansi_t* text;
+
+    /* 兼容 UTF-32 编码 */
+    size = buffer_size(buff);
+    text = str_allocA(size + sizeof(int64u));
+    if (text == NULL)
+        return (NULL);
+    mem_cpy(text, buff->data, size);
+    mem_zero(&text[size], sizeof(int64u));
+    return (text);
+}
+
+/*
+=======================================
+    读入整个数据缓冲
+=======================================
+*/
+CR_API void_t*
+buffer_load_as_bin (
+  __CR_IN__ const sBUFFER*  buff,
+  __CR_OT__ leng_t*         size
+    )
+{
+    leng_t  temp;
+    void_t* data;
+
+    temp = buffer_size(buff);
+    data = mem_dup(buff->data, temp);
+    if (data == NULL)
+        return (NULL);
+    if (size != NULL)
+        *size = temp;
+    return (data);
+}
+
 /*****************************************************************************/
 /* _________________________________________________________________________ */
 /* uBMAzRBoAKAHaACQD6FoAIAPqbgA/7rIA+5CM9uKw8D4Au7u7mSIJ0t18mYz0mYz9rAQZCgHc */

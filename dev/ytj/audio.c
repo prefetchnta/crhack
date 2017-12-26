@@ -22,7 +22,7 @@
 #include "stm32f10x_conf.h"
 
 /* 音量值 */
-uint_t  g_volume = 1;
+uint_t  g_volume = AUDIO_DEF_VOLUME;
 
 /* 音频数据环形队列 */
 #define AUDIO_BUF_SIZE  4096
@@ -43,7 +43,7 @@ audio_init (void_t)
     TIM_TimeBaseInitTypeDef sttb;
 
     /* 初始化全局变量 */
-    g_volume = 1;
+    g_volume = AUDIO_DEF_VOLUME;
     s_audio_read = NULL;
     s_size = s_head = s_tail = 0;
 
@@ -70,8 +70,8 @@ audio_volume (
   __CR_IN__ uint_t  value
     )
 {
-    if (value > 16)
-        g_volume = 16;
+    if (value > AUDIO_MAX_VOLUME)
+        g_volume = AUDIO_MAX_VOLUME;
     else
         g_volume = value;
 }

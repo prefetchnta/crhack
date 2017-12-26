@@ -43,6 +43,10 @@ CR_API leng_t   mx25l16_program (int32u addr, const void_t *data,
 /*                                   AUDIO                                   */
 /*****************************************************************************/
 
+/* 音量的常数 */
+#define AUDIO_MAX_VOLUME    16
+#define AUDIO_DEF_VOLUME    16
+
 /* 音频总开关 */
 #define audio_xon()     GPIOB->BSRR = GPIO_Pin_0
 #define audio_off()     GPIOB->BRR = GPIO_Pin_0

@@ -1,4 +1,6 @@
 
+from __future__ import print_function
+
 def get_bps51(smod, fso, bps):
     f_th1 = (256 - fso / (bps * 32.0))
     h_th1 = int(f_th1 + 0.5)
@@ -16,9 +18,8 @@ def get_bps51(smod, fso, bps):
             return
         get_bps51(1, fso * 2, bps)
         return
-    display = "flt=%5.4f, hex=0x%02X, smod=%u, bps=%u, delta=%3.2f%%" \
-                %(f_th1, h_th1, smod, bps, delta)
-    print display
+    display = "flt=%5.4f, hex=0x%02X, smod=%u, bps=%u, delta=%3.2f%%" % (f_th1, h_th1, smod, bps, delta)
+    print(display)
 
 fso = float(raw_input())
 get_bps51(0, fso, 110.0)
