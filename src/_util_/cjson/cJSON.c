@@ -100,7 +100,7 @@ CJSON_PUBLIC(char *) cJSON_GetStringValue(cJSON *item) {
 }
 
 /* This is a safeguard to prevent copy-pasters from using incompatible C and header files */
-#if (CJSON_VERSION_MAJOR != 1) || (CJSON_VERSION_MINOR != 7) || (CJSON_VERSION_PATCH != 1)
+#if (CJSON_VERSION_MAJOR != 1) || (CJSON_VERSION_MINOR != 7) || (CJSON_VERSION_PATCH != 3)
     #error cJSON.h and cJSON.c have different versions. Make sure that both have the same.
 #endif
 
@@ -1329,10 +1329,6 @@ static cJSON_bool print_value(const cJSON * const item, printbuffer * const outp
             size_t raw_length = 0;
             if (item->valuestring == NULL)
             {
-                if (!output_buffer->noalloc)
-                {
-                    output_buffer->hooks.deallocate(output_buffer->buffer);
-                }
                 return false;
             }
 
