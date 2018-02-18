@@ -18,7 +18,7 @@
 /*****************************************************************************/
 
 #include "strlib.h"
-#include "../fmtint.h"
+#include "fmtz/fmtint.h"
 #include "fmtz/nscripter.h"
 
 /* 接口内部数据结构 */

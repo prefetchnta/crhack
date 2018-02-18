@@ -18,10 +18,10 @@
 /*****************************************************************************/
 
 #include "safe.h"
-#include "fmtint.h"
 #include "strlib.h"
 #include "fmod/fmod.h"
 #include "fmtz/fmodex.h"
+#include "fmtz/fmtint.h"
 
 /* FMODEx 导入库 */
 #ifndef _CR_NO_PRAGMA_LIB_

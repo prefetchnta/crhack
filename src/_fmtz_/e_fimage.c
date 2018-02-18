@@ -18,10 +18,10 @@
 /*****************************************************************************/
 
 #include "safe.h"
-#include "fmtint.h"
 #include "msclib.h"
 #include "strlib.h"
 #include "fmtz/fimage.h"
+#include "fmtz/fmtint.h"
 #include "fi/FreeImage.h"
 
 /* FreeImage 导入库 */

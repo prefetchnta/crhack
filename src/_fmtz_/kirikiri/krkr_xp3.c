@@ -20,7 +20,7 @@
 #include "hash.h"
 #include "enclib.h"
 #include "strlib.h"
-#include "../fmtint.h"
+#include "fmtz/fmtint.h"
 #include "fmtz/kirikiri.h"
 
 /* 接口内部数据结构 */

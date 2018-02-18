@@ -20,7 +20,7 @@
 #include "hash.h"
 #include "safe.h"
 #include "strlib.h"
-#include "_fmtz_/fmtint.h"
+#include "fmtz/fmtint.h"
 
 /*****************************************************************************/
 /*                               插件功能封装                                */

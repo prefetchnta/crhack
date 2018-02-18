@@ -18,10 +18,10 @@
 /*****************************************************************************/
 
 #include "safe.h"
-#include "fmtint.h"
 #include "strlib.h"
 #include "devil/il.h"
 #include "fmtz/devil.h"
+#include "fmtz/fmtint.h"
 
 /* DevIL 导入库 */
 #ifndef _CR_NO_PRAGMA_LIB_

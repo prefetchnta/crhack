@@ -18,8 +18,8 @@
 /*****************************************************************************/
 
 #include "strlib.h"
-#include "../fmtint.h"
 #include "fmtz/falcom.h"
+#include "fmtz/fmtint.h"
 
 /* 接口内部数据结构 */
 typedef struct

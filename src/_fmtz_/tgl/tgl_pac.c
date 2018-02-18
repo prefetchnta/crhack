@@ -20,7 +20,7 @@
 #include "msclib.h"
 #include "strlib.h"
 #include "fmtz/tgl.h"
-#include "../fmtint.h"
+#include "fmtz/fmtint.h"
 
 /* 接口内部数据结构 */
 typedef struct

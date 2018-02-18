@@ -19,7 +19,7 @@
 
 #include "safe.h"
 #include "strlib.h"
-#include "../fmtint.h"
+#include "fmtz/fmtint.h"
 #include "fmtz/nscripter.h"
 
 /*****************************************************************************/

@@ -19,7 +19,7 @@
 
 #include "strlib.h"
 #include "fmtz/ego.h"
-#include "../fmtint.h"
+#include "fmtz/fmtint.h"
 
 /* 接口内部数据结构 */
 typedef struct

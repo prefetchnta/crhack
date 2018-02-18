@@ -19,7 +19,7 @@
 
 #include "strlib.h"
 #include "fmtz/syn.h"
-#include "../fmtint.h"
+#include "fmtz/fmtint.h"
 
 #if defined(_CR_HAVE_PAK_GCA_)
 
