@@ -62,11 +62,11 @@ load_cr_pcx (
 {
     byte_t* ptr;
     byte_t* line;
-    leng_t  ptsz;
     uint_t  fcrh;
     uint_t  x1, y1;
     uint_t  ww, hh;
     byte_t  pal[769];
+    leng_t  ln, ptsz;
     leng_t  bpl, idx;
     /* ----------- */
     sPCX_HDR    head;
@@ -97,6 +97,19 @@ load_cr_pcx (
     ww = ww - x1 + 1;
     hh = hh - y1 + 1;
 
+    /* BPL 安全检查 */
+    bpl = WORD_LE(head.bpl);
+    if (bpl & 1)
+        return (NULL);
+    if (ww & 1) {
+        if (ww + 1 != (uint_t)bpl)
+            return (NULL);
+    }
+    else {
+        if (ww != (uint_t)bpl)
+            return (NULL);
+    }
+
     /* 生成图片对象 */
     mem_zero(temp.wh, sizeof(temp.wh));
     if (head.ncp == 1) {
@@ -115,7 +128,6 @@ load_cr_pcx (
         temp.wh[1] = 8;
         temp.wh[2] = 8;
     }
-    /* PCX 没有行字节对齐 */
     temp.pic = image_new(x1, y1, ww, hh, fcrh, FALSE, 4);
     if (temp.pic == NULL)
         return (NULL);
@@ -136,7 +148,6 @@ load_cr_pcx (
         /* 开始读取图形数据 */
         if (!CR_VCALL(datin)->seek(datin, 128, SEEK_SET))
             goto _failure;
-        bpl = ww;
 
         /* 一般都有 RLE 压缩 */
         if (head.enc == 0x00) {
@@ -148,21 +159,21 @@ load_cr_pcx (
         }
         else {
             for (; hh != 0; hh--) {
-                for (x1 = 0; x1 < ww; x1++) {
+                for (idx = 0; idx < bpl; idx++) {
                     if (!CR_VCALL(datin)->getb_no(datin, pal))
                         goto _failure;
                     if ((pal[0] & 0xC0) != 0xC0) {
-                        ptr[x1] = pal[0];
+                        ptr[idx] = pal[0];
                         continue;
                     }
-                    y1 = pal[0] & 0x3F;
-                    if (y1 > ww - x1)
+                    ptsz = pal[0] & 0x3F;
+                    if (ptsz > bpl - idx)
                         goto _failure;
                     if (!CR_VCALL(datin)->getb_no(datin, pal))
                         goto _failure;
-                    for (; y1 != 0; y1--)
-                        ptr[x1++] = pal[0];
-                    x1 -= 1;
+                    for (; ptsz != 0; ptsz--)
+                        ptr[idx++] = pal[0];
+                    idx -= 1;
                 }
                 ptr += temp.pic->bpl;
             }
@@ -171,7 +182,7 @@ load_cr_pcx (
     else
     {
         /* 24位色按 RRRRGGGGBBBB 格式存放 */
-        bpl = ww;
+        ln = bpl;
         bpl *= 3;
         line = (byte_t*)mem_malloc(bpl);
         if (line == NULL)
@@ -187,8 +198,8 @@ load_cr_pcx (
                 for (y1 = 0; y1 < ww; y1++) {
                     ptsz = (leng_t)y1;
                     ptr[ptsz * 3 + 2] = line[ptsz];
-                    ptr[ptsz * 3 + 1] = line[ptsz + ww];
-                    ptr[ptsz * 3 + 0] = line[ptsz + ww + ww];
+                    ptr[ptsz * 3 + 1] = line[ptsz + ln];
+                    ptr[ptsz * 3 + 0] = line[ptsz + ln + ln];
                 }
                 ptr += temp.pic->bpl;
             }
@@ -204,8 +215,8 @@ load_cr_pcx (
                         line[idx] = pal[0];
                         continue;
                     }
-                    y1 = pal[0] & 0x3F;
-                    if (y1 > bpl - idx) {
+                    ptsz = pal[0] & 0x3F;
+                    if (ptsz > bpl - idx) {
                         mem_free(line);
                         goto _failure;
                     }
@@ -213,15 +224,15 @@ load_cr_pcx (
                         mem_free(line);
                         goto _failure;
                     }
-                    for (; y1 != 0; y1--)
+                    for (; ptsz != 0; ptsz--)
                         line[idx++] = pal[0];
                     idx -= 1;
                 }
                 for (y1 = 0; y1 < ww; y1++) {
                     ptsz = (leng_t)y1;
                     ptr[ptsz * 3 + 2] = line[ptsz];
-                    ptr[ptsz * 3 + 1] = line[ptsz + ww];
-                    ptr[ptsz * 3 + 0] = line[ptsz + ww + ww];
+                    ptr[ptsz * 3 + 1] = line[ptsz + ln];
+                    ptr[ptsz * 3 + 0] = line[ptsz + ln + ln];
                 }
                 ptr += temp.pic->bpl;
             }
