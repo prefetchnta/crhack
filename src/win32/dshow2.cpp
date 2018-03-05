@@ -659,6 +659,8 @@ dshow_cam_list (
         return (0);
     }
     iem->Reset();
+    for (idx = 0; idx < max_num; idx++)
+        name[idx] = NULL;
     for (idx = 0; idx < max_num; idx++) {
         hr = iem->Next(1, &im, &got);
         if (hr != S_OK)

@@ -57,18 +57,25 @@ bgr2hsl (
     if (dlt == 0) {
         hsl[0] = 0;
     }
-    else
-    if (max == rr) {
-        hsl[0] = (60 * (gg - bb)) / dlt;
-        if (gg < bb)
-            hsl[0] += 360;
-    }
-    else
-    if (max == gg) {
-        hsl[0] = (60 * (bb - rr)) / dlt + 120;
-    }
     else {
-        hsl[0] = (60 * (rr - gg)) / dlt + 240;
+        if (max == rr) {
+            hsl[0] = (60 * (gg - bb)) / dlt;
+        }
+        else
+        if (max == gg) {
+            hsl[0] = (60 * (bb - rr)) / dlt + 120;
+        }
+        else {
+            hsl[0] = (60 * (rr - gg)) / dlt + 240;
+        }
+
+        if (hsl[0] < 0) {
+            hsl[0] += 360;
+        }
+        else
+        if (hsl[0] >= 360) {
+            hsl[0] -= 360;
+        }
     }
 
     /* 分量-L */
@@ -116,18 +123,25 @@ bgr2hsv (
     if (dlt == 0) {
         hsv[0] = 0;
     }
-    else
-    if (max == rr) {
-        hsv[0] = (60 * (gg - bb)) / dlt;
-        if (gg < bb)
-            hsv[0] += 360;
-    }
-    else
-    if (max == gg) {
-        hsv[0] = (60 * (bb - rr)) / dlt + 120;
-    }
     else {
-        hsv[0] = (60 * (rr - gg)) / dlt + 240;
+        if (max == rr) {
+            hsv[0] = (60 * (gg - bb)) / dlt;
+        }
+        else
+        if (max == gg) {
+            hsv[0] = (60 * (bb - rr)) / dlt + 120;
+        }
+        else {
+            hsv[0] = (60 * (rr - gg)) / dlt + 240;
+        }
+
+        if (hsv[0] < 0) {
+            hsv[0] += 360;
+        }
+        else
+        if (hsv[0] >= 360) {
+            hsv[0] -= 360;
+        }
     }
 
     /* 分量-S */
