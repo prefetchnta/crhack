@@ -58,7 +58,7 @@ void can_deinit(uint32_t can_periph)
 ErrStatus can_init(uint32_t can_periph, can_parameter_struct* can_parameter_init)
 {
     uint32_t timeout = CAN_TIMEOUT;
-    ErrStatus flag = ERROR;
+    ErrStatus flag = SUCCESS;
     
     /* disable sleep mode */
     CAN_CTL(can_periph) &= ~CAN_CTL_SLPWMOD;
@@ -123,7 +123,7 @@ ErrStatus can_init(uint32_t can_periph, can_parameter_struct* can_parameter_init
         }
         /* check exit initialize mode */
         if(CAN_STAT_IWS == (CAN_STAT(can_periph) & CAN_STAT_IWS)){
-            flag = SUCCESS;
+            flag = ERROR;
         }
     }  
     return flag;
