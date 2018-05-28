@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    stm32f7xx_it.c
+  * @file    stm32f7xx_it.c 
   * @author  MCD Application Team
   * @brief   Main Interrupt Service Routines.
   *          This file provides template for all exceptions handler and 
@@ -36,9 +36,9 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
 #include "stm32f7xx_it.h"
-   
+#include "main.h"
+
 /** @addtogroup STM32F7xx_HAL_Examples
   * @{
   */
@@ -51,7 +51,6 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -156,6 +155,7 @@ void SysTick_Handler(void)
 {
   HAL_IncTick();
 }
+  
 
 /******************************************************************************/
 /*                 STM32F7xx Peripherals Interrupt Handlers                   */

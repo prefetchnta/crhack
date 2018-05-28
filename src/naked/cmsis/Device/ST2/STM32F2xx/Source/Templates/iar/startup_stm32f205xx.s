@@ -1,8 +1,6 @@
 ;/******************** (C) COPYRIGHT 2017 STMicroelectronics ********************
 ;* File Name          : startup_stm32f205xx.s
 ;* Author             : MCD Application Team
-;* Version            : V2.2.0
-;* Date               : 17-March-2017
 ;* Description        : STM32F20x/21x devices vector table for EWARM toolchain.
 ;*                      This module performs:
 ;*                      - Set the initial SP
