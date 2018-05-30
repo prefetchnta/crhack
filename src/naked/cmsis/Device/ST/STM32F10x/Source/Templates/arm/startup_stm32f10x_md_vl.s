@@ -1,8 +1,8 @@
-;******************** (C) COPYRIGHT 2012 STMicroelectronics ********************
+;******************** (C) COPYRIGHT 2014 STMicroelectronics ********************
 ;* File Name          : startup_stm32f10x_md_vl.s
 ;* Author             : MCD Application Team
-;* Version            : V3.6.1
-;* Date               : 09-March-2012
+;* Version            : V3.6.3
+;* Date               : 10-April-2014
 ;* Description        : STM32F10x Medium Density Value Line Devices vector table  
 ;*                      for MDK-ARM toolchain.  
 ;*                      This module performs:
