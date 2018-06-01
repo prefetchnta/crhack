@@ -798,6 +798,94 @@ image_set_alpha (
 
 /*
 =======================================
+    拆分图片指定通道
+=======================================
+*/
+CR_API sIMAGE*
+image_get_chn32 (
+  __CR_IN__ const sIMAGE*   img,
+  __CR_IN__ uint_t          offset
+    )
+{
+    uint_t  xx;
+    uint_t  yy;
+    uint_t  ww;
+    uint_t  hh;
+    byte_t* src;
+    byte_t* dst;
+    sIMAGE* chn;
+
+    /* 参数过滤 */
+    if (offset > 3 || img->fmt != CR_ARGB8888)
+        return (NULL);
+
+    /* 生成8位的灰度图 */
+    chn = image_new(img->position.x1, img->position.y1,
+                    img->position.ww, img->position.hh,
+                    CR_INDEX8, img->gdi, img->align);
+    if (chn == NULL)
+        return (NULL);
+    pal_set_gray8(chn->pal, 256);
+
+    /* 逐像素抽取 */
+    dst = chn->data;
+    src = img->data;
+    ww = img->position.ww;
+    hh = img->position.hh;
+    for (yy = 0; yy < hh; yy++) {
+        for (xx = 0; xx < ww; xx++)
+            dst[xx] = src[xx * 4 + offset];
+        dst += chn->bpl;
+        src += img->bpl;
+    }
+    return (chn);
+}
+
+/*
+=======================================
+    合并图片指定通道
+=======================================
+*/
+CR_API void_t
+image_set_chn32 (
+  __CR_IO__ const sIMAGE*   img,
+  __CR_IN__ const sIMAGE*   chn,
+  __CR_IN__ uint_t          offset
+    )
+{
+    uint_t  xx;
+    uint_t  yy;
+    uint_t  ww;
+    uint_t  hh;
+    byte_t* src;
+    byte_t* dst;
+
+    /* 参数过滤 */
+    if (offset > 3 || chn->gdi != img->gdi ||
+        chn->fmt != CR_INDEX8 || img->fmt != CR_ARGB8888)
+        return;
+
+    /* 逐像素设置 */
+    src = chn->data;
+    dst = img->data;
+    if (chn->position.ww > img->position.ww)
+        ww = img->position.ww;
+    else
+        ww = chn->position.ww;
+    if (chn->position.hh > img->position.hh)
+        hh = img->position.hh;
+    else
+        hh = chn->position.hh;
+    for (yy = 0; yy < hh; yy++) {
+        for (xx = 0; xx < ww; xx++)
+            dst[xx * 4 + offset] = src[xx];
+        src += chn->bpl;
+        dst += img->bpl;
+    }
+}
+
+/*
+=======================================
     分块转线性图片
 =======================================
 */

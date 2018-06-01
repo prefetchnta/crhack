@@ -655,14 +655,14 @@ blit_alp08_c (
         chn->position.hh < src->position.hh ||
         !blt_use_blit_clip(&doper, &soper, 1, 1, dst, src, blit, rect))
         return;
+    len = soper.width;
     tmp.dx = blit->sx;
     tmp.dy = blit->sy;
-    tmp.dw = blit->sw;
-    tmp.dh = blit->sh;
+    tmp.dw = (uint_t)len;
+    tmp.dh = soper.height;
     blt_use_fill(&aoper, chn, 1, &tmp);
 
     /* 开始像素混合 */
-    len = soper.width;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
             CR_BLEND_LRP_LOAD08(aoper.addr[0])
@@ -725,8 +725,8 @@ blit_alp12_c (
             return;
         tmp.dx = blit->sx;
         tmp.dy = blit->sy;
-        tmp.dw = blit->sw;
-        tmp.dh = blit->sh;
+        tmp.dw = (uint_t)len;
+        tmp.dh = soper.height;
         blt_use_fill(&aoper, chn, 1, &tmp);
 
         /* 开始像素混合 */
@@ -794,8 +794,8 @@ blit_alp15_c (
             return;
         tmp.dx = blit->sx;
         tmp.dy = blit->sy;
-        tmp.dw = blit->sw;
-        tmp.dh = blit->sh;
+        tmp.dw = (uint_t)len;
+        tmp.dh = soper.height;
         blt_use_fill(&aoper, chn, 1, &tmp);
 
         /* 开始像素混合 */
@@ -847,14 +847,14 @@ blit_alp16_c (
         chn->position.hh < src->position.hh ||
         !blt_use_blit_clip(&doper, &soper, 2, 2, dst, src, blit, rect))
         return;
+    len = soper.width / 2;
     tmp.dx = blit->sx;
     tmp.dy = blit->sy;
-    tmp.dw = blit->sw;
-    tmp.dh = blit->sh;
+    tmp.dw = (uint_t)len;
+    tmp.dh = soper.height;
     blt_use_fill(&aoper, chn, 1, &tmp);
 
     /* 开始像素混合 */
-    len = soper.width / 2;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
             CR_BLEND_LRP_LOAD16(aoper.addr[0] >> 2)
@@ -902,14 +902,14 @@ blit_alp24_c (
         chn->position.hh < src->position.hh ||
         !blt_use_blit_clip(&doper, &soper, 3, 3, dst, src, blit, rect))
         return;
+    len = soper.width / 3;
     tmp.dx = blit->sx;
     tmp.dy = blit->sy;
-    tmp.dw = blit->sw;
-    tmp.dh = blit->sh;
+    tmp.dw = (uint_t)len;
+    tmp.dh = soper.height;
     blt_use_fill(&aoper, chn, 1, &tmp);
 
     /* 开始像素混合 */
-    len = soper.width / 3;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
             CR_BLEND_LRP_LOAD24(aoper.addr[0])
@@ -975,8 +975,8 @@ blit_alp32_c (
             return;
         tmp.dx = blit->sx;
         tmp.dy = blit->sy;
-        tmp.dw = blit->sw;
-        tmp.dh = blit->sh;
+        tmp.dw = (uint_t)len;
+        tmp.dh = soper.height;
         blt_use_fill(&aoper, chn, 1, &tmp);
 
         /* 开始像素混合 */
@@ -994,6 +994,213 @@ blit_alp32_c (
             soper.addr += soper.rest;
             aoper.addr += aoper.rest;
         }
+    }
+}
+
+/*
+=======================================
+    掩码绘制 BLIT (08位色)
+=======================================
+*/
+CR_API void_t
+blit_msk08_c (
+  __CR_IN__ const sIMAGE*   dst,
+  __CR_IN__ const sIMAGE*   src,
+  __CR_IN__ const sIMAGE*   msk,
+  __CR_IN__ const sBLIT*    blit,
+  __CR_IN__ const sRECT*    rect,
+  __CR_IN__ byte_t          index
+    )
+{
+    sFILL   tmp;
+    leng_t  idx;
+    leng_t  len;
+    sBLTer  doper;
+    sBLTer  soper;
+    sBLTer  moper;
+
+    /* msk 大小要与 src 一致 */
+    if (msk->bpc != 1 ||
+        dst->bpc != 1 || src->bpc != 1 ||
+        msk->position.ww < src->position.ww ||
+        msk->position.hh < src->position.hh ||
+        !blt_use_blit_clip(&doper, &soper, 1, 1, dst, src, blit, rect))
+        return;
+    len = soper.width;
+    tmp.dx = blit->sx;
+    tmp.dy = blit->sy;
+    tmp.dw = (uint_t)len;
+    tmp.dh = soper.height;
+    blt_use_fill(&moper, msk, 1, &tmp);
+
+    /* 开始像素绘制 */
+    while (soper.height-- != 0) {
+        for (idx = len; idx != 0; idx--) {
+            if (moper.addr[0] == index)
+                doper.addr[0] = soper.addr[0];
+            doper.addr += 1;
+            soper.addr += 1;
+            moper.addr += 1;
+        }
+        doper.addr += doper.rest;
+        soper.addr += soper.rest;
+        moper.addr += moper.rest;
+    }
+}
+
+/*
+=======================================
+    掩码绘制 BLIT (16位色)
+=======================================
+*/
+CR_API void_t
+blit_msk16_c (
+  __CR_IN__ const sIMAGE*   dst,
+  __CR_IN__ const sIMAGE*   src,
+  __CR_IN__ const sIMAGE*   msk,
+  __CR_IN__ const sBLIT*    blit,
+  __CR_IN__ const sRECT*    rect,
+  __CR_IN__ byte_t          index
+    )
+{
+    sFILL   tmp;
+    leng_t  idx;
+    leng_t  len;
+    sBLTer  doper;
+    sBLTer  soper;
+    sBLTer  moper;
+
+    /* msk 大小要与 src 一致 */
+    if (msk->bpc != 1 ||
+        dst->bpc != 2 || src->bpc != 2 ||
+        msk->position.ww < src->position.ww ||
+        msk->position.hh < src->position.hh ||
+        !blt_use_blit_clip(&doper, &soper, 2, 2, dst, src, blit, rect))
+        return;
+    len = soper.width / 2;
+    tmp.dx = blit->sx;
+    tmp.dy = blit->sy;
+    tmp.dw = (uint_t)len;
+    tmp.dh = soper.height;
+    blt_use_fill(&moper, msk, 1, &tmp);
+
+    /* 开始像素绘制 */
+    while (soper.height-- != 0) {
+        for (idx = len; idx != 0; idx--) {
+            if (moper.addr[0] == index)
+                *(int16u*)doper.addr = *(int16u*)soper.addr;
+            doper.addr += 2;
+            soper.addr += 2;
+            moper.addr += 1;
+        }
+        doper.addr += doper.rest;
+        soper.addr += soper.rest;
+        moper.addr += moper.rest;
+    }
+}
+
+/*
+=======================================
+    掩码绘制 BLIT (24位色)
+=======================================
+*/
+CR_API void_t
+blit_msk24_c (
+  __CR_IN__ const sIMAGE*   dst,
+  __CR_IN__ const sIMAGE*   src,
+  __CR_IN__ const sIMAGE*   msk,
+  __CR_IN__ const sBLIT*    blit,
+  __CR_IN__ const sRECT*    rect,
+  __CR_IN__ byte_t          index
+    )
+{
+    sFILL   tmp;
+    leng_t  idx;
+    leng_t  len;
+    sBLTer  doper;
+    sBLTer  soper;
+    sBLTer  moper;
+
+    /* msk 大小要与 src 一致 */
+    if (msk->bpc != 1 ||
+        dst->bpc != 3 || src->bpc != 3 ||
+        msk->position.ww < src->position.ww ||
+        msk->position.hh < src->position.hh ||
+        !blt_use_blit_clip(&doper, &soper, 3, 3, dst, src, blit, rect))
+        return;
+    len = soper.width / 3;
+    tmp.dx = blit->sx;
+    tmp.dy = blit->sy;
+    tmp.dw = (uint_t)len;
+    tmp.dh = soper.height;
+    blt_use_fill(&moper, msk, 1, &tmp);
+
+    /* 开始像素绘制 */
+    while (soper.height-- != 0) {
+        for (idx = len; idx != 0; idx--) {
+            if (moper.addr[0] == index) {
+                doper.addr[0] = soper.addr[0];
+                doper.addr[1] = soper.addr[1];
+                doper.addr[2] = soper.addr[2];
+            }
+            doper.addr += 3;
+            soper.addr += 3;
+            moper.addr += 1;
+        }
+        doper.addr += doper.rest;
+        soper.addr += soper.rest;
+        moper.addr += moper.rest;
+    }
+}
+
+/*
+=======================================
+    掩码绘制 BLIT (32位色)
+=======================================
+*/
+CR_API void_t
+blit_msk32_c (
+  __CR_IN__ const sIMAGE*   dst,
+  __CR_IN__ const sIMAGE*   src,
+  __CR_IN__ const sIMAGE*   msk,
+  __CR_IN__ const sBLIT*    blit,
+  __CR_IN__ const sRECT*    rect,
+  __CR_IN__ byte_t          index
+    )
+{
+    sFILL   tmp;
+    leng_t  idx;
+    leng_t  len;
+    sBLTer  doper;
+    sBLTer  soper;
+    sBLTer  moper;
+
+    /* msk 大小要与 src 一致 */
+    if (msk->bpc != 1 ||
+        dst->bpc != 4 || src->bpc != 4 ||
+        msk->position.ww < src->position.ww ||
+        msk->position.hh < src->position.hh ||
+        !blt_use_blit_clip(&doper, &soper, 4, 4, dst, src, blit, rect))
+        return;
+    len = soper.width / 4;
+    tmp.dx = blit->sx;
+    tmp.dy = blit->sy;
+    tmp.dw = (uint_t)len;
+    tmp.dh = soper.height;
+    blt_use_fill(&moper, msk, 1, &tmp);
+
+    /* 开始像素绘制 */
+    while (soper.height-- != 0) {
+        for (idx = len; idx != 0; idx--) {
+            if (moper.addr[0] == index)
+                *(int32u*)doper.addr = *(int32u*)soper.addr;
+            doper.addr += 4;
+            soper.addr += 4;
+            moper.addr += 1;
+        }
+        doper.addr += doper.rest;
+        soper.addr += soper.rest;
+        moper.addr += moper.rest;
     }
 }
 
