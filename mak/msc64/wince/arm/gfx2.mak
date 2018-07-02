@@ -38,6 +38,9 @@ build_dll:
     $(CC) $(CFLAGS) /D "_CR_BUILD_DLL_" $(ALL_CPPS)
     $(LD) $(LFLAGS) $(DLL_OBJS) $(GDI_OBJS)
     move CrH_GFX2.dll GFX2_GDI.dll
+    $(LD) $(LFLAGS) /LIBPATH:$(SDK_COFF_ARM)gapi \
+                    $(DLL_OBJS) $(GAPI_OBJS)
+    move CrH_GFX2.dll GFX2_GAPI.dll
     $(LD) $(LFLAGS) $(DLL_OBJS) $(OBJS) .$(L)gfx2.res
     del *.obj /Q
     del *.res /Q

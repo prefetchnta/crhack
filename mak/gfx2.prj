@@ -41,6 +41,14 @@ GDI_CPPS=$(SRC)gdiwin.$(C) \
          $(SRC_WIN)wrapper.$(C)
 
 ###############################################################################
+##                                 GAME API                                  ##
+###############################################################################
+
+GAPI_OBJS=$(OBJ)gxapi.$(O)
+
+GAPI_CPPS=$(SRC)gxapi.$(P)
+
+###############################################################################
 ##                               Windows DX8                                 ##
 ###############################################################################
 
@@ -166,9 +174,9 @@ MSC64_WIN32_X64_CPPS=$(DLL_CPPS) $(CPPS) $(GDI_CPPS) $(DX9_CPPS)
 ##      MSC64 WINCE ARM
 ##=====================================
 ##
-MSC64_WINCE_ARM_OBJS=$(DLL_OBJS) $(OBJS) $(GDI_OBJS)
+MSC64_WINCE_ARM_OBJS=$(DLL_OBJS) $(OBJS) $(GDI_OBJS) $(GAPI_OBJS)
 
-MSC64_WINCE_ARM_CPPS=$(DLL_CPPS) $(CPPS) $(GDI_CPPS)
+MSC64_WINCE_ARM_CPPS=$(DLL_CPPS) $(CPPS) $(GDI_CPPS) $(GAPI_CPPS)
 
 ##
 ##=====================================
