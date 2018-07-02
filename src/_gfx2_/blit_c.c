@@ -637,7 +637,6 @@ blit_alp08_c (
   __CR_IN__ const sRECT*    rect
     )
 {
-    sFILL   tmp;
     leng_t  idx;
     leng_t  len;
     sBLTer  doper;
@@ -655,14 +654,10 @@ blit_alp08_c (
         chn->position.hh < src->position.hh ||
         !blt_use_blit_clip(&doper, &soper, 1, 1, dst, src, blit, rect))
         return;
-    len = soper.width;
-    tmp.dx = blit->sx;
-    tmp.dy = blit->sy;
-    tmp.dw = (uint_t)len;
-    tmp.dh = soper.height;
-    blt_use_fill(&aoper, chn, 1, &tmp);
+    blt_use_blit_clip(&doper, &aoper, 1, 1, dst, chn, blit, rect);
 
     /* 开始像素混合 */
+    len = soper.width;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
             CR_BLEND_LRP_LOAD08(aoper.addr[0])
@@ -691,7 +686,6 @@ blit_alp12_c (
   __CR_IN__ const sRECT*    rect
     )
 {
-    sFILL   tmp;
     leng_t  idx;
     leng_t  len;
     sBLTer  doper;
@@ -723,11 +717,7 @@ blit_alp12_c (
             chn->position.ww < src->position.ww ||
             chn->position.hh < src->position.hh)
             return;
-        tmp.dx = blit->sx;
-        tmp.dy = blit->sy;
-        tmp.dw = (uint_t)len;
-        tmp.dh = soper.height;
-        blt_use_fill(&aoper, chn, 1, &tmp);
+        blt_use_blit_clip(&doper, &aoper, 2, 1, dst, chn, blit, rect);
 
         /* 开始像素混合 */
         while (soper.height-- != 0) {
@@ -760,7 +750,6 @@ blit_alp15_c (
   __CR_IN__ const sRECT*    rect
     )
 {
-    sFILL   tmp;
     leng_t  idx;
     leng_t  len;
     sBLTer  doper;
@@ -792,11 +781,7 @@ blit_alp15_c (
             chn->position.ww < src->position.ww ||
             chn->position.hh < src->position.hh)
             return;
-        tmp.dx = blit->sx;
-        tmp.dy = blit->sy;
-        tmp.dw = (uint_t)len;
-        tmp.dh = soper.height;
-        blt_use_fill(&aoper, chn, 1, &tmp);
+        blt_use_blit_clip(&doper, &aoper, 2, 1, dst, chn, blit, rect);
 
         /* 开始像素混合 */
         while (soper.height-- != 0) {
@@ -829,7 +814,6 @@ blit_alp16_c (
   __CR_IN__ const sRECT*    rect
     )
 {
-    sFILL   tmp;
     leng_t  idx;
     leng_t  len;
     sBLTer  doper;
@@ -847,14 +831,10 @@ blit_alp16_c (
         chn->position.hh < src->position.hh ||
         !blt_use_blit_clip(&doper, &soper, 2, 2, dst, src, blit, rect))
         return;
-    len = soper.width / 2;
-    tmp.dx = blit->sx;
-    tmp.dy = blit->sy;
-    tmp.dw = (uint_t)len;
-    tmp.dh = soper.height;
-    blt_use_fill(&aoper, chn, 1, &tmp);
+    blt_use_blit_clip(&doper, &aoper, 2, 1, dst, chn, blit, rect);
 
     /* 开始像素混合 */
+    len = soper.width / 2;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
             CR_BLEND_LRP_LOAD16(aoper.addr[0] >> 2)
@@ -884,7 +864,6 @@ blit_alp24_c (
   __CR_IN__ const sRECT*    rect
     )
 {
-    sFILL   tmp;
     leng_t  idx;
     leng_t  len;
     sBLTer  doper;
@@ -902,14 +881,10 @@ blit_alp24_c (
         chn->position.hh < src->position.hh ||
         !blt_use_blit_clip(&doper, &soper, 3, 3, dst, src, blit, rect))
         return;
-    len = soper.width / 3;
-    tmp.dx = blit->sx;
-    tmp.dy = blit->sy;
-    tmp.dw = (uint_t)len;
-    tmp.dh = soper.height;
-    blt_use_fill(&aoper, chn, 1, &tmp);
+    blt_use_blit_clip(&doper, &aoper, 3, 1, dst, chn, blit, rect);
 
     /* 开始像素混合 */
+    len = soper.width / 3;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
             CR_BLEND_LRP_LOAD24(aoper.addr[0])
@@ -940,7 +915,6 @@ blit_alp32_c (
   __CR_IN__ const sRECT*    rect
     )
 {
-    sFILL   tmp;
     leng_t  idx;
     leng_t  len;
     sBLTer  doper;
@@ -973,11 +947,7 @@ blit_alp32_c (
             chn->position.ww < src->position.ww ||
             chn->position.hh < src->position.hh)
             return;
-        tmp.dx = blit->sx;
-        tmp.dy = blit->sy;
-        tmp.dw = (uint_t)len;
-        tmp.dh = soper.height;
-        blt_use_fill(&aoper, chn, 1, &tmp);
+        blt_use_blit_clip(&doper, &aoper, 4, 1, dst, chn, blit, rect);
 
         /* 开始像素混合 */
         while (soper.height-- != 0) {
@@ -1012,7 +982,6 @@ blit_msk08_c (
   __CR_IN__ byte_t          index
     )
 {
-    sFILL   tmp;
     leng_t  idx;
     leng_t  len;
     sBLTer  doper;
@@ -1026,14 +995,10 @@ blit_msk08_c (
         msk->position.hh < src->position.hh ||
         !blt_use_blit_clip(&doper, &soper, 1, 1, dst, src, blit, rect))
         return;
-    len = soper.width;
-    tmp.dx = blit->sx;
-    tmp.dy = blit->sy;
-    tmp.dw = (uint_t)len;
-    tmp.dh = soper.height;
-    blt_use_fill(&moper, msk, 1, &tmp);
+    blt_use_blit_clip(&doper, &moper, 1, 1, dst, msk, blit, rect);
 
     /* 开始像素绘制 */
+    len = soper.width;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
             if (moper.addr[0] == index)
@@ -1063,7 +1028,6 @@ blit_msk16_c (
   __CR_IN__ byte_t          index
     )
 {
-    sFILL   tmp;
     leng_t  idx;
     leng_t  len;
     sBLTer  doper;
@@ -1077,14 +1041,10 @@ blit_msk16_c (
         msk->position.hh < src->position.hh ||
         !blt_use_blit_clip(&doper, &soper, 2, 2, dst, src, blit, rect))
         return;
-    len = soper.width / 2;
-    tmp.dx = blit->sx;
-    tmp.dy = blit->sy;
-    tmp.dw = (uint_t)len;
-    tmp.dh = soper.height;
-    blt_use_fill(&moper, msk, 1, &tmp);
+    blt_use_blit_clip(&doper, &moper, 2, 1, dst, msk, blit, rect);
 
     /* 开始像素绘制 */
+    len = soper.width / 2;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
             if (moper.addr[0] == index)
@@ -1114,7 +1074,6 @@ blit_msk24_c (
   __CR_IN__ byte_t          index
     )
 {
-    sFILL   tmp;
     leng_t  idx;
     leng_t  len;
     sBLTer  doper;
@@ -1128,14 +1087,10 @@ blit_msk24_c (
         msk->position.hh < src->position.hh ||
         !blt_use_blit_clip(&doper, &soper, 3, 3, dst, src, blit, rect))
         return;
-    len = soper.width / 3;
-    tmp.dx = blit->sx;
-    tmp.dy = blit->sy;
-    tmp.dw = (uint_t)len;
-    tmp.dh = soper.height;
-    blt_use_fill(&moper, msk, 1, &tmp);
+    blt_use_blit_clip(&doper, &moper, 3, 1, dst, msk, blit, rect);
 
     /* 开始像素绘制 */
+    len = soper.width / 3;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
             if (moper.addr[0] == index) {
@@ -1168,7 +1123,6 @@ blit_msk32_c (
   __CR_IN__ byte_t          index
     )
 {
-    sFILL   tmp;
     leng_t  idx;
     leng_t  len;
     sBLTer  doper;
@@ -1182,14 +1136,10 @@ blit_msk32_c (
         msk->position.hh < src->position.hh ||
         !blt_use_blit_clip(&doper, &soper, 4, 4, dst, src, blit, rect))
         return;
-    len = soper.width / 4;
-    tmp.dx = blit->sx;
-    tmp.dy = blit->sy;
-    tmp.dw = (uint_t)len;
-    tmp.dh = soper.height;
-    blt_use_fill(&moper, msk, 1, &tmp);
+    blt_use_blit_clip(&doper, &moper, 4, 1, dst, msk, blit, rect);
 
     /* 开始像素绘制 */
+    len = soper.width / 4;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
             if (moper.addr[0] == index)
