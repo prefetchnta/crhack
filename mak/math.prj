@@ -65,7 +65,10 @@ OBJS=$(OBJ)math.$(O) \
      $(OBJ)pregnant.$(O) \
      $(OBJ)pf_astar.$(O) \
      $(OBJ)pf_dijkstra.$(O) \
-     $(OBJ)vmaggeo.$(O)
+     $(OBJ)vmaggeo.$(O) \
+     $(OBJ)ctl_pid.$(O) \
+     $(OBJ)fir_lpass.$(O) \
+     $(OBJ)fir_nline.$(O)
 
 CPPS=$(SRC)math.$(C) \
      $(SRC)bspace.$(C) \
@@ -107,7 +110,10 @@ CPPS=$(SRC)math.$(C) \
      $(SRC)pregnant.$(C) \
      $(SRC)pf_astar.$(C) \
      $(SRC)pf_dijkstra.$(C) \
-     $(SRC)vmaggeo.$(C)
+     $(SRC)vmaggeo.$(C) \
+     $(SRC)ctl_pid.$(C) \
+     $(SRC)fir_lpass.$(C) \
+     $(SRC)fir_nline.$(C)
 
 ###############################################################################
 ##                             各个编译器的配置                              ##

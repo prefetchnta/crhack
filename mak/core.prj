@@ -56,6 +56,18 @@ LZO_CPPS=$(SRC)comp_lzo.$(C) \
          $(SRC_3RD)minilzo$(L)minilzo.$(C)
 
 ###############################################################################
+##                                  PKWARE                                   ##
+###############################################################################
+
+PKWARE_OBJS=$(OBJ)comp_pk.$(O) \
+            $(OBJ)explode.$(O) \
+            $(OBJ)implode.$(O)
+
+PKWARE_CPPS=$(SRC)comp_pk.$(C) \
+            $(SRC_3RD)pkware$(L)explode.$(C) \
+            $(SRC_3RD)pkware$(L)implode.$(C)
+
+###############################################################################
 ##                                   ZLib                                    ##
 ###############################################################################
 
@@ -405,100 +417,100 @@ NAKED_CPPS=$(SRC_NAK)appnak.$(C) \
 ##=====================================
 ##
 ARMCC_NAKED_ARM_OBJS=$(OBJS) $(NAKED_OBJS) $(LZO_OBJS) \
-                     $(BZIP2_OBJS) $(ZLIB_OBJS)
+                     $(BZIP2_OBJS) $(PKWARE_OBJS) $(ZLIB_OBJS)
 
 ARMCC_NAKED_ARM_CPPS=$(CPPS) $(NAKED_CPPS) $(LZO_CPPS) \
-                     $(BZIP2_CPPS) $(ZLIB_CPPS)
+                     $(BZIP2_CPPS) $(PKWARE_CPPS) $(ZLIB_CPPS)
 ##
 ##=====================================
 ##      BCC32 WIN32 X86
 ##=====================================
 ##
 BCC32_WIN32_X86_OBJS=$(OBJS) $(WIN32_OBJS) $(LZO_OBJS) \
-                     $(BZIP2_OBJS) $(ZLIB_OBJS)
+                     $(BZIP2_OBJS) $(PKWARE_OBJS) $(ZLIB_OBJS)
 
 BCC32_WIN32_X86_CPPS=$(CPPS) $(WIN32_CPPS) $(LZO_CPPS) \
-                     $(BZIP2_CPPS) $(ZLIB_CPPS)
+                     $(BZIP2_CPPS) $(PKWARE_CPPS) $(ZLIB_CPPS)
 ##
 ##=====================================
 ##      GCC WIN32 X86
 ##=====================================
 ##
 GCC_WIN32_X86_OBJS=$(OBJS) $(WIN32_OBJS) $(LZO_OBJS) \
-                   $(BZIP2_OBJS) $(ZLIB_OBJS)
+                   $(BZIP2_OBJS) $(PKWARE_OBJS) $(ZLIB_OBJS)
 
 GCC_WIN32_X86_CPPS=$(CPPS) $(WIN32_CPPS) $(LZO_CPPS) \
-                   $(BZIP2_CPPS) $(ZLIB_CPPS)
+                   $(BZIP2_CPPS) $(PKWARE_CPPS) $(ZLIB_CPPS)
 ##
 ##=====================================
 ##      GCC WIN32 X64
 ##=====================================
 ##
 GCC_WIN32_X64_OBJS=$(OBJS) $(WIN32_OBJS) $(LZO_OBJS) \
-                   $(BZIP2_OBJS) $(ZLIB_OBJS)
+                   $(BZIP2_OBJS) $(PKWARE_OBJS) $(ZLIB_OBJS)
 
 GCC_WIN32_X64_CPPS=$(CPPS) $(WIN32_CPPS) $(LZO_CPPS) \
-                   $(BZIP2_CPPS) $(ZLIB_CPPS)
+                   $(BZIP2_CPPS) $(PKWARE_CPPS) $(ZLIB_CPPS)
 ##
 ##=====================================
 ##      GCC ANDROID NDK
 ##=====================================
 ##
 GCC_ANDROID_NDK_OBJS=$(OBJS) $(POSIX_OBJS) $(LINUX_OBJS) \
-                     $(LZO_OBJS) $(BZIP2_OBJS) $(ZLIB_OBJS)
+                     $(LZO_OBJS) $(BZIP2_OBJS) $(PKWARE_OBJS) $(ZLIB_OBJS)
 
 GCC_ANDROID_NDK_CPPS=$(CPPS) $(POSIX_CPPS) $(LINUX_CPPS) \
-                     $(LZO_CPPS) $(BZIP2_CPPS) $(ZLIB_CPPS)
+                     $(LZO_CPPS) $(BZIP2_CPPS) $(PKWARE_CPPS) $(ZLIB_CPPS)
 ##
 ##=====================================
 ##      MSC32 WIN32 X86
 ##=====================================
 ##
 MSC32_WIN32_X86_OBJS=$(OBJS) $(WIN32_OBJS) $(LZO_OBJS) \
-                     $(BZIP2_OBJS) $(ZLIB_OBJS)
+                     $(BZIP2_OBJS) $(PKWARE_OBJS) $(ZLIB_OBJS)
 
 MSC32_WIN32_X86_CPPS=$(CPPS) $(WIN32_CPPS) $(LZO_CPPS) \
-                     $(BZIP2_CPPS) $(ZLIB_CPPS)
+                     $(BZIP2_CPPS) $(PKWARE_CPPS) $(ZLIB_CPPS)
 ##
 ##=====================================
 ##      MSC64 WIN32 X86
 ##=====================================
 ##
 MSC64_WIN32_X86_OBJS=$(OBJS) $(WIN32_OBJS) $(LZO_OBJS) \
-                     $(BZIP2_OBJS) $(ZLIB_OBJS)
+                     $(BZIP2_OBJS) $(PKWARE_OBJS) $(ZLIB_OBJS)
 
 MSC64_WIN32_X86_CPPS=$(CPPS) $(WIN32_CPPS) $(LZO_CPPS) \
-                     $(BZIP2_CPPS) $(ZLIB_CPPS)
+                     $(BZIP2_CPPS) $(PKWARE_CPPS) $(ZLIB_CPPS)
 ##
 ##=====================================
 ##      MSC64 WIN32 X64
 ##=====================================
 ##
 MSC64_WIN32_X64_OBJS=$(OBJS) $(WIN32_OBJS) $(LZO_OBJS) \
-                     $(BZIP2_OBJS) $(ZLIB_OBJS)
+                     $(BZIP2_OBJS) $(PKWARE_OBJS) $(ZLIB_OBJS)
 
 MSC64_WIN32_X64_CPPS=$(CPPS) $(WIN32_CPPS) $(LZO_CPPS) \
-                     $(BZIP2_CPPS) $(ZLIB_CPPS)
+                     $(BZIP2_CPPS) $(PKWARE_CPPS) $(ZLIB_CPPS)
 ##
 ##=====================================
 ##      MSC64 WINCE ARM
 ##=====================================
 ##
 MSC64_WINCE_ARM_OBJS=$(OBJS) $(WIN32_OBJS) $(LZO_OBJS) \
-                     $(BZIP2_OBJS) $(ZLIB_OBJS)
+                     $(BZIP2_OBJS) $(PKWARE_OBJS) $(ZLIB_OBJS)
 
 MSC64_WINCE_ARM_CPPS=$(CPPS) $(WIN32_CPPS) $(LZO_CPPS) \
-                     $(BZIP2_CPPS) $(ZLIB_CPPS)
+                     $(BZIP2_CPPS) $(PKWARE_CPPS) $(ZLIB_CPPS)
 ##
 ##=====================================
 ##      VDSP NAKED BFIN
 ##=====================================
 ##
 VDSP_NAKED_BFIN_OBJS=$(OBJS) $(NAKED_OBJS) $(LZO_OBJS) \
-                     $(BZIP2_OBJS) $(ZLIB_OBJS)
+                     $(BZIP2_OBJS) $(PKWARE_OBJS) $(ZLIB_OBJS)
 
 VDSP_NAKED_BFIN_CPPS=$(CPPS) $(NAKED_CPPS) $(LZO_CPPS) \
-                     $(BZIP2_CPPS) $(ZLIB_CPPS)
+                     $(BZIP2_CPPS) $(PKWARE_CPPS) $(ZLIB_CPPS)
 
 ###############################################################################
 ## _________________________________________________________________________ ##
