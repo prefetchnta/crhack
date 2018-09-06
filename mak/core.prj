@@ -99,7 +99,8 @@ ZLIB_CPPS=$(SRC)comp_z.$(C) \
 ##                               CRHACK/CORE                                 ##
 ###############################################################################
 
-OBJS=$(OBJ)errs.$(O) \
+OBJS=$(OBJ)defs.$(O) \
+     $(OBJ)errs.$(O) \
      $(OBJ)anubis.$(O) \
      $(OBJ)blowfish.$(O) \
      $(OBJ)twofish.$(O) \
@@ -201,7 +202,8 @@ OBJS=$(OBJ)errs.$(O) \
      $(OBJ)ui_align.$(O) \
      $(OBJ)ui_resrc.$(O)
 
-CPPS=$(SRC)errs.$(C) \
+CPPS=$(SRC)defs.$(C) \
+     $(SRC)errs.$(C) \
      $(SRC)anubis.$(C) \
      $(SRC)blowfish.$(C) \
      $(SRC)twofish.$(C) \

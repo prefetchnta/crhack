@@ -698,6 +698,38 @@ image_indexed (
 
 /*
 =======================================
+    灰度图二值化 (单一值)
+=======================================
+*/
+CR_API bool_t
+image_binaryv (
+  __CR_IO__ const sIMAGE*   gray,
+  __CR_IN__ byte_t          value
+    )
+{
+    uint_t  xx;
+    uint_t  ww;
+    uint_t  hh;
+    byte_t* ptr;
+    byte_t* line;
+
+    /* 输入必须为灰度图 */
+    if (gray->fmt != CR_INDEX8)
+        return (FALSE);
+
+    /* 通过单一值判断 */
+    ww = gray->position.ww;
+    hh = gray->position.hh;
+    for (line = gray->data; hh != 0; hh--) {
+        for (ptr = line, xx = ww; xx != 0; xx--, ptr++)
+            *ptr = (*ptr != value) ? 0 : 255;
+        line += gray->bpl;
+    }
+    return (TRUE);
+}
+
+/*
+=======================================
     灰度图二值化 (自适应)
 =======================================
 */
