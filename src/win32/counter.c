@@ -46,9 +46,11 @@ timer_new (void_t)
     timer = struct_new(sCOUNTER);
     if (timer == NULL)
         return (NULL);
+    count = 0;
 
     /* 高精度计数器失败使用低精度的计数器 */
-    if (!QueryPerformanceFrequency((LARGE_INTEGER*)(&count))) {
+    if (!QueryPerformanceFrequency((LARGE_INTEGER*)(&count))
+        || count == 0) {
         timer->high = FALSE;
         timer->freq = 1000.0f;
     }
@@ -93,10 +95,20 @@ timer_get32 (void_t)
 CR_API int64u
 timer_get64 (void_t)
 {
-    int64u  count;
+    int64u          count;
+    static int64u   freq = 1;
 
+    if (freq == 0)
+        return ((int64u)GetTickCount());
+    if (freq == 1) {
+        count = 0;
+        QueryPerformanceFrequency((LARGE_INTEGER*)(&count));
+        freq = count;
+        if (freq == 0)
+            return ((int64u)GetTickCount());
+    }
     QueryPerformanceCounter((LARGE_INTEGER*)(&count));
-    return (count);
+    return (count * 1000UL / freq);
 }
 
 /*
