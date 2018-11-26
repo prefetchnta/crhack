@@ -9,8 +9,7 @@
 extern "C" {
 #endif
 
-#include "integer.h"
-
+#include "ff.h"
 
 /* Status of Disk Functions */
 typedef BYTE	DSTATUS;

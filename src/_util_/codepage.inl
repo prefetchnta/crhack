@@ -20,7 +20,6 @@
 /* 骗过 FatFS 的头文件包含 */
 #define FF_DEFINED  1
 #define FF_USE_LFN  1
-#define FF_NO_QWORD 1
 
 #include "memlib.h"
 #include "strlib.h"
