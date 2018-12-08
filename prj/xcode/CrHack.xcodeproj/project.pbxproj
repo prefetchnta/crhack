@@ -234,8 +234,17 @@
 		11A476061C9FF28E00CFC25E /* thread.c in Sources */ = {isa = PBXBuildFile; fileRef = 11A475FE1C9FF28E00CFC25E /* thread.c */; };
 		11BCB2CC1CC6462F00704F41 /* slist.c in Sources */ = {isa = PBXBuildFile; fileRef = 11BCB2CB1CC6462F00704F41 /* slist.c */; };
 		11FD56651FD8E4A70042FA03 /* cr_spak.c in Sources */ = {isa = PBXBuildFile; fileRef = 11FD56641FD8E4A70042FA03 /* cr_spak.c */; };
+		BA0134B521BB8ADC0058784A /* rf_loc.c in Sources */ = {isa = PBXBuildFile; fileRef = BA0134B421BB8ADC0058784A /* rf_loc.c */; };
 		BA0D3E291CB1551E00BDA52D /* fsyspsx.c in Sources */ = {isa = PBXBuildFile; fileRef = BA0D3E281CB1551E00BDA52D /* fsyspsx.c */; };
 		BA0D3E2B1CB1552900BDA52D /* netbsd.c in Sources */ = {isa = PBXBuildFile; fileRef = BA0D3E2A1CB1552900BDA52D /* netbsd.c */; };
+		BAAAC81E21B3D61900DB7C26 /* ctl_pid.c in Sources */ = {isa = PBXBuildFile; fileRef = BAAAC81D21B3D61900DB7C26 /* ctl_pid.c */; };
+		BAAAC82021B3D63800DB7C26 /* fir_lpass.c in Sources */ = {isa = PBXBuildFile; fileRef = BAAAC81F21B3D63800DB7C26 /* fir_lpass.c */; };
+		BAAAC82221B3D64300DB7C26 /* fir_nline.c in Sources */ = {isa = PBXBuildFile; fileRef = BAAAC82121B3D64300DB7C26 /* fir_nline.c */; };
+		BAAAC82421B3D66F00DB7C26 /* kalman.c in Sources */ = {isa = PBXBuildFile; fileRef = BAAAC82321B3D66F00DB7C26 /* kalman.c */; };
+		BAAAC82C21B3D76F00DB7C26 /* explode.c in Sources */ = {isa = PBXBuildFile; fileRef = BAAAC82721B3D76F00DB7C26 /* explode.c */; };
+		BAAAC82D21B3D76F00DB7C26 /* implode.c in Sources */ = {isa = PBXBuildFile; fileRef = BAAAC82921B3D76F00DB7C26 /* implode.c */; };
+		BAAAC82F21B3D85400DB7C26 /* comp_pk.c in Sources */ = {isa = PBXBuildFile; fileRef = BAAAC82E21B3D85400DB7C26 /* comp_pk.c */; };
+		BAAAC83121B3D88B00DB7C26 /* defs.c in Sources */ = {isa = PBXBuildFile; fileRef = BAAAC83021B3D88B00DB7C26 /* defs.c */; };
 		BAC0539D1F6963D90060907A /* pf_dijkstra.c in Sources */ = {isa = PBXBuildFile; fileRef = BAC0539C1F6963D90060907A /* pf_dijkstra.c */; };
 /* End PBXBuildFile section */
 
@@ -480,8 +489,17 @@
 		11A475FE1C9FF28E00CFC25E /* thread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = thread.c; sourceTree = "<group>"; };
 		11BCB2CB1CC6462F00704F41 /* slist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = slist.c; path = ../../../src/slist.c; sourceTree = "<group>"; };
 		11FD56641FD8E4A70042FA03 /* cr_spak.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cr_spak.c; sourceTree = "<group>"; };
+		BA0134B421BB8ADC0058784A /* rf_loc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rf_loc.c; sourceTree = "<group>"; };
 		BA0D3E281CB1551E00BDA52D /* fsyspsx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fsyspsx.c; sourceTree = "<group>"; };
 		BA0D3E2A1CB1552900BDA52D /* netbsd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = netbsd.c; sourceTree = "<group>"; };
+		BAAAC81D21B3D61900DB7C26 /* ctl_pid.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctl_pid.c; sourceTree = "<group>"; };
+		BAAAC81F21B3D63800DB7C26 /* fir_lpass.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fir_lpass.c; sourceTree = "<group>"; };
+		BAAAC82121B3D64300DB7C26 /* fir_nline.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fir_nline.c; sourceTree = "<group>"; };
+		BAAAC82321B3D66F00DB7C26 /* kalman.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kalman.c; sourceTree = "<group>"; };
+		BAAAC82721B3D76F00DB7C26 /* explode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = explode.c; sourceTree = "<group>"; };
+		BAAAC82921B3D76F00DB7C26 /* implode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = implode.c; sourceTree = "<group>"; };
+		BAAAC82E21B3D85400DB7C26 /* comp_pk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = comp_pk.c; path = ../../../src/comp_pk.c; sourceTree = "<group>"; };
+		BAAAC83021B3D88B00DB7C26 /* defs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = defs.c; path = ../../../src/defs.c; sourceTree = "<group>"; };
 		BAC0539C1F6963D90060907A /* pf_dijkstra.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pf_dijkstra.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -564,6 +582,7 @@
 				11A473A01C9FE90F00CFC25E /* code128.c */,
 				11A473A21C9FE90F00CFC25E /* comp_bz2.c */,
 				11A473A31C9FE90F00CFC25E /* comp_lzo.c */,
+				BAAAC82E21B3D85400DB7C26 /* comp_pk.c */,
 				11A473A41C9FE90F00CFC25E /* comp_z.c */,
 				11A473A51C9FE90F00CFC25E /* crc7.c */,
 				11A473A61C9FE90F00CFC25E /* crc8a.c */,
@@ -582,6 +601,7 @@
 				11A473B21C9FE90F00CFC25E /* curtain.c */,
 				11A473B31C9FE90F00CFC25E /* d3dfmt.c */,
 				11A473B41C9FE90F00CFC25E /* datio.c */,
+				BAAAC83021B3D88B00DB7C26 /* defs.c */,
 				11A473B51C9FE90F00CFC25E /* delay.c */,
 				11A473B61C9FE90F00CFC25E /* des.c */,
 				11A473B71C9FE90F00CFC25E /* devlib.c */,
@@ -799,8 +819,11 @@
 			children = (
 				118A50651D0405600091E1AC /* bspace.c */,
 				11A4755D1C9FF07100CFC25E /* conv_nxn.c */,
+				BAAAC81D21B3D61900DB7C26 /* ctl_pid.c */,
 				11A4755E1C9FF07100CFC25E /* cu50_r2t.c */,
 				11A4755F1C9FF07100CFC25E /* cu50_t2r.c */,
+				BAAAC81F21B3D63800DB7C26 /* fir_lpass.c */,
+				BAAAC82121B3D64300DB7C26 /* fir_nline.c */,
 				11A475601C9FF07100CFC25E /* form_nxn.c */,
 				11A475611C9FF07100CFC25E /* ifc67.c */,
 				11A475631C9FF07100CFC25E /* iif97_1.c */,
@@ -812,6 +835,7 @@
 				11A475621C9FF07100CFC25E /* iif97.c */,
 				11A475691C9FF07100CFC25E /* imgbin.c */,
 				11A4756A1C9FF07100CFC25E /* imgclr.c */,
+				BAAAC82321B3D66F00DB7C26 /* kalman.c */,
 				11A4756B1C9FF07100CFC25E /* line_ops.c */,
 				1144871E1D2B947A00D89DF2 /* pf_astar.c */,
 				BAC0539C1F6963D90060907A /* pf_dijkstra.c */,
@@ -819,6 +843,7 @@
 				11A4756D1C9FF07100CFC25E /* pt100_r2t.c */,
 				11A4756E1C9FF07100CFC25E /* pt100_t2r.c */,
 				11A4756F1C9FF07100CFC25E /* rect_ops.c */,
+				BA0134B421BB8ADC0058784A /* rf_loc.c */,
 				11A475701C9FF07100CFC25E /* tb_mv2t.c */,
 				11A475711C9FF07100CFC25E /* tb_t2mv.c */,
 				11A475721C9FF07100CFC25E /* te_mv2t.c */,
@@ -847,6 +872,7 @@
 			children = (
 				11A475A61C9FF0BA00CFC25E /* bzip2 */,
 				11A475C41C9FF0BA00CFC25E /* minilzo */,
+				BAAAC82621B3D76F00DB7C26 /* pkware */,
 				11A475CA1C9FF0BA00CFC25E /* zlib */,
 			);
 			name = ex3rd;
@@ -908,6 +934,15 @@
 			);
 			name = posix;
 			path = ../../../src/posix;
+			sourceTree = "<group>";
+		};
+		BAAAC82621B3D76F00DB7C26 /* pkware */ = {
+			isa = PBXGroup;
+			children = (
+				BAAAC82721B3D76F00DB7C26 /* explode.c */,
+				BAAAC82921B3D76F00DB7C26 /* implode.c */,
+			);
+			path = pkware;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1018,7 +1053,9 @@
 				11A474571C9FE90F00CFC25E /* ui_resrc.c in Sources */,
 				119AA8CE1CBB4B3100BCB9DB /* bjnetcomm.c in Sources */,
 				11A474311C9FE90F00CFC25E /* idea.c in Sources */,
+				BAAAC82D21B3D76F00DB7C26 /* implode.c in Sources */,
 				11A475FF1C9FF28E00CFC25E /* codepage.c in Sources */,
+				BAAAC82F21B3D85400DB7C26 /* comp_pk.c in Sources */,
 				11A4745A1C9FE90F00CFC25E /* xmlcall.c in Sources */,
 				1199AB801D8100E800B271B9 /* pregnant.c in Sources */,
 				11A4759F1C9FF07100CFC25E /* tr_mv2t.c in Sources */,
@@ -1027,6 +1064,7 @@
 				11A474421C9FE90F00CFC25E /* pixelz.c in Sources */,
 				11A4755B1C9FF03100CFC25E /* wavefront.c in Sources */,
 				BA0D3E2B1CB1552900BDA52D /* netbsd.c in Sources */,
+				BAAAC83121B3D88B00DB7C26 /* defs.c in Sources */,
 				11A474121C9FE90F00CFC25E /* crc32a.c in Sources */,
 				11A475881C9FF07100CFC25E /* iif97_2.c in Sources */,
 				11A474261C9FE90F00CFC25E /* enclib.c in Sources */,
@@ -1065,6 +1103,7 @@
 				11A474461C9FE90F00CFC25E /* rc4.c in Sources */,
 				11A4742F1C9FE90F00CFC25E /* hashc.c in Sources */,
 				11A475E41C9FF0BA00CFC25E /* bz_randtable.c in Sources */,
+				BAAAC82C21B3D76F00DB7C26 /* explode.c in Sources */,
 				11A473FB1C9FE90F00CFC25E /* atree.c in Sources */,
 				11A474471C9FE90F00CFC25E /* rmd128.c in Sources */,
 				11A475871C9FF07100CFC25E /* iif97_1.c in Sources */,
@@ -1080,6 +1119,7 @@
 				11A474401C9FE90F00CFC25E /* msclib.c in Sources */,
 				11A474511C9FE90F00CFC25E /* sha512.c in Sources */,
 				11A473FC1C9FE90F00CFC25E /* base16.c in Sources */,
+				BAAAC81E21B3D61900DB7C26 /* ctl_pid.c in Sources */,
 				11A474071C9FE90F00CFC25E /* clipper.c in Sources */,
 				11A476061C9FF28E00CFC25E /* thread.c in Sources */,
 				11A4745D1C9FE90F00CFC25E /* xxtea.c in Sources */,
@@ -1095,11 +1135,13 @@
 				11A476001C9FF28E00CFC25E /* counter.c in Sources */,
 				11A4754A1C9FF03100CFC25E /* bound.c in Sources */,
 				11A474291C9FE90F00CFC25E /* fileio.c in Sources */,
+				BA0134B521BB8ADC0058784A /* rf_loc.c in Sources */,
 				11A4740E1C9FE90F00CFC25E /* crc8a.c in Sources */,
 				11A4743C1C9FE90F00CFC25E /* memin.c in Sources */,
 				11A475A41C9FF07100CFC25E /* tt_t2mv.c in Sources */,
 				11A475931C9FF07100CFC25E /* rect_ops.c in Sources */,
 				11A475011C9FEE7000CFC25E /* tgl_bmr.c in Sources */,
+				BAAAC82021B3D63800DB7C26 /* fir_lpass.c in Sources */,
 				11A475851C9FF07100CFC25E /* ifc67.c in Sources */,
 				BAC0539D1F6963D90060907A /* pf_dijkstra.c in Sources */,
 				11A475001C9FEE7000CFC25E /* tgl_acf.c in Sources */,
@@ -1134,6 +1176,7 @@
 				11A474101C9FE90F00CFC25E /* crc16c.c in Sources */,
 				BA0D3E291CB1551E00BDA52D /* fsyspsx.c in Sources */,
 				11A475F21C9FF0BA00CFC25E /* z_inftrees.c in Sources */,
+				BAAAC82221B3D64300DB7C26 /* fir_nline.c in Sources */,
 				11A473F71C9FE90F00CFC25E /* aes.c in Sources */,
 				11A475981C9FF07100CFC25E /* text_ops.c in Sources */,
 				11A474011C9FE90F00CFC25E /* blowfish.c in Sources */,
@@ -1144,6 +1187,7 @@
 				11A4743B1C9FE90F00CFC25E /* md5.c in Sources */,
 				11A474031C9FE90F00CFC25E /* bzz5.c in Sources */,
 				11A4758D1C9FF07100CFC25E /* imgbin.c in Sources */,
+				BAAAC82421B3D66F00DB7C26 /* kalman.c in Sources */,
 				11A474231C9FE90F00CFC25E /* ecc256.c in Sources */,
 				11A474321C9FE90F00CFC25E /* image.c in Sources */,
 				11A476011C9FF28E00CFC25E /* dllpsx.c in Sources */,

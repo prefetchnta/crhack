@@ -593,7 +593,7 @@ static void WriteCmpData(TCmpStruct * pWork)
                 if(input_data_ended && input_data + rep_length > input_data_end)
                 {
                     // Shorten the repetition length so that it only covers valid data
-                    rep_length = (unsigned long)(input_data_end - input_data);
+                    rep_length = (unsigned int)(input_data_end - input_data);
                     if(rep_length < 2)
                         break;
 

@@ -380,8 +380,8 @@ static unsigned int DecodeDist(TDcmpStruct * pWork, unsigned int rep_length)
     {
         // If the repetition is more than 2 bytes length,
         // then take "dsize_bits" bits in order to get the distance
-        distance = (dist_pos_code << pWork->dsize_bits) | (pWork->bit_buff & pWork->dsize_mask);
-        if(WasteBits(pWork, pWork->dsize_bits))
+        distance = (unsigned int)((dist_pos_code << pWork->dsize_bits) | (pWork->bit_buff & pWork->dsize_mask));
+        if(WasteBits(pWork, (unsigned int)pWork->dsize_bits))
             return 0;
     }
     return distance + 1;
@@ -460,7 +460,7 @@ static unsigned int Expand(TDcmpStruct * pWork)
     }
 
     // Flush any remaining decompressed bytes
-    copyBytes = pWork->outputPos - 0x1000;
+    copyBytes = (unsigned int)(pWork->outputPos - 0x1000);
     pWork->write_buf((char *)&pWork->out_buff[0x1000], &copyBytes, pWork->param);
     return result;
 }

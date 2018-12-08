@@ -1353,13 +1353,13 @@ image_grab (
     ry0 = (ry1 - 1.0f) / 2.0f; \
     rx1 *= scale; ry1 *= scale; \
     fax = rx1 * cosa; \
-    if (fax < 0.0f) fax = -fax; \
+    fax = FABS(fax); \
     fay = ry1 * sina; \
-    if (fay < 0.0f) fay = -fay; \
+    fay = FABS(fay); \
     fbx = rx1 * sina; \
-    if (fbx < 0.0f) fbx = -fbx; \
+    fbx = FABS(fbx); \
     fby = ry1 * cosa; \
-    if (fby < 0.0f) fby = -fby; \
+    fby = FABS(fby); \
     new_w = (sint_t)(fax + fay + 0.999f); \
     new_h = (sint_t)(fbx + fby + 0.999f); \
     box_x = (sint_t)(new_w - box->ww); \

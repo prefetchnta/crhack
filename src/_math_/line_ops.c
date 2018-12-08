@@ -262,8 +262,7 @@ line_split_int (
     for (idx = 1; idx <= count - 2; idx++) {
         dist = aa * (fp32_t)(pnts[idx].x) + bb * (fp32_t)(pnts[idx].y) - cc;
         dist *= len;
-        if (dist < 0.0f)
-            dist = -dist;
+        dist = FABS(dist);
         if (dist > max) {
             max = dist;
             split = idx;

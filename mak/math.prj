@@ -27,6 +27,7 @@ SRC_3RD=..$(L)src$(L)ex3rd$(L)
 
 OBJS=$(OBJ)math.$(O) \
      $(OBJ)bspace.$(O) \
+     $(OBJ)rf_loc.$(O) \
      $(OBJ)cu50_r2t.$(O) \
      $(OBJ)cu50_t2r.$(O) \
      $(OBJ)pt100_r2t.$(O) \
@@ -67,11 +68,13 @@ OBJS=$(OBJ)math.$(O) \
      $(OBJ)pf_dijkstra.$(O) \
      $(OBJ)vmaggeo.$(O) \
      $(OBJ)ctl_pid.$(O) \
+     $(OBJ)kalman.$(O) \
      $(OBJ)fir_lpass.$(O) \
      $(OBJ)fir_nline.$(O)
 
 CPPS=$(SRC)math.$(C) \
      $(SRC)bspace.$(C) \
+     $(SRC)rf_loc.$(C) \
      $(SRC)cu50_r2t.$(C) \
      $(SRC)cu50_t2r.$(C) \
      $(SRC)pt100_r2t.$(C) \
@@ -112,6 +115,7 @@ CPPS=$(SRC)math.$(C) \
      $(SRC)pf_dijkstra.$(C) \
      $(SRC)vmaggeo.$(C) \
      $(SRC)ctl_pid.$(C) \
+     $(SRC)kalman.$(C) \
      $(SRC)fir_lpass.$(C) \
      $(SRC)fir_nline.$(C)
 

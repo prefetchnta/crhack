@@ -311,7 +311,7 @@ camera_update_fps (
     fp32_t  sin_p = FSIN(cam->phi) * cam->distance;
     fp32_t  cos_p = FCOS(cam->phi) * cam->distance;
 
-    if (cos_p < 0.0f) cos_p = -cos_p;
+    cos_p = FABS(cos_p);
     cam->lookat->x = cam->eye->x - cos_p * cos_t;
     cam->lookat->y = cam->eye->y - sin_p;
     cam->lookat->z = cam->eye->z - cos_p * sin_t;
@@ -332,7 +332,7 @@ camera_update_tps (
     fp32_t  sin_p = FSIN(cam->phi) * cam->distance;
     fp32_t  cos_p = FCOS(cam->phi) * cam->distance;
 
-    if (cos_p < 0.0f) cos_p = -cos_p;
+    cos_p = FABS(cos_p);
     cam->eye->x = cam->lookat->x + cos_p * cos_t;
     cam->eye->y = cam->lookat->y + sin_p;
     cam->eye->z = cam->lookat->z + cos_p * sin_t;

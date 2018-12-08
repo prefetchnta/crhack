@@ -20,7 +20,7 @@
 #ifndef __CR_PHYLIB_H__
 #define __CR_PHYLIB_H__
 
-#include "gfx2.h"
+#include "gfx3.h"
 #include "datlib.h"
 
 /*****************************************************************************/
@@ -402,6 +402,42 @@ CR_API ansi_t*  space_hash3d (double min_x, double max_x,
                               double min_y, double max_y,
                               double min_z, double max_z,
                               double x, double y, double z, uint_t times);
+/* RSSI 距离定位 */
+CR_API fp32_t   rfloc_lqi2rssi (fp32_t lqi);
+CR_API fp32_t   rfloc_rssi2meter (fp32_t rssi, fp32_t a, fp32_t n);
+CR_API bool_t   circle_intersect (vec2d_t *pnts, const vec3d_t *circle1,
+                                  const vec3d_t *circle2);
+/* 信标结构 */
+typedef struct
+{
+        fp32_t  x, y, r, z;
+        fp32_t  rssi, a, d;
+
+} sRF_LOC_BKEN;
+
+/* RSSI 定位参数 */
+typedef struct
+{
+        /* 输入参数 */
+        fp32_t  n;      /* 环境 n 参数 */
+        fp32_t  a;      /* 默认的 A 参数 */
+        fp32_t  min;    /* 最小的 RSSI 值 */
+        fp32_t  err;    /* 最大允许误差 */
+        fp32_t  sml;    /* 直接判断的阈值 */
+        leng_t  num;    /* 参与计算的点数 (4 - 5) */
+
+        /* 临时缓存 */
+        leng_t          size;
+        vec3d_t*        list;
+        leng_t          max_sz;
+        sRF_LOC_BKEN*   buffer;
+
+} sRF_LOC;
+
+CR_API bool_t   rfloc_init (sRF_LOC *param, leng_t max_count);
+CR_API void_t   rfloc_free (sRF_LOC *param);
+CR_API bool_t   rfloc_doit (vec2d_t *pos, const sRF_LOC_BKEN *beacon,
+                            leng_t count, sRF_LOC *param);
 
 /*****************************************************************************/
 /*                                   寻路                                    */
@@ -574,6 +610,19 @@ CR_API double   pid_custom (sCTL_PID *pid, double input,
 /*                                  滤波器                                   */
 /*****************************************************************************/
 
+/* 卡尔曼滤波 */
+typedef struct
+{
+        double  Ut, Pt; /* (μt, σ^ 2) */
+        double  Q;  /* 过程误差 (α^ 2) */
+        double  R;  /* 测量误差 (β^ 2) */
+
+} sKALMAN;
+
+CR_API void_t   kalman_init (sKALMAN *kalman, double u0, double p0,
+                             double alpha2, double beta2);
+CR_API double   kalman_filter (sKALMAN *kalman, double yt);
+
 /* 低通滤波器 */
 CR_API void_t   fir_lp_clear (sint_t ntaps, double z[]);
 CR_API double   fir_lp_basic (double input, sint_t ntaps, const double h[],
@@ -591,6 +640,22 @@ CR_API double   fir_lp_double_h (double input, sint_t ntaps, const double h[],
 /* 非线性滤波器 */
 CR_API double   fir_nl_median (double input, sint_t ntaps, double z[],
                                double t[]);
+/* 计数滤波参数 */
+typedef struct
+{
+        uint_t  mode;           /* 中值模式 */
+        double  percent;        /* 概率阈值 */
+        sint_t  v_up, v_dn;     /* 上下振幅 */
+
+} sNL_COUNTS;
+
+#define CR_NL_CNTS_MODE_AUTO    0   /* 自动 */
+#define CR_NL_CNTS_MODE_AVGS    1   /* 均值 */
+#define CR_NL_CNTS_MODE_MIDS    2   /* 中值 */
+
+CR_API double   fir_nl_counts (sint_t input, sint_t ntaps,
+                               sint_t z[], sint_t t[], sint_t rle[],
+                               const sNL_COUNTS *param);
 
 #endif  /* !__CR_PHYLIB_H__ */
 
