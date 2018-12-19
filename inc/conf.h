@@ -81,7 +81,7 @@
         #define _CR_AR_STR_ "[ARM64]"
     #elif   defined(_CR_AR_ARM7S_)
         #define _CR_SYS32_
-        #define _CR_AR_STR_ "[ARMv7S]"
+        #define _CR_AR_STR_ "[ARM7S]"
     #elif   defined(_CR_AR_THUMB_)
         #define _CR_SYS32_
         #define _CR_AR_STR_ "[THUMB]"

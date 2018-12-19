@@ -62,10 +62,13 @@
     #elif   defined(_M_IX86)
         #define _CR_AR_X86_     /* Intel X86 */
 
-    #elif   defined(ARM) || \
-            defined(_ARM_) || defined(_M_ARM)
+    #elif   defined(ARM) || defined(_ARM_) || \
+            defined(_M_ARM) || defined(_M_ARM64)
         #define _CR_AR_ARM_     /* ARM */
-        #if defined(_M_ARMT)
+        #if     defined(_M_ARM64)
+            #define _CR_AR_ARM64_   /* ARM64 */
+
+        #elif   defined(_M_ARMT)
             #define _CR_AR_THUMB_   /* THUMB */
         #endif
     #elif   defined(_M_MRX000)
