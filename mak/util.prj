@@ -109,7 +109,13 @@ LUA_CPPS=$(SRC)lua$(L)lapi.$(C) \
 ##                               CRHACK/UTIL                                 ##
 ###############################################################################
 
-OBJS=$(OBJ)cpage437.$(O) \
+OBJS=$(OBJ)rfgeo.$(O) \
+     $(OBJ)rfgeo_halo.$(O) \
+     $(OBJ)rfgeo_lpass.$(O) \
+     $(OBJ)rfgeo_median.$(O) \
+     $(OBJ)rfgeo_gate9.$(O) \
+     $(OBJ)rfgeo_tempc.$(O) \
+     $(OBJ)cpage437.$(O) \
      $(OBJ)cpage720.$(O) \
      $(OBJ)cpage737.$(O) \
      $(OBJ)cpage771.$(O) \
@@ -135,7 +141,13 @@ OBJS=$(OBJ)cpage437.$(O) \
      $(OBJ)holidays.$(O) \
      $(OBJ)bjnetcomm.$(O)
 
-CPPS=$(SRC)cpage437.$(C) \
+CPPS=$(SRC)rfgeo.$(C) \
+     $(SRC)rfgeo_halo.$(C) \
+     $(SRC)rfgeo_lpass.$(C) \
+     $(SRC)rfgeo_median.$(C) \
+     $(SRC)rfgeo_gate9.$(C) \
+     $(SRC)rfgeo_tempc.$(C) \
+     $(SRC)cpage437.$(C) \
      $(SRC)cpage720.$(C) \
      $(SRC)cpage737.$(C) \
      $(SRC)cpage771.$(C) \

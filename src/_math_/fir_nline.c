@@ -20,7 +20,6 @@
 #include "msclib.h"
 #include "phylib.h"
 
-#if !defined(__no_fir_nl_median)
 /*
 ---------------------------------------
     数值排序比较
@@ -36,13 +35,9 @@ value_comp_double (
     double  val2 = *(double*)elem2;
 
     /* 升序 */
-#if defined(_CR_NL_VCMP_DIRECT_)
-    return ((sint_t)val1 - (sint_t)val2);
-#else
     if (val1 < val2) return (-1);
     if (val1 > val2) return ( 1);
     return (0);
-#endif
 }
 
 /*
@@ -70,9 +65,6 @@ fir_nl_median (
     return (middle);
 }
 
-#endif  /* !__no_fir_nl_median */
-
-#if !defined(__no_fir_nl_counts)
 /*
 ---------------------------------------
     数值排序比较
@@ -178,8 +170,6 @@ fir_nl_counts (
         return ((double)middle);
     return (value / total);
 }
-
-#endif  /* !__no_fir_nl_counts */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */
