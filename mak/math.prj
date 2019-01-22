@@ -70,7 +70,8 @@ OBJS=$(OBJ)math.$(O) \
      $(OBJ)ctl_pid.$(O) \
      $(OBJ)kalman.$(O) \
      $(OBJ)fir_lpass.$(O) \
-     $(OBJ)fir_nline.$(O)
+     $(OBJ)fir_nline.$(O) \
+     $(OBJ)statistics.$(O)
 
 CPPS=$(SRC)math.$(C) \
      $(SRC)bspace.$(C) \
@@ -117,7 +118,8 @@ CPPS=$(SRC)math.$(C) \
      $(SRC)ctl_pid.$(C) \
      $(SRC)kalman.$(C) \
      $(SRC)fir_lpass.$(C) \
-     $(SRC)fir_nline.$(C)
+     $(SRC)fir_nline.$(C) \
+     $(SRC)statistics.$(C)
 
 ###############################################################################
 ##                             各个编译器的配置                              ##

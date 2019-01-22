@@ -114,7 +114,11 @@ OBJS=$(OBJ)rfgeo.$(O) \
      $(OBJ)rfgeo_lpass.$(O) \
      $(OBJ)rfgeo_median.$(O) \
      $(OBJ)rfgeo_gate9.$(O) \
+     $(OBJ)rfgeo_vector.$(O) \
      $(OBJ)rfgeo_tempc.$(O) \
+     $(OBJ)rfgeo_evals.$(O) \
+     $(OBJ)rfgeo_judge.$(O) \
+     $(OBJ)rfgeo_float.$(O) \
      $(OBJ)cpage437.$(O) \
      $(OBJ)cpage720.$(O) \
      $(OBJ)cpage737.$(O) \
@@ -146,7 +150,11 @@ CPPS=$(SRC)rfgeo.$(C) \
      $(SRC)rfgeo_lpass.$(C) \
      $(SRC)rfgeo_median.$(C) \
      $(SRC)rfgeo_gate9.$(C) \
+     $(SRC)rfgeo_vector.$(C) \
      $(SRC)rfgeo_tempc.$(C) \
+     $(SRC)rfgeo_evals.$(C) \
+     $(SRC)rfgeo_judge.$(C) \
+     $(SRC)rfgeo_float.$(C) \
      $(SRC)cpage437.$(C) \
      $(SRC)cpage720.$(C) \
      $(SRC)cpage737.$(C) \

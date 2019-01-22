@@ -657,6 +657,13 @@ CR_API double   fir_nl_counts (sint_t input, sint_t ntaps,
                                sint_t z[], sint_t t[], sint_t rle[],
                                const sNL_COUNTS *param);
 
+/*****************************************************************************/
+/*                                   统计                                    */
+/*****************************************************************************/
+
+CR_API double   statistics (const double *data, uint_t count,
+                            double *sd2, double *sd);
+
 #endif  /* !__CR_PHYLIB_H__ */
 
 /*****************************************************************************/
