@@ -378,7 +378,8 @@ xchg_int16u (
     return (cr_byteswap16(val));
 
 /* Intel style inline asm (ARM) */
-#elif   defined(_CR_ASM_INTL_) && defined(_CR_AR_ARM_)
+#elif   defined(_CR_ASM_INTL_) && defined(_CR_AR_ARM_) && \
+                ((_CR_ARM_V32_ != 0) || (_CR_ARM_V16_ > 3))
     int32u  r0, tmp = val;
 
     __asm {
@@ -421,7 +422,8 @@ xchg_int32u (
     return (cr_byteswap32(val));
 
 /* Intel style inline asm (ARM) */
-#elif   defined(_CR_ASM_INTL_) && defined(_CR_AR_ARM_)
+#elif   defined(_CR_ASM_INTL_) && defined(_CR_AR_ARM_) && \
+                ((_CR_ARM_V32_ != 0) || (_CR_ARM_V16_ > 3))
     int32u  r0, r1;
 
     __asm {

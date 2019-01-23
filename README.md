@@ -30,7 +30,9 @@ usr/arm-linux-gnueabihf.sh | GCC (Linux ARM32 Hard Float ABI)
 usr/n3292x.sh | GCC (Linux for Nuvoton N3292x)
 usr/ndk-gcc-api14.bat | Android NDK GCC 4.9 (for API-14)
 usr/ndk-gcc-api24.bat | Android NDK GCC 4.9 (for API-24)
+usr/arm-cm0p-small-ram.bat | Keil MDK 4.0+ ARMCC (for ARM Cortex-M0+ Small RAM)
 usr/arm-cm3-big-ram.bat | Keil MDK 4.0+ ARMCC (for ARM Cortex-M3 Big RAM)
+usr/arm-cm4f-big-ram.bat | Keil MDK 4.0+ ARMCC (for ARM Cortex-M4F Big RAM)
 
 ## 【废 话】
 　　这是一个近乎脑残的项目，试图用一套 **C** 代码支持所有的编译器平台。结果发现，维护这么一套代码的精力投入，要远大于分开独立的项目。可见，真正的跨平台就是浮云。纯粹用 **C** 来写所有东西，而且要照顾到很多变态的编译器，也是一件十分痛苦的事（有些东西根本不该包括进来的也包括进来了）。所以这个是一个失败的项目。但木已成舟，这个项目还将继续，不过不会是主要的项目了。走出自己给自己设下的笼子，是很重要的（从一个笼子换到另一个笼子，人生就是如此）。
