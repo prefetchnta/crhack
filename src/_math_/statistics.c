@@ -64,6 +64,47 @@ statistics (
     return (avg);
 }
 
+/*
+=======================================
+    协方差/相关系数计算
+=======================================
+*/
+CR_API double
+covariance (
+  __CR_IN__ const double*   x,
+  __CR_IN__ const double*   y,
+  __CR_IN__ uint_t          count,
+  __CR_OT__ double*         pxy
+    )
+{
+    uint_t  idx;
+    double  num, exy = 0;
+    double  ex, ey, sdx, sdy;
+
+    /* 计算均值和标准差 */
+    if (pxy != NULL) {
+        ex = statistics(x, count, NULL, &sdx);
+        ey = statistics(y, count, NULL, &sdy);
+    }
+    else {
+        ex = statistics(x, count, NULL, NULL);
+        ey = statistics(y, count, NULL, NULL);
+        sdx = sdy = 1;
+    }
+
+    /* 计算协方差 */
+    num = (double)count;
+    for (idx = 0; idx < count; idx++)
+        exy += x[idx] * y[idx];
+    exy /= num;
+    exy -= ex * ey;
+
+    /* 计算相关系数 */
+    if (pxy != NULL)
+        *pxy = exy / (sdx * sdy);
+    return (exy);
+}
+
 /*****************************************************************************/
 /* _________________________________________________________________________ */
 /* uBMAzRBoAKAHaACQD6FoAIAPqbgA/7rIA+5CM9uKw8D4Au7u7mSIJ0t18mYz0mYz9rAQZCgHc */

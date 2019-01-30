@@ -663,6 +663,8 @@ CR_API double   fir_nl_counts (sint_t input, sint_t ntaps,
 
 CR_API double   statistics (const double *data, uint_t count,
                             double *sd2, double *sd);
+CR_API double   covariance (const double *x, const double *y,
+                            uint_t count, double *pxy);
 
 #endif  /* !__CR_PHYLIB_H__ */
 
