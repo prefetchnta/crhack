@@ -69,7 +69,7 @@ spi0_init (void_t)
     sspi.SPI_CPOL = SPI_CPOL_Low;
     sspi.SPI_CPHA = SPI_CPHA_1Edge;
     sspi.SPI_NSS = SPI_NSS_Soft;
-    sspi.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
+    sspi.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_4;
     sspi.SPI_FirstBit = SPI_FirstBit_MSB;
     sspi.SPI_CRCPolynomial = 7;
     SPI_Init(SPI1, &sspi);
