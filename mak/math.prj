@@ -66,6 +66,7 @@ OBJS=$(OBJ)math.$(O) \
      $(OBJ)pregnant.$(O) \
      $(OBJ)pf_astar.$(O) \
      $(OBJ)pf_dijkstra.$(O) \
+     $(OBJ)earth.$(O) \
      $(OBJ)vmaggeo.$(O) \
      $(OBJ)ctl_pid.$(O) \
      $(OBJ)kalman.$(O) \
@@ -114,6 +115,7 @@ CPPS=$(SRC)math.$(C) \
      $(SRC)pregnant.$(C) \
      $(SRC)pf_astar.$(C) \
      $(SRC)pf_dijkstra.$(C) \
+     $(SRC)earth.$(C) \
      $(SRC)vmaggeo.$(C) \
      $(SRC)ctl_pid.$(C) \
      $(SRC)kalman.$(C) \

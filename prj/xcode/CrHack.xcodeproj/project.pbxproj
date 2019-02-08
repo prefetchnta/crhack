@@ -235,6 +235,8 @@
 		11BCB2CC1CC6462F00704F41 /* slist.c in Sources */ = {isa = PBXBuildFile; fileRef = 11BCB2CB1CC6462F00704F41 /* slist.c */; };
 		11FD56651FD8E4A70042FA03 /* cr_spak.c in Sources */ = {isa = PBXBuildFile; fileRef = 11FD56641FD8E4A70042FA03 /* cr_spak.c */; };
 		BA0134B521BB8ADC0058784A /* rf_loc.c in Sources */ = {isa = PBXBuildFile; fileRef = BA0134B421BB8ADC0058784A /* rf_loc.c */; };
+		BA04AE68220C630F004E2DFA /* earth.c in Sources */ = {isa = PBXBuildFile; fileRef = BA04AE67220C630F004E2DFA /* earth.c */; };
+		BA04AE6A220C634A004E2DFA /* statistics.c in Sources */ = {isa = PBXBuildFile; fileRef = BA04AE69220C634A004E2DFA /* statistics.c */; };
 		BA0D3E291CB1551E00BDA52D /* fsyspsx.c in Sources */ = {isa = PBXBuildFile; fileRef = BA0D3E281CB1551E00BDA52D /* fsyspsx.c */; };
 		BA0D3E2B1CB1552900BDA52D /* netbsd.c in Sources */ = {isa = PBXBuildFile; fileRef = BA0D3E2A1CB1552900BDA52D /* netbsd.c */; };
 		BAAAC81E21B3D61900DB7C26 /* ctl_pid.c in Sources */ = {isa = PBXBuildFile; fileRef = BAAAC81D21B3D61900DB7C26 /* ctl_pid.c */; };
@@ -490,6 +492,8 @@
 		11BCB2CB1CC6462F00704F41 /* slist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = slist.c; path = ../../../src/slist.c; sourceTree = "<group>"; };
 		11FD56641FD8E4A70042FA03 /* cr_spak.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cr_spak.c; sourceTree = "<group>"; };
 		BA0134B421BB8ADC0058784A /* rf_loc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rf_loc.c; sourceTree = "<group>"; };
+		BA04AE67220C630F004E2DFA /* earth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = earth.c; sourceTree = "<group>"; };
+		BA04AE69220C634A004E2DFA /* statistics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = statistics.c; sourceTree = "<group>"; };
 		BA0D3E281CB1551E00BDA52D /* fsyspsx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fsyspsx.c; sourceTree = "<group>"; };
 		BA0D3E2A1CB1552900BDA52D /* netbsd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = netbsd.c; sourceTree = "<group>"; };
 		BAAAC81D21B3D61900DB7C26 /* ctl_pid.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctl_pid.c; sourceTree = "<group>"; };
@@ -822,6 +826,7 @@
 				BAAAC81D21B3D61900DB7C26 /* ctl_pid.c */,
 				11A4755E1C9FF07100CFC25E /* cu50_r2t.c */,
 				11A4755F1C9FF07100CFC25E /* cu50_t2r.c */,
+				BA04AE67220C630F004E2DFA /* earth.c */,
 				BAAAC81F21B3D63800DB7C26 /* fir_lpass.c */,
 				BAAAC82121B3D64300DB7C26 /* fir_nline.c */,
 				11A475601C9FF07100CFC25E /* form_nxn.c */,
@@ -844,6 +849,7 @@
 				11A4756E1C9FF07100CFC25E /* pt100_t2r.c */,
 				11A4756F1C9FF07100CFC25E /* rect_ops.c */,
 				BA0134B421BB8ADC0058784A /* rf_loc.c */,
+				BA04AE69220C634A004E2DFA /* statistics.c */,
 				11A475701C9FF07100CFC25E /* tb_mv2t.c */,
 				11A475711C9FF07100CFC25E /* tb_t2mv.c */,
 				11A475721C9FF07100CFC25E /* te_mv2t.c */,
@@ -1109,6 +1115,7 @@
 				11A475871C9FF07100CFC25E /* iif97_1.c in Sources */,
 				11A476031C9FF28E00CFC25E /* filestd.c in Sources */,
 				11A475A01C9FF07100CFC25E /* tr_t2mv.c in Sources */,
+				BA04AE68220C630F004E2DFA /* earth.c in Sources */,
 				11A474361C9FE90F00CFC25E /* lzhuf.c in Sources */,
 				11A4740C1C9FE90F00CFC25E /* comp_z.c in Sources */,
 				11A475541C9FF03100CFC25E /* interlock.c in Sources */,
@@ -1161,6 +1168,7 @@
 				11A475EB1C9FF0BA00CFC25E /* minilzo.c in Sources */,
 				11A474591C9FE90F00CFC25E /* uue.c in Sources */,
 				11A474271C9FE90F00CFC25E /* errs.c in Sources */,
+				BA04AE6A220C634A004E2DFA /* statistics.c in Sources */,
 				11A475051C9FEE7000CFC25E /* tgl_pac.c in Sources */,
 				11A474F21C9FEE7000CFC25E /* ego_gdat.c in Sources */,
 				11092B3F1EE28BB700CEC35E /* filelib.c in Sources */,

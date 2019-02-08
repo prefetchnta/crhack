@@ -28,6 +28,9 @@
 /*****************************************************************************/
 
 #define CR_PHY_INV      (-65536.0) /* 非法的计算结果 */
+#define CR_PHY_C0       (299792458.0) /* 真空光速 (m/s) */
+#define CR_PHY_G        (6.67259E-11) /* 万有引力常数 (N * m^2 / kg^2) */
+#define CR_PHY_KB       (1.3806505E-23) /* 玻尔兹曼常数 (J/K) */
 #define CR_PHY_E        (2.718281828459045235360287471352662497757) /* e */
 #define CR_PHY_LN2      (0.69314718055994530941723212145818) /* ln(2) */
 #define CR_PHY_LN10     (2.3025850929940456840179914546844) /* ln(10) */
@@ -36,7 +39,7 @@
 #define CR_PHY_DTOR     (CR_PHY_PI / 180.0) /* 角度转弧度 */
 #define CR_PHY_RTOD     (180.0 / CR_PHY_PI) /* 弧度转角度 */
 #define CR_PHY_OSAP     (101325.0) /* 标准大气压 (Pa) */
-#define CR_PHY_UGCR     (8.31441) /* 理想气体常数 (J / (mol * K)) */
+#define CR_PHY_UGCR     (8.314472) /* 理想气体常数 (J / (mol * K)) */
 #define CR_PHY_WUGCR    (0.461526) /* 水的理想气体常数 (kJ / (kg * K)) */
 #define CR_PHY_ABSZ     (273.15) /* 绝对零度相关的常数 (K) */
 #define CR_PHY_CAL2J    (4.187) /* 卡路里转焦耳的常数 */
@@ -93,6 +96,16 @@ CR_API double   iif97_5_ws_d (double t, double mpa);
 CR_API double   iif97_5_ws_e (double t, double mpa);
 CR_API double   iif97_ws_de (double *e, double t, double mpa, double wx,
                              ufast_t *sec CR_DEFAULT(NULL));
+
+/*****************************************************************************/
+/*                                   地球                                    */
+/*****************************************************************************/
+
+/* 万有引力计算 */
+CR_API double   gravitation (double kg1, double kg2, double meter);
+
+/* 大气相关计算 */
+CR_API double   atmosphere (double *t, double *ru, double meter);
 
 /*****************************************************************************/
 /*                                   磁场                                    */
