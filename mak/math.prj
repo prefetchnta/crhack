@@ -26,6 +26,8 @@ SRC_3RD=..$(L)src$(L)ex3rd$(L)
 ###############################################################################
 
 OBJS=$(OBJ)math.$(O) \
+     $(OBJ)complex.$(O) \
+     $(OBJ)fft1.$(O) \
      $(OBJ)bspace.$(O) \
      $(OBJ)rf_loc.$(O) \
      $(OBJ)cu50_r2t.$(O) \
@@ -75,6 +77,8 @@ OBJS=$(OBJ)math.$(O) \
      $(OBJ)statistics.$(O)
 
 CPPS=$(SRC)math.$(C) \
+     $(SRC)complex.$(C) \
+     $(SRC)fft1.$(C) \
      $(SRC)bspace.$(C) \
      $(SRC)rf_loc.$(C) \
      $(SRC)cu50_r2t.$(C) \

@@ -679,6 +679,37 @@ CR_API double   statistics (const double *data, uint_t count,
 CR_API double   covariance (const double *x, const double *y,
                             uint_t count, double *pxy);
 
+/*****************************************************************************/
+/*                                   变换                                    */
+/*****************************************************************************/
+
+/* 复数结构 */
+typedef	struct
+{
+    double  re;     /* 实部 */
+    double  im;     /* 虚部 */
+
+} sCOMPLEX;
+
+/* 一些常用的复数运算 */
+CR_API double       complex_abs (const sCOMPLEX *c);
+CR_API sCOMPLEX*    complex_add (sCOMPLEX *r, const sCOMPLEX *c1,
+                                              const sCOMPLEX *c2);
+CR_API sCOMPLEX*    complex_sub (sCOMPLEX *r, const sCOMPLEX *c1,
+                                              const sCOMPLEX *c2);
+CR_API sCOMPLEX*    complex_mul (sCOMPLEX *r, const sCOMPLEX *c1,
+                                              const sCOMPLEX *c2);
+CR_API sCOMPLEX*    complex_div (sCOMPLEX *r, const sCOMPLEX *c1,
+                                              const sCOMPLEX *c2);
+/* 快速傅立叶变换 */
+CR_API sCOMPLEX*    fft1_init (sCOMPLEX *W, sint_t power);
+CR_API sCOMPLEX*    fft1_func (sCOMPLEX *FD, const sCOMPLEX *TD,
+                               const sCOMPLEX *W, sint_t power);
+CR_API sCOMPLEX*    fft1_invert (sCOMPLEX *TD, const sCOMPLEX *FD,
+                                 const sCOMPLEX *W, sint_t power);
+CR_API sCOMPLEX*    fft1_shift (sCOMPLEX *D, const sCOMPLEX *S, sint_t power);
+CR_API double*      fft1_ashow (double *D, const sCOMPLEX *S, sint_t power);
+
 #endif  /* !__CR_PHYLIB_H__ */
 
 /*****************************************************************************/
