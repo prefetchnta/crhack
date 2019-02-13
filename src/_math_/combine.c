@@ -1,7 +1,7 @@
 /*****************************************************************************/
 /*                                                  ###                      */
-/*       #####          ###    ###                  ###  CREATE: 2013-03-04  */
-/*     #######          ###    ###      [FMTZ]      ###  ~~~~~~~~~~~~~~~~~~  */
+/*       #####          ###    ###                  ###  CREATE: 2019-02-13  */
+/*     #######          ###    ###      [MATH]      ###  ~~~~~~~~~~~~~~~~~~  */
 /*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
 /*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
 /*   ###       ### ###  ###    ###    ####    ####  ###   ##  +-----------+  */
@@ -13,68 +13,60 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>> CrHack 微软 EXPAND FMTZ 插件接口实现 <<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>>>>>>>>> CrHack 组合数学函数库 <<<<<<<<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
-#include "fmtz/expand.h"
-#include "fmtz/fmtint.h"
-
-/* 引擎常数表 */
-#undef  _CR_FMTZ_WIDE_
-#include "e_expand.inl"
-#define _CR_FMTZ_WIDE_
-#include "e_expand.inl"
-#undef  _CR_FMTZ_WIDE_
+#include "phylib.h"
 
 /*
----------------------------------------
-    文件格式加载接口
----------------------------------------
+=======================================
+    阶乘
+=======================================
 */
-static sFMTZ*
-engine_expand_load (
-  __CR_IN__ sENGINE*    engine,
-  __CR_IO__ sLOADER*    loader
+CR_API uint_t
+factorial (
+  __CR_IN__ uint_t  n
     )
 {
-    if (!(engine->mask & CR_FMTZ_MASK_DAT))
-        return (NULL);
-    return (fmtz_find(engine, loader));
+    uint_t  idx, val = 1;
+
+    for (idx = 2; idx <= n; idx++)
+        val *= idx;
+    return (val);
 }
 
 /*
 =======================================
-    获取引擎插件接口
+    排列
 =======================================
 */
-CR_API sENGINE*
-engine_expand (void_t)
+CR_API uint_t
+permutation (
+  __CR_IN__ uint_t  m,
+  __CR_IN__ uint_t  n
+    )
 {
-    sENGINE*    engine;
-
-    engine = engine_init(s_finda, s_findw, s_loada, s_loadw);
-    if (engine == NULL)
-        return (NULL);
-    engine->fmtz_load = engine_expand_load;
-    engine->info = "Microsoft EXPAND FMTz Engine (Done by CrHackOS)";
-    return (engine);
+    if (m > n)
+        return (0);
+    return (factorial(n) / factorial(n - m));
 }
 
-#ifndef _CR_DLL_TOGETHER_
-#if defined(_CR_BUILD_DLL_)
 /*
 =======================================
-    获取引擎插件接口 (同名)
+    组合
 =======================================
 */
-CR_API sENGINE*
-engine_get (void_t)
+CR_API uint_t
+combination (
+  __CR_IN__ uint_t  m,
+  __CR_IN__ uint_t  n
+    )
 {
-    return (engine_expand());
+    if (m > n)
+        return (0);
+    return (factorial(n) / (factorial(m) * factorial(n - m)));
 }
-#endif  /* _CR_BUILD_DLL_ */
-#endif  /* !_CR_DLL_TOGETHER_ */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */

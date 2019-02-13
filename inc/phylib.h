@@ -674,6 +674,12 @@ CR_API double   fir_nl_counts (sint_t input, sint_t ntaps,
 /*                                   统计                                    */
 /*****************************************************************************/
 
+/* 组合数学 */
+CR_API uint_t   factorial (uint_t n);
+CR_API uint_t   permutation (uint_t m, uint_t n);
+CR_API uint_t   combination (uint_t m, uint_t n);
+
+/* 概率统计 */
 CR_API double   statistics (const double *data, uint_t count,
                             double *sd2, double *sd);
 CR_API double   covariance (const double *x, const double *y,
@@ -709,6 +715,18 @@ CR_API sCOMPLEX*    fft1_invert (sCOMPLEX *TD, const sCOMPLEX *FD,
                                  const sCOMPLEX *W, sint_t power);
 CR_API sCOMPLEX*    fft1_shift (sCOMPLEX *D, const sCOMPLEX *S, sint_t power);
 CR_API double*      fft1_ashow (double *D, const sCOMPLEX *S, sint_t power);
+
+/* 窗函数计算 */
+CR_API void_t   winfunc_triange (double *W, sint_t N, sint_t bias);
+CR_API void_t   winfunc_parzen (double *W, sint_t N);
+CR_API void_t   winfunc_welch (double *W, sint_t N);
+CR_API void_t   winfunc_sine (double *W, sint_t N, double alpha);
+CR_API void_t   winfunc_hann (double *W, sint_t N, double alpha);
+CR_API void_t   winfunc_hann_periodic (double *W, sint_t N);
+CR_API void_t   winfunc_hann_symmetric (double *W, sint_t N);
+CR_API void_t   winfunc_hanning_symmetric (double *W, sint_t N);
+CR_API void_t   winfunc_blackman (double *W, sint_t N, double alpha);
+CR_API void_t   winfunc_gaussian (double *W, sint_t N, double alpha);
 
 #endif  /* !__CR_PHYLIB_H__ */
 

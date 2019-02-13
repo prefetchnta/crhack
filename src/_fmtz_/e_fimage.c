@@ -1373,6 +1373,7 @@ engine_fimage (void_t)
     return (engine);
 }
 
+#ifndef _CR_DLL_TOGETHER_
 #if defined(_CR_BUILD_DLL_)
 /*
 =======================================
@@ -1385,6 +1386,7 @@ engine_get (void_t)
     return (engine_fimage());
 }
 #endif  /* _CR_BUILD_DLL_ */
+#endif  /* !_CR_DLL_TOGETHER_ */
 
 /*****************************************************************************/
 /*                                 文件保存                                  */

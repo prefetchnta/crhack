@@ -20,6 +20,7 @@
 #include "defs.h"
 
 /* DLL 自定义入口点 */
+#ifndef _CR_DLL_TOGETHER_
 #if defined(_CR_BUILD_DLL_)
 #if defined(_CR_OS_MSWIN_)
 
@@ -69,6 +70,7 @@ void_t  so_gfx3_fini (void_t)
 }
 #endif  /* _CR_OS_MSWIN_ */
 #endif  /* _CR_BUILD_DLL_ */
+#endif  /* !_CR_DLL_TOGETHER_ */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */

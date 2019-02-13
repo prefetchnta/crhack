@@ -279,6 +279,7 @@ _failure1:
     return (NULL);
 }
 
+#ifndef _CR_DLL_TOGETHER_
 #if defined(_CR_BUILD_DLL_)
 /*
 =======================================
@@ -302,6 +303,7 @@ create_canvas (
     return ((iGFX2*)create_gx_canvas((HWND)handle));
 }
 #endif  /* _CR_BUILD_DLL_ */
+#endif  /* !_CR_DLL_TOGETHER_ */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */
