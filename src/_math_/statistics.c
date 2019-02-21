@@ -83,8 +83,8 @@ covariance (
 
     /* 计算均值和标准差 */
     if (pxy != NULL) {
-        ex = statistics(x, count, NULL, &sdx);
-        ey = statistics(y, count, NULL, &sdy);
+        ex = statistics(x, count, &sdx, NULL);
+        ey = statistics(y, count, &sdy, NULL);
     }
     else {
         ex = statistics(x, count, NULL, NULL);
@@ -101,7 +101,7 @@ covariance (
 
     /* 计算相关系数 */
     if (pxy != NULL)
-        *pxy = exy / (sdx * sdy);
+        *pxy = exy / sqrt(sdx * sdy);
     return (exy);
 }
 
