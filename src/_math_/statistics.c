@@ -100,8 +100,13 @@ covariance (
     exy -= ex * ey;
 
     /* 计算相关系数 */
-    if (pxy != NULL)
-        *pxy = exy / sqrt(sdx * sdy);
+    if (pxy != NULL) {
+        sdx *= sdy;
+        if (sdx <= CR_ABIT64)
+            *pxy = 0.0;
+        else
+            *pxy = exy / sqrt(sdx);
+    }
     return (exy);
 }
 
