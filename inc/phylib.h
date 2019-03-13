@@ -692,13 +692,16 @@ CR_API double   covariance (const double *x, const double *y,
 /* 复数结构 */
 typedef	struct
 {
-    double  re;     /* 实部 */
-    double  im;     /* 虚部 */
+        double  re;     /* 实部 */
+        double  im;     /* 虚部 */
 
 } sCOMPLEX;
 
 /* 一些常用的复数运算 */
 CR_API double       complex_abs (const sCOMPLEX *c);
+CR_API double       complex_ang (const sCOMPLEX *c);
+CR_API sCOMPLEX*    complex_exp (sCOMPLEX *r, const sCOMPLEX *c);
+CR_API sCOMPLEX*    complex_mak (sCOMPLEX *r, double length, double theta);
 CR_API sCOMPLEX*    complex_add (sCOMPLEX *r, const sCOMPLEX *c1,
                                               const sCOMPLEX *c2);
 CR_API sCOMPLEX*    complex_sub (sCOMPLEX *r, const sCOMPLEX *c1,
@@ -727,6 +730,49 @@ CR_API void_t   winfunc_hann_symmetric (double *W, sint_t N);
 CR_API void_t   winfunc_hanning_symmetric (double *W, sint_t N);
 CR_API void_t   winfunc_blackman (double *W, sint_t N, double alpha);
 CR_API void_t   winfunc_gaussian (double *W, sint_t N, double alpha);
+
+/*****************************************************************************/
+/*                                   雷达                                    */
+/*****************************************************************************/
+
+/* FMCW 结构 */
+typedef struct
+{
+        /* 输入参数 */
+        uint_t          filter;
+        uint_t          totals;
+        fp32_t          ka, kb;
+        sint_t          npower;
+        sint_t          fft_max;
+        double          cut_pxy;
+        double          cut_fft;
+        const double*   cut_lst;
+        const double*   fft_win;
+
+        /* 临时缓存 */
+        uint_t      chk_time;
+        double*     fft_tmp1;
+        double*     fft_tmp2;
+        double*     fft_back;
+        sCOMPLEX*   fft_data;
+        sCOMPLEX*   fft_coes;
+
+        /* 返回结果 */
+        sint_t      fft_cnts;
+        sCOMPLEX*   fft_vals;
+        sCOMPLEX*   fmcw_fft;
+} sFMCW;
+
+/* FMCW 滤波 */
+#define CR_FMCW_DIR     0
+#define CR_FMCW_AVG     1
+#define CR_FMCW_MAX     2
+
+CR_API bool_t   radar_fmcw_init (sFMCW *fmcw);
+CR_API void_t   radar_fmcw_free (sFMCW *fmcw);
+CR_API sint_t   radar_fmcw_pass (sFMCW *fmcw, const sint_t *data,
+                                 bool_t reset);
+CR_API sint_t   radar_fmcw_dist (const sFMCW *fmcw, fp32_t *dist);
 
 #endif  /* !__CR_PHYLIB_H__ */
 

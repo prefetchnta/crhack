@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32h753xx.h
   * @author  MCD Application Team
-  * @version V1.2.0
-  * @date    29-December-2017
   * @brief   CMSIS STM32H753xx Device Peripheral Access Layer Header File.
   *
   *          This file contains:
@@ -2051,6 +2049,9 @@ typedef struct
 
 /* Legacy define */
 #define FLASH_BASE                FLASH_BANK1_BASE
+
+/*!< Device electronic signature memory map */
+#define UID_BASE                  (0x1FF1E800UL)          /*!< Unique device ID register base address */
 
 
 /*!< Peripheral memory map */

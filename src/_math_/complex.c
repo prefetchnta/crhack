@@ -38,6 +38,52 @@ complex_abs (
 
 /*
 =======================================
+    复数相位
+=======================================
+*/
+CR_API double
+complex_ang (
+  __CR_IN__ const sCOMPLEX* c
+    )
+{
+    return (atan2(c->im, c->re));
+}
+
+/*
+=======================================
+    复数指数
+=======================================
+*/
+CR_API sCOMPLEX*
+complex_exp (
+  __CR_OT__ sCOMPLEX*       r,
+  __CR_IN__ const sCOMPLEX* c
+    )
+{
+    r->re = exp(c->re) * cos(c->im);
+    r->im = exp(c->re) * sin(c->im);
+    return (r);
+}
+
+/*
+=======================================
+    复数合成
+=======================================
+*/
+CR_API sCOMPLEX*
+complex_mak (
+  __CR_OT__ sCOMPLEX*   r,
+  __CR_IN__ double      length,
+  __CR_IN__ double      theta
+    )
+{
+    r->re = length * cos(theta);
+    r->im = length * sin(theta);
+    return (r);
+}
+
+/*
+=======================================
     复数加法
 =======================================
 */
