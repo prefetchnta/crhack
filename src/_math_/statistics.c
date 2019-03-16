@@ -59,7 +59,7 @@ statistics (
 
         /* 标准差 */
         if (sd != NULL)
-            *sd = sqrt(acc);
+            *sd = DSQRT(acc);
     }
     return (avg);
 }
@@ -105,7 +105,7 @@ covariance (
         if (sdx <= CR_ABIT64)
             *pxy = 0.0;
         else
-            *pxy = exy / sqrt(sdx);
+            *pxy = exy / DSQRT(sdx);
     }
     return (exy);
 }

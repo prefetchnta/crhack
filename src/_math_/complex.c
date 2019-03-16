@@ -33,7 +33,7 @@ complex_abs (
   __CR_IN__ const sCOMPLEX* c
     )
 {
-    return (sqrt(c->re * c->re + c->im * c->im));
+    return (DSQRT(c->re * c->re + c->im * c->im));
 }
 
 /*
@@ -46,7 +46,7 @@ complex_ang (
   __CR_IN__ const sCOMPLEX* c
     )
 {
-    return (atan2(c->im, c->re));
+    return (DATAN2(c->im, c->re));
 }
 
 /*
@@ -60,8 +60,8 @@ complex_exp (
   __CR_IN__ const sCOMPLEX* c
     )
 {
-    r->re = exp(c->re) * cos(c->im);
-    r->im = exp(c->re) * sin(c->im);
+    r->re = DEXP(c->re) * DCOS(c->im);
+    r->im = DEXP(c->re) * DSIN(c->im);
     return (r);
 }
 
@@ -77,8 +77,8 @@ complex_mak (
   __CR_IN__ double      theta
     )
 {
-    r->re = length * cos(theta);
-    r->im = length * sin(theta);
+    r->re = length * DCOS(theta);
+    r->im = length * DSIN(theta);
     return (r);
 }
 

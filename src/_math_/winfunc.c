@@ -42,7 +42,7 @@ winfunc_triange (
     else if (bias >  1) bias =  1;
     for (idx = 0; idx < N; idx++) {
         val = (double)(2 * idx - N + 1);
-        W[idx] = 1 - fabs(val / (N + bias));
+        W[idx] = 1 - DABS(val / (N + bias));
     }
 }
 
@@ -58,7 +58,7 @@ winfunc_parzen_int (
     )
 {
     double  v1, n2 = N / 2;
-    double  v2, an = fabs(X);
+    double  v2, an = DABS(X);
 
     v1 = 1 - an / n2;
     if (an <= n2 / 2) {
@@ -124,8 +124,8 @@ winfunc_sine (
     sint_t  idx;
 
     for (idx = 0; idx < N; idx++) {
-        val = sin((CR_PHY_PI * idx) / (N - 1));
-        W[idx] = pow(val, alpha);
+        val = DSIN((CR_PHY_PI * idx) / (N - 1));
+        W[idx] = DPOW(val, alpha);
     }
 }
 
@@ -145,7 +145,7 @@ winfunc_hann (
     sint_t  idx;
 
     for (idx = 0; idx < N; idx++) {
-        val = cos((2 * CR_PHY_PI * idx) / (N - 1));
+        val = DCOS((2 * CR_PHY_PI * idx) / (N - 1));
         W[idx] = alpha - (1 - alpha) * val;
     }
 }
@@ -165,7 +165,7 @@ winfunc_hann_periodic (
     sint_t  idx;
 
     for (idx = 0; idx < N; idx++) {
-        val = cos((2 * CR_PHY_PI * (idx - 1)) / N);
+        val = DCOS((2 * CR_PHY_PI * (idx - 1)) / N);
         W[idx] = 0.5 * (1 - val);
     }
 }
@@ -185,7 +185,7 @@ winfunc_hann_symmetric (
     sint_t  idx;
 
     for (idx = 0; idx < N; idx++) {
-        val = cos((2 * CR_PHY_PI * (idx - 1)) / (N - 1));
+        val = DCOS((2 * CR_PHY_PI * (idx - 1)) / (N - 1));
         W[idx] = 0.5 * (1 - val);
     }
 }
@@ -205,7 +205,7 @@ winfunc_hanning_symmetric (
     sint_t  idx;
 
     for (idx = 0; idx < N; idx++) {
-        val = cos((2 * CR_PHY_PI * idx) / (N + 1));
+        val = DCOS((2 * CR_PHY_PI * idx) / (N + 1));
         W[idx] = 0.5 * (1 - val);
     }
 }
@@ -227,7 +227,7 @@ winfunc_blackman (
 
     for (idx = 0; idx < N; idx++) {
         val = (2 * CR_PHY_PI * idx) / (N - 1);
-        W[idx] = (1 - alpha) - cos(val) + alpha * cos(2 * val);
+        W[idx] = (1 - alpha) - DCOS(val) + alpha * DCOS(2 * val);
         W[idx] *= 0.5;
     }
 }
@@ -252,7 +252,7 @@ winfunc_gaussian (
     for (idx = 0; idx < N; idx++) {
         val = (double)(2 * idx - N + 1);
         val /= (N - 1) * alpha;
-        W[idx] = exp(-0.5 * val * val);
+        W[idx] = DEXP(-0.5 * val * val);
     }
 }
 

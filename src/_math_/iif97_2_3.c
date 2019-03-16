@@ -66,7 +66,7 @@ iif97_2_3_mpa2t (
     tt  = mpa;
     tt -= IIF97_N5;
     tt /= IIF97_N3;
-    tt  = sqrt(tt);
+    tt  = DSQRT(tt);
     tt += IIF97_N4;
     tt -= 273.15;
     return (tt);

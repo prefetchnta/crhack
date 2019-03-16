@@ -49,8 +49,8 @@ fft1_init (
     }
     for (idx = 0; idx < count; idx++) {
         angle = -idx * CR_PHY_PI / count;
-        W[idx].re = cos(angle);
-        W[idx].im = sin(angle);
+        W[idx].re = DCOS(angle);
+        W[idx].im = DSIN(angle);
     }
     return (W);
 }

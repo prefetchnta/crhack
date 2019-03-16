@@ -72,8 +72,8 @@ iif97_1_ws_d (
     mpa = 7.1 - mpa / 16.53;
     for (vvv = 1386.0 / t - 1.222, idx = 0; idx < 34; idx++) {
         xx -= s_iif97_ni[idx] * s_iif97_ii[idx] *
-                  pow(mpa, s_iif97_ii[idx] - 1) *
-                  pow(vvv, s_iif97_ji[idx]);
+                  DPOW(mpa, s_iif97_ii[idx] - 1) *
+                  DPOW(vvv, s_iif97_ji[idx]);
     }
     return (16530.0 / (0.461526 * t * xx));
 }
@@ -98,8 +98,8 @@ iif97_1_ws_e (
     mpa = 7.1 - mpa / 16.53;
     for (vvv = 1386.0 / t - 1.222, idx = 0; idx < 34; idx++) {
         xx += s_iif97_ni[idx] * s_iif97_ji[idx] *
-                  pow(mpa, s_iif97_ii[idx]) *
-                  pow(vvv, s_iif97_ji[idx] - 1);
+                  DPOW(mpa, s_iif97_ii[idx]) *
+                  DPOW(vvv, s_iif97_ji[idx] - 1);
     }
     return (1386.0 * 0.461526 / 4.187 * xx);
 }

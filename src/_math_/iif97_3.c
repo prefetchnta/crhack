@@ -76,8 +76,8 @@ iif97_3_ws_p (
     xx = s_iif97_ni[0];
     for (vvv = 647.096 / t, idx = 1; idx < 40; idx++) {
         xx += s_iif97_ni[idx] * s_iif97_ii[idx] *
-                  pow(cpp, s_iif97_ii[idx]) *
-                  pow(vvv, s_iif97_ji[idx]);
+                  DPOW(cpp, s_iif97_ii[idx]) *
+                  DPOW(vvv, s_iif97_ji[idx]);
     }
     return (0.461526 / 1000.0 * cp * t * xx);
 }
@@ -105,13 +105,13 @@ iif97_3_ws_e (
     xx = s_iif97_ni[0];
     for (vvv = 647.096 / t, idx = 1; idx < 40; idx++) {
         xx += s_iif97_ni[idx] * s_iif97_ii[idx] *
-                  pow(cpp, s_iif97_ii[idx]) *
-                  pow(vvv, s_iif97_ji[idx]);
+                  DPOW(cpp, s_iif97_ii[idx]) *
+                  DPOW(vvv, s_iif97_ji[idx]);
     }
     for (idx = 1; idx < 40; idx++) {
         yy += s_iif97_ni[idx] * s_iif97_ji[idx] *
-                  pow(cpp, s_iif97_ii[idx]) *
-                  pow(vvv, s_iif97_ji[idx]);
+                  DPOW(cpp, s_iif97_ii[idx]) *
+                  DPOW(vvv, s_iif97_ji[idx]);
     }
     return (0.461526 / 4.187 * t * (xx + yy));
 }
@@ -144,7 +144,7 @@ iif97_3_ws_d (
         /* 弦截法逼近结果 */
         xx = x1 - (f1 / (f1 - f0)) * (x1 - x0);
         fx = iif97_3_ws_p(t, xx) - mpa;
-        if (fabs(fx) < wx)
+        if (DABS(fx) < wx)
             break;
         x0 = x1; f0 = f1; x1 = xx; f1 = fx;
     }

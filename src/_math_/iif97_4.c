@@ -53,7 +53,7 @@ iif97_4_t2mpa (
     aa = t * (t             + IIF97_N01) + IIF97_N02;
     bb = t * (t * IIF97_N03 + IIF97_N04) + IIF97_N05;
     cc = t * (t * IIF97_N06 + IIF97_N07) + IIF97_N08;
-    mpa = (-2.0 * cc) / (bb - sqrt(bb * bb - 4.0 * aa * cc));
+    mpa = (-2.0 * cc) / (bb - DSQRT(bb * bb - 4.0 * aa * cc));
     return (mpa * mpa * mpa * mpa);
 }
 
@@ -70,14 +70,14 @@ iif97_4_mpa2t (
     double  tt, dd;
     double  ee, ff, gg;
 
-    mpa = sqrt(mpa);
-    mpa = sqrt(mpa);
+    mpa = DSQRT(mpa);
+    mpa = DSQRT(mpa);
     ee = mpa * (mpa             + IIF97_N03) + IIF97_N06;
     ff = mpa * (mpa * IIF97_N01 + IIF97_N04) + IIF97_N07;
     gg = mpa * (mpa * IIF97_N02 + IIF97_N05) + IIF97_N08;
-    dd = (-2.0 * gg) / (ff + sqrt(ff * ff - 4.0 * ee * gg));
+    dd = (-2.0 * gg) / (ff + DSQRT(ff * ff - 4.0 * ee * gg));
     ee = IIF97_N10 + dd;
-    tt = sqrt(ee * ee - 4.0 * (IIF97_N09 + IIF97_N10 * dd));
+    tt = DSQRT(ee * ee - 4.0 * (IIF97_N09 + IIF97_N10 * dd));
     return ((ee - tt) / 2.0 - 273.15);
 }
 

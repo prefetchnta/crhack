@@ -79,23 +79,23 @@ ifc67_ws_d (
     tr = t / _Tc;
     pr = mpa / _Pc;
     p1 = _L0 + tr * (_L1 + _L2 * tr);
-    xx = exp(0.7633333333 * (1 - tr));
-    ur = _I1 * tr / pr - _B11 * pow(xx, 13) - _B12 * pow(xx, 3) -
-        (2 * pr * (_B21 * pow(xx, 18) + _B22 * pow(xx, 2) + _B23 * xx)) -
-        (3 * pow(pr,  2) * (_B31 * pow(xx, 18) + _B32 * pow(xx, 10))) -
-        (4 * pow(pr,  3) * (_B41 * pow(xx, 25) + _B42 * pow(xx, 14))) -
-        (5 * pow(pr,  4) * (_B51 * pow(xx, 32) + _B52 * pow(xx, 28) +
-                            _B53 * pow(xx, 24))) -
-        (4 * pow(pr, -5) * (_B61 * pow(xx, 12) + _B62 * pow(xx, 11))) *
-                            pow(pow(pr, -4) - _BB61 * pow(xx, 14), -2) -
-        (5 * pow(pr, -6) * (_B71 * pow(xx, 24) + _B72 * pow(xx, 18))) *
-                            pow(pow(pr, -5) + _BB71 * pow(xx, 19), -2) -
-        (6 * pow(pr, -7) * (_B81 * pow(xx, 24) + _B82 * pow(xx, 14))) *
-                            pow(pow(pr, -6) + _BB81 * pow(xx, 54) +
-                                              _BB82 * pow(xx, 27), -2) +
-        11 * pow(pr / p1, 10) * (_B90 + _B91 * xx  + _B92 * pow(xx, 2) +
-                                 _B93 * pow(xx, 3) + _B94 * pow(xx, 4) +
-                                 _B95 * pow(xx, 5) + _B96 * pow(xx, 6));
+    xx = DEXP(0.7633333333 * (1 - tr));
+    ur = _I1 * tr / pr - _B11 * DPOW(xx, 13) - _B12 * DPOW(xx, 3) -
+        (2 * pr * (_B21 * DPOW(xx, 18) + _B22 * DPOW(xx, 2) + _B23 * xx)) -
+        (3 * DPOW(pr,  2) * (_B31 * DPOW(xx, 18) + _B32 * DPOW(xx, 10))) -
+        (4 * DPOW(pr,  3) * (_B41 * DPOW(xx, 25) + _B42 * DPOW(xx, 14))) -
+        (5 * DPOW(pr,  4) * (_B51 * DPOW(xx, 32) + _B52 * DPOW(xx, 28) +
+                             _B53 * DPOW(xx, 24))) -
+        (4 * DPOW(pr, -5) * (_B61 * DPOW(xx, 12) + _B62 * DPOW(xx, 11))) *
+                              DPOW(DPOW(pr, -4) - _BB61 * DPOW(xx, 14), -2) -
+        (5 * DPOW(pr, -6) * (_B71 * DPOW(xx, 24) + _B72 * DPOW(xx, 18))) *
+                              DPOW(DPOW(pr, -5) + _BB71 * DPOW(xx, 19), -2) -
+        (6 * DPOW(pr, -7) * (_B81 * DPOW(xx, 24) + _B82 * DPOW(xx, 14))) *
+                              DPOW(DPOW(pr, -6) + _BB81 * DPOW(xx, 54) +
+                                                  _BB82 * DPOW(xx, 27), -2) +
+        11 * DPOW(pr / p1, 10) * (_B90 + _B91 * xx   + _B92 * DPOW(xx, 2) +
+                                  _B93 * DPOW(xx, 3) + _B94 * DPOW(xx, 4) +
+                                  _B95 * DPOW(xx, 5) + _B96 * DPOW(xx, 6));
     return (1.0 / (ur * _Uc));
 }
 
