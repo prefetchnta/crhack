@@ -235,12 +235,12 @@ typedef void_t* (STDCALL *stdfunc_t) (void_t*, void_t*);
 
 /* 编译器库函数差异映射 */
 #if defined(_CR_DOUBLE32_) || defined(_CR_NO_MATHC99_)
-    #define  FSIN(x)        ((fp32_t) sin(x))
-    #define  FCOS(x)        ((fp32_t) cos(x))
-    #define  FTAN(x)        ((fp32_t) tan(x))
-    #define  FEXP(x)        ((fp32_t) exp(x))
-    #define FLOGE(x)        ((fp32_t) log(x))
-    #define  FABS(x)        ((fp32_t)fabs(x))
+    #define FABS(x)         ((fp32_t)fabs(x))
+    #define FSIN(x)         ((fp32_t)sin(x))
+    #define FCOS(x)         ((fp32_t)cos(x))
+    #define FTAN(x)         ((fp32_t)tan(x))
+    #define FEXP(x)         ((fp32_t)exp(x))
+    #define FPOW(x,y)       ((fp32_t)pow(x,y))
     #define FASIN(x)        ((fp32_t)asin(x))
     #define FACOS(x)        ((fp32_t)acos(x))
     #define FATAN(x)        ((fp32_t)atan(x))
@@ -248,16 +248,16 @@ typedef void_t* (STDCALL *stdfunc_t) (void_t*, void_t*);
     #define FCOSH(x)        ((fp32_t)cosh(x))
     #define FTANH(x)        ((fp32_t)tanh(x))
     #define FSQRT(x)        ((fp32_t)sqrt(x))
+    #define FLOGE(x)        ((fp32_t)log(x))
     #define FLOG10(x)       ((fp32_t)log10(x))
-    #define FPOW(x, y)      ((fp32_t)pow(x, y))
-    #define FATAN2(y, x)    ((fp32_t)atan2(y, x))
+    #define FATAN2(y,x)     ((fp32_t)atan2(y,x))
 #else
-    #define  FSIN(x)        ((fp32_t) sinf(x))
-    #define  FCOS(x)        ((fp32_t) cosf(x))
-    #define  FTAN(x)        ((fp32_t) tanf(x))
-    #define  FEXP(x)        ((fp32_t) expf(x))
-    #define FLOGE(x)        ((fp32_t) logf(x))
-    #define  FABS(x)        ((fp32_t)fabsf(x))
+    #define FABS(x)         ((fp32_t)fabsf(x))
+    #define FSIN(x)         ((fp32_t)sinf(x))
+    #define FCOS(x)         ((fp32_t)cosf(x))
+    #define FTAN(x)         ((fp32_t)tanf(x))
+    #define FEXP(x)         ((fp32_t)expf(x))
+    #define FPOW(x,y)       ((fp32_t)powf(x,y))
     #define FASIN(x)        ((fp32_t)asinf(x))
     #define FACOS(x)        ((fp32_t)acosf(x))
     #define FATAN(x)        ((fp32_t)atanf(x))
@@ -265,28 +265,67 @@ typedef void_t* (STDCALL *stdfunc_t) (void_t*, void_t*);
     #define FCOSH(x)        ((fp32_t)coshf(x))
     #define FTANH(x)        ((fp32_t)tanhf(x))
     #define FSQRT(x)        ((fp32_t)sqrtf(x))
+    #define FLOGE(x)        ((fp32_t)logf(x))
     #define FLOG10(x)       ((fp32_t)log10f(x))
-    #define FPOW(x, y)      ((fp32_t)powf(x, y))
-    #define FATAN2(y, x)    ((fp32_t)atan2f(y, x))
+    #define FATAN2(y,x)     ((fp32_t)atan2f(y,x))
 #endif
 
 /* 数学函数映射 */
-#define  DSIN(x)        sin(x)
-#define  DCOS(x)        cos(x)
-#define  DTAN(x)        tan(x)
-#define  DEXP(x)        exp(x)
-#define DLOGE(x)        log(x)
-#define  DABS(x)        fabs(x)
-#define DASIN(x)        asin(x)
-#define DACOS(x)        acos(x)
-#define DATAN(x)        atan(x)
-#define DSINH(x)        sinh(x)
-#define DCOSH(x)        cosh(x)
-#define DTANH(x)        tanh(x)
-#define DSQRT(x)        sqrt(x)
-#define DLOG10(x)       log10(x)
-#define DPOW(x, y)      pow(x, y)
-#define DATAN2(y, x)    atan2(y, x)
+#define DABS(x)         (fabs(x))
+#define DSIN(x)         (sin(x))
+#define DCOS(x)         (cos(x))
+#define DTAN(x)         (tan(x))
+#define DEXP(x)         (exp(x))
+#define DPOW(x,y)       (pow(x,y))
+#define DASIN(x)        (asin(x))
+#define DACOS(x)        (acos(x))
+#define DATAN(x)        (atan(x))
+#define DSINH(x)        (sinh(x))
+#define DCOSH(x)        (cosh(x))
+#define DTANH(x)        (tanh(x))
+#define DSQRT(x)        (sqrt(x))
+#define DLOGE(x)        (log(x))
+#define DLOG10(x)       (log10(x))
+#define DATAN2(y,x)     (atan2(y,x))
+
+/* 选择不同的浮点精度 */
+#if defined(_CR_USE_FP32_)
+    #define XABS    FABS
+    #define XSIN    FSIN
+    #define XCOS    FCOS
+    #define XTAN    FTAN
+    #define XEXP    FEXP
+    #define XPOW    FPOW
+    #define XASIN   FASIN
+    #define XACOS   FACOS
+    #define XATAN   FATAN
+    #define XSINH   FSINH
+    #define XCOSH   FCOSH
+    #define XTANH   FTANH
+    #define XSQRT   FSQRT
+    #define XLOGE   FLOGE
+    #define XLOG10  FLOG10
+    #define XATAN2  FATAN2
+    typedef float   fpxx_t;
+#else   /* (_CR_USE_FP64_) */
+    #define XABS    DABS
+    #define XSIN    DSIN
+    #define XCOS    DCOS
+    #define XTAN    DTAN
+    #define XEXP    DEXP
+    #define XPOW    DPOW
+    #define XASIN   DASIN
+    #define XACOS   DACOS
+    #define XATAN   DATAN
+    #define XSINH   DSINH
+    #define XCOSH   DCOSH
+    #define XTANH   DTANH
+    #define XSQRT   DSQRT
+    #define XLOGE   DLOGE
+    #define XLOG10  DLOG10
+    #define XATAN2  DATAN2
+    typedef double  fpxx_t;
+#endif
 
 /*****************************************************************************/
 /*                               美化代码定义                                */
@@ -309,14 +348,14 @@ typedef void_t* (STDCALL *stdfunc_t) (void_t*, void_t*);
 #if !defined(_CR_CC_BCC_)
     #define CR_NOUSE(v)     ((v) = (v))
 #else
-    #define CR_NOUSE(v) fmj_xzz((uchar*)(v))
+    #define CR_NOUSE(v) fmj_fzh((uchar*)(v))
 /*
 =======================================
     取消无用参数的警告
 =======================================
 */
 cr_inline void_t*
-fmj_xzz (
+fmj_fzh (
   __CR_UU__ void_t* nouse
     )
 {

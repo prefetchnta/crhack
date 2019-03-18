@@ -28,12 +28,12 @@
     复数的模
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 complex_abs (
   __CR_IN__ const sCOMPLEX* c
     )
 {
-    return (DSQRT(c->re * c->re + c->im * c->im));
+    return (XSQRT(c->re * c->re + c->im * c->im));
 }
 
 /*
@@ -41,12 +41,12 @@ complex_abs (
     复数相位
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 complex_ang (
   __CR_IN__ const sCOMPLEX* c
     )
 {
-    return (DATAN2(c->im, c->re));
+    return (XATAN2(c->im, c->re));
 }
 
 /*
@@ -60,8 +60,8 @@ complex_exp (
   __CR_IN__ const sCOMPLEX* c
     )
 {
-    r->re = DEXP(c->re) * DCOS(c->im);
-    r->im = DEXP(c->re) * DSIN(c->im);
+    r->re = XEXP(c->re) * XCOS(c->im);
+    r->im = XEXP(c->re) * XSIN(c->im);
     return (r);
 }
 
@@ -73,12 +73,12 @@ complex_exp (
 CR_API sCOMPLEX*
 complex_mak (
   __CR_OT__ sCOMPLEX*   r,
-  __CR_IN__ double      length,
-  __CR_IN__ double      theta
+  __CR_IN__ fpxx_t      length,
+  __CR_IN__ fpxx_t      theta
     )
 {
-    r->re = length * DCOS(theta);
-    r->im = length * DSIN(theta);
+    r->re = length * XCOS(theta);
+    r->im = length * XSIN(theta);
     return (r);
 }
 
@@ -128,7 +128,7 @@ complex_mul (
   __CR_IN__ const sCOMPLEX* c2
     )
 {
-    double  aa, bb;
+    fpxx_t  aa, bb;
 
     aa = c1->re * c2->re - c1->im * c2->im;
     bb = c1->im * c2->re + c1->re * c2->im;
@@ -149,7 +149,7 @@ complex_div (
   __CR_IN__ const sCOMPLEX* c2
     )
 {
-    double  aa, bb, cc;
+    fpxx_t  aa, bb, cc;
 
     aa = c1->re * c2->re + c1->im * c2->im;
     bb = c1->im * c2->re - c1->re * c2->im;

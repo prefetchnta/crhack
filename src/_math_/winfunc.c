@@ -30,19 +30,19 @@
 */
 CR_API void_t
 winfunc_triange (
-  __CR_OT__ double* W,
+  __CR_OT__ fpxx_t* W,
   __CR_IN__ sint_t  N,
   __CR_IN__ sint_t  bias
     )
 {
-    double  val;
+    fpxx_t  val;
     sint_t  idx;
 
     if      (bias < -1) bias = -1;
     else if (bias >  1) bias =  1;
     for (idx = 0; idx < N; idx++) {
-        val = (double)(2 * idx - N + 1);
-        W[idx] = 1 - DABS(val / (N + bias));
+        val = (fpxx_t)(2 * idx - N + 1);
+        W[idx] = 1 - XABS(val / (N + bias));
     }
 }
 
@@ -51,14 +51,14 @@ winfunc_triange (
     帕尔逊窗 (内部)
 ---------------------------------------
 */
-static double
+static fpxx_t
 winfunc_parzen_int (
-  __CR_IN__ double  X,
-  __CR_IN__ double  N
+  __CR_IN__ fpxx_t  X,
+  __CR_IN__ fpxx_t  N
     )
 {
-    double  v1, n2 = N / 2;
-    double  v2, an = DABS(X);
+    fpxx_t  v1, n2 = N / 2;
+    fpxx_t  v2, an = XABS(X);
 
     v1 = 1 - an / n2;
     if (an <= n2 / 2) {
@@ -75,14 +75,14 @@ winfunc_parzen_int (
 */
 CR_API void_t
 winfunc_parzen (
-  __CR_OT__ double* W,
+  __CR_OT__ fpxx_t* W,
   __CR_IN__ sint_t  N
     )
 {
-    double  val;
+    fpxx_t  val;
     sint_t  idx;
 
-    val = (double)(N - 1) / 2;
+    val = (fpxx_t)(N - 1) / 2;
     for (idx = 0; idx < N; idx++)
         W[idx] = winfunc_parzen_int(idx - val, N);
 }
@@ -94,14 +94,14 @@ winfunc_parzen (
 */
 CR_API void_t
 winfunc_welch (
-  __CR_OT__ double* W,
+  __CR_OT__ fpxx_t* W,
   __CR_IN__ sint_t  N
     )
 {
     sint_t  idx;
-    double  v1, v2;
+    fpxx_t  v1, v2;
 
-    v1 = (double)(N - 1) / 2;
+    v1 = (fpxx_t)(N - 1) / 2;
     for (idx = 0; idx < N; idx++) {
         v2 = (idx - v1) / v1;
         W[idx] = 1 - v2 * v2;
@@ -115,17 +115,17 @@ winfunc_welch (
 */
 CR_API void_t
 winfunc_sine (
-  __CR_OT__ double* W,
+  __CR_OT__ fpxx_t* W,
   __CR_IN__ sint_t  N,
-  __CR_IN__ double  alpha
+  __CR_IN__ fpxx_t  alpha
     )
 {
-    double  val;
+    fpxx_t  val;
     sint_t  idx;
 
     for (idx = 0; idx < N; idx++) {
-        val = DSIN((CR_PHY_PI * idx) / (N - 1));
-        W[idx] = DPOW(val, alpha);
+        val = XSIN((CR_PHY_PI * idx) / (N - 1));
+        W[idx] = XPOW(val, alpha);
     }
 }
 
@@ -136,16 +136,16 @@ winfunc_sine (
 */
 CR_API void_t
 winfunc_hann (
-  __CR_OT__ double* W,
+  __CR_OT__ fpxx_t* W,
   __CR_IN__ sint_t  N,
-  __CR_IN__ double  alpha
+  __CR_IN__ fpxx_t  alpha
     )
 {
-    double  val;
+    fpxx_t  val;
     sint_t  idx;
 
     for (idx = 0; idx < N; idx++) {
-        val = DCOS((2 * CR_PHY_PI * idx) / (N - 1));
+        val = XCOS((2 * CR_PHY_PI * idx) / (N - 1));
         W[idx] = alpha - (1 - alpha) * val;
     }
 }
@@ -157,15 +157,15 @@ winfunc_hann (
 */
 CR_API void_t
 winfunc_hann_periodic (
-  __CR_OT__ double* W,
+  __CR_OT__ fpxx_t* W,
   __CR_IN__ sint_t  N
     )
 {
-    double  val;
+    fpxx_t  val;
     sint_t  idx;
 
     for (idx = 0; idx < N; idx++) {
-        val = DCOS((2 * CR_PHY_PI * (idx - 1)) / N);
+        val = XCOS((2 * CR_PHY_PI * (idx - 1)) / N);
         W[idx] = 0.5 * (1 - val);
     }
 }
@@ -177,15 +177,15 @@ winfunc_hann_periodic (
 */
 CR_API void_t
 winfunc_hann_symmetric (
-  __CR_OT__ double* W,
+  __CR_OT__ fpxx_t* W,
   __CR_IN__ sint_t  N
     )
 {
-    double  val;
+    fpxx_t  val;
     sint_t  idx;
 
     for (idx = 0; idx < N; idx++) {
-        val = DCOS((2 * CR_PHY_PI * (idx - 1)) / (N - 1));
+        val = XCOS((2 * CR_PHY_PI * (idx - 1)) / (N - 1));
         W[idx] = 0.5 * (1 - val);
     }
 }
@@ -197,15 +197,15 @@ winfunc_hann_symmetric (
 */
 CR_API void_t
 winfunc_hanning_symmetric (
-  __CR_OT__ double* W,
+  __CR_OT__ fpxx_t* W,
   __CR_IN__ sint_t  N
     )
 {
-    double  val;
+    fpxx_t  val;
     sint_t  idx;
 
     for (idx = 0; idx < N; idx++) {
-        val = DCOS((2 * CR_PHY_PI * idx) / (N + 1));
+        val = XCOS((2 * CR_PHY_PI * idx) / (N + 1));
         W[idx] = 0.5 * (1 - val);
     }
 }
@@ -217,17 +217,17 @@ winfunc_hanning_symmetric (
 */
 CR_API void_t
 winfunc_blackman (
-  __CR_OT__ double* W,
+  __CR_OT__ fpxx_t* W,
   __CR_IN__ sint_t  N,
-  __CR_IN__ double  alpha
+  __CR_IN__ fpxx_t  alpha
     )
 {
-    double  val;
+    fpxx_t  val;
     sint_t  idx;
 
     for (idx = 0; idx < N; idx++) {
         val = (2 * CR_PHY_PI * idx) / (N - 1);
-        W[idx] = (1 - alpha) - DCOS(val) + alpha * DCOS(2 * val);
+        W[idx] = (1 - alpha) - XCOS(val) + alpha * XCOS(2 * val);
         W[idx] *= 0.5;
     }
 }
@@ -239,20 +239,20 @@ winfunc_blackman (
 */
 CR_API void_t
 winfunc_gaussian (
-  __CR_OT__ double* W,
+  __CR_OT__ fpxx_t* W,
   __CR_IN__ sint_t  N,
-  __CR_IN__ double  alpha
+  __CR_IN__ fpxx_t  alpha
     )
 {
-    double  val;
+    fpxx_t  val;
     sint_t  idx;
 
     if (alpha > 0.5)
         alpha = 0.5;
     for (idx = 0; idx < N; idx++) {
-        val = (double)(2 * idx - N + 1);
+        val = (fpxx_t)(2 * idx - N + 1);
         val /= (N - 1) * alpha;
-        W[idx] = DEXP(-0.5 * val * val);
+        W[idx] = XEXP(-0.5 * val * val);
     }
 }
 

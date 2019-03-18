@@ -28,20 +28,20 @@
     均值/方差/标准差计算
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 statistics (
-  __CR_IN__ const double*   data,
+  __CR_IN__ const fpxx_t*   data,
   __CR_IN__ uint_t          count,
-  __CR_OT__ double*         sd2,
-  __CR_OT__ double*         sd
+  __CR_OT__ fpxx_t*         sd2,
+  __CR_OT__ fpxx_t*         sd
     )
 {
     uint_t  idx;
-    double  acc, tmp;
-    double  num, avg = 0;
+    fpxx_t  acc, tmp;
+    fpxx_t  num, avg = 0;
 
     /* 平均值 */
-    num = (double)count;
+    num = (fpxx_t)count;
     for (idx = 0; idx < count; idx++)
         avg += data[idx];
     avg /= num;
@@ -59,7 +59,7 @@ statistics (
 
         /* 标准差 */
         if (sd != NULL)
-            *sd = DSQRT(acc);
+            *sd = XSQRT(acc);
     }
     return (avg);
 }
@@ -69,17 +69,17 @@ statistics (
     协方差/相关系数计算
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 covariance (
-  __CR_IN__ const double*   x,
-  __CR_IN__ const double*   y,
+  __CR_IN__ const fpxx_t*   x,
+  __CR_IN__ const fpxx_t*   y,
   __CR_IN__ uint_t          count,
-  __CR_OT__ double*         pxy
+  __CR_OT__ fpxx_t*         pxy
     )
 {
     uint_t  idx;
-    double  num, exy = 0;
-    double  ex, ey, sdx, sdy;
+    fpxx_t  num, exy = 0;
+    fpxx_t  ex, ey, sdx, sdy;
 
     /* 计算均值和标准差 */
     if (pxy != NULL) {
@@ -93,7 +93,7 @@ covariance (
     }
 
     /* 计算协方差 */
-    num = (double)count;
+    num = (fpxx_t)count;
     for (idx = 0; idx < count; idx++)
         exy += x[idx] * y[idx];
     exy /= num;
@@ -105,7 +105,7 @@ covariance (
         if (sdx <= CR_ABIT64)
             *pxy = 0.0;
         else
-            *pxy = exy / DSQRT(sdx);
+            *pxy = exy / XSQRT(sdx);
     }
     return (exy);
 }

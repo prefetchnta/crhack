@@ -27,7 +27,7 @@
 CR_API void_t
 fir_lp_clear (
   __CR_IN__ sint_t  ntaps,
-  __CR_OT__ double  z[]
+  __CR_OT__ fpxx_t  z[]
     )
 {
     sint_t  ii;
@@ -41,16 +41,16 @@ fir_lp_clear (
     线性 FIR 低通滤波
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 fir_lp_basic (
-  __CR_IN__ double          input,
+  __CR_IN__ fpxx_t          input,
   __CR_IN__ sint_t          ntaps,
-  __CR_IN__ const double    h[],
-  __CR_IO__ double          z[]
+  __CR_IN__ const fpxx_t    h[],
+  __CR_IO__ fpxx_t          z[]
     )
 {
     sint_t  ii;
-    double  accum = 0;
+    fpxx_t  accum = 0;
 
     z[0] = input;
     for (ii = 0; ii < ntaps; ii++)
@@ -65,16 +65,16 @@ fir_lp_basic (
     环形 FIR 低通滤波
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 fir_lp_circular (
-  __CR_IN__ double          input,
+  __CR_IN__ fpxx_t          input,
   __CR_IN__ sint_t          ntaps,
-  __CR_IN__ const double    h[],
-  __CR_IO__ double          z[],
+  __CR_IN__ const fpxx_t    h[],
+  __CR_IO__ fpxx_t          z[],
   __CR_IO__ sint_t*         p_state
     )
 {
-    double  accum = 0;
+    fpxx_t  accum = 0;
     sint_t  ii, state = *p_state;
 
     z[state] = input;
@@ -94,16 +94,16 @@ fir_lp_circular (
     平移 FIR 低通滤波
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 fir_lp_shuffle (
-  __CR_IN__ double          input,
+  __CR_IN__ fpxx_t          input,
   __CR_IN__ sint_t          ntaps,
-  __CR_IN__ const double    h[],
-  __CR_IO__ double          z[]
+  __CR_IN__ const fpxx_t    h[],
+  __CR_IO__ fpxx_t          z[]
     )
 {
     sint_t  ii;
-    double  accum;
+    fpxx_t  accum;
 
     z[0] = input;
     accum = h[ntaps - 1] * z[ntaps - 1];
@@ -119,25 +119,25 @@ fir_lp_shuffle (
     分割 FIR 低通滤波
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 fir_lp_split (
-  __CR_IN__ double          input,
+  __CR_IN__ fpxx_t          input,
   __CR_IN__ sint_t          ntaps,
-  __CR_IN__ const double    h[],
-  __CR_IO__ double          z[],
+  __CR_IN__ const fpxx_t    h[],
+  __CR_IO__ fpxx_t          z[],
   __CR_IO__ sint_t*         p_state
     )
 {
-    double  accum = 0, *p_h, *p_z;
+    fpxx_t  accum = 0, *p_h, *p_z;
     sint_t  ii, end_ntaps, state = *p_state;
 
-    p_h = (double*)h;
-    p_z = (double*)z + state;
+    p_h = (fpxx_t*)h;
+    p_z = (fpxx_t*)z + state;
     p_z[0] = input;
     end_ntaps = ntaps - state;
     for (ii = 0; ii < end_ntaps; ii++)
         accum += *p_h++ * *p_z++;
-    p_z = (double*)z;
+    p_z = (fpxx_t*)z;
     for (ii = 0; ii < state; ii++)
         accum += *p_h++ * *p_z++;
     if (--state < 0)
@@ -151,21 +151,21 @@ fir_lp_split (
     双重 FIR 低通滤波 (Z)
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 fir_lp_double_z (
-  __CR_IN__ double          input,
+  __CR_IN__ fpxx_t          input,
   __CR_IN__ sint_t          ntaps,
-  __CR_IN__ const double    h[],
-  __CR_IO__ double          z[],
+  __CR_IN__ const fpxx_t    h[],
+  __CR_IO__ fpxx_t          z[],
   __CR_IO__ sint_t*         p_state
     )
 {
     sint_t  ii, state = *p_state;
-    double  accum = 0, *p_h, *p_z;
+    fpxx_t  accum = 0, *p_h, *p_z;
 
     z[state] = z[state + ntaps] = input;
-    p_h = (double*)h;
-    p_z = (double*)z + state;
+    p_h = (fpxx_t*)h;
+    p_z = (fpxx_t*)z + state;
     for (ii = 0; ii < ntaps; ii++)
         accum += *p_h++ * *p_z++;
     if (--state < 0)
@@ -179,21 +179,21 @@ fir_lp_double_z (
     双重 FIR 低通滤波 (H)
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 fir_lp_double_h (
-  __CR_IN__ double          input,
+  __CR_IN__ fpxx_t          input,
   __CR_IN__ sint_t          ntaps,
-  __CR_IN__ const double    h[],
-  __CR_IO__ double          z[],
+  __CR_IN__ const fpxx_t    h[],
+  __CR_IO__ fpxx_t          z[],
   __CR_IO__ sint_t*         p_state
     )
 {
     sint_t  ii, state = *p_state;
-    double  accum = 0, *p_h, *p_z;
+    fpxx_t  accum = 0, *p_h, *p_z;
 
     z[state] = input;
-    p_h = (double*)h + ntaps - state;
-    p_z = (double*)z;
+    p_h = (fpxx_t*)h + ntaps - state;
+    p_z = (fpxx_t*)z;
     for (ii = 0; ii < ntaps; ii++)
         accum += *p_h++ * *p_z++;
     if (--state < 0)

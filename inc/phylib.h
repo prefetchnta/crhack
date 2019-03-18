@@ -403,18 +403,18 @@ CR_API sIMAGE*  tex_compress (const sIMAGE *img, uint_t tile_w,
 /*****************************************************************************/
 
 /* 点的空间划分 */
-CR_API uint_t   space_divide (byte_t *bits, double min, double max,
-                              double value, uint_t times);
+CR_API uint_t   space_divide (byte_t *bits, fpxx_t min, fpxx_t max,
+                              fpxx_t value, uint_t times);
 CR_API uint_t   space_genbit (byte_t *bits, uint_t size, byte_t **list,
                               uint_t count);
 /* 空间坐标哈希 */
-CR_API ansi_t*  space_hash2d (double min_x, double max_x,
-                              double min_y, double max_y,
-                              double x, double y, uint_t times);
-CR_API ansi_t*  space_hash3d (double min_x, double max_x,
-                              double min_y, double max_y,
-                              double min_z, double max_z,
-                              double x, double y, double z, uint_t times);
+CR_API ansi_t*  space_hash2d (fpxx_t min_x, fpxx_t max_x,
+                              fpxx_t min_y, fpxx_t max_y,
+                              fpxx_t x, fpxx_t y, uint_t times);
+CR_API ansi_t*  space_hash3d (fpxx_t min_x, fpxx_t max_x,
+                              fpxx_t min_y, fpxx_t max_y,
+                              fpxx_t min_z, fpxx_t max_z,
+                              fpxx_t x, fpxx_t y, fpxx_t z, uint_t times);
 /* RSSI 距离定位 */
 CR_API fp32_t   rfloc_lqi2rssi (fp32_t lqi);
 CR_API fp32_t   rfloc_rssi2meter (fp32_t rssi, fp32_t a, fp32_t n);
@@ -606,18 +606,18 @@ CR_API void_t   hcg_min_max (double base, sint_t days,
 /* PID 参数 */
 typedef struct
 {
-        double  I, O, E[3];
-        double  Kp, Ki, Kd;
-        double  umax, umin;
-        double  gate, tots;
+        fpxx_t  I, O, E[3];
+        fpxx_t  Kp, Ki, Kd;
+        fpxx_t  umax, umin;
+        fpxx_t  gate, tots;
 
 } sCTL_PID;
 
-CR_API void_t   pid_init (sCTL_PID *pid, double start);
-CR_API double   pid_delta (sCTL_PID *pid, double input);
-CR_API double   pid_full (sCTL_PID *pid, double input);
-CR_API double   pid_custom (sCTL_PID *pid, double input,
-                            double (*ki_func)(sCTL_PID*, double));
+CR_API void_t   pid_init (sCTL_PID *pid, fpxx_t start);
+CR_API fpxx_t   pid_delta (sCTL_PID *pid, fpxx_t input);
+CR_API fpxx_t   pid_full (sCTL_PID *pid, fpxx_t input);
+CR_API fpxx_t   pid_custom (sCTL_PID *pid, fpxx_t input,
+                            fpxx_t (*ki_func)(sCTL_PID*, fpxx_t));
 
 /*****************************************************************************/
 /*                                  滤波器                                   */
@@ -626,38 +626,38 @@ CR_API double   pid_custom (sCTL_PID *pid, double input,
 /* 卡尔曼滤波 */
 typedef struct
 {
-        double  Ut, Pt; /* (μt, σ^ 2) */
-        double  Q;  /* 过程误差 (α^ 2) */
-        double  R;  /* 测量误差 (β^ 2) */
+        fpxx_t  Ut, Pt; /* (μt, σ^ 2) */
+        fpxx_t  Q;  /* 过程误差 (α^ 2) */
+        fpxx_t  R;  /* 测量误差 (β^ 2) */
 
 } sKALMAN;
 
-CR_API void_t   kalman_init (sKALMAN *kalman, double u0, double p0,
-                             double alpha2, double beta2);
-CR_API double   kalman_filter (sKALMAN *kalman, double yt);
+CR_API void_t   kalman_init (sKALMAN *kalman, fpxx_t u0, fpxx_t p0,
+                             fpxx_t alpha2, fpxx_t beta2);
+CR_API fpxx_t   kalman_filter (sKALMAN *kalman, fpxx_t yt);
 
 /* 低通滤波器 */
-CR_API void_t   fir_lp_clear (sint_t ntaps, double z[]);
-CR_API double   fir_lp_basic (double input, sint_t ntaps, const double h[],
-                              double z[]);
-CR_API double   fir_lp_circular (double input, sint_t ntaps, const double h[],
-                                 double z[], sint_t *p_state);
-CR_API double   fir_lp_shuffle (double input, sint_t ntaps, const double h[],
-                                double z[]);
-CR_API double   fir_lp_split (double input, sint_t ntaps, const double h[],
-                              double z[], sint_t *p_state);
-CR_API double   fir_lp_double_z (double input, sint_t ntaps, const double h[],
-                                 double z[], sint_t *p_state);
-CR_API double   fir_lp_double_h (double input, sint_t ntaps, const double h[],
-                                 double z[], sint_t *p_state);
+CR_API void_t   fir_lp_clear (sint_t ntaps, fpxx_t z[]);
+CR_API fpxx_t   fir_lp_basic (fpxx_t input, sint_t ntaps, const fpxx_t h[],
+                              fpxx_t z[]);
+CR_API fpxx_t   fir_lp_circular (fpxx_t input, sint_t ntaps, const fpxx_t h[],
+                                 fpxx_t z[], sint_t *p_state);
+CR_API fpxx_t   fir_lp_shuffle (fpxx_t input, sint_t ntaps, const fpxx_t h[],
+                                fpxx_t z[]);
+CR_API fpxx_t   fir_lp_split (fpxx_t input, sint_t ntaps, const fpxx_t h[],
+                              fpxx_t z[], sint_t *p_state);
+CR_API fpxx_t   fir_lp_double_z (fpxx_t input, sint_t ntaps, const fpxx_t h[],
+                                 fpxx_t z[], sint_t *p_state);
+CR_API fpxx_t   fir_lp_double_h (fpxx_t input, sint_t ntaps, const fpxx_t h[],
+                                 fpxx_t z[], sint_t *p_state);
 /* 非线性滤波器 */
-CR_API double   fir_nl_median (double input, sint_t ntaps, double z[],
-                               double t[]);
+CR_API fpxx_t   fir_nl_median (fpxx_t input, sint_t ntaps, fpxx_t z[],
+                               fpxx_t t[]);
 /* 计数滤波参数 */
 typedef struct
 {
         uint_t  mode;           /* 中值模式 */
-        double  percent;        /* 概率阈值 */
+        fpxx_t  percent;        /* 概率阈值 */
         sint_t  v_up, v_dn;     /* 上下振幅 */
 
 } sNL_COUNTS;
@@ -666,7 +666,7 @@ typedef struct
 #define CR_NL_CNTS_MODE_AVGS    1   /* 均值 */
 #define CR_NL_CNTS_MODE_MIDS    2   /* 中值 */
 
-CR_API double   fir_nl_counts (sint_t input, sint_t ntaps,
+CR_API fpxx_t   fir_nl_counts (sint_t input, sint_t ntaps,
                                sint_t z[], sint_t t[], sint_t rle[],
                                const sNL_COUNTS *param);
 
@@ -680,28 +680,28 @@ CR_API uint_t   permutation (uint_t m, uint_t n);
 CR_API uint_t   combination (uint_t m, uint_t n);
 
 /* 概率统计 */
-CR_API double   statistics (const double *data, uint_t count,
-                            double *sd2, double *sd);
-CR_API double   covariance (const double *x, const double *y,
-                            uint_t count, double *pxy);
+CR_API fpxx_t   statistics (const fpxx_t *data, uint_t count,
+                            fpxx_t *sd2, fpxx_t *sd);
+CR_API fpxx_t   covariance (const fpxx_t *x, const fpxx_t *y,
+                            uint_t count, fpxx_t *pxy);
 
 /*****************************************************************************/
 /*                                   变换                                    */
 /*****************************************************************************/
 
 /* 复数结构 */
-typedef	struct
+typedef struct
 {
-        double  re;     /* 实部 */
-        double  im;     /* 虚部 */
+        fpxx_t  re;     /* 实部 */
+        fpxx_t  im;     /* 虚部 */
 
 } sCOMPLEX;
 
 /* 一些常用的复数运算 */
-CR_API double       complex_abs (const sCOMPLEX *c);
-CR_API double       complex_ang (const sCOMPLEX *c);
+CR_API fpxx_t       complex_abs (const sCOMPLEX *c);
+CR_API fpxx_t       complex_ang (const sCOMPLEX *c);
 CR_API sCOMPLEX*    complex_exp (sCOMPLEX *r, const sCOMPLEX *c);
-CR_API sCOMPLEX*    complex_mak (sCOMPLEX *r, double length, double theta);
+CR_API sCOMPLEX*    complex_mak (sCOMPLEX *r, fpxx_t length, fpxx_t theta);
 CR_API sCOMPLEX*    complex_add (sCOMPLEX *r, const sCOMPLEX *c1,
                                               const sCOMPLEX *c2);
 CR_API sCOMPLEX*    complex_sub (sCOMPLEX *r, const sCOMPLEX *c1,
@@ -717,19 +717,19 @@ CR_API sCOMPLEX*    fft1_func (sCOMPLEX *FD, const sCOMPLEX *TD,
 CR_API sCOMPLEX*    fft1_invert (sCOMPLEX *TD, const sCOMPLEX *FD,
                                  const sCOMPLEX *W, sint_t power);
 CR_API sCOMPLEX*    fft1_shift (sCOMPLEX *D, const sCOMPLEX *S, sint_t power);
-CR_API double*      fft1_ashow (double *D, const sCOMPLEX *S, sint_t power);
+CR_API fpxx_t*      fft1_ashow (fpxx_t *D, const sCOMPLEX *S, sint_t power);
 
 /* 窗函数计算 */
-CR_API void_t   winfunc_triange (double *W, sint_t N, sint_t bias);
-CR_API void_t   winfunc_parzen (double *W, sint_t N);
-CR_API void_t   winfunc_welch (double *W, sint_t N);
-CR_API void_t   winfunc_sine (double *W, sint_t N, double alpha);
-CR_API void_t   winfunc_hann (double *W, sint_t N, double alpha);
-CR_API void_t   winfunc_hann_periodic (double *W, sint_t N);
-CR_API void_t   winfunc_hann_symmetric (double *W, sint_t N);
-CR_API void_t   winfunc_hanning_symmetric (double *W, sint_t N);
-CR_API void_t   winfunc_blackman (double *W, sint_t N, double alpha);
-CR_API void_t   winfunc_gaussian (double *W, sint_t N, double alpha);
+CR_API void_t   winfunc_triange (fpxx_t *W, sint_t N, sint_t bias);
+CR_API void_t   winfunc_parzen (fpxx_t *W, sint_t N);
+CR_API void_t   winfunc_welch (fpxx_t *W, sint_t N);
+CR_API void_t   winfunc_sine (fpxx_t *W, sint_t N, fpxx_t alpha);
+CR_API void_t   winfunc_hann (fpxx_t *W, sint_t N, fpxx_t alpha);
+CR_API void_t   winfunc_hann_periodic (fpxx_t *W, sint_t N);
+CR_API void_t   winfunc_hann_symmetric (fpxx_t *W, sint_t N);
+CR_API void_t   winfunc_hanning_symmetric (fpxx_t *W, sint_t N);
+CR_API void_t   winfunc_blackman (fpxx_t *W, sint_t N, fpxx_t alpha);
+CR_API void_t   winfunc_gaussian (fpxx_t *W, sint_t N, fpxx_t alpha);
 
 /*****************************************************************************/
 /*                                   雷达                                    */
@@ -744,16 +744,16 @@ typedef struct
         fp32_t          ka, kb;
         sint_t          npower;
         sint_t          fft_max;
-        double          cut_pxy;
-        double          cut_fft;
-        const double*   cut_lst;
-        const double*   fft_win;
+        fpxx_t          cut_pxy;
+        fpxx_t          cut_fft;
+        const fpxx_t*   cut_lst;
+        const fpxx_t*   fft_win;
 
         /* 临时缓存 */
         uint_t      chk_time;
-        double*     fft_tmp1;
-        double*     fft_tmp2;
-        double*     fft_back;
+        fpxx_t*     fft_tmp1;
+        fpxx_t*     fft_tmp2;
+        fpxx_t*     fft_back;
         sCOMPLEX*   fft_data;
         sCOMPLEX*   fft_coes;
 

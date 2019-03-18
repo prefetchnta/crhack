@@ -27,10 +27,10 @@
 CR_API void_t
 kalman_init (
   __CR_OT__ sKALMAN*    kalman,
-  __CR_IN__ double      u0,
-  __CR_IN__ double      p0,
-  __CR_IN__ double      alpha2,
-  __CR_IN__ double      beta2
+  __CR_IN__ fpxx_t      u0,
+  __CR_IN__ fpxx_t      p0,
+  __CR_IN__ fpxx_t      alpha2,
+  __CR_IN__ fpxx_t      beta2
     )
 {
     kalman->Ut = u0;
@@ -44,13 +44,13 @@ kalman_init (
     卡尔曼滤波输入
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 kalman_filter (
   __CR_IO__ sKALMAN*    kalman,
-  __CR_IN__ double      yt
+  __CR_IN__ fpxx_t      yt
     )
 {
-    double  t2, kg, ut;
+    fpxx_t  t2, kg, ut;
 
     t2 = kalman->Pt + kalman->Q;
     kg = t2 / (t2 + kalman->R);

@@ -28,14 +28,14 @@
 CR_API uint_t
 space_divide (
   __CR_OT__ byte_t* bits,
-  __CR_IN__ double  min,
-  __CR_IN__ double  max,
-  __CR_IN__ double  value,
+  __CR_IN__ fpxx_t  min,
+  __CR_IN__ fpxx_t  max,
+  __CR_IN__ fpxx_t  value,
   __CR_IN__ uint_t  times
     )
 {
     byte_t  temp;
-    double  center;
+    fpxx_t  center;
     uint_t  idx, size;
 
     /* 非法的输入参数 */
@@ -119,12 +119,12 @@ space_genbit (
 */
 CR_API ansi_t*
 space_hash2d (
-  __CR_IN__ double  min_x,
-  __CR_IN__ double  max_x,
-  __CR_IN__ double  min_y,
-  __CR_IN__ double  max_y,
-  __CR_IN__ double  x,
-  __CR_IN__ double  y,
+  __CR_IN__ fpxx_t  min_x,
+  __CR_IN__ fpxx_t  max_x,
+  __CR_IN__ fpxx_t  min_y,
+  __CR_IN__ fpxx_t  max_y,
+  __CR_IN__ fpxx_t  x,
+  __CR_IN__ fpxx_t  y,
   __CR_IN__ uint_t  times
     )
 {
@@ -196,15 +196,15 @@ space_hash2d (
 */
 CR_API ansi_t*
 space_hash3d (
-  __CR_IN__ double  min_x,
-  __CR_IN__ double  max_x,
-  __CR_IN__ double  min_y,
-  __CR_IN__ double  max_y,
-  __CR_IN__ double  min_z,
-  __CR_IN__ double  max_z,
-  __CR_IN__ double  x,
-  __CR_IN__ double  y,
-  __CR_IN__ double  z,
+  __CR_IN__ fpxx_t  min_x,
+  __CR_IN__ fpxx_t  max_x,
+  __CR_IN__ fpxx_t  min_y,
+  __CR_IN__ fpxx_t  max_y,
+  __CR_IN__ fpxx_t  min_z,
+  __CR_IN__ fpxx_t  max_z,
+  __CR_IN__ fpxx_t  x,
+  __CR_IN__ fpxx_t  y,
+  __CR_IN__ fpxx_t  z,
   __CR_IN__ uint_t  times
     )
 {

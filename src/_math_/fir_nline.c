@@ -26,13 +26,13 @@
 ---------------------------------------
 */
 static sint_t
-value_comp_double (
+value_comp_real (
   __CR_IN__ const void_t*   elem1,
   __CR_IN__ const void_t*   elem2
     )
 {
-    double  val1 = *(double*)elem1;
-    double  val2 = *(double*)elem2;
+    fpxx_t  val1 = *(fpxx_t*)elem1;
+    fpxx_t  val2 = *(fpxx_t*)elem2;
 
     /* 升序 */
     if (val1 < val2) return (-1);
@@ -45,20 +45,20 @@ value_comp_double (
     中值滤波器
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 fir_nl_median (
-  __CR_IN__ double  input,
+  __CR_IN__ fpxx_t  input,
   __CR_IN__ sint_t  ntaps,
-  __CR_IO__ double  z[],
-  __CR_IN__ double  t[]
+  __CR_IO__ fpxx_t  z[],
+  __CR_IN__ fpxx_t  t[]
     )
 {
     sint_t  ii;
-    double  middle;
+    fpxx_t  middle;
 
     z[0] = input;
-    mem_cpy(t, z, ntaps * sizeof(double));
-    quick_sort(t, ntaps, sizeof(double), value_comp_double);
+    mem_cpy(t, z, ntaps * sizeof(fpxx_t));
+    quick_sort(t, ntaps, sizeof(fpxx_t), value_comp_real);
     middle = t[ntaps / 2];
     for (ii = ntaps - 2; ii >= 0; ii--)
         z[ii + 1] = z[ii];
@@ -85,7 +85,7 @@ value_comp_integer (
     计数滤波器
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 fir_nl_counts (
   __CR_IN__ sint_t              input,
   __CR_IN__ sint_t              ntaps,
@@ -95,7 +95,7 @@ fir_nl_counts (
   __CR_IN__ const sNL_COUNTS*   param
     )
 {
-    double  value;
+    fpxx_t  value;
     sint_t  middle, total;
     sint_t  ii, jj, kk, mm, vv;
 
@@ -123,16 +123,16 @@ fir_nl_counts (
 
     /* 只有一种值 */
     if (kk == 2)
-        return ((double)rle[1]);
+        return ((fpxx_t)rle[1]);
     kk /= 2;
 
     /* 查找出现最多的那个值, 有两个一样表示无法判定 */
     quick_sort(rle, kk, sizeof(sint_t) * 2, value_comp_integer);
-    if ((rle[0] == rle[2]) || (((double)rle[0] / ntaps) <= param->percent)) {
+    if ((rle[0] == rle[2]) || (((fpxx_t)rle[0] / ntaps) <= param->percent)) {
         if (param->mode == CR_NL_CNTS_MODE_AUTO) {
             if (t[0] - t[ntaps - 1] < param->v_up + param->v_dn) {
                 for (value = 0.0, jj = ii = 0; ii < kk; ii++, jj += 2)
-                    value += (double)rle[jj + 1] * rle[jj];
+                    value += (fpxx_t)rle[jj + 1] * rle[jj];
                 middle = (sint_t)(value / ntaps + 0.5);
             }
             else {
@@ -142,7 +142,7 @@ fir_nl_counts (
         else
         if (param->mode == CR_NL_CNTS_MODE_AVGS) {
             for (value = 0.0, jj = ii = 0; ii < kk; ii++, jj += 2)
-                value += (double)rle[jj + 1] * rle[jj];
+                value += (fpxx_t)rle[jj + 1] * rle[jj];
             middle = (sint_t)(value / ntaps + 0.5);
         }
         else {
@@ -158,7 +158,7 @@ fir_nl_counts (
     vv = middle - param->v_dn;
     for (value = 0.0, total = jj = ii = 0; ii < kk; ii++, jj += 2) {
         if (rle[jj + 1] > vv && rle[jj + 1] < mm) {
-            value += (double)rle[jj + 1] * rle[jj];
+            value += (fpxx_t)rle[jj + 1] * rle[jj];
             total += rle[jj];
         }
     }
@@ -167,7 +167,7 @@ fir_nl_counts (
     for (ii = ntaps - 2; ii >= 0; ii--)
         z[ii + 1] = z[ii];
     if (total == 0)
-        return ((double)middle);
+        return ((fpxx_t)middle);
     return (value / total);
 }
 

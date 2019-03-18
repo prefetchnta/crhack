@@ -46,8 +46,8 @@
 #define K9F1208C_BLKWP1     0x41    /*  块保护命令1   */
 #define K9F1208C_BLKWP2     0x42    /*  块保护命令2   */
 #define K9F1208C_BLKWP3     0x43    /*  块保护命令3   */
-#define	K9F1208C_AREA_A     0x00    /* 指针指向 A 区  */
-#define	K9F1208C_AREA_B     0x01    /* 指针指向 B 区  */
+#define K9F1208C_AREA_A     0x00    /* 指针指向 A 区  */
+#define K9F1208C_AREA_B     0x01    /* 指针指向 B 区  */
 #define K9F1208C_AREA_C     0x50    /* 指针指向 C 区  */
 #define K9F1208C_READID     0x90    /* 读取器件的编号 */
 #define K9F1208C_STATUS     0x70    /* 读取状态寄存器 */

@@ -36,7 +36,7 @@ fft1_init (
   __CR_IN__ sint_t      power
     )
 {
-    double  angle;
+    fpxx_t  angle;
     sint_t  idx, count;
 
     if (power <= FFT1_MIN_PWR)
@@ -49,8 +49,8 @@ fft1_init (
     }
     for (idx = 0; idx < count; idx++) {
         angle = -idx * CR_PHY_PI / count;
-        W[idx].re = DCOS(angle);
-        W[idx].im = DSIN(angle);
+        W[idx].re = XCOS(angle);
+        W[idx].im = XSIN(angle);
     }
     return (W);
 }
@@ -187,9 +187,9 @@ fft1_shift (
     生成用于显示的数据
 =======================================
 */
-CR_API double*
+CR_API fpxx_t*
 fft1_ashow (
-  __CR_OT__ double*         D,
+  __CR_OT__ fpxx_t*         D,
   __CR_IN__ const sCOMPLEX* S,
   __CR_IN__ sint_t          power
     )

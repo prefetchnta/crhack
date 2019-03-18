@@ -19,6 +19,10 @@
 
 #include "phylib.h"
 
+#ifndef _CR_NO_STDC_
+    #include <math.h>
+#endif
+
 /*
 =======================================
     PID 控制开始
@@ -27,7 +31,7 @@
 CR_API void_t
 pid_init (
   __CR_OT__ sCTL_PID*   pid,
-  __CR_IN__ double      start
+  __CR_IN__ fpxx_t      start
     )
 {
     pid->I = 0;
@@ -43,13 +47,13 @@ pid_init (
     PID 增量型计算
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 pid_delta (
   __CR_IO__ sCTL_PID*   pid,
-  __CR_IN__ double      input
+  __CR_IN__ fpxx_t      input
     )
 {
-    double  delta;
+    fpxx_t  delta;
 
     pid->I = input;
     pid->E[2] = pid->E[1];
@@ -67,19 +71,19 @@ pid_delta (
     PID 全功能计算
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 pid_full (
   __CR_IO__ sCTL_PID*   pid,
-  __CR_IN__ double      input
+  __CR_IN__ fpxx_t      input
     )
 {
-    double  ki, err;
+    fpxx_t  ki, err;
 
     pid->I = input;
     pid->E[2] = pid->E[1];
     pid->E[1] = pid->E[0];
     pid->E[0] = input - pid->O;
-    err = CR_ABS(pid->E[0]);
+    err = XABS(pid->E[0]);
     if (pid->O > pid->umax) {
         if (err > pid->gate) {
             ki = 0;
@@ -120,20 +124,20 @@ pid_full (
     PID 自定义积分项
 =======================================
 */
-CR_API double
+CR_API fpxx_t
 pid_custom (
   __CR_IO__ sCTL_PID*   pid,
-  __CR_IN__ double      input,
-  __CR_IN__ double      (*ki_func)(sCTL_PID*, double)
+  __CR_IN__ fpxx_t      input,
+  __CR_IN__ fpxx_t      (*ki_func)(sCTL_PID*, fpxx_t)
     )
 {
-    double  ki, err;
+    fpxx_t  ki, err;
 
     pid->I = input;
     pid->E[2] = pid->E[1];
     pid->E[1] = pid->E[0];
     pid->E[0] = input - pid->O;
-    err = CR_ABS(pid->E[0]);
+    err = XABS(pid->E[0]);
     if (err > pid->gate) {
         ki = 0;
     }
