@@ -311,6 +311,7 @@
         #define CR_PACKED   __attribute__((packed))
         #define _CR_NO_PRAGMA_PACK_
     #endif
+    #define CR_PTR_PACKED
     /*------------------------------------------------*/
 
     /* 编译器分支优化指示 */

@@ -133,6 +133,7 @@
     #define CR_PACKED
     #define CR_TYPEDEF  typedef
     #define _CR_NO_PRAGMA_PACK_
+    #define CR_PTR_PACKED
     /*------------------------------------------------*/
 
     /* 编译器分支优化指示 */

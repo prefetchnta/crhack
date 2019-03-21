@@ -49,10 +49,10 @@
         #define _CR_CC_STR_     "MicroChip XC8"
 
     #elif   defined(_CR_CC_XC16_)
-        #define _CR_CC_STR_     "MicoChip XC16"
+        #define _CR_CC_STR_     "MicroChip XC16"
 
     #else
-        #define _CR_CC_STR_     "MicoChip XC32"
+        #define _CR_CC_STR_     "MicroChip XC32"
     #endif
     /*------------------------------------------------*/
 
@@ -186,6 +186,7 @@
         #define CR_PACKED   __attribute__((packed))
         #define _CR_NO_PRAGMA_PACK_
     #endif
+    #define CR_PTR_PACKED
     /*------------------------------------------------*/
 
     /* 编译器分支优化指示 */

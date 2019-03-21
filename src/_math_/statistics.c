@@ -102,8 +102,8 @@ covariance (
     /* 计算相关系数 */
     if (pxy != NULL) {
         sdx *= sdy;
-        if (sdx <= CR_ABIT64)
-            *pxy = 0.0;
+        if (sdx <= CR_ABITX)
+            *pxy = 0;
         else
             *pxy = exy / XSQRT(sdx);
     }

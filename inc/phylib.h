@@ -720,16 +720,16 @@ CR_API sCOMPLEX*    fft1_shift (sCOMPLEX *D, const sCOMPLEX *S, sint_t power);
 CR_API fpxx_t*      fft1_ashow (fpxx_t *D, const sCOMPLEX *S, sint_t power);
 
 /* 窗函数计算 */
-CR_API void_t   winfunc_triange (fpxx_t *W, sint_t N, sint_t bias);
-CR_API void_t   winfunc_parzen (fpxx_t *W, sint_t N);
-CR_API void_t   winfunc_welch (fpxx_t *W, sint_t N);
-CR_API void_t   winfunc_sine (fpxx_t *W, sint_t N, fpxx_t alpha);
-CR_API void_t   winfunc_hann (fpxx_t *W, sint_t N, fpxx_t alpha);
-CR_API void_t   winfunc_hann_periodic (fpxx_t *W, sint_t N);
-CR_API void_t   winfunc_hann_symmetric (fpxx_t *W, sint_t N);
-CR_API void_t   winfunc_hanning_symmetric (fpxx_t *W, sint_t N);
-CR_API void_t   winfunc_blackman (fpxx_t *W, sint_t N, fpxx_t alpha);
-CR_API void_t   winfunc_gaussian (fpxx_t *W, sint_t N, fpxx_t alpha);
+CR_API void_t   winfunc_triange (double *W, sint_t N, sint_t bias);
+CR_API void_t   winfunc_parzen (double *W, sint_t N);
+CR_API void_t   winfunc_welch (double *W, sint_t N);
+CR_API void_t   winfunc_sine (double *W, sint_t N, double alpha);
+CR_API void_t   winfunc_hann (double *W, sint_t N, double alpha);
+CR_API void_t   winfunc_hann_periodic (double *W, sint_t N);
+CR_API void_t   winfunc_hann_symmetric (double *W, sint_t N);
+CR_API void_t   winfunc_hanning_symmetric (double *W, sint_t N);
+CR_API void_t   winfunc_blackman (double *W, sint_t N, double alpha);
+CR_API void_t   winfunc_gaussian (double *W, sint_t N, double alpha);
 
 /*****************************************************************************/
 /*                                   雷达                                    */

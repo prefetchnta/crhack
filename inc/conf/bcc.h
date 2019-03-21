@@ -125,7 +125,7 @@
 
     /* 编译器内联函数修饰 */
     #undef  _CR_NO_INLINE_
-    #define cr_inline       __inline
+    #define cr_inline   static __inline
     /*------------------------------------------------*/
 
     /* 编译器汇编内联函数 */
@@ -165,6 +165,7 @@
     #define CR_PACKED
     #define CR_TYPEDEF  typedef
     #undef  _CR_NO_PRAGMA_PACK_
+    #define CR_PTR_PACKED
     /*------------------------------------------------*/
 
     /* 编译器分支优化指示 */

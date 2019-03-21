@@ -131,9 +131,9 @@ fir_nl_counts (
     if ((rle[0] == rle[2]) || (((fpxx_t)rle[0] / ntaps) <= param->percent)) {
         if (param->mode == CR_NL_CNTS_MODE_AUTO) {
             if (t[0] - t[ntaps - 1] < param->v_up + param->v_dn) {
-                for (value = 0.0, jj = ii = 0; ii < kk; ii++, jj += 2)
+                for (value = 0, jj = ii = 0; ii < kk; ii++, jj += 2)
                     value += (fpxx_t)rle[jj + 1] * rle[jj];
-                middle = (sint_t)(value / ntaps + 0.5);
+                middle = (sint_t)(value / ntaps);
             }
             else {
                 middle = t[ntaps / 2];
@@ -141,9 +141,9 @@ fir_nl_counts (
         }
         else
         if (param->mode == CR_NL_CNTS_MODE_AVGS) {
-            for (value = 0.0, jj = ii = 0; ii < kk; ii++, jj += 2)
+            for (value = 0, jj = ii = 0; ii < kk; ii++, jj += 2)
                 value += (fpxx_t)rle[jj + 1] * rle[jj];
-            middle = (sint_t)(value / ntaps + 0.5);
+            middle = (sint_t)(value / ntaps);
         }
         else {
             middle = t[ntaps / 2];
@@ -156,7 +156,7 @@ fir_nl_counts (
     /* 根据上下振幅去掉超范围值并平均 */
     mm = middle + param->v_up;
     vv = middle - param->v_dn;
-    for (value = 0.0, total = jj = ii = 0; ii < kk; ii++, jj += 2) {
+    for (value = 0, total = jj = ii = 0; ii < kk; ii++, jj += 2) {
         if (rle[jj + 1] > vv && rle[jj + 1] < mm) {
             value += (fpxx_t)rle[jj + 1] * rle[jj];
             total += rle[jj];

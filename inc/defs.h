@@ -290,42 +290,50 @@ typedef void_t* (STDCALL *stdfunc_t) (void_t*, void_t*);
 
 /* 选择不同的浮点精度 */
 #if defined(_CR_USE_FP32_)
-    #define XABS    FABS
-    #define XSIN    FSIN
-    #define XCOS    FCOS
-    #define XTAN    FTAN
-    #define XEXP    FEXP
-    #define XPOW    FPOW
-    #define XASIN   FASIN
-    #define XACOS   FACOS
-    #define XATAN   FATAN
-    #define XSINH   FSINH
-    #define XCOSH   FCOSH
-    #define XTANH   FTANH
-    #define XSQRT   FSQRT
-    #define XLOGE   FLOGE
-    #define XLOG10  FLOG10
-    #define XATAN2  FATAN2
-    typedef float   fpxx_t;
+    #define XABS        FABS
+    #define XSIN        FSIN
+    #define XCOS        FCOS
+    #define XTAN        FTAN
+    #define XEXP        FEXP
+    #define XPOW        FPOW
+    #define XASIN       FASIN
+    #define XACOS       FACOS
+    #define XATAN       FATAN
+    #define XSINH       FSINH
+    #define XCOSH       FCOSH
+    #define XTANH       FTANH
+    #define XSQRT       FSQRT
+    #define XLOGE       FLOGE
+    #define XLOG10      FLOG10
+    #define XATAN2      FATAN2
+    typedef float       fpxx_t;
+    #define CR_ABITX    CR_ABIT32
+    #define CR_LARGX    CR_LARG32
 #else   /* (_CR_USE_FP64_) */
-    #define XABS    DABS
-    #define XSIN    DSIN
-    #define XCOS    DCOS
-    #define XTAN    DTAN
-    #define XEXP    DEXP
-    #define XPOW    DPOW
-    #define XASIN   DASIN
-    #define XACOS   DACOS
-    #define XATAN   DATAN
-    #define XSINH   DSINH
-    #define XCOSH   DCOSH
-    #define XTANH   DTANH
-    #define XSQRT   DSQRT
-    #define XLOGE   DLOGE
-    #define XLOG10  DLOG10
-    #define XATAN2  DATAN2
-    typedef double  fpxx_t;
+    #define XABS        DABS
+    #define XSIN        DSIN
+    #define XCOS        DCOS
+    #define XTAN        DTAN
+    #define XEXP        DEXP
+    #define XPOW        DPOW
+    #define XASIN       DASIN
+    #define XACOS       DACOS
+    #define XATAN       DATAN
+    #define XSINH       DSINH
+    #define XCOSH       DCOSH
+    #define XTANH       DTANH
+    #define XSQRT       DSQRT
+    #define XLOGE       DLOGE
+    #define XLOG10      DLOG10
+    #define XATAN2      DATAN2
+    typedef double      fpxx_t;
+    #define CR_ABITX    CR_ABIT64
+    #define CR_LARGX    CR_LARG64
 #endif
+
+/* 用于浮点常数强制转换 */
+#define CR_REAL(x)  ((real_t)(x))
+#define CR_FPXX(x)  ((fpxx_t)(x))
 
 /*****************************************************************************/
 /*                               美化代码定义                                */

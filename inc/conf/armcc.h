@@ -86,6 +86,7 @@
     /*------------------------------------------------*/
 
     /* 编译器全局定义 */
+    #define __USE_C99_MATH
     #pragma import (__use_no_semihosting_swi)
     #pragma import (__use_two_region_memory)
     /*------------------------------------------------*/
@@ -126,7 +127,7 @@
 
     /* 编译器内联函数修饰 */
     #undef  _CR_NO_INLINE_
-    #define cr_inline       __inline
+    #define cr_inline   static __inline
     /*------------------------------------------------*/
 
     /* 编译器汇编内联函数 */
@@ -170,6 +171,7 @@
         #define CR_TYPEDEF  typedef __packed
         #define _CR_NO_PRAGMA_PACK_
     #endif
+    #define CR_PTR_PACKED   __packed
     /*------------------------------------------------*/
 
     /* 编译器分支优化指示 */
@@ -205,7 +207,9 @@
     /*------------------------------------------------*/
 
     /* LIBC 支持 C99 数学函数设置 */
-    #define _CR_NO_MATHC99_
+    #if defined(_CR_CC_ARMCC_OLD_)
+        #define _CR_NO_MATHC99_
+    #endif
     /*------------------------------------------------*/
 
     /* LIBC beginthreadex() 返回值 */

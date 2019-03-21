@@ -25,6 +25,12 @@
 
 #define FFT1_MIN_PWR    2
 
+#if defined(_CR_USE_FP32_)
+    #define CR_FFT_PI   CR_PI
+#else
+    #define CR_FFT_PI   CR_PHY_PI
+#endif
+
 /*
 =======================================
     计算加权系数
@@ -48,7 +54,7 @@ fft1_init (
             return (NULL);
     }
     for (idx = 0; idx < count; idx++) {
-        angle = -idx * CR_PHY_PI / count;
+        angle = -idx * CR_FFT_PI / count;
         W[idx].re = XCOS(angle);
         W[idx].im = XSIN(angle);
     }
