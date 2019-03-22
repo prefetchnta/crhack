@@ -731,49 +731,6 @@ CR_API void_t   winfunc_hanning_symmetric (double *W, sint_t N);
 CR_API void_t   winfunc_blackman (double *W, sint_t N, double alpha);
 CR_API void_t   winfunc_gaussian (double *W, sint_t N, double alpha);
 
-/*****************************************************************************/
-/*                                   雷达                                    */
-/*****************************************************************************/
-
-/* FMCW 结构 */
-typedef struct
-{
-        /* 输入参数 */
-        uint_t          filter;
-        uint_t          totals;
-        fp32_t          ka, kb;
-        sint_t          npower;
-        sint_t          fft_max;
-        fpxx_t          cut_pxy;
-        fpxx_t          cut_fft;
-        const fpxx_t*   cut_lst;
-        const fpxx_t*   fft_win;
-
-        /* 临时缓存 */
-        uint_t      chk_time;
-        fpxx_t*     fft_tmp1;
-        fpxx_t*     fft_tmp2;
-        fpxx_t*     fft_back;
-        sCOMPLEX*   fft_data;
-        sCOMPLEX*   fft_coes;
-
-        /* 返回结果 */
-        sint_t      fft_cnts;
-        sCOMPLEX*   fft_vals;
-        sCOMPLEX*   fmcw_fft;
-} sFMCW;
-
-/* FMCW 滤波 */
-#define CR_FMCW_DIR     0
-#define CR_FMCW_AVG     1
-#define CR_FMCW_MAX     2
-
-CR_API bool_t   radar_fmcw_init (sFMCW *fmcw);
-CR_API void_t   radar_fmcw_free (sFMCW *fmcw);
-CR_API sint_t   radar_fmcw_pass (sFMCW *fmcw, const sint_t *data,
-                                 bool_t reset);
-CR_API sint_t   radar_fmcw_dist (const sFMCW *fmcw, fp32_t *dist);
-
 #endif  /* !__CR_PHYLIB_H__ */
 
 /*****************************************************************************/
