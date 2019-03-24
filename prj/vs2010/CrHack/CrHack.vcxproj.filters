@@ -344,9 +344,6 @@
     <ClCompile Include="..\..\..\src\_math_\rect_ops.c">
       <Filter>源文件\_math_</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\_math_\rf_loc.c">
-      <Filter>源文件\_math_</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\_math_\statistics.c">
       <Filter>源文件\_math_</Filter>
     </ClCompile>
@@ -483,6 +480,9 @@
       <Filter>源文件\_util_</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\_util_\radar_fmcw.c">
+      <Filter>源文件\_util_</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\_util_\rf_loc.c">
       <Filter>源文件\_util_</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\_util_\rfgeo.c">

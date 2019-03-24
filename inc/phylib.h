@@ -415,42 +415,6 @@ CR_API ansi_t*  space_hash3d (fpxx_t min_x, fpxx_t max_x,
                               fpxx_t min_y, fpxx_t max_y,
                               fpxx_t min_z, fpxx_t max_z,
                               fpxx_t x, fpxx_t y, fpxx_t z, uint_t times);
-/* RSSI 距离定位 */
-CR_API fp32_t   rfloc_lqi2rssi (fp32_t lqi);
-CR_API fp32_t   rfloc_rssi2meter (fp32_t rssi, fp32_t a, fp32_t n);
-CR_API bool_t   circle_intersect (vec2d_t *pnts, const vec3d_t *circle1,
-                                  const vec3d_t *circle2);
-/* 信标结构 */
-typedef struct
-{
-        fp32_t  x, y, r, z;
-        fp32_t  rssi, a, d;
-
-} sRF_LOC_BKEN;
-
-/* RSSI 定位参数 */
-typedef struct
-{
-        /* 输入参数 */
-        fp32_t  n;      /* 环境 n 参数 */
-        fp32_t  a;      /* 默认的 A 参数 */
-        fp32_t  min;    /* 最小的 RSSI 值 */
-        fp32_t  err;    /* 最大允许误差 */
-        fp32_t  sml;    /* 直接判断的阈值 */
-        leng_t  num;    /* 参与计算的点数 (4 - 5) */
-
-        /* 临时缓存 */
-        leng_t          size;
-        vec3d_t*        list;
-        leng_t          max_sz;
-        sRF_LOC_BKEN*   buffer;
-
-} sRF_LOC;
-
-CR_API bool_t   rfloc_init (sRF_LOC *param, leng_t max_count);
-CR_API void_t   rfloc_free (sRF_LOC *param);
-CR_API bool_t   rfloc_doit (vec2d_t *pos, const sRF_LOC_BKEN *beacon,
-                            leng_t count, sRF_LOC *param);
 
 /*****************************************************************************/
 /*                                   寻路                                    */

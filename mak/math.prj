@@ -31,7 +31,6 @@ OBJS=$(OBJ)math.$(O) \
      $(OBJ)winfunc.$(O) \
      $(OBJ)fft1.$(O) \
      $(OBJ)bspace.$(O) \
-     $(OBJ)rf_loc.$(O) \
      $(OBJ)cu50_r2t.$(O) \
      $(OBJ)cu50_t2r.$(O) \
      $(OBJ)pt100_r2t.$(O) \
@@ -84,7 +83,6 @@ CPPS=$(SRC)math.$(C) \
      $(SRC)winfunc.$(C) \
      $(SRC)fft1.$(C) \
      $(SRC)bspace.$(C) \
-     $(SRC)rf_loc.$(C) \
      $(SRC)cu50_r2t.$(C) \
      $(SRC)cu50_t2r.$(C) \
      $(SRC)pt100_r2t.$(C) \

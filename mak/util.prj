@@ -122,6 +122,7 @@ OBJS=$(OBJ)rfgeo.$(O) \
      $(OBJ)rfgeo_judge.$(O) \
      $(OBJ)rfgeo_float.$(O) \
      $(OBJ)rfgeo_total.$(O) \
+     $(OBJ)rf_loc.$(O) \
      $(OBJ)radar_fmcw.$(O) \
      $(OBJ)cpage437.$(O) \
      $(OBJ)cpage720.$(O) \
@@ -162,6 +163,7 @@ CPPS=$(SRC)rfgeo.$(C) \
      $(SRC)rfgeo_judge.$(C) \
      $(SRC)rfgeo_float.$(C) \
      $(SRC)rfgeo_total.$(C) \
+     $(SRC)rf_loc.$(C) \
      $(SRC)radar_fmcw.$(C) \
      $(SRC)cpage437.$(C) \
      $(SRC)cpage720.$(C) \

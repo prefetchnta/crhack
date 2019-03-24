@@ -285,7 +285,6 @@
     <ClCompile Include="..\..\..\src\_math_\pt100_r2t.c" />
     <ClCompile Include="..\..\..\src\_math_\pt100_t2r.c" />
     <ClCompile Include="..\..\..\src\_math_\rect_ops.c" />
-    <ClCompile Include="..\..\..\src\_math_\rf_loc.c" />
     <ClCompile Include="..\..\..\src\_math_\statistics.c" />
     <ClCompile Include="..\..\..\src\_math_\tb_mv2t.c" />
     <ClCompile Include="..\..\..\src\_math_\tb_t2mv.c" />
@@ -368,6 +367,7 @@
     <ClCompile Include="..\..\..\src\_util_\lua\lzio.c" />
     <ClCompile Include="..\..\..\src\_util_\mylua\mylua_tools.c" />
     <ClCompile Include="..\..\..\src\_util_\radar_fmcw.c" />
+    <ClCompile Include="..\..\..\src\_util_\rf_loc.c" />
     <ClCompile Include="..\..\..\src\_util_\rfgeo.c" />
     <ClCompile Include="..\..\..\src\_util_\rfgeo_average.c" />
     <ClCompile Include="..\..\..\src\_util_\rfgeo_evals.c" />
