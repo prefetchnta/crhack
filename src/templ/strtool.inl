@@ -162,6 +162,8 @@ CR_FUW(str_esc_cpy) (
 
     for (kk = 0, nn = 1; src[nn] != CR_XC('\"'); nn++)
     {
+        if (src[nn] == CR_XN(NIL))
+            return (0);
         if (src[nn] == CR_XC('\\'))
         {
             tt = 8;
@@ -397,7 +399,7 @@ CR_FAW(find_space) (
         /* 跳过引号里的空白 */
         if (*str == CR_XC('\"')) {
             if (copy) {
-                CR_FAW(chr_cpy)(str, str + 1, size - 1);
+                mem_mov(str, str + 1, (size - 1) * sizeof(XCHAR));
                 str--;
             }
             step *= -1;

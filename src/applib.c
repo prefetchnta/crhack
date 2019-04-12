@@ -18,6 +18,7 @@
 /*****************************************************************************/
 
 #include "applib.h"
+#include "msclib.h"
 
 /* 应用程序相关全局变量 */
 quit_t      g_quit_now = NULL;          /* 自定义的退出函数 */
@@ -138,6 +139,22 @@ timer_delta32 (
     if (now < base)
         return (0xFFFFFFFFUL - base + now + 1);
     return (now - base);
+}
+
+/*
+=======================================
+    延时一段时间
+=======================================
+*/
+CR_API void_t
+delayms (
+  __CR_IN__ byte_t  num
+    )
+{
+    int32u  time = (int32u)num;
+    int32u  base = timer_get32();
+
+    while (timer_delta32(base) < time);
 }
 
 /*****************************************************************************/

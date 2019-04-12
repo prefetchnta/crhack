@@ -31,22 +31,6 @@
 =======================================
 */
 CR_API void_t
-delayms (
-  __CR_IN__ byte_t  num
-    )
-{
-    int32u  time = (int32u)num;
-    int32u  base = timer_get32();
-
-    while (timer_delta32(base) < time);
-}
-
-/*
-=======================================
-    延时一段时间
-=======================================
-*/
-CR_API void_t
 thread_sleep (
   __CR_IN__ uint_t  time_ms
     )
