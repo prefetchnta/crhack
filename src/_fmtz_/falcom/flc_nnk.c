@@ -185,11 +185,29 @@ static const iPACKAGE_vtbl _rom_ s_pack_vtbl =
 };
 
 /*
----------------------------------------
-    NNK 字节流解密
----------------------------------------
+=======================================
+    NNK 字节流加密
+=======================================
 */
-static void_t
+CR_API void_t
+nnk_encode (
+  __CR_IN__ int32u  key,
+  __CR_IO__ byte_t* data,
+  __CR_IN__ leng_t  size
+    )
+{
+    for (; size != 0; size--, data++) {
+        key *= 0x3D09UL;
+        *data = *data + (byte_t)(key >> 16);
+    }
+}
+
+/*
+=======================================
+    NNK 字节流解密
+=======================================
+*/
+CR_API void_t
 nnk_decode (
   __CR_IN__ int32u  key,
   __CR_IO__ byte_t* data,

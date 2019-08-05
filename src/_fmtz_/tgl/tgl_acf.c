@@ -49,6 +49,7 @@ typedef struct
         bool_t      m_flip;
         byte_t*     m_dats;
         sACF_IDX*   m_attr;
+        /* ------------- */
         byte_t      m_pal[1024];
         const ansi_t*   m_infor;
 
