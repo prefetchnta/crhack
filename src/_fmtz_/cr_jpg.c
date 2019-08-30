@@ -33,18 +33,18 @@ typedef struct
     用户定义输入函数
 ---------------------------------------
 */
-static UINT
+static uint16_t
 jpg_in_func (
-  __CR_IO__ JDEC*   jd,
-  __CR_OT__ BYTE*   buff,
-  __CR_IN__ UINT    nbyte
+  __CR_IO__ JDEC*       jd,
+  __CR_OT__ uint8_t*    buff,
+  __CR_IN__ uint16_t    nbyte
     )
 {
     iDATIN* datin;
 
     datin = ((sIODEV*)jd->device)->datin;
     if (buff != NULL)
-        return ((UINT)(CR_VCALL(datin)->read(datin, buff, nbyte)));
+        return ((uint16_t)(CR_VCALL(datin)->read(datin, buff, nbyte)));
 
     if (!CR_VCALL(datin)->seek(datin, nbyte, SEEK_CUR))
         return (0);
@@ -56,25 +56,25 @@ jpg_in_func (
     用户定义输出函数
 ---------------------------------------
 */
-static UINT
+static uint16_t
 jpg_out_func (
   __CR_IO__ JDEC*   jd,
   __CR_IN__ void*   bitmap,
   __CR_IN__ JRECT*  rect
     )
 {
-    WORD    yy;
-    UINT    idx;
-    UINT    bws;
-    BYTE*   src;
-    BYTE*   dst;
-    sIMAGE* img;
+    sIMAGE*     img;
+    uint8_t*    src;
+    uint8_t*    dst;
+    uint16_t    yyy;
+    uint32_t    idx;
+    uint32_t    bws;
 
-    src = (BYTE*)bitmap;
+    src = (uint8_t*)bitmap;
     img = ((sIODEV*)jd->device)->image;
     dst = pixel_addr3(img, rect->left, rect->top);
     bws = 3UL * (rect->right - rect->left + 1);
-    for (yy = rect->top; yy <= rect->bottom; yy++) {
+    for (yyy = rect->top; yyy <= rect->bottom; yyy++) {
         for (idx = 0; idx < bws; idx += 3) {
             dst[idx + 0] = src[idx + 2];
             dst[idx + 1] = src[idx + 1];
