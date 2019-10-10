@@ -136,7 +136,7 @@ i2c_release (void_t)
     /* ------ */
     I2C_SDA_DIRI
     /* ------ */
-    I2C_DELAY_ACK_EX
+    I2C_DELAY_GET_EX
     if (I2C_SDA_GETB)
         return;
     for (idx = 9; idx != 0; idx--) {
