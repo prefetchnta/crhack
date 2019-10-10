@@ -68,11 +68,11 @@ CR_API void_t
 i2c_init (void_t)
 {
     _I2C_INIT_
-    /* ------- */
+    /* ------ */
     I2C_SDA_DIRI
     I2C_SCL_DIRO
-    /* ------- */
-    I2C_SCL_CLRB
+    /* ------ */
+    I2C_SCL_SETB
 }
 #endif  /* i2c_init */
 
@@ -115,10 +115,39 @@ i2c_leave (void_t)
     I2C_DELAY_4___US
     I2C_SDA_SETB
     I2C_DELAY_4_7_US
-    I2C_SCL_CLRB
-    I2C_DELAY_4___US
+    /* ------ */
+    I2C_SDA_DIRI
+    /* ------ */
 }
 #endif  /* i2c_leave */
+
+/*
+=======================================
+    模拟 I2C 释放总线
+=======================================
+*/
+#if defined(i2c_release)
+CR_API void_t
+i2c_release (void_t)
+{
+    ufast_t idx;
+
+    I2C_SCL_CLRB
+    /* ------ */
+    I2C_SDA_DIRI
+    /* ------ */
+    I2C_DELAY_ACK_EX
+    if (I2C_SDA_GETB)
+        return;
+    for (idx = 9; idx != 0; idx--) {
+        I2C_SCL_CLRB
+        I2C_DELAY_4_7_US
+        I2C_SCL_SETB
+        I2C_DELAY_4___US
+    }
+    I2C_SCL_CLRB
+}
+#endif  /* i2c_release */
 
 /*
 =======================================
@@ -136,7 +165,6 @@ i2c_send_ack (void_t)
     I2C_SCL_SETB
     I2C_DELAY_4___US
     I2C_SCL_CLRB
-    I2C_SDA_SETB
     I2C_DELAY_4_7_US
 }
 #endif  /* i2c_send_ack */
@@ -157,7 +185,6 @@ i2c_send_nack (void_t)
     I2C_SCL_SETB
     I2C_DELAY_4___US
     I2C_SCL_CLRB
-    I2C_SDA_CLRB
     I2C_DELAY_4_7_US
 }
 #endif  /* i2c_send_nack */
