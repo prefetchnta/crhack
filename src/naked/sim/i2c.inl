@@ -27,6 +27,9 @@
 #ifndef I2C_SDA_DIRO
     #define I2C_SDA_DIRO
 #endif
+#ifndef I2C_SCL_DIRI
+    #define I2C_SCL_DIRI    I2C_SCL_SETB
+#endif
 #ifndef I2C_SDA_DIRI
     #define I2C_SDA_DIRI    I2C_SDA_SETB
 #endif
@@ -70,9 +73,8 @@ i2c_init (void_t)
     _I2C_INIT_
     /* ------ */
     I2C_SDA_DIRI
-    I2C_SCL_DIRO
+    I2C_SCL_DIRI
     /* ------ */
-    I2C_SCL_SETB
 }
 #endif  /* i2c_init */
 
@@ -87,6 +89,7 @@ i2c_enter (void_t)
 {
     /* ------ */
     I2C_SDA_DIRO
+    I2C_SCL_DIRO
     /* ------ */
     I2C_SDA_SETB
     I2C_SCL_SETB
@@ -117,6 +120,7 @@ i2c_leave (void_t)
     I2C_DELAY_4_7_US
     /* ------ */
     I2C_SDA_DIRI
+    I2C_SCL_DIRI
     /* ------ */
 }
 #endif  /* i2c_leave */
