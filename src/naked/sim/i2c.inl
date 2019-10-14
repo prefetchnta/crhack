@@ -136,6 +136,9 @@ i2c_release (void_t)
 {
     ufast_t idx;
 
+    /* ------ */
+    I2C_SCL_DIRO
+    /* ------ */
     I2C_SCL_CLRB
     /* ------ */
     I2C_SDA_DIRI
