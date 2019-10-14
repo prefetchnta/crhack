@@ -112,6 +112,7 @@ i2c_leave (void_t)
 {
     /* ------ */
     I2C_SDA_DIRO
+    I2C_SCL_DIRO
     /* ------ */
     I2C_SDA_CLRB
     I2C_SCL_SETB
@@ -132,10 +133,10 @@ i2c_leave (void_t)
 */
 #if defined(i2c_release)
 CR_API void_t
-i2c_release (void_t)
+i2c_release (
+  __CR_IN__ ufast_t cnt
+    )
 {
-    ufast_t idx;
-
     /* ------ */
     I2C_SCL_DIRO
     /* ------ */
@@ -146,13 +147,16 @@ i2c_release (void_t)
     I2C_DELAY_GET_EX
     if (I2C_SDA_GETB)
         return;
-    for (idx = 9; idx != 0; idx--) {
-        I2C_SCL_CLRB
-        I2C_DELAY_4_7_US
+    for (; cnt != 0; cnt--) {
         I2C_SCL_SETB
+        I2C_DELAY_4_7_US
+        I2C_SCL_CLRB
         I2C_DELAY_4___US
     }
-    I2C_SCL_CLRB
+    I2C_SCL_SETB
+    /* ------ */
+    I2C_SCL_DIRI
+    /* ------ */
 }
 #endif  /* i2c_release */
 
