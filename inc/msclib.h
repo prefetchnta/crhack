@@ -36,7 +36,8 @@ CR_API void_t   delayms (byte_t num);
 CR_API void_t   rand_seed (uint_t seed);
 CR_API sint_t   rand_get (void_t);
 CR_API sint_t   rand_getx (sint_t mod);
-
+CR_API fp32_t   random3d (uint_t x, uint_t y, uint_t z, uint_t p0,
+                          uint_t p1, uint_t p2, uint_t p3);
 /* 快速数值计算 */
 CR_API int16u   sqrt_int32 (int32u val);
 
