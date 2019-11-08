@@ -206,12 +206,13 @@ decode_base64 (
     BASE64 to BASE64-URL
 =======================================
 */
-CR_API void_t
+CR_API leng_t
 encode_base64url (
   __CR_IO__ void_t* data,
   __CR_IN__ leng_t  size
     )
 {
+    leng_t  bck = size;
     byte_t* ptr = (byte_t*)data;
 
     for (; size != 0; size--, ptr++) {
@@ -221,6 +222,7 @@ encode_base64url (
         if (*ptr == '/')
             *ptr = '_';
     }
+    return (bck);
 }
 
 /*
@@ -228,12 +230,13 @@ encode_base64url (
     BASE64-URL to BASE64
 =======================================
 */
-CR_API void_t
+CR_API leng_t
 decode_base64url (
   __CR_IO__ void_t* data,
   __CR_IN__ leng_t  size
     )
 {
+    leng_t  bck = size;
     byte_t* ptr = (byte_t*)data;
 
     for (; size != 0; size--, ptr++) {
@@ -243,6 +246,7 @@ decode_base64url (
         if (*ptr == '_')
             *ptr = '/';
     }
+    return (bck);
 }
 
 /*****************************************************************************/

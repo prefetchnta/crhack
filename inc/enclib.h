@@ -116,16 +116,16 @@ CR_API leng_t   encode_base32 (void_t *dst, leng_t dstlen,
 CR_API leng_t   decode_base32 (void_t *dst, leng_t dstlen,
                                const void_t *src, leng_t srclen);
 /* Z-BASE32 */
-CR_API void_t   encode_zbase32 (void_t *data, leng_t size);
-CR_API void_t   decode_zbase32 (void_t *data, leng_t size);
+CR_API leng_t   encode_zbase32 (void_t *data, leng_t size);
+CR_API leng_t   decode_zbase32 (void_t *data, leng_t size);
 
 /* BASE32-CROCKFORD */
-CR_API void_t   encode_base32crk (void_t *data, leng_t size);
-CR_API void_t   decode_base32crk (void_t *data, leng_t size);
+CR_API leng_t   encode_base32crk (void_t *data, leng_t size);
+CR_API leng_t   decode_base32crk (void_t *data, leng_t size);
 
 /* BASE32-HEX */
-CR_API void_t   encode_base32hex (void_t *data, leng_t size);
-CR_API void_t   decode_base32hex (void_t *data, leng_t size);
+CR_API leng_t   encode_base32hex (void_t *data, leng_t size);
+CR_API leng_t   decode_base32hex (void_t *data, leng_t size);
 
 /* BASE64 */
 CR_API leng_t   encode_base64 (void_t *dst, leng_t dstlen,
@@ -135,8 +135,8 @@ CR_API leng_t   encode_base64 (void_t *dst, leng_t dstlen,
 CR_API leng_t   decode_base64 (void_t *dst, leng_t dstlen,
                                const void_t *src, leng_t srclen);
 /* BASE64-URL */
-CR_API void_t   encode_base64url (void_t *data, leng_t size);
-CR_API void_t   decode_base64url (void_t *data, leng_t size);
+CR_API leng_t   encode_base64url (void_t *data, leng_t size);
+CR_API leng_t   decode_base64url (void_t *data, leng_t size);
 
 /* UUE */
 CR_API leng_t   encode_uue (void_t *dst, leng_t dstlen,
@@ -178,6 +178,18 @@ CR_API leng_t   match_rle_4 (const void_t *data, leng_t size,
                              leng_t max_count);
 CR_API leng_t   match_rle_x (const void_t *data, leng_t size,
                              leng_t unit, leng_t max_count);
+/* MTF 数据变换 */
+CR_API leng_t   encode_mtf (void_t *data, leng_t size);
+CR_API leng_t   decode_mtf (void_t *data, leng_t size);
+
+/* BRR 数据变换 */
+CR_API leng_t   encode_brr (void_t *dst, leng_t dstlen,
+                            const void_t *src, leng_t srclen,
+                            const byte_t *mask CR_DEFAULT(NULL));
+
+CR_API leng_t   decode_brr (void_t *dst, leng_t dstlen,
+                            const void_t *src, leng_t srclen,
+                            const byte_t *mask CR_DEFAULT(NULL));
 
 #endif  /* !__CR_ENCLIB_H__ */
 

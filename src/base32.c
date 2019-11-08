@@ -207,13 +207,14 @@ decode_base32 (
     BASE32 to Z-BASE32
 =======================================
 */
-CR_API void_t
+CR_API leng_t
 encode_zbase32 (
   __CR_IO__ void_t* data,
   __CR_IN__ leng_t  size
     )
 {
     byte_t  cha;
+    leng_t  bck = size;
     byte_t* ptr = (byte_t*)data;
 
     for (; size != 0; size--, ptr++)
@@ -237,6 +238,7 @@ encode_zbase32 (
             case '7': *ptr = '9'; break;
         }
     }
+    return (bck);
 }
 
 /*
@@ -244,13 +246,14 @@ encode_zbase32 (
     Z-BASE32 to BASE32
 =======================================
 */
-CR_API void_t
+CR_API leng_t
 decode_zbase32 (
   __CR_IO__ void_t* data,
   __CR_IN__ leng_t  size
     )
 {
     byte_t  cha;
+    leng_t  bck = size;
     byte_t* ptr = (byte_t*)data;
 
     for (; size != 0; size--, ptr++)
@@ -274,6 +277,7 @@ decode_zbase32 (
             case '9': *ptr = '7'; break;
         }
     }
+    return (bck);
 }
 
 /*
@@ -281,13 +285,14 @@ decode_zbase32 (
     BASE32 to BASE32-CROCKFORD
 =======================================
 */
-CR_API void_t
+CR_API leng_t
 encode_base32crk (
   __CR_IO__ void_t* data,
   __CR_IN__ leng_t  size
     )
 {
     byte_t  cha;
+    leng_t  bck = size;
     byte_t* ptr = (byte_t*)data;
 
     for (; size != 0; size--, ptr++)
@@ -332,6 +337,7 @@ encode_base32crk (
             case '7': *ptr = 'Z'; break;
         }
     }
+    return (bck);
 }
 
 /*
@@ -339,13 +345,14 @@ encode_base32crk (
     BASE32-CROCKFORD to BASE32
 =======================================
 */
-CR_API void_t
+CR_API leng_t
 decode_base32crk (
   __CR_IO__ void_t* data,
   __CR_IN__ leng_t  size
     )
 {
     byte_t  cha;
+    leng_t  bck = size;
     byte_t* ptr = (byte_t*)data;
 
     for (; size != 0; size--, ptr++)
@@ -393,6 +400,7 @@ decode_base32crk (
             case 'Z': *ptr = '7'; break;
         }
     }
+    return (bck);
 }
 
 /*
@@ -400,13 +408,14 @@ decode_base32crk (
     BASE32 to BASE32-HEX
 =======================================
 */
-CR_API void_t
+CR_API leng_t
 encode_base32hex (
   __CR_IO__ void_t* data,
   __CR_IN__ leng_t  size
     )
 {
     byte_t  cha;
+    leng_t  bck = size;
     byte_t* ptr = (byte_t*)data;
 
     for (; size != 0; size--, ptr++)
@@ -451,6 +460,7 @@ encode_base32hex (
             case '7': *ptr = 'V'; break;
         }
     }
+    return (bck);
 }
 
 /*
@@ -458,13 +468,14 @@ encode_base32hex (
     BASE32-HEX to BASE32
 =======================================
 */
-CR_API void_t
+CR_API leng_t
 decode_base32hex (
   __CR_IO__ void_t* data,
   __CR_IN__ leng_t  size
     )
 {
     byte_t  cha;
+    leng_t  bck = size;
     byte_t* ptr = (byte_t*)data;
 
     for (; size != 0; size--, ptr++)
@@ -509,6 +520,7 @@ decode_base32hex (
             case 'V': *ptr = '7'; break;
         }
     }
+    return (bck);
 }
 
 /*****************************************************************************/
