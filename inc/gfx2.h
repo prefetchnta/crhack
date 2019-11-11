@@ -132,6 +132,9 @@ CR_API void_t   image_fuck_gdi (sIMAGE *img);
 /* 位图垂直翻转 */
 CR_API void_t   image_flp (const sIMAGE *img, bool_t solid);
 
+/* 位图水平翻转 */
+CR_API void_t   image_mirror (const sIMAGE *img);
+
 /* 计算位图基本信息 */
 CR_API bool_t   image_info (sIMAGE *img, uint_t w, uint_t h,
                             uint_t fmt, bool_t gdi, uint_t align);

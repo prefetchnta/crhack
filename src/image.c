@@ -514,6 +514,88 @@ image_flp (
 
 /*
 =======================================
+    位图水平翻转
+=======================================
+*/
+CR_API void_t
+image_mirror (
+  __CR_IO__ const sIMAGE*   img
+    )
+{
+    byte_t  tp1;
+    int16u  tp2;
+    int32u  tp4;
+    uint_t  yyy;
+    leng_t  pos;
+    leng_t  ptr;
+    leng_t  wtmp;
+    byte_t* img1;
+    byte_t* img2;
+
+    img1 = img->data;
+    wtmp = img->position.ww / 2;
+
+    switch (img->fmt)
+    {
+        default:
+            return;
+
+        case CR_INDEX8:
+            img2 = img1 + img->position.ww - 1;
+            for (yyy = img->position.hh; yyy != 0; yyy--) {
+                for (pos = 0; pos < wtmp; pos++) {
+                    CR_SWAP(((byte_t*)img1)[pos],
+                            ((byte_t*)img2)[0 - pos], tp1);
+                }
+                img1 += img->bpl;
+                img2 += img->bpl;
+            }
+            break;
+
+        case CR_ARGB565:
+        case CR_ARGB4444:
+        case CR_ARGBX555:
+        case CR_ARGB1555:
+            img2 = img1 + img->position.ww * 2 - 2;
+            for (yyy = img->position.hh; yyy != 0; yyy--) {
+                for (pos = 0; pos < wtmp; pos++) {
+                    CR_SWAP(((int16u*)img1)[pos],
+                            ((int16u*)img2)[0 - pos], tp2);
+                }
+                img1 += img->bpl;
+                img2 += img->bpl;
+            }
+            break;
+
+        case CR_ARGB888:
+            img2 = img1 + img->position.ww * 3 - 3;
+            for (yyy = img->position.hh; yyy != 0; yyy--) {
+                for (pos = ptr = 0; pos < wtmp; pos++, ptr += 3) {
+                    CR_SWAP(img1[ptr],     img2[0 - ptr], tp1);
+                    CR_SWAP(img1[ptr + 1], img2[1 - ptr], tp1);
+                    CR_SWAP(img1[ptr + 2], img2[2 - ptr], tp1);
+                }
+                img1 += img->bpl;
+                img2 += img->bpl;
+            }
+            break;
+
+        case CR_ARGB8888:
+            img2 = img1 + img->position.ww * 4 - 4;
+            for (yyy = img->position.hh; yyy != 0; yyy--) {
+                for (pos = 0; pos < wtmp; pos++) {
+                    CR_SWAP(((int32u*)img1)[pos],
+                            ((int32u*)img2)[0 - pos], tp4);
+                }
+                img1 += img->bpl;
+                img2 += img->bpl;
+            }
+            break;
+    }
+}
+
+/*
+=======================================
     根据透明色设置 Alpha 通道
 =======================================
 */

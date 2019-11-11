@@ -62,6 +62,22 @@ typedef struct
 
 } sLZWSTACK;
 
+/* 代码简化 */
+typedef struct
+{
+        sLZW        handle;
+        sLZWBUFFER  in, out;
+
+} encode;
+
+typedef struct
+{
+        sLZW        handle;
+        sLZWSTACK   stack;
+        sLZWBUFFER  in, out;
+
+} decode;
+
 /*
 ---------------------------------------
     初始化代码表
@@ -490,13 +506,6 @@ lzw_do_decode (
     LZW 压缩
 =======================================
 */
-typedef struct
-{
-        sLZW        handle;
-        sLZWBUFFER  in, out;
-
-} encode;
-
 CR_API leng_t
 compr_lzw (
   __CR_OT__ void_t*         dst,
@@ -560,6 +569,7 @@ compr_lzw (
     o_ptr += lzw_empty_buffer(&o_buf[o_ptr], &dsize, &handle->out);
     if (o_ptr > dstlen)
         goto _failure;
+    mem_free(handle);
     return (o_ptr);
 
 _failure:
@@ -572,14 +582,6 @@ _failure:
     LZW 解压
 =======================================
 */
-typedef struct
-{
-        sLZW        handle;
-        sLZWSTACK   stack;
-        sLZWBUFFER  in, out;
-
-} decode;
-
 CR_API leng_t
 uncompr_lzw (
   __CR_OT__ void_t*         dst,
@@ -640,6 +642,7 @@ uncompr_lzw (
     o_ptr += lzw_empty_buffer(&o_buf[o_ptr], &dsize, &handle->out);
     if (o_ptr > dstlen)
         goto _failure;
+    mem_free(handle);
     return (o_ptr);
 
 _failure:

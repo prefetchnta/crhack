@@ -188,6 +188,10 @@ load_cr_tga (
         }
     }
 
+    /* 处理水平翻转 */
+    if ((head.img_attr >> 4) & 1)
+        image_mirror(temp.pic);
+
     /* 返回读取的文件数据 */
     rett = struct_new(sFMT_PIC);
     if (rett == NULL)

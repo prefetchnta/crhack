@@ -168,6 +168,7 @@ OBJS=$(OBJ)defs.$(O) \
      $(OBJ)code128.$(O) \
      $(OBJ)uue.$(O) \
      $(OBJ)xxe.$(O) \
+     $(OBJ)dmc.$(O) \
      $(OBJ)lzw.$(O) \
      $(OBJ)lz32.$(O) \
      $(OBJ)lzss.$(O) \
@@ -271,6 +272,7 @@ CPPS=$(SRC)defs.$(C) \
      $(SRC)code128.$(C) \
      $(SRC)uue.$(C) \
      $(SRC)xxe.$(C) \
+     $(SRC)dmc.$(C) \
      $(SRC)lzw.$(C) \
      $(SRC)lz32.$(C) \
      $(SRC)lzss.$(C) \
