@@ -96,7 +96,7 @@ dmc_flush (
 */
 static bool_t
 dmc_init (
-  __CR_IO__ sDMC*   handle
+  __CR_OT__ sDMC*   handle
     )
 {
     handle->nodebuf = (sDMC_NODE*)mem_malloc(DMC_MEMSIZE);
@@ -280,7 +280,7 @@ uncompr_dmc (
     byte_t  cha, bit;
     int32u  max, min, mid, val;
 
-    if (srclen <= 3)
+    if (srclen < 3)
         return (0);
     handle = struct_new(sDMC);
     if (handle == NULL)

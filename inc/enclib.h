@@ -26,6 +26,12 @@
 /*                               数据压缩解压                                */
 /*****************************************************************************/
 
+/* Arithmetic */
+CR_API leng_t   compr_arith (void_t *dst, leng_t dstlen,
+                             const void_t *src, leng_t srclen);
+
+CR_API leng_t   uncompr_arith (void_t *dst, leng_t dstlen,
+                               const void_t *src, leng_t srclen);
 /* BZip2 */
 CR_API leng_t   compr_bzip2 (void_t *dst, leng_t dstlen,
                              const void_t *src, leng_t srclen,
@@ -68,6 +74,12 @@ CR_API leng_t   compr_lzhuf (void_t *dst, leng_t dstlen,
 CR_API leng_t   uncompr_lzhuf (void_t *dst, leng_t dstlen,
                                const void_t *src, leng_t srclen,
                                uint_t fill CR_DEFAULT(0));
+/* LZRW1 */
+CR_API leng_t   compr_lzrw1 (void_t *dst, leng_t dstlen,
+                             const void_t *src, leng_t srclen);
+
+CR_API leng_t   uncompr_lzrw1 (void_t *dst, leng_t dstlen,
+                               const void_t *src, leng_t srclen);
 /* LZSS */
 CR_API leng_t   compr_lzss (void_t *dst, leng_t dstlen,
                             const void_t *src, leng_t srclen,
@@ -95,6 +107,12 @@ CR_API leng_t   compr_pkware (void_t *dst, leng_t dstlen,
 
 CR_API leng_t   uncompr_pkware (void_t *dst, leng_t dstlen,
                                 const void_t *src, leng_t srclen);
+/* SPLAY */
+CR_API leng_t   compr_splay (void_t *dst, leng_t dstlen,
+                             const void_t *src, leng_t srclen);
+
+CR_API leng_t   uncompr_splay (void_t *dst, leng_t dstlen,
+                               const void_t *src, leng_t srclen);
 /* ZLib */
 CR_API leng_t   compr_zlib (void_t *dst, leng_t dstlen,
                             const void_t *src, leng_t srclen,

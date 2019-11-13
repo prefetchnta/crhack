@@ -1064,6 +1064,21 @@
     <ClCompile Include="..\..\..\src\xxtea.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\_util_\radar_cfar.c">
+      <Filter>源文件\_util_</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\arith.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\dmc.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\lzrw1.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\splay.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\..\mak\version.rc">

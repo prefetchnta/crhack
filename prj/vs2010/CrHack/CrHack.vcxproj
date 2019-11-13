@@ -57,6 +57,7 @@
     <ClCompile Include="..\..\..\src\aes.c" />
     <ClCompile Include="..\..\..\src\anubis.c" />
     <ClCompile Include="..\..\..\src\applib.c" />
+    <ClCompile Include="..\..\..\src\arith.c" />
     <ClCompile Include="..\..\..\src\array.c" />
     <ClCompile Include="..\..\..\src\atree.c" />
     <ClCompile Include="..\..\..\src\base16.c" />
@@ -97,6 +98,7 @@
     <ClCompile Include="..\..\..\src\delay.c" />
     <ClCompile Include="..\..\..\src\des.c" />
     <ClCompile Include="..\..\..\src\devlib.c" />
+    <ClCompile Include="..\..\..\src\dmc.c" />
     <ClCompile Include="..\..\..\src\dskin.c" />
     <ClCompile Include="..\..\..\src\dskot.c" />
     <ClCompile Include="..\..\..\src\ecc256.c" />
@@ -138,6 +140,7 @@
     <ClCompile Include="..\..\..\src\lz32.c" />
     <ClCompile Include="..\..\..\src\lzari.c" />
     <ClCompile Include="..\..\..\src\lzhuf.c" />
+    <ClCompile Include="..\..\..\src\lzrw1.c" />
     <ClCompile Include="..\..\..\src\lzss.c" />
     <ClCompile Include="..\..\..\src\lzw.c" />
     <ClCompile Include="..\..\..\src\md2.c" />
@@ -168,6 +171,7 @@
     <ClCompile Include="..\..\..\src\sha256.c" />
     <ClCompile Include="..\..\..\src\sha512.c" />
     <ClCompile Include="..\..\..\src\slist.c" />
+    <ClCompile Include="..\..\..\src\splay.c" />
     <ClCompile Include="..\..\..\src\stringa.c" />
     <ClCompile Include="..\..\..\src\stringw.c" />
     <ClCompile Include="..\..\..\src\tea.c" />
@@ -366,6 +370,7 @@
     <ClCompile Include="..\..\..\src\_util_\lua\lvm.c" />
     <ClCompile Include="..\..\..\src\_util_\lua\lzio.c" />
     <ClCompile Include="..\..\..\src\_util_\mylua\mylua_tools.c" />
+    <ClCompile Include="..\..\..\src\_util_\radar_cfar.c" />
     <ClCompile Include="..\..\..\src\_util_\radar_fmcw.c" />
     <ClCompile Include="..\..\..\src\_util_\rf_loc.c" />
     <ClCompile Include="..\..\..\src\_util_\rfgeo.c" />

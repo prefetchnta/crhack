@@ -37,8 +37,7 @@
 /* LZW 内部结构 */
 typedef struct
 {
-        uint_t  prefix;
-        uint_t  suffix;
+        uint_t  prefix, suffix;
         uint_t  code, curCodeLen;
         int16u  codeTable[LZW_TABLE_LEN];
         int16u  prefixTable[LZW_TABLE_LEN];
@@ -47,11 +46,10 @@ typedef struct
 
 typedef struct
 {
-        uint_t  index;
-        uint_t  buffer;
         bool_t  endFlag;
         uint_t  top, left;
-        byte_t  buf[LZW_BUFFERSIZE];
+        uint_t  index, buffer;
+        byte_t  buf[LZW_BUFFERSIZE + 1];
 
 } sLZWBUFFER;
 
@@ -133,15 +131,15 @@ lzw_empty_buffer (
 {
     uint_t  idx;
 
-    if (buf->endFlag && buf->left != 0)
+    if (buf->endFlag && buf->left != 0) {
         buf->buf[buf->index++] = (uchar)((buf->buffer >> (32 - buf->left))
                                                       << ( 8 - buf->left));
+    }
+
     for (idx = 0; idx < buf->index; dsize[0]--, idx++)
     {
-        if (dsize[0] == 0) {
-            idx = buf->index;
+        if (dsize[0] == 0)
             break;
-        }
         dst[idx] = buf->buf[idx];
     }
 
@@ -319,7 +317,7 @@ lzw_do_encode (
 
             prefix = handle->suffix;
             idx += lzw_output_code(&dst[idx], dsize, handle->prefix,
-                                  out, handle);
+                                    out, handle);
             handle->code++;
             if (handle->code == (1UL << handle->curCodeLen))
             {
