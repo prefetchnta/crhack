@@ -122,9 +122,9 @@ _literal:
             control_bits++;
         }
         else {
-            LZRW1_PS || LZRW1_PS || LZRW1_PS || LZRW1_PS || LZRW1_PS ||
-            LZRW1_PS || LZRW1_PS || LZRW1_PS || LZRW1_PS || LZRW1_PS ||
-            LZRW1_PS || LZRW1_PS || LZRW1_PS || ss++;
+            if (LZRW1_PS || LZRW1_PS || LZRW1_PS || LZRW1_PS || LZRW1_PS ||
+                LZRW1_PS || LZRW1_PS || LZRW1_PS || LZRW1_PS || LZRW1_PS ||
+                LZRW1_PS || LZRW1_PS || LZRW1_PS || ss++) {}
             len = (uint_t)(ss - p_src - 1);
             *p_dst++ = (byte_t)(((offset & 0xF00) >> 4) + (len - 1));
             *p_dst++ = (byte_t)  (offset);
@@ -210,9 +210,9 @@ uncompr_lzrw1 (
             srclen -= 2;
             offset  = (int16u)(*p_src   & 0xF0) << 4;
             len = 1 + (int16u)(*p_src++ & 0x0F);
-            offset += (int16u)(*p_src++ & 0xFF);
+            offset  = (int16u)(*p_src++ & 0xFF) + offset;
             pp = p_dst - offset;
-            if (dstlen < len)
+            if (dstlen < (leng_t)len)
                 return (0);
             dstlen -= len;
             while (len-- != 0)

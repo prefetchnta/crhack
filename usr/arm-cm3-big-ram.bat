@@ -11,6 +11,7 @@ make54 -farmcc\naked\arm\gfx3.mak
 make54 -farmcc\naked\arm\math.mak
 make54 -farmcc\naked\arm\fmtz.mak
 make54 -farmcc\naked\arm\util.mak
-move *.a ..\bin\armcc_naked_arm
+md ..\bin\arm-cm3-big-ram
+move *.a ..\bin\arm-cm3-big-ram
 del conf.inc
 cd ..\usr

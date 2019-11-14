@@ -1,6 +1,6 @@
 1 VERSIONINFO
-    FILEVERSION 1,1,0,5604
-    PRODUCTVERSION 1,1,0,5604
+    FILEVERSION 1,1,0,5610
+    PRODUCTVERSION 1,1,0,5610
     FILEFLAGSMASK 0x17L
 #ifdef  _DEBUG
     FILEFLAGS 0x1L
@@ -16,8 +16,8 @@ BEGIN
         BLOCK "080404b0"
         BEGIN
             VALUE "ProductName"     , "CrHack CORE Library\0"
-            VALUE "ProductVersion"  , "1.1.0.5604\0"
-            VALUE "FileVersion"     , "1.1.0.5604\0"
+            VALUE "ProductVersion"  , "1.1.0.5610\0"
+            VALUE "FileVersion"     , "1.1.0.5610\0"
             VALUE "FileDescription" , "CrHack CORE Library\0"
             VALUE "LegalCopyright"  , "Copyright 2009+ by CrHackOS\0"
             VALUE "Comments"        , "Release Date: 2019-11-13\0"

@@ -157,7 +157,7 @@ Compress (
 
     do {
         U = handle->Up[A];
-        Stack[Sp++] = (handle->Right[U] == A);
+        Stack[Sp++] = (byte_t)(handle->Right[U] == A);
         A = U;
     } while (A != SPLAY_ROOT);
 

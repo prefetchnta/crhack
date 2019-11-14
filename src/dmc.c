@@ -214,7 +214,7 @@ compr_dmc (
         }
         cha = i_buf[i_ptr++];
         for (idx = 0; idx < 8; idx++) {
-            bit = (cha << idx) & 0x80;
+            bit = (byte_t)((cha << idx) & 0x80);
             mid = (int32u)(min + (max - min - 1) * dmc_predict(handle));
             dmc_update(handle, bit != 0);
             if (mid == min)
