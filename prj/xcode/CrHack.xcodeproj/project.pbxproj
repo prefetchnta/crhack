@@ -238,6 +238,11 @@
 		BA04AE6A220C634A004E2DFA /* statistics.c in Sources */ = {isa = PBXBuildFile; fileRef = BA04AE69220C634A004E2DFA /* statistics.c */; };
 		BA0D3E291CB1551E00BDA52D /* fsyspsx.c in Sources */ = {isa = PBXBuildFile; fileRef = BA0D3E281CB1551E00BDA52D /* fsyspsx.c */; };
 		BA0D3E2B1CB1552900BDA52D /* netbsd.c in Sources */ = {isa = PBXBuildFile; fileRef = BA0D3E2A1CB1552900BDA52D /* netbsd.c */; };
+		BA5FA3C1239CCC8E00202340 /* radar_cfar.c in Sources */ = {isa = PBXBuildFile; fileRef = BA5FA3C0239CCC8E00202340 /* radar_cfar.c */; };
+		BA5FA3C3239CCCBF00202340 /* arith.c in Sources */ = {isa = PBXBuildFile; fileRef = BA5FA3C2239CCCBF00202340 /* arith.c */; };
+		BA5FA3C5239CCD0A00202340 /* dmc.c in Sources */ = {isa = PBXBuildFile; fileRef = BA5FA3C4239CCD0A00202340 /* dmc.c */; };
+		BA5FA3C7239CCD3600202340 /* lzrw1.c in Sources */ = {isa = PBXBuildFile; fileRef = BA5FA3C6239CCD3600202340 /* lzrw1.c */; };
+		BA5FA3C9239CCD6000202340 /* splay.c in Sources */ = {isa = PBXBuildFile; fileRef = BA5FA3C8239CCD6000202340 /* splay.c */; };
 		BA6A945D22475CB8007E45E3 /* combine.c in Sources */ = {isa = PBXBuildFile; fileRef = BA6A945C22475CB8007E45E3 /* combine.c */; };
 		BA6A945F22475CCD007E45E3 /* complex.c in Sources */ = {isa = PBXBuildFile; fileRef = BA6A945E22475CCD007E45E3 /* complex.c */; };
 		BA6A946122475CF8007E45E3 /* fft1.c in Sources */ = {isa = PBXBuildFile; fileRef = BA6A946022475CF8007E45E3 /* fft1.c */; };
@@ -535,6 +540,11 @@
 		BA04AE69220C634A004E2DFA /* statistics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = statistics.c; sourceTree = "<group>"; };
 		BA0D3E281CB1551E00BDA52D /* fsyspsx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fsyspsx.c; sourceTree = "<group>"; };
 		BA0D3E2A1CB1552900BDA52D /* netbsd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = netbsd.c; sourceTree = "<group>"; };
+		BA5FA3C0239CCC8E00202340 /* radar_cfar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = radar_cfar.c; sourceTree = "<group>"; };
+		BA5FA3C2239CCCBF00202340 /* arith.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arith.c; path = ../../../src/arith.c; sourceTree = "<group>"; };
+		BA5FA3C4239CCD0A00202340 /* dmc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dmc.c; path = ../../../src/dmc.c; sourceTree = "<group>"; };
+		BA5FA3C6239CCD3600202340 /* lzrw1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lzrw1.c; path = ../../../src/lzrw1.c; sourceTree = "<group>"; };
+		BA5FA3C8239CCD6000202340 /* splay.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = splay.c; path = ../../../src/splay.c; sourceTree = "<group>"; };
 		BA6A945C22475CB8007E45E3 /* combine.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = combine.c; sourceTree = "<group>"; };
 		BA6A945E22475CCD007E45E3 /* complex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = complex.c; sourceTree = "<group>"; };
 		BA6A946022475CF8007E45E3 /* fft1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fft1.c; sourceTree = "<group>"; };
@@ -635,6 +645,7 @@
 				11092B3E1EE28BB700CEC35E /* filelib.c */,
 				11026ED91CBE66D40003E386 /* holidays.c */,
 				BA6A949222475E5D007E45E3 /* httplib.c */,
+				BA5FA3C0239CCC8E00202340 /* radar_cfar.c */,
 				BA6A946622475DDA007E45E3 /* radar_fmcw.c */,
 				BA6A946422475DA1007E45E3 /* rf_loc.c */,
 				BA6A949A22475E82007E45E3 /* rfgeo_average.c */,
@@ -686,6 +697,7 @@
 				11A4738F1C9FE90F00CFC25E /* aes.c */,
 				11A473901C9FE90F00CFC25E /* anubis.c */,
 				11A473911C9FE90F00CFC25E /* applib.c */,
+				BA5FA3C2239CCCBF00202340 /* arith.c */,
 				11A473921C9FE90F00CFC25E /* array.c */,
 				11A473931C9FE90F00CFC25E /* atree.c */,
 				11A473941C9FE90F00CFC25E /* base16.c */,
@@ -726,6 +738,7 @@
 				11A473B51C9FE90F00CFC25E /* delay.c */,
 				11A473B61C9FE90F00CFC25E /* des.c */,
 				11A473B71C9FE90F00CFC25E /* devlib.c */,
+				BA5FA3C4239CCD0A00202340 /* dmc.c */,
 				11A473B81C9FE90F00CFC25E /* dskin.c */,
 				11A473B91C9FE90F00CFC25E /* dskot.c */,
 				11A473BA1C9FE90F00CFC25E /* ecc_st.c */,
@@ -748,6 +761,7 @@
 				11A473CC1C9FE90F00CFC25E /* lz32.c */,
 				11A473CD1C9FE90F00CFC25E /* lzari.c */,
 				11A473CE1C9FE90F00CFC25E /* lzhuf.c */,
+				BA5FA3C6239CCD3600202340 /* lzrw1.c */,
 				11A473CF1C9FE90F00CFC25E /* lzss.c */,
 				11A473D01C9FE90F00CFC25E /* lzw.c */,
 				11A473D11C9FE90F00CFC25E /* md2.c */,
@@ -776,6 +790,7 @@
 				11A473E81C9FE90F00CFC25E /* sha256.c */,
 				11A473E91C9FE90F00CFC25E /* sha512.c */,
 				11BCB2CB1CC6462F00704F41 /* slist.c */,
+				BA5FA3C8239CCD6000202340 /* splay.c */,
 				11A473EA1C9FE90F00CFC25E /* stringa.c */,
 				11A473EB1C9FE90F00CFC25E /* stringw.c */,
 				11A473EC1C9FE90F00CFC25E /* tea.c */,
@@ -1165,8 +1180,10 @@
 				11A474441C9FE90F00CFC25E /* plugin.c in Sources */,
 				11A4758A1C9FF07100CFC25E /* iif97_3.c in Sources */,
 				11A475261C9FEFE100CFC25E /* draw2d.c in Sources */,
+				BA5FA3C5239CCD0A00202340 /* dmc.c in Sources */,
 				11A475301C9FEFE100CFC25E /* surfmem.c in Sources */,
 				11A4740F1C9FE90F00CFC25E /* crc8d.c in Sources */,
+				BA5FA3C1239CCC8E00202340 /* radar_cfar.c in Sources */,
 				11A474D61C9FEE7000CFC25E /* cr_tga.c in Sources */,
 				BA6A949122475E23007E45E3 /* cpage866.c in Sources */,
 				11A475E01C9FF0BA00CFC25E /* bz_bzlib.c in Sources */,
@@ -1282,6 +1299,7 @@
 				11A475531C9FF03100CFC25E /* heightmap.c in Sources */,
 				11A4741B1C9FE90F00CFC25E /* d3dfmt.c in Sources */,
 				11A474491C9FE90F00CFC25E /* rmd256.c in Sources */,
+				BA5FA3C3239CCCBF00202340 /* arith.c in Sources */,
 				11A474341C9FE90F00CFC25E /* lz32.c in Sources */,
 				11A4759B1C9FF07100CFC25E /* tk_mv2t.c in Sources */,
 				11A476001C9FF28E00CFC25E /* counter.c in Sources */,
@@ -1361,6 +1379,7 @@
 				11A475F51C9FF0BA00CFC25E /* z_zutil.c in Sources */,
 				BA6A948422475E23007E45E3 /* cpage850.c in Sources */,
 				11A474211C9FE90F00CFC25E /* dskot.c in Sources */,
+				BA5FA3C9239CCD6000202340 /* splay.c in Sources */,
 				11A475E21C9FF0BA00CFC25E /* bz_decompress.c in Sources */,
 				11A475EC1C9FF0BA00CFC25E /* z_adler32.c in Sources */,
 				11A474F71C9FEE7000CFC25E /* flc_zed.c in Sources */,
@@ -1370,6 +1389,7 @@
 				11A474FC1C9FEE7000CFC25E /* nscr_nsa.c in Sources */,
 				BA6A94A222475E82007E45E3 /* rfgeo_gate9.c in Sources */,
 				11A474FB1C9FEE7000CFC25E /* nscr_dat.c in Sources */,
+				BA5FA3C7239CCD3600202340 /* lzrw1.c in Sources */,
 				11A475F11C9FF0BA00CFC25E /* z_inflate.c in Sources */,
 				119E46461DC45D7400AA2AD7 /* vmaggeo.c in Sources */,
 				11A475941C9FF07100CFC25E /* tb_mv2t.c in Sources */,
