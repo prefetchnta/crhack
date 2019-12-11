@@ -1974,7 +1974,8 @@ CR_API bool_t
 image_oper (
   __CR_IN__ const sIMAGE*   dst,
   __CR_IN__ const sIMAGE*   src,
-  __CR_IN__ pix_ops_t       dopix
+  __CR_IN__ pix_ops_t       dopix,
+  __CR_IN__ void_t*         param
     )
 {
     uint_t  hh;
@@ -2029,7 +2030,7 @@ image_oper (
     /* 逐像素运算 */
     for (hh = src->position.hh; hh != 0; hh--) {
         for (idx = 0; idx < line; idx++) {
-            val = dopix(dptr[idx], sptr[idx]);
+            val = dopix(dptr[idx], sptr[idx], param);
             if (val <= 0)
                 dptr[idx] = 0x00;
             else
