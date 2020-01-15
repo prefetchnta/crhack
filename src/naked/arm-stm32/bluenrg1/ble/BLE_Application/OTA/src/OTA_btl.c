@@ -22,7 +22,6 @@
 #include "BlueNRG1_conf.h"
 #include "bluenrg1_stack.h"
 #include "ble_const.h"
-#include "SDK_EVAL_Config.h"
 #include "osal.h"
 #include "OTA_btl.h"
 #include "math.h"
@@ -322,7 +321,6 @@ static ErrorStatus FLASH_Verify(uint32_t currentWriteAddress,uint32_t * pbuffer,
  */
 static void OTA_Init(void)
 {
-  SdkEvalLedInit(OTA_LED); //bootloader is ongoing led
 }
 
 /**
@@ -469,9 +467,6 @@ void OTA_Send_Ack(void)
 
   if (totalBytesWritten >= imageSize)
   { 
-
-   /* light down led on the BlueNRG-1 platform to advertise beginning of OTA bootloading session */
-   SdkEvalLedOff(OTA_LED);
 
    /* Set the validity tags for the new app and old one */
    OTA_Set_Validity_Tags();
@@ -622,9 +617,6 @@ void OTA_Write_Request_CB(uint16_t connection_handle,
       } 
       else 
       {  
-        /* light up led on the BlueNRG platform to advertise beginning of OTA bootloading session */
-        SdkEvalLedOn(OTA_LED);
-        
         /* warn beginning of bootloading session through gloabal variable */
         //bootloadingOngoing = 1;
       }
