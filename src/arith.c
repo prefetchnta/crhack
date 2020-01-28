@@ -45,7 +45,7 @@ arith_init (
   __CR_OT__ sARITH* handle
     )
 {
-   sint_t   ii, jj;
+    sint_t  ii, jj;
 
     for (ii = 0; ii < 256; ii++)
     for (jj = 0; jj < 256; jj++)
