@@ -40,7 +40,8 @@
 #include "norflash.inl"
 
 /* FatFS 上下文 */
-static FATFS    s_fs;
+static FATFS            s_fs;
+static const MKFS_PARM  s_fs_opt = { FM_FAT, 0, 0, 0, 0 };
 
 /*
 =======================================
@@ -54,7 +55,7 @@ store_init (void_t)
 
     /* 初始化文件系统 */
     if (f_mount(&s_fs, "", 1) != FR_OK) {
-        if (f_mkfs("", FM_FAT, 0, work, sizeof(work)) != FR_OK)
+        if (f_mkfs("", &s_fs_opt, work, sizeof(work)) != FR_OK)
             return (FALSE);
         if (f_mount(&s_fs, "", 1) != FR_OK)
             return (FALSE);

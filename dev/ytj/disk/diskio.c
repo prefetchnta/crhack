@@ -7,7 +7,7 @@
 /* storage control modules to the FatFs module with a defined API.       */
 /*-----------------------------------------------------------------------*/
 
-#include "ffconf.h"
+#include "ff.h"
 #include "diskio.h"     /* FatFs lower layer API */
 #include "device.h"
 
@@ -94,7 +94,7 @@ DRESULT disk_ioctl (
             break;
 
         case GET_SECTOR_COUNT:
-            *(DWORD*)buff = CR_K2B(512) / FF_MAX_SS;
+            *(LBA_t*)buff = CR_K2B(512) / FF_MAX_SS;
             break;
 
         case GET_SECTOR_SIZE:
