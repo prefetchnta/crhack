@@ -20,6 +20,34 @@
 #ifndef __CR_FLOAT_H__
 #define __CR_FLOAT_H__
 
+/*****************************************************************************/
+/*                                  定点数                                   */
+/*****************************************************************************/
+
+/* 32位定点数 (16.16) */
+typedef int32s  fix32_t;
+#define fix32_from_int(i)       (((fix32_t)(i)) << 16)
+#define fix32_from_float(x)     ((fix32_t)((x) * 65536.0f))
+#define fix32_from_double(d)    ((fix32_t)((d) * 65536.0))
+#define fix32_to_int(f)         ((f) >> 16)
+#define fix32_to_float(x)       ((float)((x) / 65536.0f))
+#define fix32_to_double(f)      ((double)((f) / 65536.0))
+#define fix32_const_1           (fix32_from_int(1))
+#define fix32_const_half        (fix32_const_1 >> 1)
+#define fix32_const_e           ((fix32_t)(1))
+#define fix32_const_1_m_e       (fix32_const_1 - fix32_const_e)
+#define fix32_frac(f)           ((f) & fix32_const_1_m_e)
+#define fix32_floor(f)          ((f) & (~fix32_const_1_m_e))
+#define fix32_ceil(f)           (fix32_floor((f) + 0xFFFF))
+#define fix32_mul(x, y)         ((fix32_t)((((int64s)(x)) * (y)) >> 16))
+#define fix32_div(x, y)         ((fix32_t)((((int64s)(x)) << 16) / (y)))
+#define fix32_const_max         ((int64s)0x7FFFFFFF)
+#define fix32_const_min         (-((((int64s)1) << 31)))
+
+/*****************************************************************************/
+/*                                  浮点数                                   */
+/*****************************************************************************/
+
 /************************************/
 /* +--------+----------+----------+ */
 /* |  形式  |   指数   | 小数部分 | */
