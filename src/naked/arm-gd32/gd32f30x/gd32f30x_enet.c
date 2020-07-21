@@ -1,15 +1,44 @@
 /*!
     \file  gd32f30x_enet.c
     \brief ENET driver
+
+    \version 2017-02-10, V1.0.0, firmware for GD32F30x
+    \version 2018-10-10, V1.1.0, firmware for GD32F30x
+    \version 2018-12-25, V2.0.0, firmware for GD32F30x
+    \version 2020-04-02, V2.0.1, firmware for GD32F30x
 */
 
 /*
-    Copyright (C) 2017 GigaDevice
+    Copyright (c) 2018, GigaDevice Semiconductor Inc.
 
-    2017-02-10, V1.0.3, firmware for GD32F30x
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without modification, 
+are permitted provided that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice, this 
+       list of conditions and the following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright notice, 
+       this list of conditions and the following disclaimer in the documentation 
+       and/or other materials provided with the distribution.
+    3. Neither the name of the copyright holder nor the names of its contributors 
+       may be used to endorse or promote products derived from this software without 
+       specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+OF SUCH DAMAGE.
 */
 
 #include "gd32f30x_enet.h"
+#include <stdlib.h>
 
 #ifdef GD32F30X_CL
 
@@ -33,6 +62,12 @@ uint8_t rx_buff[ENET_RXBUF_NUM][ENET_RXBUF_SIZE];           /*!< ENET receive bu
 #pragma data_alignment=4
 uint8_t tx_buff[ENET_TXBUF_NUM][ENET_TXBUF_SIZE];           /*!< ENET transmit buffer */
 
+#elif defined (__GNUC__)        /* GNU Compiler */
+enet_descriptors_struct  rxdesc_tab[ENET_RXBUF_NUM] __attribute__ ((aligned (4)));        /*!< ENET RxDMA descriptor */ 
+enet_descriptors_struct  txdesc_tab[ENET_TXBUF_NUM] __attribute__ ((aligned (4)));        /*!< ENET TxDMA descriptor */
+uint8_t rx_buff[ENET_RXBUF_NUM][ENET_RXBUF_SIZE] __attribute__ ((aligned (4)));           /*!< ENET receive buffer */
+uint8_t tx_buff[ENET_TXBUF_NUM][ENET_TXBUF_SIZE] __attribute__ ((aligned (4)));           /*!< ENET transmit buffer */
+
 #endif /* __CC_ARM */
 
 /* global transmit and receive descriptors pointers */
@@ -46,7 +81,7 @@ enet_descriptors_struct  *dma_current_ptp_rxdesc = NULL;
 /* init structure parameters for ENET initialization */
 static enet_initpara_struct enet_initpara ={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-static uint32_t enet_unknow_err = 0;
+static uint32_t enet_unknow_err = 0U;
 /* array of register offset for debug information get */
 static const uint16_t enet_reg_tab[] = {
 0x0000, 0x0004, 0x0008, 0x000C, 0x0010, 0x0014, 0x0018, 0x001C, 0x0028, 0x002C, 0x0034,
@@ -59,6 +94,13 @@ static const uint16_t enet_reg_tab[] = {
 0x1000, 0x1004, 0x1008, 0x100C, 0x1010, 0x1014, 0x1018, 0x101C, 0x1020, 0x1024, 0x1048,
 0x104C, 0x1050, 0x1054};
 
+/* initialize ENET peripheral with generally concerned parameters, call it by enet_init() */
+static void enet_default_init(void);
+
+#ifndef USE_DELAY
+/* insert a delay time */
+static void enet_delay(uint32_t ncount);
+#endif /* USE_DELAY */
 
 /*!
     \brief      deinitialize the ENET, and reset structure parameters for ENET initialization
@@ -972,12 +1014,17 @@ ErrStatus enet_frame_transmit(uint8_t *buffer, uint32_t length)
       \arg        ENET_CHECKSUM_TCPUDPICMP_SEGMENT: TCP/UDP/ICMP checksum insertion calculated but pseudo-header
       \arg        ENET_CHECKSUM_TCPUDPICMP_FULL: TCP/UDP/ICMP checksum insertion fully calculated
     \param[out] none
-    \retval     none
+    \retval     ErrStatus: ERROR, SUCCESS
 */
-void enet_transmit_checksum_config(enet_descriptors_struct *desc, uint32_t checksum)
+ErrStatus enet_transmit_checksum_config(enet_descriptors_struct *desc, uint32_t checksum)
 {
-    desc->status &= ~ENET_TDES0_CM;
-    desc->status |= checksum;
+    if(NULL != desc){
+        desc->status &= ~ENET_TDES0_CM;
+        desc->status |= checksum;
+        return SUCCESS;
+    }else{
+        return ERROR;
+    }   
 }
 
 /*!
@@ -1033,16 +1080,22 @@ void enet_mac_address_set(enet_macaddress_enum mac_addr, uint8_t paddr[])
       \arg        ENET_MAC_ADDRESS3: get MAC address 3 filter
     \param[out] paddr: the buffer pointer which is stored the MAC address
                   (little-ending store, such as mac address is aa:bb:cc:dd:ee:22, the buffer is {22, ee, dd, cc, bb, aa}) 
-    \retval     none
+    \param[in]  bufsize: refer to the size of the buffer which stores the MAC address
+      \arg        6 - 255
+    \retval     ErrStatus: ERROR, SUCCESS
 */                                   
-void enet_mac_address_get(enet_macaddress_enum mac_addr, uint8_t paddr[])
+ErrStatus enet_mac_address_get(enet_macaddress_enum mac_addr, uint8_t paddr[], uint8_t bufsize)
 {
+    if(bufsize < 6U){
+        return ERROR;
+    }
     paddr[0] = ENET_GET_MACADDR(mac_addr, 0U);
     paddr[1] = ENET_GET_MACADDR(mac_addr, 1U);
     paddr[2] = ENET_GET_MACADDR(mac_addr, 2U);
     paddr[3] = ENET_GET_MACADDR(mac_addr, 3U);
     paddr[4] = ENET_GET_MACADDR(mac_addr, 4U);
     paddr[5] = ENET_GET_MACADDR(mac_addr, 5U);
+    return SUCCESS;
 }
 
 /*!
@@ -1970,7 +2023,7 @@ uint32_t enet_desc_information_get(enet_descriptors_struct *desc, enet_descstate
         break; 
     case RXDESC_FRAME_LENGTH:    
         reval = GET_RDES0_FRML(desc->status);
-        if(reval > 4){
+        if(reval > 4U){
             reval = reval - 4U;
             
             /* if is a type frame, and CRC is not included in forwarding frame */ 
@@ -1978,7 +2031,7 @@ uint32_t enet_desc_information_get(enet_descriptors_struct *desc, enet_descstate
                 reval = reval + 4U;
             }
         }else{
-             reval = 0;
+             reval = 0U;
         }      
              
         break;
@@ -3616,7 +3669,7 @@ static void enet_default_init(void)
 */
 static void enet_delay(uint32_t ncount)
 {
-    uint32_t delay_time = 0U; 
+    __IO uint32_t delay_time = 0U; 
     
     for(delay_time = ncount; delay_time != 0U; delay_time--){
     }
