@@ -1,5 +1,5 @@
 @echo off
-echo C_ADDONS=--cpu %1 > conf.inc
+echo C_ADDONS=%~1 > conf.inc
 echo A_ADDONS= >> conf.inc
 echo ARMCC_THUMB=1 >> conf.inc
 echo ALL_OBJS=$(ARMCC_NAKED_ARM_OBJS) >> conf.inc

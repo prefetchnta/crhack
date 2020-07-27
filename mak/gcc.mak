@@ -151,6 +151,25 @@ LFLAGS_LINUX=-o $(BIN_NAME) -shared -fPIC -Wl,--gc-sections \
 SFLAGS_LINUX=--strip-unneeded $(BIN_NAME)
 
 ###############################################################################
+##                               ALL (NAKED)                                 ##
+###############################################################################
+
+##
+##=====================================
+##      编译命令行公用参数
+##=====================================
+##
+CFLAGS_NAKED=-c -O2 -fshort-wchar -Wall -ffunction-sections \
+             -fdata-sections -I. -I../inc -fPIC $(C_ADDONS)
+
+##
+##=====================================
+##      静态库生成公用参数
+##=====================================
+##
+AFLAGS_NAKED=q $(A_ADDONS) $(LIB_NAME)
+
+###############################################################################
 ## _________________________________________________________________________ ##
 ## sBPNEGgAoAeMyIDEEI7gMcm6yAOJyO5C0Ph4B+724MHoBu6wAO55CCjI0Oju0OjuictkiB/i2 ##
 ## onLAcjTwIjGwP4FEPJkEpf/ANDqZIgX9tdkiBfi4tvj2e6Axwi/BALYRfRXurD/vWD/vvwB30 ##

@@ -54,15 +54,15 @@ echo RFLAGS=$(RFLAGS_WINCE) >> conf.inc
 echo CFLAGS=$(CFLAGS_WINCE) >> conf.inc
 echo AFLAGS=$(AFLAGS_WINCE) >> conf.inc
 echo LFLAGS=$(LFLAGS_WINCE) >> conf.inc
-echo ALL_OBJS=$(MSC64_WINCE_ARM_OBJS) >> conf.inc
-echo ALL_CPPS=$(MSC64_WINCE_ARM_CPPS) >> conf.inc
+echo ALL_OBJS=$(MSC64_WINCE_ALL_OBJS) >> conf.inc
+echo ALL_CPPS=$(MSC64_WINCE_ALL_CPPS) >> conf.inc
 call "..\bat\vc2008_ppc2k3_armv4.bat"
-nmake /NOLOGO /Fmsc64\wince\arm\core.mak
-nmake /NOLOGO /Fmsc64\wince\arm\gfx2.mak
-nmake /NOLOGO /Fmsc64\wince\arm\gfx3.mak
-nmake /NOLOGO /Fmsc64\wince\arm\math.mak
-nmake /NOLOGO /Fmsc64\wince\arm\fmtz.mak
-nmake /NOLOGO /Fmsc64\wince\arm\util.mak
+nmake /NOLOGO /Fmsc64\wince\all\core.mak
+nmake /NOLOGO /Fmsc64\wince\all\gfx2.mak
+nmake /NOLOGO /Fmsc64\wince\all\gfx3.mak
+nmake /NOLOGO /Fmsc64\wince\all\math.mak
+nmake /NOLOGO /Fmsc64\wince\all\fmtz.mak
+nmake /NOLOGO /Fmsc64\wince\all\util.mak
 move *.dll ..\bin\vc2008_wince_arm
 move *.lib ..\bin\vc2008_wince_arm
 del conf.inc

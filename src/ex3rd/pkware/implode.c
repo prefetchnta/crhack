@@ -693,7 +693,7 @@ unsigned int PKEXPORT implode(
     unsigned int nChCode;
     unsigned int nCount;
     unsigned int i;
-    int nCount2;
+    int nCount2, tmp;
 
     // Fill the work buffer information
     // Note: The caller must zero the "work_buff" before passing it to implode
@@ -752,9 +752,10 @@ unsigned int PKEXPORT implode(
 
     for(i = 0; i < 0x10; i++)
     {
-        if(1 << ExLenBits[i])
+        tmp = 1 << ExLenBits[i];
+        if(tmp)
         {
-            for(nCount2 = 0; nCount2 < (1 << ExLenBits[i]); nCount2++)
+            for(nCount2 = 0; nCount2 < tmp; nCount2++)
             {
                 pWork->nChBits[nCount]  = (unsigned char)(ExLenBits[i] + LenBits[i] + 1);
                 pWork->nChCodes[nCount] = (unsigned short)((nCount2 << (LenBits[i] + 1)) | ((LenCode[i] & 0xFFFF00FF) * 2) | 1);

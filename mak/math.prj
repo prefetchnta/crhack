@@ -180,6 +180,15 @@ GCC_ANDROID_NDK_CPPS=$(CPPS)
 
 ##
 ##=====================================
+##      GCC NAKED ALL
+##=====================================
+##
+GCC_NAKED_ALL_OBJS=$(OBJS)
+
+GCC_NAKED_ALL_CPPS=$(CPPS)
+
+##
+##=====================================
 ##      MSC32 WIN32 X86
 ##=====================================
 ##
@@ -207,12 +216,12 @@ MSC64_WIN32_X64_CPPS=$(CPPS)
 
 ##
 ##=====================================
-##      MSC64 WINCE ARM
+##      MSC64 WINCE ALL
 ##=====================================
 ##
-MSC64_WINCE_ARM_OBJS=$(OBJS)
+MSC64_WINCE_ALL_OBJS=$(OBJS)
 
-MSC64_WINCE_ARM_CPPS=$(CPPS)
+MSC64_WINCE_ALL_CPPS=$(CPPS)
 
 ##
 ##=====================================

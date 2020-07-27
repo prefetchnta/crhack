@@ -265,6 +265,18 @@ GCC_ANDROID_NDK_CPPS=$(DLL_CPPS) $(CPPS) $(SYN_CPPS_CC) $(EXPAND_CPPS) \
                      $(KRKR_CPPS)
 ##
 ##=====================================
+##      GCC NAKED ALL
+##=====================================
+##
+GCC_NAKED_ALL_OBJS=$(DLL_OBJS) $(OBJS) $(SYN_OBJS_CC) $(EXPAND_OBJS) \
+                   $(NSCR_OBJS) $(EGO_OBJS) $(TGL_OBJS) $(FALCOM_OBJS) \
+                   $(KRKR_OBJS)
+
+GCC_NAKED_ALL_CPPS=$(DLL_CPPS) $(CPPS) $(SYN_CPPS_CC) $(EXPAND_CPPS) \
+                   $(NSCR_CPPS) $(EGO_CPPS) $(TGL_CPPS) $(FALCOM_CPPS) \
+                   $(KRKR_CPPS)
+##
+##=====================================
 ##      MSC32 WIN32 X86
 ##=====================================
 ##
@@ -307,14 +319,14 @@ MSC64_WIN32_X64_CPPS=$(DLL_CPPS) $(CPPS) $(SYN_CPPS_CC) $(FI_CPPS) \
                      $(FALCOM_CPPS) $(KRKR_CPPS)
 ##
 ##=====================================
-##      MSC64 WINCE ARM
+##      MSC64 WINCE ALL
 ##=====================================
 ##
-MSC64_WINCE_ARM_OBJS=$(DLL_OBJS) $(OBJS) $(SYN_OBJS_CC) $(EXPAND_OBJS) \
+MSC64_WINCE_ALL_OBJS=$(DLL_OBJS) $(OBJS) $(SYN_OBJS_CC) $(EXPAND_OBJS) \
                      $(NSCR_OBJS) $(EGO_OBJS) $(TGL_OBJS) $(FALCOM_OBJS) \
                      $(KRKR_OBJS)
 
-MSC64_WINCE_ARM_CPPS=$(DLL_CPPS) $(CPPS) $(SYN_CPPS_CC) $(EXPAND_CPPS) \
+MSC64_WINCE_ALL_CPPS=$(DLL_CPPS) $(CPPS) $(SYN_CPPS_CC) $(EXPAND_CPPS) \
                      $(NSCR_CPPS) $(EGO_CPPS) $(TGL_CPPS) $(FALCOM_CPPS) \
                      $(KRKR_CPPS)
 ##
