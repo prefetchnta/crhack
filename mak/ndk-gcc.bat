@@ -1,6 +1,6 @@
 @echo off
 call "..\bat\gcc_android_ndk.bat" %1 %2 %3 %4
-echo C_ADDONS=%5 -D_CR_NO_LIBICONV_ >> conf.inc
+echo C_ADDONS=%~5 -D_CR_NO_LIBICONV_ >> conf.inc
 echo A_ADDONS= >> conf.inc
 if %1==x86 (echo CROSS_COMPILE=i686-linux-android->> conf.inc
 ) else (if %1==x86_64 (echo CROSS_COMPILE=x86_64-linux-android->> conf.inc
