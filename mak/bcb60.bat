@@ -11,6 +11,6 @@ make -fbcc32\win32\x86\gfx3.mak
 make -fbcc32\win32\x86\math.mak
 make -fbcc32\win32\x86\fmtz.mak
 make -fbcc32\win32\x86\util.mak
-move *.dll ..\bin\cb60_win32_x86
-move *.lib ..\bin\cb60_win32_x86
+move *.dll ..\bin\bcb60_win32_x86
+move *.lib ..\bin\bcb60_win32_x86
 del conf.inc
