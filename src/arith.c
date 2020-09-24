@@ -97,6 +97,7 @@ compr_arith (
     handle = struct_new(sARITH);
     if (handle == NULL)
         return (0);
+    struct_zero(handle, sARITH);
     min = 0;
     o_ptr = 0;
     count = -24;
@@ -200,6 +201,7 @@ uncompr_arith (
     handle = struct_new(sARITH);
     if (handle == NULL)
         return (0);
+    struct_zero(handle, sARITH);
     min = 0;
     o_ptr = 0;
     count = -8;
