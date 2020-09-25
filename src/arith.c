@@ -91,6 +91,9 @@ compr_arith (
     int32s  aa, ll, xx;
     int32s  space, min, index;
 
+    if (srclen <= 2)
+        return (0);
+
     if (dst == NULL)
         return (srclen * 2 + 4);
 

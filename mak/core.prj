@@ -177,6 +177,7 @@ OBJS=$(OBJ)defs.$(O) \
      $(OBJ)lzrw1.$(O) \
      $(OBJ)arith.$(O) \
      $(OBJ)splay.$(O) \
+     $(OBJ)shrinker.$(O) \
      $(OBJ)enclib.$(O) \
      $(OBJ)fpsoft.$(O) \
      $(OBJ)delay.$(O) \
@@ -284,6 +285,7 @@ CPPS=$(SRC)defs.$(C) \
      $(SRC)lzrw1.$(C) \
      $(SRC)arith.$(C) \
      $(SRC)splay.$(C) \
+     $(SRC)shrinker.$(C) \
      $(SRC)enclib.$(C) \
      $(SRC)fpsoft.$(C) \
      $(SRC)delay.$(C) \

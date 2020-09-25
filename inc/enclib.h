@@ -107,6 +107,12 @@ CR_API leng_t   compr_pkware (void_t *dst, leng_t dstlen,
 
 CR_API leng_t   uncompr_pkware (void_t *dst, leng_t dstlen,
                                 const void_t *src, leng_t srclen);
+/* SHRINKER */
+CR_API leng_t   compr_shrinker (void_t *dst, leng_t dstlen,
+                                const void_t *src, leng_t srclen);
+
+CR_API leng_t   uncompr_shrinker (void_t *dst, leng_t dstlen,
+                                  const void_t *src, leng_t srclen);
 /* SPLAY */
 CR_API leng_t   compr_splay (void_t *dst, leng_t dstlen,
                              const void_t *src, leng_t srclen);

@@ -197,6 +197,7 @@ compr_dmc (
     handle = struct_new(sDMC);
     if (handle == NULL)
         return (0);
+    struct_zero(handle, sDMC);
     if (!dmc_init(handle))
         goto _failure1;
     pot = 0;
@@ -285,6 +286,7 @@ uncompr_dmc (
     handle = struct_new(sDMC);
     if (handle == NULL)
         return (0);
+    struct_zero(handle, sDMC);
     if (!dmc_init(handle))
         goto _failure1;
     pin = 3;
