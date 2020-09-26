@@ -1,92 +1,92 @@
-                          C/C++ ±àÒëÆ÷Ñ¡Ïî
+                          C/C++ ç¼–è¯‘å™¨é€‰é¡¹
 
-                              -ÓÅ»¯-
+                              -ä¼˜åŒ–-
 
-/O1 ×îÐ¡»¯¿Õ¼ä                          /Op[-] ¸ÄÉÆ¸¡µãÊýÒ»ÖÂÐÔ
-/O2 ×î´ó»¯ËÙ¶È                          /Os ÓÅÑ¡´úÂë¿Õ¼ä
-/Oa ¼ÙÉèÃ»ÓÐ±ðÃû                        /Ot ÓÅÑ¡´úÂëËÙ¶È
-/Ob<n> ÄÚÁªÕ¹¿ª(Ä¬ÈÏ n=0)               /Ow ¼ÙÉè½»²æº¯Êý±ðÃû
-/Od ½ûÓÃÓÅ»¯(Ä¬ÈÏÖµ)                    /Ox ×î´ó»¯Ñ¡Ïî¡£(/Ogityb2 /Gs)
-/Og ÆôÓÃÈ«¾ÖÓÅ»¯                        /Oy[-] ÆôÓÃ¿ò¼ÜÖ¸ÕëÊ¡ÂÔ
-/Oi ÆôÓÃÄÚ²¿º¯Êý
+/O1 æœ€å°åŒ–ç©ºé—´                          /Op[-] æ”¹å–„æµ®ç‚¹æ•°ä¸€è‡´æ€§
+/O2 æœ€å¤§åŒ–é€Ÿåº¦                          /Os ä¼˜é€‰ä»£ç ç©ºé—´
+/Oa å‡è®¾æ²¡æœ‰åˆ«å                        /Ot ä¼˜é€‰ä»£ç é€Ÿåº¦
+/Ob<n> å†…è”å±•å¼€(é»˜è®¤ n=0)               /Ow å‡è®¾äº¤å‰å‡½æ•°åˆ«å
+/Od ç¦ç”¨ä¼˜åŒ–(é»˜è®¤å€¼)                    /Ox æœ€å¤§åŒ–é€‰é¡¹ã€‚(/Ogityb2 /Gs)
+/Og å¯ç”¨å…¨å±€ä¼˜åŒ–                        /Oy[-] å¯ç”¨æ¡†æž¶æŒ‡é’ˆçœç•¥
+/Oi å¯ç”¨å†…éƒ¨å‡½æ•°
 
-                             -´úÂëÉú³É-
+                             -ä»£ç ç”Ÿæˆ-
 
-/G3 Îª 80386 ½øÐÐÓÅ»¯                   /Gh ÆôÓÃ _penter º¯Êýµ÷ÓÃ
-/G4 Îª 80486 ½øÐÐÓÅ»¯                   /GH ÆôÓÃ _pexit º¯Êýµ÷ÓÃ
-/G5 Îª Pentium ½øÐÐÓÅ»¯                 /GR[-] ÆôÓÃ C++ RTTI
-/G6 ¶Ô PPro¡¢P-II¡¢P-III ½øÐÐÓÅ»¯       /GX[-] ÆôÓÃ C++ EH (Óë /EHsc ÏàÍ¬)
-/G7 ¶Ô Pentium 4 »ò Athlon ½øÐÐÓÅ»¯     /EHs ÆôÓÃ C++ EH (Ã»ÓÐ SEH Òì³£)
-/GB Îª»ìºÏÄ£ÐÍ½øÐÐÓÅ»¯(Ä¬ÈÏ)            /EHa ÆôÓÃ C++ EH(w/ SEH Òì³£)
-/Gd __cdecl µ÷ÓÃÔ¼¶¨                    /EHc extern "C" Ä¬ÈÏÎª nothrow
-/Gr __fastcall µ÷ÓÃÔ¼¶¨                 /GT Éú³ÉÏËÎ¬°²È« TLS ·ÃÎÊ
-/Gz __stdcall µ÷ÓÃÔ¼¶¨                  /Gm[-] ÆôÓÃ×îÐ¡ÖØÐÂÉú³É
-/GA Îª Windows Ó¦ÓÃ³ÌÐò½øÐÐÓÅ»¯         /GL[-] ÆôÓÃÁ´½ÓÊ±´úÂëÉú³É
-/Gf ÆôÓÃ×Ö·û´®³Ø                        /QIfdiv[-] ÆôÓÃ Pentium FDIV ÐÞ¸´
-/GF ÆôÓÃÖ»¶Á×Ö·û´®³Ø                    /QI0f[-] ÆôÓÃ Pentium 0x0f ÐÞ¸´
-/Gy ·Ö¸ôÁ´½ÓÆ÷º¯Êý                      /QIfist[-] Ê¹ÓÃ FIST ¶ø²»ÊÇ ftol()
-/GZ ÆôÓÃ¶ÑÕ»¼ì²é(/RTCs)                 /RTC1 ÆôÓÃ¿ìËÙ¼ì²é(/RTCsu)
-/Ge ¶ÔËùÓÐº¯ÊýÇ¿ÖÆ¶ÑÕ»¼ì²é              /RTCc ×ª»»Îª½ÏÐ¡µÄÀàÐÍ¼ì²é
-/Gs[num] ¿ØÖÆ¶ÑÕ»¼ì²éµ÷ÓÃ               /RTCs ¶ÑÕ»Ö¡ÔËÐÐÊ±¼ì²é
-/GS ÆôÓÃ°²È«¼ì²é                        /RTCu Î´³õÊ¼»¯µÄ±¾µØÓÃ·¨¼ì²é
-/clr[:noAssembly] Îª¹«¹²ÓïÑÔÔËÐÐ¿â±àÒë
-    noAssembly - ²»²úÉú³ÌÐò¼¯
-/arch:<SSE|SSE2> CPU ½á¹¹µÄ×îµÍÒªÇó£¬ÒÔÏÂÄÚÈÝÖ®Ò»:
-    SSE - ÆôÓÃÖ§³Ö SSE µÄ CPU ¿ÉÓÃµÄÖ¸Áî
-    SSE2 - ÆôÓÃÖ§³Ö SSE2 µÄ CPU ¿ÉÓÃµÄÖ¸Áî
+/G3 ä¸º 80386 è¿›è¡Œä¼˜åŒ–                   /Gh å¯ç”¨ _penter å‡½æ•°è°ƒç”¨
+/G4 ä¸º 80486 è¿›è¡Œä¼˜åŒ–                   /GH å¯ç”¨ _pexit å‡½æ•°è°ƒç”¨
+/G5 ä¸º Pentium è¿›è¡Œä¼˜åŒ–                 /GR[-] å¯ç”¨ C++ RTTI
+/G6 å¯¹ PProã€P-IIã€P-III è¿›è¡Œä¼˜åŒ–       /GX[-] å¯ç”¨ C++ EH (ä¸Ž /EHsc ç›¸åŒ)
+/G7 å¯¹ Pentium 4 æˆ– Athlon è¿›è¡Œä¼˜åŒ–     /EHs å¯ç”¨ C++ EH (æ²¡æœ‰ SEH å¼‚å¸¸)
+/GB ä¸ºæ··åˆæ¨¡åž‹è¿›è¡Œä¼˜åŒ–(é»˜è®¤)            /EHa å¯ç”¨ C++ EH(w/ SEH å¼‚å¸¸)
+/Gd __cdecl è°ƒç”¨çº¦å®š                    /EHc extern "C" é»˜è®¤ä¸º nothrow
+/Gr __fastcall è°ƒç”¨çº¦å®š                 /GT ç”Ÿæˆçº¤ç»´å®‰å…¨ TLS è®¿é—®
+/Gz __stdcall è°ƒç”¨çº¦å®š                  /Gm[-] å¯ç”¨æœ€å°é‡æ–°ç”Ÿæˆ
+/GA ä¸º Windows åº”ç”¨ç¨‹åºè¿›è¡Œä¼˜åŒ–         /GL[-] å¯ç”¨é“¾æŽ¥æ—¶ä»£ç ç”Ÿæˆ
+/Gf å¯ç”¨å­—ç¬¦ä¸²æ±                         /QIfdiv[-] å¯ç”¨ Pentium FDIV ä¿®å¤
+/GF å¯ç”¨åªè¯»å­—ç¬¦ä¸²æ±                     /QI0f[-] å¯ç”¨ Pentium 0x0f ä¿®å¤
+/Gy åˆ†éš”é“¾æŽ¥å™¨å‡½æ•°                      /QIfist[-] ä½¿ç”¨ FIST è€Œä¸æ˜¯ ftol()
+/GZ å¯ç”¨å †æ ˆæ£€æŸ¥(/RTCs)                 /RTC1 å¯ç”¨å¿«é€Ÿæ£€æŸ¥(/RTCsu)
+/Ge å¯¹æ‰€æœ‰å‡½æ•°å¼ºåˆ¶å †æ ˆæ£€æŸ¥              /RTCc è½¬æ¢ä¸ºè¾ƒå°çš„ç±»åž‹æ£€æŸ¥
+/Gs[num] æŽ§åˆ¶å †æ ˆæ£€æŸ¥è°ƒç”¨               /RTCs å †æ ˆå¸§è¿è¡Œæ—¶æ£€æŸ¥
+/GS å¯ç”¨å®‰å…¨æ£€æŸ¥                        /RTCu æœªåˆå§‹åŒ–çš„æœ¬åœ°ç”¨æ³•æ£€æŸ¥
+/clr[:noAssembly] ä¸ºå…¬å…±è¯­è¨€è¿è¡Œåº“ç¼–è¯‘
+    noAssembly - ä¸äº§ç”Ÿç¨‹åºé›†
+/arch:<SSE|SSE2> CPU ç»“æž„çš„æœ€ä½Žè¦æ±‚ï¼Œä»¥ä¸‹å†…å®¹ä¹‹ä¸€:
+    SSE - å¯ç”¨æ”¯æŒ SSE çš„ CPU å¯ç”¨çš„æŒ‡ä»¤
+    SSE2 - å¯ç”¨æ”¯æŒ SSE2 çš„ CPU å¯ç”¨çš„æŒ‡ä»¤
 
-                              -Êä³öÎÄ¼þ-
+                              -è¾“å‡ºæ–‡ä»¶-
 
-/Fa[file] ÃüÃû³ÌÐò¼¯ÁÐ±íÎÄ¼þ            /Fo<file> ÃüÃû¶ÔÏóÎÄ¼þ
-/FA[sc] ÅäÖÃ³ÌÐò¼¯ÁÐ±í                  /Fp<file> ÃüÃûÔ¤±àÒëÍ·ÎÄ¼þ
-/Fd[file] ÃüÃû .PDB ÎÄ¼þ                /Fr[file] ÃüÃûÔ´ä¯ÀÀÆ÷ÎÄ¼þ
-/Fe<file> ÃüÃû¿ÉÖ´ÐÐÎÄ¼þ                /FR[file] ÃüÃûÀ©Õ¹ .SBR ÎÄ¼þ
-/Fm[file] ÃüÃûÓ³ÉäÎÄ¼þ
+/Fa[file] å‘½åç¨‹åºé›†åˆ—è¡¨æ–‡ä»¶            /Fo<file> å‘½åå¯¹è±¡æ–‡ä»¶
+/FA[sc] é…ç½®ç¨‹åºé›†åˆ—è¡¨                  /Fp<file> å‘½åé¢„ç¼–è¯‘å¤´æ–‡ä»¶
+/Fd[file] å‘½å .PDB æ–‡ä»¶                /Fr[file] å‘½åæºæµè§ˆå™¨æ–‡ä»¶
+/Fe<file> å‘½åå¯æ‰§è¡Œæ–‡ä»¶                /FR[file] å‘½åæ‰©å±• .SBR æ–‡ä»¶
+/Fm[file] å‘½åæ˜ å°„æ–‡ä»¶
 
-                              -Ô¤´¦ÀíÆ÷-
+                              -é¢„å¤„ç†å™¨-
 
-/AI<dir> Ìí¼Óµ½³ÌÐò¼¯ËÑË÷Â·¾¶           /Fx ½«²åÈëµÄ´úÂëºÏ²¢µ½ÎÄ¼þ
-/FU<file> Ç¿ÖÆÊ¹ÓÃ³ÌÐò¼¯/Ä£¿é           /FI<file> ÃüÃûÇ¿ÖÆ°üº¬ÎÄ¼þ
-/C ²»³é³ö×¢ÊÍ                           /U<name> ÒÆ³ýÔ¤¶¨Òåºê
-/D<name>{=|#}<text> ¶¨Òåºê              /u ÒÆ³ýËùÓÐÔ¤¶¨Òåºê
-/E Ô¤´¦Àíµ½ stdout                      /I<dir> Ìí¼Óµ½°üº¬ËÑË÷Â·¾¶
-/EP Ô¤´¦Àíµ½ stdout£¬Ã»ÓÐ #line         /X ºöÂÔ¡°±ê×¼Î»ÖÃ¡±
-/P Ô¤´¦Àíµ½ÎÄ¼þ
+/AI<dir> æ·»åŠ åˆ°ç¨‹åºé›†æœç´¢è·¯å¾„           /Fx å°†æ’å…¥çš„ä»£ç åˆå¹¶åˆ°æ–‡ä»¶
+/FU<file> å¼ºåˆ¶ä½¿ç”¨ç¨‹åºé›†/æ¨¡å—           /FI<file> å‘½åå¼ºåˆ¶åŒ…å«æ–‡ä»¶
+/C ä¸æŠ½å‡ºæ³¨é‡Š                           /U<name> ç§»é™¤é¢„å®šä¹‰å®
+/D<name>{=|#}<text> å®šä¹‰å®              /u ç§»é™¤æ‰€æœ‰é¢„å®šä¹‰å®
+/E é¢„å¤„ç†åˆ° stdout                      /I<dir> æ·»åŠ åˆ°åŒ…å«æœç´¢è·¯å¾„
+/EP é¢„å¤„ç†åˆ° stdoutï¼Œæ²¡æœ‰ #line         /X å¿½ç•¥â€œæ ‡å‡†ä½ç½®â€
+/P é¢„å¤„ç†åˆ°æ–‡ä»¶
 
-                                -ÓïÑÔ-
+                                -è¯­è¨€-
 
-/Zi ÆôÓÃµ÷ÊÔÐÅÏ¢                        /Ze ÆôÓÃÀ©Õ¹(Ä¬ÈÏ)
-/ZI ÆôÓÃ¡°±à¼­²¢¼ÌÐø¡±µ÷ÊÔÐÅÏ¢          /Zl Ê¡ÂÔ .OBJ ÖÐµÄÄ¬ÈÏ¿âÃû
-/Z7 ÆôÓÃ¾ÉÊ½µ÷ÊÔÐÅÏ¢                    /Zg Éú³Éº¯ÊýÔ­ÐÍ
-/Zd ½öÓÐÐÐºÅµ÷ÊÔÐÅÏ¢                    /Zs Ö»½øÐÐÓï·¨¼ì²é
-/Zp[n] ÔÚ n ×Ö½Ú±ß½çÉÏ°ü×°½á¹¹          /vd{0|1} ½ûÓÃ/ÆôÓÃ vtordisp
-/Za ½ûÓÃÀ©Õ¹(°µÖ¸ /Op)                  /vm<x> Ö¸Ïò³ÉÔ±µÄÖ¸ÕëÀàÐÍ
-/Zc:arg1[,arg2] C++ ÓïÑÔÒ»ÖÂÐÔ£¬ÕâÀïµÄ²ÎÊý¿ÉÒÔÊÇ:
-    forScope - ¶Ô·¶Î§¹æÔòÇ¿ÖÆÊ¹ÓÃ±ê×¼ C++ 
-    wchar_t - wchar_t ÊÇ±¾»úÀàÐÍ£¬²»ÊÇ typedef
+/Zi å¯ç”¨è°ƒè¯•ä¿¡æ¯                        /Ze å¯ç”¨æ‰©å±•(é»˜è®¤)
+/ZI å¯ç”¨â€œç¼–è¾‘å¹¶ç»§ç»­â€è°ƒè¯•ä¿¡æ¯          /Zl çœç•¥ .OBJ ä¸­çš„é»˜è®¤åº“å
+/Z7 å¯ç”¨æ—§å¼è°ƒè¯•ä¿¡æ¯                    /Zg ç”Ÿæˆå‡½æ•°åŽŸåž‹
+/Zd ä»…æœ‰è¡Œå·è°ƒè¯•ä¿¡æ¯                    /Zs åªè¿›è¡Œè¯­æ³•æ£€æŸ¥
+/Zp[n] åœ¨ n å­—èŠ‚è¾¹ç•Œä¸ŠåŒ…è£…ç»“æž„          /vd{0|1} ç¦ç”¨/å¯ç”¨ vtordisp
+/Za ç¦ç”¨æ‰©å±•(æš—æŒ‡ /Op)                  /vm<x> æŒ‡å‘æˆå‘˜çš„æŒ‡é’ˆç±»åž‹
+/Zc:arg1[,arg2] C++ è¯­è¨€ä¸€è‡´æ€§ï¼Œè¿™é‡Œçš„å‚æ•°å¯ä»¥æ˜¯:
+    forScope - å¯¹èŒƒå›´è§„åˆ™å¼ºåˆ¶ä½¿ç”¨æ ‡å‡† C++ 
+    wchar_t - wchar_t æ˜¯æœ¬æœºç±»åž‹ï¼Œä¸æ˜¯ typedef
 
-                              - ÔÓÏî -
+                              - æ‚é¡¹ -
 
-@<file> Ñ¡ÏîÏìÓ¦ÎÄ¼þ                    /wo<n> ·¢³öÒ»´Î¾¯¸æ n 
-/?, /help ´òÓ¡´Ë°ïÖúÏûÏ¢                /w<l><n> Îª n ÉèÖÃ¾¯¸æµÈ¼¶ 1-4
-/c Ö»±àÒë£¬²»Á´½Ó                       /W<n> ÉèÖÃ¾¯¸æµÈ¼¶(Ä¬ÈÏ n=1)
-/H<num> ×î´óÍâ²¿Ãû³Æ³¤¶È                /Wall ÆôÓÃËùÓÐ¾¯¸æ
-/J Ä¬ÈÏ char ÀàÐÍÊÇ unsigned            /Wp64 ÆôÓÃ 64 Î»¶Ë¿Ú¶¨Î»¾¯¸æ
-/nologo È¡ÏûÏÔÊ¾°æÈ¨ÏûÏ¢                /WX ½«¾¯¸æÊÓÎª´íÎó
-/showIncludes ÏÔÊ¾°üº¬ÎÄ¼þÃû            /WL ÆôÓÃµ¥ÐÐÕï¶Ï
-/Tc<source file> ½«ÎÄ¼þ±àÒëÎª .c        /Yc[file] ´´½¨ .PCH ÎÄ¼þ
-/Tp<source file> ½«ÎÄ¼þ±àÒëÎª .cpp      /Yd ½«µ÷ÊÔÐÅÏ¢·ÅÔÚÃ¿¸ö .OBJ ÖÐ
-/TC ½«ËùÓÐÎÄ¼þ±àÒëÎª .c                 /Yl[sym] Îªµ÷ÊÔ¿â²åÈë .PCH ÒýÓÃ
-/TP ½«ËùÓÐÎÄ¼þ±àÒëÎª .cpp               /Yu[file] Ê¹ÓÃ .PCH ÎÄ¼þ
-/V<string> ÉèÖÃ°æ±¾×Ö·û´®               /YX[file] ×Ô¶¯ .PCH
-/w ½ûÓÃËùÓÐ¾¯¸æ                         /Y- ½ûÓÃËùÓÐ PCH Ñ¡Ïî
-/wd<n> ½ûÓÃ¾¯¸æ n                       /Zm<n> ×î´óÄÚ´æ·ÖÅä(Ä¬ÈÏÎª %)
-/we<n> ½«¾¯¸æ n ÊÓÎª´íÎó
+@<file> é€‰é¡¹å“åº”æ–‡ä»¶                    /wo<n> å‘å‡ºä¸€æ¬¡è­¦å‘Š n 
+/?, /help æ‰“å°æ­¤å¸®åŠ©æ¶ˆæ¯                /w<l><n> ä¸º n è®¾ç½®è­¦å‘Šç­‰çº§ 1-4
+/c åªç¼–è¯‘ï¼Œä¸é“¾æŽ¥                       /W<n> è®¾ç½®è­¦å‘Šç­‰çº§(é»˜è®¤ n=1)
+/H<num> æœ€å¤§å¤–éƒ¨åç§°é•¿åº¦                /Wall å¯ç”¨æ‰€æœ‰è­¦å‘Š
+/J é»˜è®¤ char ç±»åž‹æ˜¯ unsigned            /Wp64 å¯ç”¨ 64 ä½ç«¯å£å®šä½è­¦å‘Š
+/nologo å–æ¶ˆæ˜¾ç¤ºç‰ˆæƒæ¶ˆæ¯                /WX å°†è­¦å‘Šè§†ä¸ºé”™è¯¯
+/showIncludes æ˜¾ç¤ºåŒ…å«æ–‡ä»¶å            /WL å¯ç”¨å•è¡Œè¯Šæ–­
+/Tc<source file> å°†æ–‡ä»¶ç¼–è¯‘ä¸º .c        /Yc[file] åˆ›å»º .PCH æ–‡ä»¶
+/Tp<source file> å°†æ–‡ä»¶ç¼–è¯‘ä¸º .cpp      /Yd å°†è°ƒè¯•ä¿¡æ¯æ”¾åœ¨æ¯ä¸ª .OBJ ä¸­
+/TC å°†æ‰€æœ‰æ–‡ä»¶ç¼–è¯‘ä¸º .c                 /Yl[sym] ä¸ºè°ƒè¯•åº“æ’å…¥ .PCH å¼•ç”¨
+/TP å°†æ‰€æœ‰æ–‡ä»¶ç¼–è¯‘ä¸º .cpp               /Yu[file] ä½¿ç”¨ .PCH æ–‡ä»¶
+/V<string> è®¾ç½®ç‰ˆæœ¬å­—ç¬¦ä¸²               /YX[file] è‡ªåŠ¨ .PCH
+/w ç¦ç”¨æ‰€æœ‰è­¦å‘Š                         /Y- ç¦ç”¨æ‰€æœ‰ PCH é€‰é¡¹
+/wd<n> ç¦ç”¨è­¦å‘Š n                       /Zm<n> æœ€å¤§å†…å­˜åˆ†é…(é»˜è®¤ä¸º %)
+/we<n> å°†è­¦å‘Š n è§†ä¸ºé”™è¯¯
 
-                                 -Á´½Ó-
+                                 -é“¾æŽ¥-
 
-/MD Óë MSVCRT.LIB Á´½Ó                  /MDd Óë MSVCRTD.LIB µ÷ÊÔ¿âÁ´½Ó
-/ML Óë LIBC.LIB Á´½Ó                    /MLd Óë LIBCD.LIB µ÷ÊÔ¿âÁ´½Ó
-/MT Óë LIBCMT.LIB Á´½Ó                  /MTd Óë LIBCMTD.LIB µ÷ÊÔ¿âÁ´½Ó
-/LD ´´½¨ .DLL                           /F<num> ÉèÖÃ¶ÑÕ»´óÐ¡
-/LDd ´´½¨ .DLL µ÷ÊÔ¿â                   /link [Á´½ÓÆ÷Ñ¡ÏîºÍ¿â]
+/MD ä¸Ž MSVCRT.LIB é“¾æŽ¥                  /MDd ä¸Ž MSVCRTD.LIB è°ƒè¯•åº“é“¾æŽ¥
+/ML ä¸Ž LIBC.LIB é“¾æŽ¥                    /MLd ä¸Ž LIBCD.LIB è°ƒè¯•åº“é“¾æŽ¥
+/MT ä¸Ž LIBCMT.LIB é“¾æŽ¥                  /MTd ä¸Ž LIBCMTD.LIB è°ƒè¯•åº“é“¾æŽ¥
+/LD åˆ›å»º .DLL                           /F<num> è®¾ç½®å †æ ˆå¤§å°
+/LDd åˆ›å»º .DLL è°ƒè¯•åº“                   /link [é“¾æŽ¥å™¨é€‰é¡¹å’Œåº“]
