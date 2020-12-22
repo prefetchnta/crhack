@@ -174,6 +174,15 @@ CR_API void_t   wdg_close (sint_t wdg);
 CR_API void_t   wdg_timeout (sint_t wdg, uint_t time_ms);
 CR_API void_t   wdg_feed (sint_t wdg);
 
+/* I2C */
+#define CR_I2C_TEN  0x0010
+CR_API sint_t   i2c_open (const ansi_t *dev);
+CR_API void_t   i2c_close (sint_t i2c);
+CR_API bool_t   i2c_read (sint_t i2c, int16u mode, int16u devs,
+                          void_t *rdata, int16u nrecv, const void_t *sdata,
+                          int16u nsend);
+CR_API bool_t   i2c_write (sint_t i2c, int16u mode, int16u devs,
+                           const void_t *data, int16u size);
 /* SPI */
 #define CR_SPI_CPHA         0x01
 #define CR_SPI_CPOL         0x02

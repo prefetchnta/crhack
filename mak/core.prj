@@ -393,11 +393,13 @@ POSIX_CPPS=$(SRC_NAK)appnak.$(C) \
 ##                                  LINUX                                    ##
 ###############################################################################
 
-LINUX_OBJS=$(OBJ)cr_spi.$(O) \
+LINUX_OBJS=$(OBJ)cr_i2c.$(O) \
+           $(OBJ)cr_spi.$(O) \
            $(OBJ)cr_wdg.$(O) \
            $(OBJ)cr_gpio.$(O)
 
-LINUX_CPPS=$(SRC_LNX)cr_spi.$(C) \
+LINUX_CPPS=$(SRC_LNX)cr_i2c.$(C) \
+           $(SRC_LNX)cr_spi.$(C) \
            $(SRC_LNX)cr_wdg.$(C) \
            $(SRC_LNX)cr_gpio.$(C)
 

@@ -1,6 +1,6 @@
 /*****************************************************************************/
 /*                                                  ###                      */
-/*       #####          ###    ###                  ###  CREATE: 2016-06-22  */
+/*       #####          ###    ###                  ###  CREATE: 2020-12-16  */
 /*     #######          ###    ###      [CORE]      ###  ~~~~~~~~~~~~~~~~~~  */
 /*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
 /*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
@@ -13,7 +13,7 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>>>>>> CrHack SPI 函数库 for Linux <<<<<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>>>>>> CrHack I2C 函数库 for Linux <<<<<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
@@ -21,124 +21,114 @@
 #include "memlib.h"
 
 #if defined(_CR_NDK_LOW_)
-    #define _CR_NO_LINUX_SPI_
+    #define _CR_NO_LINUX_I2C_
 #endif
 #include <linux/types.h>
 #include <linux/ioctl.h>
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <unistd.h>
-#if defined(_CR_NO_LINUX_SPI_)
-    #include "miss/spidev.h"
+#if defined(_CR_NO_LINUX_I2C_)
+    #include "miss/i2c.h"
+    #include "miss/i2c-dev.h"
 #else
-    #include <linux/spi/spidev.h>
+    #include <linux/i2c.h>
+    #include <linux/i2c-dev.h>
 #endif
 
 /*
 =======================================
-    打开 SPI
+    打开 I2C
 =======================================
 */
 CR_API sint_t
-spi_open (
-  __CR_IN__ const ansi_t*   dev,
-  __CR_IN__ uint_t          mode,
-  __CR_IN__ uint_t          bits,
-  __CR_IN__ uint_t          speed
+i2c_open (
+  __CR_IN__ const ansi_t*   dev
     )
 {
-    sint_t  spi;
-
     if (dev == NULL)
-        dev = "/dev/spidev0.0";
-    spi = open(dev, O_RDWR);
-    if (spi < 0)
-        return (-1);
-    if (ioctl(spi, SPI_IOC_WR_MODE, &mode) < 0)
-        goto _failure;
-    if (ioctl(spi, SPI_IOC_WR_BITS_PER_WORD, &bits) < 0)
-        goto _failure;
-    if (ioctl(spi, SPI_IOC_WR_MAX_SPEED_HZ, &speed) < 0)
-        goto _failure;
-    return (spi);
-
-_failure:
-    close(spi);
-    return (-1);
+        dev = "/dev/i2c-0";
+    return (open(dev, O_RDWR));
 }
 
 /*
 =======================================
-    关闭 SPI
+    关闭 I2C
 =======================================
 */
 CR_API void_t
-spi_close (
-  __CR_IN__ sint_t  spi
+i2c_close (
+  __CR_IN__ sint_t  i2c
     )
 {
-    close(spi);
+    close(i2c);
 }
 
 /*
 =======================================
-    单读 SPI
+    读取 I2C
 =======================================
 */
 CR_API bool_t
-spi_read (
-  __CR_IN__ sint_t  spi,
-  __CR_OT__ void_t* data,
-  __CR_IN__ uint_t  size
+i2c_read (
+  __CR_IN__ sint_t          i2c,
+  __CR_IN__ int16u          mode,
+  __CR_IN__ int16u          devs,
+  __CR_OT__ void_t*         rdata,
+  __CR_IN__ int16u          nrecv,
+  __CR_IN__ const void_t*   sdata,
+  __CR_IN__ int16u          nsend
     )
 {
-    uint_t  back;
+    struct i2c_msg              m[2];
+    struct i2c_rdwr_ioctl_data  idat;
 
-    back = (uint_t)read(spi, data, size);
-    return (back != size) ? FALSE : TRUE;
+    idat.msgs = m;
+    idat.nmsgs = 2;
+
+    mode &= ~I2C_M_RD;
+    m[0].addr = devs;
+    m[0].flags = mode;
+    m[0].len = nsend;
+    m[0].buf = (byte_t*)sdata;
+
+    m[1].addr = devs;
+    m[1].flags = mode | I2C_M_RD;
+    m[1].len = nrecv;
+    m[1].buf = (byte_t*)rdata;
+    mem_zero(rdata, nrecv);
+
+    if (ioctl(i2c, I2C_RDWR, &idat) < 0)
+        return (FALSE);
+    return (TRUE);
 }
 
 /*
 =======================================
-    单写 SPI
+    写入 I2C
 =======================================
 */
 CR_API bool_t
-spi_write (
-  __CR_IN__ sint_t          spi,
+i2c_write (
+  __CR_IN__ sint_t          i2c,
+  __CR_IN__ int16u          mode,
+  __CR_IN__ int16u          devs,
   __CR_IN__ const void_t*   data,
-  __CR_IN__ uint_t          size
+  __CR_IN__ int16u          size
     )
 {
-    uint_t  back;
+    struct i2c_msg              imsg;
+    struct i2c_rdwr_ioctl_data  idat;
 
-    back = (uint_t)write(spi, data, size);
-    return (back != size) ? FALSE : TRUE;
-}
+    idat.msgs = &imsg;
+    idat.nmsgs = 1;
 
-/*
-=======================================
-    写读 SPI
-=======================================
-*/
-CR_API bool_t
-spi_iorw (
-  __CR_IN__ sint_t          spi,
-  __CR_OT__ void_t*         recv,
-  __CR_IN__ const void_t*   send,
-  __CR_IN__ uint_t          size,
-  __CR_IN__ bool_t          cs_flip
-    )
-{
-    struct spi_ioc_transfer tr;
+    imsg.addr = devs;
+    imsg.flags = mode & (~I2C_M_RD);
+    imsg.len = size;
+    imsg.buf = (byte_t*)data;
 
-    mem_zero(&tr, sizeof(tr));
-    tr.tx_buf = (size_t)send;
-    tr.rx_buf = (size_t)recv;
-    tr.len = size;
-    tr.cs_change = !!cs_flip;
-
-    if (ioctl(spi, SPI_IOC_MESSAGE(1), &tr) < 1)
+    if (ioctl(i2c, I2C_RDWR, &idat) < 0)
         return (FALSE);
     return (TRUE);
 }

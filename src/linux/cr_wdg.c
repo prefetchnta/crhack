@@ -19,14 +19,19 @@
 
 #include "devlib.h"
 
-#if !defined(_CR_NDK_LOW_)
-
+#if defined(_CR_NDK_LOW_)
+    #define _CR_NO_LINUX_WDG_
+#endif
 #include <linux/types.h>
 #include <linux/ioctl.h>
-#include <linux/watchdog.h>
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <unistd.h>
+#if defined(_CR_NO_LINUX_WDG_)
+    #include "miss/watchdog.h"
+#else
+    #include <linux/watchdog.h>
+#endif
 
 /*
 =======================================
@@ -83,8 +88,6 @@ wdg_feed (
 {
     ioctl(wdg, WDIOC_KEEPALIVE);
 }
-
-#endif  /* !_CR_NDK_LOW_ */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */

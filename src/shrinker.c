@@ -40,7 +40,6 @@
             b += sizeof(SHRINKER_T); \
         } while (b < c); \
         a -= (b - c); \
-        b = c; \
     }
 #define SHRINKER_MEMCPY_NOOVERLAP_NOSURPASS(a, b, c) \
     { \
@@ -110,14 +109,13 @@ compr_shrinker (
         return (0);
 #endif
     mem_zero(ht, 4UL << SHRINKER_HASH_BITS);
-    cur_u32 = *(int32u*)p_src;
     while ((p_src < src_end) && (p_dst < dst_end))
     {
         tmp = (int32u)(p_src - (byte_t*)src);
         pcur = p_src;
         cur_u32 = *(int32u*)pcur;
         cur_hash = SHRINKER_HASH(cur_u32);
-        cache = ht[cur_hash] >> 27;
+        cache = (byte_t)(ht[cur_hash] >> 27);
         pfind = (byte_t*)src + (ht[cur_hash] & 0x07FFFFFFUL);
         ht[cur_hash] = tmp | (int32u)(*p_src << 27);
 
@@ -314,13 +312,14 @@ uncompr_shrinker (
 
         pend = p_src + literal_len;
         SHRINKER_MEMCPY_NOOVERLAP(p_dst, p_src, pend)
+        p_src = pend;
         pcpy = p_dst - match_dist - 1;
         pend = pcpy + match_len + SHRINKER_MINMATCH;
         if (pcpy < (byte_t*)dst)
             goto _failure;
         SHRINKER_MEMCPY(p_dst, pcpy, pend);
     }
-    return (p_dst - (byte_t*)dst);
+    return ((leng_t)(p_dst - (byte_t*)dst));
 
 _failure:
     return (0);
