@@ -25,7 +25,6 @@ mak/vc2017.bat | Microsoft Visual Studio 2017 (Win32-X86-X64)
 mak/vc2019.bat | Microsoft Visual Studio 2019 (Win32-X86-X64)
 mak/linux.sh | GCC (Linux-ALL) [base]
 mak/naked.bat | GCC (Naked-ALL) [base]
-prj/xcode/build.sh | Apple Clang (iOS-ALL)
 usr/linux-arm32.sh | GCC (Linux for ARM32 non cross-compilation)
 usr/arm-fsl-linux-gnueabi.sh | GCC (Linux for Freescale i.MX6)
 usr/arm-linux-gnueabihf.sh | GCC (Linux ARM32 Hard Float ABI)
