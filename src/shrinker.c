@@ -35,7 +35,7 @@
         do { \
             if (a + sizeof(SHRINKER_T) > dst_end) \
                 goto _failure; \
-            *(SHRINKER_T*)a = *(SHRINKER_T*)b; \
+            mem_cpy(a, b, sizeof(SHRINKER_T)); \
             a += sizeof(SHRINKER_T); \
             b += sizeof(SHRINKER_T); \
         } while (b < c); \
@@ -47,7 +47,7 @@
         while (b < c) { \
             if (a + sizeof(SHRINKER_T) > dst_end) \
                 goto _failure; \
-            *(SHRINKER_T*)a = *(SHRINKER_T*)b; \
+            mem_cpy(a, b, sizeof(SHRINKER_T)); \
             a += sizeof(SHRINKER_T); \
             b += sizeof(SHRINKER_T); \
         } \
@@ -113,23 +113,24 @@ compr_shrinker (
     {
         tmp = (int32u)(p_src - (byte_t*)src);
         pcur = p_src;
-        cur_u32 = *(int32u*)pcur;
+        cur_u32 = load_misali32(pcur);
         cur_hash = SHRINKER_HASH(cur_u32);
         cache = (byte_t)(ht[cur_hash] >> 27);
         pfind = (byte_t*)src + (ht[cur_hash] & 0x07FFFFFFUL);
-        ht[cur_hash] = tmp | (int32u)(*p_src << 27);
+        ht[cur_hash] = tmp | ((int32u)(*p_src) << 27);
 
         if (cache == (*pcur & 0x1F) && pfind + 0xFFFF >= pcur &&
-            pfind < pcur && *(int32u*)pfind == *(int32u*)pcur)
+            pfind < pcur && mem_cmp(pfind, pcur, sizeof(int32u)) == 0)
         {
             pfind += sizeof(int32u);
             pcur  += sizeof(int32u);
-            while (pcur < src_end && *(int32u*)pfind == *(int32u*)pcur) {
+            while (pcur < src_end &&
+                   mem_cmp(pfind, pcur, sizeof(int32u)) == 0) {
                 pfind += sizeof(int32u);
                 pcur  += sizeof(int32u);
             }
             if (pcur < src_end) {
-                if (*(int16u*)pfind == *(int16u*)pcur) {
+                if (mem_cmp(pfind, pcur, sizeof(int16u)) == 0) {
                     pfind += sizeof(int16u);
                     pcur  += sizeof(int16u);
                 }
@@ -190,12 +191,12 @@ compr_shrinker (
             }
             SHRINKER_MEMCPY_NOOVERLAP(p_dst, p_last_lit, p_src)
 
-            cur_u32 = *(int32u*)(p_src + 1);
+            cur_u32 = load_misali32(p_src + 1);
             ht[SHRINKER_HASH(cur_u32)] = (int32u)
-                            ((p_src - (byte_t*)src + 1) | (p_src[1] << 27));
-            cur_u32 = *(int32u*)(p_src + 3);
+                    ((p_src - (byte_t*)src + 1) | ((int32u)p_src[1] << 27));
+            cur_u32 = load_misali32(p_src + 3);
             ht[SHRINKER_HASH(cur_u32)] = (int32u)
-                            ((p_src - (byte_t*)src + 3) | (p_src[3] << 27));
+                    ((p_src - (byte_t*)src + 3) | ((int32u)p_src[3] << 27));
             p_src = pcur;
             p_last_lit = p_src;
             continue;
