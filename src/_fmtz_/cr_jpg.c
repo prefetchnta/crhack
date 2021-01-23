@@ -33,11 +33,11 @@ typedef struct
     用户定义输入函数
 ---------------------------------------
 */
-static uint16_t
+static unsigned int
 jpg_in_func (
-  __CR_IO__ JDEC*       jd,
-  __CR_OT__ uint8_t*    buff,
-  __CR_IN__ uint16_t    nbyte
+  __CR_IO__ JDEC*           jd,
+  __CR_OT__ uint8_t*        buff,
+  __CR_IN__ unsigned int    nbyte
     )
 {
     iDATIN* datin;
@@ -56,7 +56,7 @@ jpg_in_func (
     用户定义输出函数
 ---------------------------------------
 */
-static uint16_t
+static int
 jpg_out_func (
   __CR_IO__ JDEC*   jd,
   __CR_IN__ void*   bitmap,
@@ -98,10 +98,9 @@ load_cr_jpg (
     )
 {
     JDEC    jdec;
-    void_t* work;
     sIODEV  devid;
-    byte_t  head[11];
-    /* ----------- */
+    byte_t  head[3100];
+    /* ------------- */
     JRESULT     retc;
     sFMT_PIC*   rett;
     sFMT_FRAME  temp;
@@ -119,15 +118,10 @@ load_cr_jpg (
         return (NULL);
 
     /* 准备解压图片 */
-    work = mem_malloc(3100);
-    if (work == NULL)
-        return (NULL);
     devid.datin = datin;
-    retc = jd_prepare(&jdec, jpg_in_func, work, 3100, &devid);
-    if (retc != JDR_OK) {
-        mem_free(work);
+    retc = jd_prepare(&jdec, jpg_in_func, head, sizeof(head), &devid);
+    if (retc != JDR_OK)
         return (NULL);
-    }
 
     /* 生成图片对象 */
     mem_zero(temp.wh, sizeof(temp.wh));
@@ -139,15 +133,12 @@ load_cr_jpg (
     temp.wh[2] = 8;
     temp.pic = image_new(0, 0, jdec.width, jdec.height,
                          CR_ARGB888, FALSE, 4);
-    if (temp.pic == NULL) {
-        mem_free(work);
+    if (temp.pic == NULL)
         return (NULL);
-    }
 
     /* 读取图片数据 */
     devid.image = temp.pic;
     retc = jd_decomp(&jdec, jpg_out_func, 0);
-    mem_free(work);
     if (retc != JDR_OK)
         goto _failure;
 
