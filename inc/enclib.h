@@ -39,12 +39,6 @@ CR_API leng_t   compr_bzip2 (void_t *dst, leng_t dstlen,
 
 CR_API leng_t   uncompr_bzip2 (void_t *dst, leng_t dstlen,
                                const void_t *src, leng_t srclen);
-/* DMC */
-CR_API leng_t   compr_dmc (void_t *dst, leng_t dstlen,
-                           const void_t *src, leng_t srclen);
-
-CR_API leng_t   uncompr_dmc (void_t *dst, leng_t dstlen,
-                             const void_t *src, leng_t srclen);
 /* FLATE */
 CR_API leng_t   compr_flate (void_t *dst, leng_t dstlen,
                              const void_t *src, leng_t srclen,
@@ -88,12 +82,6 @@ CR_API leng_t   compr_lzss (void_t *dst, leng_t dstlen,
 CR_API leng_t   uncompr_lzss (void_t *dst, leng_t dstlen,
                               const void_t *src, leng_t srclen,
                               uint_t fill CR_DEFAULT(0));
-/* LZW */
-CR_API leng_t   compr_lzw (void_t *dst, leng_t dstlen,
-                           const void_t *src, leng_t srclen);
-
-CR_API leng_t   uncompr_lzw (void_t *dst, leng_t dstlen,
-                             const void_t *src, leng_t srclen);
 /* LZO */
 CR_API leng_t   compr_lzo (void_t *dst, leng_t dstlen,
                            const void_t *src, leng_t srclen);
@@ -113,12 +101,6 @@ CR_API leng_t   compr_shrinker (void_t *dst, leng_t dstlen,
 
 CR_API leng_t   uncompr_shrinker (void_t *dst, leng_t dstlen,
                                   const void_t *src, leng_t srclen);
-/* SPLAY */
-CR_API leng_t   compr_splay (void_t *dst, leng_t dstlen,
-                             const void_t *src, leng_t srclen);
-
-CR_API leng_t   uncompr_splay (void_t *dst, leng_t dstlen,
-                               const void_t *src, leng_t srclen);
 /* ZLib */
 CR_API leng_t   compr_zlib (void_t *dst, leng_t dstlen,
                             const void_t *src, leng_t srclen,

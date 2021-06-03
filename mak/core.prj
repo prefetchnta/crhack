@@ -168,15 +168,12 @@ OBJS=$(OBJ)defs.$(O) \
      $(OBJ)code128.$(O) \
      $(OBJ)uue.$(O) \
      $(OBJ)xxe.$(O) \
-     $(OBJ)dmc.$(O) \
-     $(OBJ)lzw.$(O) \
      $(OBJ)lz32.$(O) \
      $(OBJ)lzss.$(O) \
      $(OBJ)lzari.$(O) \
      $(OBJ)lzhuf.$(O) \
      $(OBJ)lzrw1.$(O) \
      $(OBJ)arith.$(O) \
-     $(OBJ)splay.$(O) \
      $(OBJ)shrinker.$(O) \
      $(OBJ)enclib.$(O) \
      $(OBJ)fpsoft.$(O) \
@@ -276,15 +273,12 @@ CPPS=$(SRC)defs.$(C) \
      $(SRC)code128.$(C) \
      $(SRC)uue.$(C) \
      $(SRC)xxe.$(C) \
-     $(SRC)dmc.$(C) \
-     $(SRC)lzw.$(C) \
      $(SRC)lz32.$(C) \
      $(SRC)lzss.$(C) \
      $(SRC)lzari.$(C) \
      $(SRC)lzhuf.$(C) \
      $(SRC)lzrw1.$(C) \
      $(SRC)arith.$(C) \
-     $(SRC)splay.$(C) \
      $(SRC)shrinker.$(C) \
      $(SRC)enclib.$(C) \
      $(SRC)fpsoft.$(C) \
