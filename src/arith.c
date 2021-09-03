@@ -91,11 +91,15 @@ compr_arith (
     int32s  aa, ll, xx;
     int32s  space, min, index;
 
-    if (srclen <= 2)
-        return (0);
-
     if (dst == NULL)
         return (srclen * 2 + 4);
+
+    if (srclen <= 2) {
+        if (dstlen < srclen)
+            return (0);
+        mem_cpy(dst, src, srclen);
+        return (srclen);
+    }
 
     handle = struct_new(sARITH);
     if (handle == NULL)
@@ -198,8 +202,12 @@ uncompr_arith (
     int32s  aa, ll, xx, val;
     int32s  space, min, index;
 
-    if (srclen < 4)
-        return (0);
+    if (srclen < 4) {
+        if (dstlen < srclen)
+            return (0);
+        mem_cpy(dst, src, srclen);
+        return (srclen);
+    }
 
     handle = struct_new(sARITH);
     if (handle == NULL)
