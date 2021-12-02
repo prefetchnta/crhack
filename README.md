@@ -10,6 +10,8 @@ mak/bcb2010.bat | Embarcadero RAD Studio 2010 (Win32-X86)
 mak/ccblkfn50.bat | ADI Visual DSP++ 5.0 (Naked-Blackfin) [base]
 mak/mdk40_16.bat | Keil MDK 4.0 ARMCC (Naked-THUMB) [base]
 mak/mdk40_32.bat | Keil MDK 4.0 ARMCC (Naked-ARM32) [base]
+mak/mdk50_16.bat | Keil MDK 5.0 ARMCC (Naked-THUMB) [base]
+mak/mdk50_32.bat | Keil MDK 5.0 ARMCC (Naked-ARM32) [base]
 mak/ndk-gcc.bat | Android NDK GCC (Android-ALL) [base]
 mak/mingw32.bat | MinGW32 (Win32-X86)
 mak/mingw64.bat | MinGW64 (Win32-X64)
@@ -31,9 +33,10 @@ usr/arm-linux-gnueabihf.sh | GCC (Linux ARM32 Hard Float ABI)
 usr/n3292x.sh | GCC (Linux for Nuvoton N3292x)
 usr/ndk-gcc-api14.bat | Android NDK GCC 4.9 (API-14)
 usr/ndk-gcc-api24.bat | Android NDK GCC 4.9 (API-24)
-usr/armcc-cm0p-small-ram.bat | Keil MDK 4.0 ARMCC (ARM Cortex-M0+ Small RAM)
-usr/armcc-cm3-big-ram.bat | Keil MDK 4.0 ARMCC (ARM Cortex-M3 Big RAM)
-usr/armcc-cm4f-big-ram.bat | Keil MDK 4.0 ARMCC (ARM Cortex-M4F Big RAM)
+usr/armcc-cm0p-small-ram.bat | Keil MDK 5.0 ARMCC (ARM Cortex-M0+ Small RAM)
+usr/armcc-cm3-big-ram.bat | Keil MDK 5.0 ARMCC (ARM Cortex-M3 Big RAM)
+usr/armcc-cm4f-big-ram.bat | Keil MDK 5.0 ARMCC (ARM Cortex-M4F-SP Big RAM)
+usr/armcc-cm7f-big-ram.bat | Keil MDK 5.0 ARMCC (ARM Cortex-M7F-DP Big RAM)
 usr/arm-none-eabi-cm0p-small-ram.bat | GCC (ARM Cortex-M0+ Small RAM)
 usr/arm-none-eabi-cm3-big-ram.bat | GCC (ARM Cortex-M3 Big RAM)
 usr/arm-none-eabi-cm4f-big-ram.bat | GCC (ARM Cortex-M4F Big RAM)

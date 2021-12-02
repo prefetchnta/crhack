@@ -64,8 +64,8 @@ RFLAGS_WIN32=$(R_ADDONS)
 ##=====================================
 ##
 CFLAGS_WIN32=-c -O2 -fshort-wchar -Wall -ffunction-sections \
-             -fdata-sections -I. -I../inc $(C_ADDONS) -DNDEBUG \
-             -DUNICODE -D_UNICODE
+             -fdata-sections -fsigned-char -I. -I../inc $(C_ADDONS) \
+             -DNDEBUG -DUNICODE -D_UNICODE
 
 ##
 ##=====================================
@@ -106,8 +106,8 @@ SFLAGS_WIN32=--strip-unneeded $(BIN_NAME)
 ##=====================================
 ##
 CFLAGS_ANDROID=-c -O2 -fshort-wchar -Wall -ffunction-sections \
-               -fdata-sections -I. -I../inc -I$(NDK_INC) -fPIC \
-               -DANDROID_API=$(PLATFORM_VER) $(C_ADDONS)
+               -fdata-sections -fsigned-char -I. -I../inc -I$(NDK_INC) \
+               -fPIC -DANDROID_API=$(PLATFORM_VER) $(C_ADDONS)
 
 ##
 ##=====================================
@@ -126,7 +126,7 @@ AFLAGS_ANDROID=q $(A_ADDONS) $(LIB_NAME)
 ##=====================================
 ##
 CFLAGS_LINUX=-c -O2 -fshort-wchar -Wall -ffunction-sections \
-             -fdata-sections -I. -I../inc -fPIC $(C_ADDONS)
+             -fdata-sections -fsigned-char -I. -I../inc -fPIC $(C_ADDONS)
 
 ##
 ##=====================================
@@ -160,7 +160,7 @@ SFLAGS_LINUX=--strip-unneeded $(BIN_NAME)
 ##=====================================
 ##
 CFLAGS_NAKED=-c -O2 -fshort-wchar -Wall -ffunction-sections \
-             -fdata-sections -I. -I../inc -fPIC $(C_ADDONS)
+             -fdata-sections -fsigned-char -I. -I../inc -fPIC $(C_ADDONS)
 
 ##
 ##=====================================

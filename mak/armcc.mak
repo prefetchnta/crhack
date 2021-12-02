@@ -63,8 +63,8 @@ SCHAR=--signed_chars
 ACREATE=--create
 
 !IF $d(ARMCC_THUMB)
-CC=armcc.exe
-PP=armcc.exe --cpp --thumb
+CC=armcc.exe --thumb
+PP=armcc.exe --thumb --cpp
 AR=armar.exe
 LD=armlink.exe
 !ELSE
