@@ -3,13 +3,13 @@
  * Title:        arm_correlate_f32.c
  * Description:  Correlation of floating-point sequences
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/filtering_functions.h"
 
 /**
   @ingroup groupFilters
@@ -93,6 +93,211 @@
   @return        none
  */
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+#include "arm_vec_filtering.h"
+
+
+void arm_correlate_f32(
+  const float32_t * pSrcA,
+        uint32_t srcALen,
+  const float32_t * pSrcB,
+        uint32_t srcBLen,
+        float32_t * pDst)
+{
+    const float32_t *pIn1 = pSrcA;    /* inputA pointer               */
+    const float32_t *pIn2 = pSrcB + (srcBLen - 1U);   /* inputB pointer               */
+    const float32_t *pX, *pY;
+    const float32_t *pA, *pB;
+    int32_t   i = 0U, j = 0;    /* loop counters */
+    int32_t   inv = 4U;         /* Reverse order flag */
+    uint32_t  tot = 0U;         /* Length */
+    int32_t   block1, block2, block3;
+    int32_t   incr;
+
+    tot = ((srcALen + srcBLen) - 2U);
+    if (srcALen > srcBLen)
+    {
+        /*
+         * Calculating the number of zeros to be padded to the output
+         */
+        j = srcALen - srcBLen;
+        /*
+         * Initialize the pointer after zero padding
+         */
+        pDst += j;
+    }
+    else if (srcALen < srcBLen)
+    {
+        /*
+         * Initialization to inputB pointer
+         */
+        pIn1 = pSrcB;
+        /*
+         * Initialization to the end of inputA pointer
+         */
+        pIn2 = pSrcA + (srcALen - 1U);
+        /*
+         * Initialisation of the pointer after zero padding
+         */
+        pDst = pDst + tot;
+        /*
+         * Swapping the lengths
+         */
+
+        j = srcALen;
+        srcALen = srcBLen;
+        srcBLen = j;
+        /*
+         * Setting the reverse flag
+         */
+        inv = -4;
+    }
+
+    block1 = srcBLen - 1;
+    block2 = srcALen - srcBLen + 1;
+    block3 = srcBLen - 1;
+
+    pA = pIn1;
+    pB = pIn2;
+    incr = inv / 4;
+
+    for (i = 0U; i <= block1 - 2; i += 2)
+    {
+        uint32_t  count = i + 1;
+        float32_t acc0;
+        float32_t acc1;
+
+        /*
+         * compute 2 accumulators per loop
+         * size is incrementing for second accumulator
+         * Y pointer is decrementing for second accumulator
+         */
+        pX = pA;
+        pY = pB;
+        MVE_INTR_CORR_DUAL_DEC_Y_INC_SIZE_F32(acc0, acc1, pX, pY, count);
+
+        *pDst = acc0;
+        pDst += incr;
+        *pDst = acc1;
+        pDst += incr;
+        pB -= 2;
+    }
+    for (; i < block1; i++)
+    {
+        uint32_t  count = i + 1;
+        float32_t acc;
+
+        pX = pA;
+        pY = pB;
+        MVE_INTR_CORR_SINGLE_F32(acc, pX, pY, count);
+
+        *pDst = acc;
+        pDst += incr;
+        pB--;
+    }
+
+    for (i = 0U; i <= block2 - 4; i += 4)
+    {
+        float32_t acc0;
+        float32_t acc1;
+        float32_t acc2;
+        float32_t acc3;
+
+        pX = pA;
+        pY = pB;
+        /*
+         * compute 4 accumulators per loop
+         * size is fixed for all accumulators
+         * X pointer is incrementing for successive accumulators
+         */
+        MVE_INTR_CORR_QUAD_INC_X_FIXED_SIZE_F32(acc0, acc1, acc2, acc3, pX, pY, srcBLen);
+
+        *pDst = acc0;
+        pDst += incr;
+        *pDst = acc1;
+        pDst += incr;
+        *pDst = acc2;
+        pDst += incr;
+        *pDst = acc3;
+        pDst += incr;
+        pA += 4;
+    }
+
+    for (; i <= block2 - 2; i += 2)
+    {
+        float32_t acc0;
+        float32_t acc1;
+
+        pX = pA;
+        pY = pB;
+        /*
+         * compute 2 accumulators per loop
+         * size is fixed for all accumulators
+         * X pointer is incrementing for second accumulator
+         */
+        MVE_INTR_CORR_DUAL_INC_X_FIXED_SIZE_F32(acc0, acc1, pX, pY, srcBLen);
+
+        *pDst = acc0;
+        pDst += incr;
+        *pDst = acc1;
+        pDst += incr;
+        pA += 2;
+    }
+
+    if (block2 & 1)
+    {
+        float32_t acc;
+
+        pX = pA;
+        pY = pB;
+        MVE_INTR_CORR_SINGLE_F32(acc, pX, pY, srcBLen);
+
+        *pDst = acc;
+        pDst += incr;
+        pA++;
+    }
+
+    for (i = block3 - 1; i >= 0; i -= 2)
+    {
+
+        uint32_t  count = (i + 1);
+        float32_t acc0;
+        float32_t acc1;
+
+        pX = pA;
+        pY = pB;
+        /*
+         * compute 2 accumulators per loop
+         * size is decrementing for second accumulator
+         * X pointer is incrementing for second accumulator
+         */
+        MVE_INTR_CORR_DUAL_INC_X_DEC_SIZE_F32(acc0, acc1, pX, pY, count);
+
+        *pDst = acc0;
+        pDst += incr;
+        *pDst = acc1;
+        pDst += incr;
+        pA += 2;
+
+    }
+    for (; i >= 0; i--)
+    {
+        uint32_t  count = (i + 1);
+        float32_t acc;
+
+        pX = pA;
+        pY = pB;
+        MVE_INTR_CORR_SINGLE_F32(acc, pX, pY, count);
+
+        *pDst = acc;
+        pDst += incr;
+        pA++;
+    }
+}
+
+#else
 void arm_correlate_f32(
   const float32_t * pSrcA,
         uint32_t srcALen,
@@ -101,24 +306,25 @@ void arm_correlate_f32(
         float32_t * pDst)
 {
 
-#if (1)
-//#if !defined(ARM_MATH_CM0_FAMILY)
-
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_AUTOVECTORIZE)
+  
   const float32_t *pIn1;                               /* InputA pointer */
   const float32_t *pIn2;                               /* InputB pointer */
         float32_t *pOut = pDst;                        /* Output pointer */
   const float32_t *px;                                 /* Intermediate inputA pointer */
   const float32_t *py;                                 /* Intermediate inputB pointer */
-  const float32_t *pSrc1;                              /* Intermediate pointers */
-        float32_t sum;                                 /* Accumulators */
+  const float32_t *pSrc1;
+        float32_t sum;
         uint32_t blockSize1, blockSize2, blockSize3;   /* Loop counters */
         uint32_t j, k, count, blkCnt;                  /* Loop counters */
         uint32_t outBlockSize;                         /* Loop counter */
         int32_t inc = 1;                               /* Destination address modifier */
 
-#if defined (ARM_MATH_LOOPUNROLL)
-        float32_t acc0, acc1, acc2, acc3;              /* Accumulators */
-        float32_t x0, x1, x2, x3, c0;                  /* Temporary variables for holding input and coefficient values */
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
+    float32_t acc0, acc1, acc2, acc3,c0;                    /* Accumulators */
+#if !defined(ARM_MATH_NEON)
+    float32_t x0, x1, x2, x3;                        /* temporary variables for holding input and coefficient values */
+#endif
 #endif
 
   /* The algorithm implementation is based on the lengths of the inputs. */
@@ -153,16 +359,6 @@ void arm_correlate_f32(
 
     /* Updating the pointer position to non zero value */
     pOut += j;
-
-    //while (j > 0U)
-    //{
-    //  /* Zero is stored in the destination buffer */
-    //  *pOut++ = 0.0f;
-
-    //  /* Decrement the loop counter */
-    //  j--;
-    //}
-
   }
   else
   {
@@ -183,7 +379,6 @@ void arm_correlate_f32(
 
     /* Destination address modifier is set to -1 */
     inc = -1;
-
   }
 
   /* The function is internally
@@ -231,11 +426,37 @@ void arm_correlate_f32(
     /* Accumulator is made zero for every iteration */
     sum = 0.0f;
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
 
     /* Loop unrolling: Compute 4 outputs at a time */
     k = count >> 2U;
 
+#if defined(ARM_MATH_NEON)
+    float32x4_t x,y;
+    float32x4_t res = vdupq_n_f32(0) ;
+    float32x2_t accum = vdup_n_f32(0);
+
+    while (k > 0U)
+    {
+      x = vld1q_f32(px);
+      y = vld1q_f32(py);
+
+      res = vmlaq_f32(res,x, y);
+
+      px += 4;
+      py += 4;
+
+      /* Decrement the loop counter */
+      k--;
+    }
+
+    accum = vpadd_f32(vget_low_f32(res), vget_high_f32(res));
+    sum += accum[0] + accum[1];
+
+    k = count & 0x3;
+#else
+    /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
+     ** a second loop below computes MACs for the remaining 1 to 3 samples. */
     while (k > 0U)
     {
       /* x[0] * y[srcBLen - 4] */
@@ -257,12 +478,13 @@ void arm_correlate_f32(
     /* Loop unrolling: Compute remaining outputs */
     k = count % 0x4U;
 
+#endif /* #if defined(ARM_MATH_NEON) */
 #else
 
     /* Initialize k with number of samples */
     k = count;
 
-#endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON) */
 
     while (k > 0U)
     {
@@ -318,10 +540,18 @@ void arm_correlate_f32(
    * srcBLen should be greater than or equal to 4 */
   if (srcBLen >= 4U)
   {
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
 
     /* Loop unrolling: Compute 4 outputs at a time */
     blkCnt = blockSize2 >> 2U;
+
+#if defined(ARM_MATH_NEON)
+      float32x4_t c;
+      float32x4_t x1v;
+      float32x4_t x2v;
+      float32x4_t x;
+      float32x4_t res = vdupq_n_f32(0) ;
+#endif /* #if defined(ARM_MATH_NEON) */
 
     while (blkCnt > 0U)
     {
@@ -331,6 +561,69 @@ void arm_correlate_f32(
       acc2 = 0.0f;
       acc3 = 0.0f;
 
+#if defined(ARM_MATH_NEON)
+      /* Compute 4 MACs simultaneously. */
+      k = srcBLen >> 2U;
+
+      res = vdupq_n_f32(0) ;
+
+      x1v = vld1q_f32(px);
+      px += 4;
+      do
+      {
+        x2v = vld1q_f32(px);
+        c = vld1q_f32(py);
+
+        py += 4;
+
+        x = x1v;
+        res = vmlaq_n_f32(res,x,c[0]);
+
+        x = vextq_f32(x1v,x2v,1);
+
+        res = vmlaq_n_f32(res,x,c[1]);
+
+        x = vextq_f32(x1v,x2v,2);
+
+	res = vmlaq_n_f32(res,x,c[2]);
+
+        x = vextq_f32(x1v,x2v,3);
+
+	res = vmlaq_n_f32(res,x,c[3]);
+
+        x1v = x2v;
+        px+=4;
+      } while (--k);
+      
+      /* If the srcBLen is not a multiple of 4, compute any remaining MACs here.
+       ** No loop unrolling is used. */
+      k = srcBLen & 0x3;
+
+      while (k > 0U)
+      {
+        /* Read y[srcBLen - 5] sample */
+        c0 = *(py++);
+
+        res = vmlaq_n_f32(res,x1v,c0);
+
+        /* Reuse the present samples for the next MAC */
+        x1v[0] = x1v[1];
+        x1v[1] = x1v[2];
+        x1v[2] = x1v[3];
+
+        x1v[3] = *(px++);
+
+        /* Decrement the loop counter */
+        k--;
+      }
+
+      px-=1;
+
+      acc0 = res[0];
+      acc1 = res[1];
+      acc2 = res[2];
+      acc3 = res[3];
+#else
       /* read x[0], x[1], x[2] samples */
       x0 = *px++;
       x1 = *px++;
@@ -435,6 +728,8 @@ void arm_correlate_f32(
         k--;
       }
 
+#endif /* #if defined(ARM_MATH_NEON) */
+
       /* Store the result in the accumulator in the destination buffer. */
       *pOut = acc0;
       /* Destination pointer is updated according to the address modifier, inc */
@@ -468,18 +763,41 @@ void arm_correlate_f32(
     /* Initialize blkCnt with number of samples */
     blkCnt = blockSize2;
 
-#endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON) */
 
     while (blkCnt > 0U)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0.0f;
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
 
     /* Loop unrolling: Compute 4 outputs at a time */
       k = srcBLen >> 2U;
 
+#if defined(ARM_MATH_NEON)
+    float32x4_t x,y;
+    float32x4_t res = vdupq_n_f32(0) ;
+    float32x2_t accum = vdup_n_f32(0);
+
+    while (k > 0U)
+    {
+      x = vld1q_f32(px);
+      y = vld1q_f32(py);
+
+      res = vmlaq_f32(res,x, y);
+
+      px += 4;
+      py += 4;
+      /* Decrement the loop counter */
+      k--;
+    }
+
+    accum = vpadd_f32(vget_low_f32(res), vget_high_f32(res));
+    sum += accum[0] + accum[1];
+#else
+      /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
+       ** a second loop below computes MACs for the remaining 1 to 3 samples. */
       while (k > 0U)
       {
         /* Perform the multiply-accumulate */
@@ -491,16 +809,16 @@ void arm_correlate_f32(
         /* Decrement loop counter */
         k--;
       }
-
-      /* Loop unrolling: Compute remaining outputs */
+#endif /* #if defined(ARM_MATH_NEON) */
+      /* If the srcBLen is not a multiple of 4, compute any remaining MACs here.
+       ** No loop unrolling is used. */
       k = srcBLen % 0x4U;
-
 #else
 
       /* Initialize blkCnt with number of samples */
       k = srcBLen;
 
-#endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON) */
 
       while (k > 0U)
       {
@@ -513,6 +831,7 @@ void arm_correlate_f32(
 
       /* Store the result in the accumulator in the destination buffer. */
       *pOut = sum;
+
       /* Destination pointer is updated according to the address modifier, inc */
       pOut += inc;
 
@@ -599,11 +918,35 @@ void arm_correlate_f32(
     /* Accumulator is made zero for every iteration */
     sum = 0.0f;
 
-#if defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
 
     /* Loop unrolling: Compute 4 outputs at a time */
     k = count >> 2U;
 
+#if defined(ARM_MATH_NEON)
+    float32x4_t x,y;
+    float32x4_t res = vdupq_n_f32(0) ;
+    float32x2_t accum = vdup_n_f32(0);
+
+    while (k > 0U)
+    {
+      x = vld1q_f32(px);
+      y = vld1q_f32(py);
+
+      res = vmlaq_f32(res,x, y);
+
+      px += 4;
+      py += 4;
+
+      /* Decrement the loop counter */
+      k--;
+    }
+
+    accum = vpadd_f32(vget_low_f32(res), vget_high_f32(res));
+    sum += accum[0] + accum[1];
+#else
+    /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.
+     ** a second loop below computes MACs for the remaining 1 to 3 samples. */
     while (k > 0U)
     {
       /* Perform the multiply-accumulate */
@@ -623,6 +966,7 @@ void arm_correlate_f32(
       k--;
     }
 
+#endif /* #if defined (ARM_MATH_NEON) */
     /* Loop unrolling: Compute remaining outputs */
     k = count % 0x4U;
 
@@ -631,7 +975,7 @@ void arm_correlate_f32(
     /* Initialize blkCnt with number of samples */
     k = count;
 
-#endif /* #if defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON) */
 
     while (k > 0U)
     {
@@ -730,7 +1074,7 @@ void arm_correlate_f32(
       if ((((i - j) < srcBLen) && (j < srcALen)))
       {
         /* z[i] += x[i-j] * y[j] */
-        sum += pIn1[j] * pIn2[-((int32_t) i - j)];
+        sum += pIn1[j] * pIn2[-((int32_t) i - (int32_t) j)];
       }
     }
 
@@ -744,6 +1088,7 @@ void arm_correlate_f32(
 #endif /* #if !defined(ARM_MATH_CM0_FAMILY) */
 
 }
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of Corr group

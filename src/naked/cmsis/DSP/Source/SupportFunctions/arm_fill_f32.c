@@ -3,13 +3,13 @@
  * Title:        arm_fill_f32.c
  * Description:  Fills a constant value into a floating-point vector
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/support_functions.h"
 
 /**
   @ingroup groupSupport
@@ -56,7 +56,84 @@
   @param[in]     blockSize  number of samples in each vector
   @return        none
  */
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+void arm_fill_f32(
+  float32_t value,
+  float32_t * pDst,
+  uint32_t blockSize)
+{
+  uint32_t blkCnt;
+  blkCnt = blockSize >> 2U;
 
+  /* Compute 4 outputs at a time */
+  while (blkCnt > 0U)
+  {
+
+    vstrwq_f32(pDst,vdupq_n_f32(value));
+    /*
+     * Decrement the blockSize loop counter
+     * Advance vector source and destination pointers
+     */
+    pDst += 4;
+    blkCnt --;
+  }
+
+  blkCnt = blockSize & 3;
+
+  while (blkCnt > 0U)
+  {
+    /* C = value */
+
+    /* Fill value in destination buffer */
+    *pDst++ = value;
+
+    /* Decrement loop counter */
+    blkCnt--;
+  }
+
+}
+#else
+#if defined(ARM_MATH_NEON_EXPERIMENTAL)
+void arm_fill_f32(
+  float32_t value,
+  float32_t * pDst,
+  uint32_t blockSize)
+{
+  uint32_t blkCnt;                               /* loop counter */
+
+
+  float32x4_t inV = vdupq_n_f32(value);
+
+  blkCnt = blockSize >> 2U;
+
+  /* Compute 4 outputs at a time.
+   ** a second loop below computes the remaining 1 to 3 samples. */
+  while (blkCnt > 0U)
+  {
+    /* C = value */
+    /* Fill the value in the destination buffer */
+    vst1q_f32(pDst, inV);
+    pDst += 4;
+
+    /* Decrement the loop counter */
+    blkCnt--;
+  }
+
+  /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
+   ** No loop unrolling is used. */
+  blkCnt = blockSize & 3;
+
+  while (blkCnt > 0U)
+  {
+    /* C = value */
+    /* Fill the value in the destination buffer */
+    *pDst++ = value;
+
+    /* Decrement the loop counter */
+    blkCnt--;
+  }
+}
+#else
 void arm_fill_f32(
   float32_t value,
   float32_t * pDst,
@@ -104,6 +181,8 @@ void arm_fill_f32(
     blkCnt--;
   }
 }
+#endif /* #if defined(ARM_MATH_NEON) */
+#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
   @} end of Fill group
