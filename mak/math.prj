@@ -73,6 +73,7 @@ OBJS=$(OBJ)math.$(O) \
      $(OBJ)vmaggeo.$(O) \
      $(OBJ)ctl_pid.$(O) \
      $(OBJ)kalman.$(O) \
+     $(OBJ)xfilter.$(O) \
      $(OBJ)fir_lpass.$(O) \
      $(OBJ)fir_nline.$(O) \
      $(OBJ)statistics.$(O)
@@ -125,6 +126,7 @@ CPPS=$(SRC)math.$(C) \
      $(SRC)vmaggeo.$(C) \
      $(SRC)ctl_pid.$(C) \
      $(SRC)kalman.$(C) \
+     $(SRC)xfilter.$(C) \
      $(SRC)fir_lpass.$(C) \
      $(SRC)fir_nline.$(C) \
      $(SRC)statistics.$(C)

@@ -236,6 +236,8 @@ typedef void_t* (STDCALL *stdfunc_t) (void_t*, void_t*);
 /* 编译器库函数差异映射 */
 #if defined(_CR_DOUBLE32_) || defined(_CR_NO_MATHC99_)
     #define FABS(x)         ((fp32_t)fabs(x))
+    #define FCEIL(x)        ((fp32_t)ceil(x))
+    #define FFLOOR(x)       ((fp32_t)floor(x))
     #define FSIN(x)         ((fp32_t)sin(x))
     #define FCOS(x)         ((fp32_t)cos(x))
     #define FTAN(x)         ((fp32_t)tan(x))
@@ -253,6 +255,8 @@ typedef void_t* (STDCALL *stdfunc_t) (void_t*, void_t*);
     #define FATAN2(y,x)     ((fp32_t)atan2(y,x))
 #else
     #define FABS(x)         ((fp32_t)fabsf(x))
+    #define FCEIL(x)        ((fp32_t)ceilf(x))
+    #define FFLOOR(x)       ((fp32_t)floorf(x))
     #define FSIN(x)         ((fp32_t)sinf(x))
     #define FCOS(x)         ((fp32_t)cosf(x))
     #define FTAN(x)         ((fp32_t)tanf(x))
@@ -272,6 +276,8 @@ typedef void_t* (STDCALL *stdfunc_t) (void_t*, void_t*);
 
 /* 数学函数映射 */
 #define DABS(x)         (fabs(x))
+#define DCEIL(x)        (ceil(x))
+#define DFLOOR(x)       (floor(x))
 #define DSIN(x)         (sin(x))
 #define DCOS(x)         (cos(x))
 #define DTAN(x)         (tan(x))
@@ -291,6 +297,8 @@ typedef void_t* (STDCALL *stdfunc_t) (void_t*, void_t*);
 /* 选择不同的浮点精度 */
 #if defined(_CR_USE_FP32_)
     #define XABS        FABS
+    #define XCEIL       FCEIL
+    #define XFLOOR      FFLOOR
     #define XSIN        FSIN
     #define XCOS        FCOS
     #define XTAN        FTAN
@@ -311,6 +319,8 @@ typedef void_t* (STDCALL *stdfunc_t) (void_t*, void_t*);
     #define CR_LARGX    CR_LARG32
 #else   /* (_CR_USE_FP64_) */
     #define XABS        DABS
+    #define XCEIL       DCEIL
+    #define XFLOOR      DFLOOR
     #define XSIN        DSIN
     #define XCOS        DCOS
     #define XTAN        DTAN

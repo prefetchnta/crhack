@@ -633,6 +633,13 @@ typedef struct
 CR_API fpxx_t   fir_nl_counts (sint_t input, sint_t ntaps,
                                sint_t z[], sint_t t[], sint_t rle[],
                                const sNL_COUNTS *param);
+/* 通用滤波器参数归一化 */
+CR_API void_t   xfilter_normal (fpxx_t *a, fpxx_t *b, uint_t nab);
+
+/* 通用滤波器 (要求输入系数已经归一化) */
+CR_API void_t   xfilter (fpxx_t *y, const fpxx_t *x, uint_t nxy,
+                         const fpxx_t *a, const fpxx_t *b, uint_t nab,
+                         const fpxx_t *zi CR_DEFAULT(NULL));
 
 /*****************************************************************************/
 /*                                   统计                                    */
