@@ -370,33 +370,54 @@ CR_API bool_t   rect_area_bound (sRECT *bound, const sIMAGE *img,
 CR_API bool_t   tex_project_x (uint_t *prj, const sIMAGE *img, byte_t idx);
 CR_API bool_t   tex_project_y (uint_t *prj, const sIMAGE *img, byte_t idx);
 
-/* 交替统计参数结果结构 */
-typedef struct
-{
-        /* 输入参数 */
-        sint_t  step;           /* 像素的间隔 */
-        bool_t  altr;           /* 是否交替统计 */
-        uint_t  gmin, gmax;     /* 交替的阈值 */
-        byte_t  idx1, idx2;     /* 形态边界值组
-                                   进入形态 [idx1, idx2]
-                                   退出形态 [idx2, idx1] */
-        const sRECT*    win;    /* 局部位置 */
-        const sIMAGE*   img;    /* 输入图片 */
-
-        /* 返回结果 */
-        byte_t* result;     /* 结果状态列表 (需要释放) */
-        uint_t  nhit, ntot;     /* 符合数和总数 */
-
-} sTEX_PATTERN;
-
-/* 像素交替统计 */
-CR_API bool_t   tex_altern_x  (sTEX_PATTERN *patt);
-CR_API bool_t   tex_altern_y  (sTEX_PATTERN *patt);
-CR_API void_t   tex_patt_free (sTEX_PATTERN *patt);
-
 /* 纹理网格压缩 */
 CR_API sIMAGE*  tex_compress (const sIMAGE *img, uint_t tile_w,
                               uint_t tile_h, byte_t gate);
+/* 多维空间直方图 */
+typedef struct
+{
+        /* 输入 - 维数 */
+        uint_t          dim;
+
+        /* 输入 - 尺度 */
+        uint_t          sze;    /* 统计尺度(1/2/4) */
+
+        /* 输入 - 维度范围 */
+        const sint_t*   min;    /* 每个维度的最小值 (包括) */
+        const sint_t*   max;    /* 每个维度的最大值 (不包括) */
+
+        /* 输入 - 每个维度的降采样 */
+        const uint_t*   dwn;
+
+        /* 输出 - 返回结果 */
+        leng_t          len;    /* 总数据大小 */
+        void_t*         map;    /* 直方图数据 */
+
+        /* 输出 - 空间由外部提供 */
+        leng_t*         stt;    /* 每个维度起始位置 */
+        leng_t*         bpd;    /* 每个维度数据长度 */
+
+} sHISTO_XD;
+
+CR_API bool_t   histo_xd_init (sHISTO_XD *hist);
+CR_API void_t   histo_xd_free (sHISTO_XD *hist);
+CR_API void_t   histo_xd_reset (sHISTO_XD *hist);
+CR_API bool_t   histo_xd_index (sHISTO_XD *hist, leng_t *index,
+                                const sint_t *value);
+CR_API void_t   histo_xd_inc (sHISTO_XD *hist, leng_t index);
+CR_API bool_t   histo_xd_inc_ex (sHISTO_XD *hist, const sint_t *value);
+CR_API bool_t   histo_xd_get_back (sHISTO_XD *hist, sint_t *value,
+                                   leng_t index);
+/* 直方图单元结构 */
+typedef struct
+{
+        int32u  freq;
+        leng_t  index;
+
+} sHISTO_XD_NODE;
+
+/* 按照频率的降序排列输出 */
+CR_API sHISTO_XD_NODE*  histo_xd_sort (sHISTO_XD *hist, leng_t *size);
 
 /*****************************************************************************/
 /*                                   空间                                    */

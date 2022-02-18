@@ -17,6 +17,7 @@
 /*  =======================================================================  */
 /*****************************************************************************/
 
+#include "msclib.h"
 #include "phylib.h"
 
 /*
@@ -91,207 +92,6 @@ tex_project_y (
 
 /*
 =======================================
-    形态统计 (分割 X 轴方向)
-=======================================
-*/
-CR_API bool_t
-tex_altern_x (
-  __CR_IO__ sTEX_PATTERN*   patt
-    )
-{
-    sRECT   clip;
-    uchar*  line;
-    sint_t  flag;
-    byte_t  idx1;
-    byte_t  idx2;
-    sint_t  xx, yy;
-    uint_t  n1, n2;
-
-    /* 参数过滤 */
-    if (patt->img->fmt != CR_INDEX8 || patt->step <= 0)
-        return (FALSE);
-    if (!clip_rect(&clip, patt->win, &patt->img->clip_win))
-        return (FALSE);
-
-    /* 最大也只有宽度个结果 */
-    patt->result = (byte_t*)mem_malloc(clip.ww);
-    if (patt->result == NULL)
-        return (FALSE);
-
-    /* 开始统计形态的个数 */
-    patt->nhit = patt->ntot = 0;
-    if (!patt->altr)
-    {
-        /* 直接统计 */
-        for (xx = clip.x1 + patt->step; xx < clip.x2; xx += patt->step) {
-            n1 = n2 = 0;
-            line = patt->img->data + xx;
-            for (yy = clip.y1; yy < clip.y2; yy++) {
-                idx1 = line[(yy + 0) * patt->img->bpl];
-                idx2 = line[(yy + 1) * patt->img->bpl];
-                if (idx1 == patt->idx1 && idx2 == patt->idx2)
-                    n1 += 1;
-                else
-                if (idx1 == patt->idx2 && idx2 == patt->idx1)
-                    n2 += 1;
-            }
-            if (n1 >= patt->gmin && n2 >= patt->gmin &&
-                n1 <= patt->gmax && n2 <= patt->gmax) {
-                patt->nhit += 1;
-                patt->result[patt->ntot] = TRUE;
-            }
-            else {
-                patt->result[patt->ntot] = FALSE;
-            }
-            patt->ntot += 1;
-        }
-    }
-    else
-    {
-        /* 交替统计 */
-        flag = 1;
-        for (xx = clip.x1 + patt->step; xx < clip.x2; xx += patt->step) {
-            n1 = n2 = 0;
-            line = patt->img->data + xx;
-            for (yy = clip.y1; yy < clip.y2; yy++) {
-                idx1 = line[(yy + 0) * patt->img->bpl];
-                idx2 = line[(yy + 1) * patt->img->bpl];
-                if (flag > 0) {
-                    if (idx1 == patt->idx1 && idx2 == patt->idx2) {
-                        n1 += 1;
-                        flag = -flag;
-                    }
-                }
-                else {
-                    if (idx1 == patt->idx2 && idx2 == patt->idx1) {
-                        n2 += 1;
-                        flag = -flag;
-                    }
-                }
-            }
-            if (n1 >= patt->gmin && n2 >= patt->gmin &&
-                n1 <= patt->gmax && n2 <= patt->gmax) {
-                patt->nhit += 1;
-                patt->result[patt->ntot] = TRUE;
-            }
-            else {
-                patt->result[patt->ntot] = FALSE;
-            }
-            patt->ntot += 1;
-        }
-    }
-    return (TRUE);
-}
-
-/*
-=======================================
-    形态统计 (分割 Y 轴方向)
-=======================================
-*/
-CR_API bool_t
-tex_altern_y (
-  __CR_IO__ sTEX_PATTERN*   patt
-    )
-{
-    sRECT   clip;
-    uchar*  line;
-    sint_t  flag;
-    byte_t  idx1;
-    byte_t  idx2;
-    sint_t  xx, yy;
-    uint_t  n1, n2;
-
-    /* 参数过滤 */
-    if (patt->img->fmt != CR_INDEX8 || patt->step <= 0)
-        return (FALSE);
-    if (!clip_rect(&clip, patt->win, &patt->img->clip_win))
-        return (FALSE);
-
-    /* 最大也只有高度个结果 */
-    patt->result = (byte_t*)mem_malloc(clip.hh);
-    if (patt->result == NULL)
-        return (FALSE);
-
-    /* 开始统计形态的个数 */
-    patt->nhit = patt->ntot = 0;
-    if (!patt->altr)
-    {
-        /* 直接统计 */
-        for (yy = clip.y1 + patt->step; yy < clip.y2; yy += patt->step) {
-            n1 = n2 = 0;
-            line = patt->img->data + yy * patt->img->bpl;
-            for (xx = clip.x1; xx < clip.x2; xx++) {
-                idx1 = line[xx + 0];
-                idx2 = line[xx + 1];
-                if (idx1 == patt->idx1 && idx2 == patt->idx2)
-                    n1 += 1;
-                else
-                if (idx1 == patt->idx2 && idx2 == patt->idx1)
-                    n2 += 1;
-            }
-            if (n1 >= patt->gmin && n2 >= patt->gmin &&
-                n1 <= patt->gmax && n2 <= patt->gmax) {
-                patt->nhit += 1;
-                patt->result[patt->ntot] = TRUE;
-            }
-            else {
-                patt->result[patt->ntot] = FALSE;
-            }
-            patt->ntot += 1;
-        }
-    }
-    else
-    {
-        /* 交替统计 */
-        flag = 1;
-        for (yy = clip.y1 + patt->step; yy < clip.y2; yy += patt->step) {
-            n1 = n2 = 0;
-            line = patt->img->data + yy * patt->img->bpl;
-            for (xx = clip.x1; xx < clip.x2; xx++) {
-                idx1 = line[xx + 0];
-                idx2 = line[xx + 1];
-                if (flag > 0) {
-                    if (idx1 == patt->idx1 && idx2 == patt->idx2) {
-                        n1 += 1;
-                        flag = -flag;
-                    }
-                }
-                else {
-                    if (idx1 == patt->idx2 && idx2 == patt->idx1) {
-                        n2 += 1;
-                        flag = -flag;
-                    }
-                }
-            }
-            if (n1 >= patt->gmin && n2 >= patt->gmin &&
-                n1 <= patt->gmax && n2 <= patt->gmax) {
-                patt->nhit += 1;
-                patt->result[patt->ntot] = TRUE;
-            }
-            else {
-                patt->result[patt->ntot] = FALSE;
-            }
-            patt->ntot += 1;
-        }
-    }
-    return (TRUE);
-}
-
-/*
-=======================================
-    释放交替统计参数结果
-=======================================
-*/
-CR_API void_t
-tex_patt_free (
-  __CR_IN__ sTEX_PATTERN*   patt
-    )
-{
-    SAFE_FREE(patt->result);
-}
-
-/*
-=======================================
     纹理网格压缩
 =======================================
 */
@@ -350,6 +150,325 @@ tex_compress (
         }
     }
     return (tex_freq);
+}
+
+/*
+=======================================
+    多维直方图初始化
+=======================================
+*/
+CR_API bool_t
+histo_xd_init (
+  __CR_IO__ sHISTO_XD*  hist
+    )
+{
+    uint_t  idx, bpl;
+
+    /* 参数校验 */
+    if (hist->dim == 0)
+        return (FALSE);
+    if (hist->sze != 1 && hist->sze != 2 && hist->sze != 4)
+        return (FALSE);
+    hist->len = 1;
+    for (idx = 0; idx < hist->dim; idx++)
+    {
+        /* 参数校验 */
+        if (hist->dwn[idx] == 0)
+            return (FALSE);
+        if (hist->min[idx] >= hist->max[idx])
+            return (FALSE);
+
+        /* 计算参数 */
+        bpl = (uint_t)(hist->max[idx] - hist->min[idx]);
+        hist->bpd[idx] = (leng_t)(bpl / hist->dwn[idx]);
+        if (bpl % hist->dwn[idx] != 0)
+            hist->bpd[idx] += 1;
+        hist->len *= hist->bpd[idx];
+        if (idx == 0)
+            hist->stt[idx] = 1;
+        else
+            hist->stt[idx] = hist->stt[idx - 1] * hist->bpd[idx - 1];
+    }
+    hist->map = mem_calloc(hist->len, hist->sze);
+    if (hist->map == NULL)
+        return (FALSE);
+    mem_zero(hist->map, hist->len * hist->sze);
+    return (TRUE);
+}
+
+/*
+=======================================
+    多维直方图释放
+=======================================
+*/
+CR_API void_t
+histo_xd_free (
+  __CR_IO__ sHISTO_XD*  hist
+    )
+{
+    SAFE_FREE(hist->map);
+}
+
+/*
+=======================================
+    多维直方图复位
+=======================================
+*/
+CR_API void_t
+histo_xd_reset (
+  __CR_IO__ sHISTO_XD*  hist
+    )
+{
+    mem_zero(hist->map, hist->len * hist->sze);
+}
+
+/*
+=======================================
+    多维直方图返回索引
+=======================================
+*/
+CR_API bool_t
+histo_xd_index (
+  __CR_IN__ sHISTO_XD*      hist,
+  __CR_OT__ leng_t*         index,
+  __CR_IN__ const sint_t*   value
+    )
+{
+    uint_t  idx, cnt;
+
+    index[0] = 0;
+    for (idx = 0; idx < hist->dim; idx++)
+    {
+        /* 判断范围 */
+        if (value[idx] <  hist->min[idx] ||
+            value[idx] >= hist->max[idx])
+            return (FALSE);
+
+        /* 降采样后计算偏移 */
+        cnt = (uint_t)(value[idx] - hist->min[idx]);
+        cnt /= hist->dwn[idx];
+        if (cnt >= hist->bpd[idx])
+            return (FALSE);
+        index[0] += cnt * hist->stt[idx];
+    }
+    return (TRUE);
+}
+
+/*
+=======================================
+    多维直方图计数 (通过索引)
+=======================================
+*/
+CR_API void_t
+histo_xd_inc (
+  __CR_IN__ sHISTO_XD*  hist,
+  __CR_IN__ leng_t      index
+    )
+{
+    leng_t  idx;
+    byte_t* ptr1;
+    int16u* ptr2;
+    int32u* ptr4;
+
+    switch (hist->sze)
+    {
+        default:
+            break;
+
+        case 1:
+            ptr1 = (byte_t*)hist->map;
+            if (ptr1[index] != 0xFF) {
+                ptr1[index] += 1;
+            }
+            else {
+                for (idx = 0; idx < hist->len; idx++) {
+                    if (idx == index)
+                        continue;
+                    if (ptr1[idx] != 0)
+                        ptr1[idx] -= 1;
+                }
+            }
+            break;
+
+        case 2:
+            ptr2 = (int16u*)hist->map;
+            if (ptr2[index] != 0xFFFF) {
+                ptr2[index] += 1;
+            }
+            else {
+                for (idx = 0; idx < hist->len; idx++) {
+                    if (idx == index)
+                        continue;
+                    if (ptr2[idx] != 0)
+                        ptr2[idx] -= 1;
+                }
+            }
+            break;
+
+        case 4:
+            ptr4 = (int32u*)hist->map;
+            if (ptr4[index] != 0xFFFFFFFFUL) {
+                ptr4[index] += 1;
+            }
+            else {
+                for (idx = 0; idx < hist->len; idx++) {
+                    if (idx == index)
+                        continue;
+                    if (ptr4[idx] != 0)
+                        ptr4[idx] -= 1;
+                }
+            }
+            break;
+    }
+}
+
+/*
+=======================================
+    多维直方图计数 (通过坐标)
+=======================================
+*/
+CR_API bool_t
+histo_xd_inc_ex (
+  __CR_IN__ sHISTO_XD*      hist,
+  __CR_IN__ const sint_t*   value
+    )
+{
+    leng_t  index;
+
+    if (!histo_xd_index(hist, &index, value))
+        return (FALSE);
+    histo_xd_inc(hist, index);
+    return (TRUE);
+}
+
+/*
+=======================================
+    多维直方图反算坐标
+=======================================
+*/
+CR_API bool_t
+histo_xd_get_back (
+  __CR_IN__ sHISTO_XD*  hist,
+  __CR_OT__ sint_t*     value,
+  __CR_IN__ leng_t      index
+    )
+{
+    uint_t  ii, jj, tmp;
+
+    if (index >= hist->len)
+        return (FALSE);
+    for (ii = hist->dim; ii != 0; ii--) {
+        jj = ii - 1;
+        tmp = (uint_t)(index / hist->stt[jj]);
+        index %= hist->stt[jj];
+        value[jj] = tmp * hist->dwn[jj] + hist->dwn[jj] / 2;
+        value[jj] += hist->min[jj];
+    }
+    return (TRUE);
+}
+
+/*
+---------------------------------------
+    节点降序排序
+---------------------------------------
+*/
+static sint_t
+histo_comp (
+  __CR_IN__ const void_t*   elem1,
+  __CR_IN__ const void_t*   elem2
+    )
+{
+    sHISTO_XD_NODE* val1 = (sHISTO_XD_NODE*)elem1;
+    sHISTO_XD_NODE* val2 = (sHISTO_XD_NODE*)elem2;
+
+    /* 降序 */
+    if (val1->freq < val2->freq) return ( 1);
+    if (val1->freq > val2->freq) return (-1);
+    return (0);
+}
+
+/*
+=======================================
+    多维直方图降序排序
+=======================================
+*/
+CR_API sHISTO_XD_NODE*
+histo_xd_sort (
+  __CR_IN__ sHISTO_XD*  hist,
+  __CR_OT__ leng_t*     size
+    )
+{
+    leng_t          idx;
+    leng_t          len;
+    byte_t*         ptr1;
+    int16u*         ptr2;
+    int32u*         ptr4;
+    sHISTO_XD_NODE* list;
+
+    *size = 0;
+
+    switch (hist->sze)
+    {
+        default:
+            return (NULL);
+
+        case 1:
+            ptr1 = (byte_t*)hist->map;
+            for (len = idx = 0; idx < hist->len; idx++) {
+                if (ptr1[idx] != 0)
+                    len++;
+            }
+            if (len == 0) return (NULL);
+            list = mem_talloc(len, sHISTO_XD_NODE);
+            if (list == NULL)
+                return (NULL);
+            for (len = idx = 0; idx < hist->len; idx++) {
+                if (ptr1[idx] != 0) {
+                    list[len].freq = ptr1[idx];
+                    list[len++].index = idx;
+                }
+            }
+            break;
+
+        case 2:
+            ptr2 = (int16u*)hist->map;
+            for (len = idx = 0; idx < hist->len; idx++) {
+                if (ptr2[idx] != 0)
+                    len++;
+            }
+            if (len == 0) return (NULL);
+            list = mem_talloc(len, sHISTO_XD_NODE);
+            if (list == NULL)
+                return (NULL);
+            for (len = idx = 0; idx < hist->len; idx++) {
+                if (ptr2[idx] != 0) {
+                    list[len].freq = ptr2[idx];
+                    list[len++].index = idx;
+                }
+            }
+            break;
+
+        case 4:
+            ptr4 = (int32u*)hist->map;
+            for (len = idx = 0; idx < hist->len; idx++) {
+                if (ptr4[idx] != 0)
+                    len++;
+            }
+            if (len == 0) return (NULL);
+            list = mem_talloc(len, sHISTO_XD_NODE);
+            if (list == NULL)
+                return (NULL);
+            for (len = idx = 0; idx < hist->len; idx++) {
+                if (ptr4[idx] != 0) {
+                    list[len].freq = ptr4[idx];
+                    list[len++].index = idx;
+                }
+            }
+            break;
+    }
+    *size = len;
+    quick_sort(list, len, sizeof(sHISTO_XD_NODE), histo_comp);
+    return (list);
 }
 
 /*****************************************************************************/
