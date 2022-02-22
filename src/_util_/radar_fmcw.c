@@ -325,7 +325,7 @@ radar_fmcw_dist (
             k_max = fmcw->fmcw_fft[idx].re;
             k_idx = idx;
         }
-        dist[idx] = idx * fmcw->ka + fmcw->kb;
+        dist[idx] = radar_fmcw_dist_ex(fmcw, idx);
 
         /* 计算谱线相位 */
         fmcw->fmcw_fft[idx].im = complex_ang(&fmcw->fft_vals[idx]);
