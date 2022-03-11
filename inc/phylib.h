@@ -678,7 +678,7 @@ CR_API fpxx_t   covariance (const fpxx_t *x, const fpxx_t *y,
                             uint_t count, fpxx_t *pxy);
 
 /*****************************************************************************/
-/*                                   变换                                    */
+/*                                   代数                                    */
 /*****************************************************************************/
 
 /* 复数结构 */
@@ -692,7 +692,10 @@ typedef struct
 /* 一些常用的复数运算 */
 CR_API fpxx_t       complex_abs (const sCOMPLEX *c);
 CR_API fpxx_t       complex_ang (const sCOMPLEX *c);
+CR_API sCOMPLEX*    complex_con (sCOMPLEX *r, const sCOMPLEX *c);
 CR_API sCOMPLEX*    complex_exp (sCOMPLEX *r, const sCOMPLEX *c);
+CR_API bool_t       complex_equ (const sCOMPLEX *c1, const sCOMPLEX *c2,
+                                 fpxx_t dlt CR_DEFAULT(CR_ABITX));
 CR_API sCOMPLEX*    complex_mak (sCOMPLEX *r, fpxx_t length, fpxx_t theta);
 CR_API sCOMPLEX*    complex_add (sCOMPLEX *r, const sCOMPLEX *c1,
                                               const sCOMPLEX *c2);
@@ -702,6 +705,44 @@ CR_API sCOMPLEX*    complex_mul (sCOMPLEX *r, const sCOMPLEX *c1,
                                               const sCOMPLEX *c2);
 CR_API sCOMPLEX*    complex_div (sCOMPLEX *r, const sCOMPLEX *c1,
                                               const sCOMPLEX *c2);
+/* 矩阵结构 */
+typedef struct
+{
+        uint_t  cols;   /* 列数 */
+        uint_t  rows;   /* 行数 */
+        fpxx_t* vals;   /* 数据 */
+
+} sMATRIX2;
+
+/* 一些常用的矩阵运算 */
+CR_API sMATRIX2*    matrix2_new (sMATRIX2 *m);
+CR_API void_t       matrix2_del (sMATRIX2 *m);
+CR_API sMATRIX2*    matrix2_set (const sMATRIX2 *m, fpxx_t v);
+CR_API sMATRIX2*    matrix2_dlg (const sMATRIX2 *m, fpxx_t v);
+CR_API sMATRIX2*    matrix2_cpy (sMATRIX2 *dm, const sMATRIX2 *sm);
+CR_API sMATRIX2*    matrix2_trn (sMATRIX2 *dm, const sMATRIX2 *sm);
+CR_API sMATRIX2*    matrix2_sadd (const sMATRIX2 *m, fpxx_t v);
+CR_API sMATRIX2*    matrix2_smul (const sMATRIX2 *m, fpxx_t v);
+CR_API sMATRIX2*    matrix2_add2 (const sMATRIX2 *dm, const sMATRIX2 *sm);
+CR_API sMATRIX2*    matrix2_add3 (sMATRIX2 *dm, const sMATRIX2 *m1,
+                                  const sMATRIX2 *m2);
+CR_API sMATRIX2*    matrix2_sub2 (const sMATRIX2 *dm, const sMATRIX2 *sm);
+CR_API sMATRIX2*    matrix2_sub3 (sMATRIX2 *dm, const sMATRIX2 *m1,
+                                  const sMATRIX2 *m2);
+CR_API sMATRIX2*    matrix2_dot2 (const sMATRIX2 *dm, const sMATRIX2 *sm);
+CR_API sMATRIX2*    matrix2_dot3 (sMATRIX2 *dm, const sMATRIX2 *m1,
+                                  const sMATRIX2 *m2);
+CR_API sMATRIX2*    matrix2_vmul (sMATRIX2 *dm, const sMATRIX2 *m1,
+                                  const sMATRIX2 *m2);
+CR_API sMATRIX2*    matrix2_det (fpxx_t *v, const sMATRIX2 *m);
+CR_API bool_t       matrix2_equ (const sMATRIX2 *m1, const sMATRIX2 *m2,
+                                 fpxx_t dlt CR_DEFAULT(CR_ABITX));
+CR_API sMATRIX2*    matrix2_inv (sMATRIX2 *dm, const sMATRIX2 *sm);
+
+/*****************************************************************************/
+/*                                   变换                                    */
+/*****************************************************************************/
+
 /* 快速傅立叶变换 */
 CR_API sCOMPLEX*    fft1_init (sCOMPLEX *W, sint_t power);
 CR_API sCOMPLEX*    fft1_func (sCOMPLEX *FD, const sCOMPLEX *TD,
@@ -722,6 +763,12 @@ CR_API void_t   winfunc_hann_symmetric (double *W, sint_t N);
 CR_API void_t   winfunc_hanning_symmetric (double *W, sint_t N);
 CR_API void_t   winfunc_blackman (double *W, sint_t N, double alpha);
 CR_API void_t   winfunc_gaussian (double *W, sint_t N, double alpha);
+
+/* Clarke & Park 变换 */
+CR_API void_t   clarke_func2 (fp32_t Xab[2], const fp32_t Iab[2], fp32_t P);
+CR_API void_t   clarke_func3 (fp32_t Xab[2], const fp32_t Iabc[3], fp32_t P);
+CR_API void_t   park_func (fp32_t Ydq[2], const fp32_t Xab[2], fp32_t theta);
+CR_API void_t   park_invert (fp32_t Xab[2], const fp32_t Ydq[2], fp32_t theta);
 
 #endif  /* !__CR_PHYLIB_H__ */
 

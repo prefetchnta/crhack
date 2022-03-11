@@ -198,7 +198,7 @@ _func ( \
 =======================================
 */
 tmpl_numb_gcd(numb_gcd  , uint_t)
-tmpl_numb_lcm(numb_lcm  , uint_t, numb_gcd)
+tmpl_numb_lcm(numb_lcm  , uint_t, numb_gcd  )
 tmpl_numb_gcd(numb_gcd32, int32u)
 tmpl_numb_lcm(numb_lcm32, int32u, numb_gcd32)
 tmpl_numb_gcd(numb_gcd64, int64u)

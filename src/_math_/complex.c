@@ -51,6 +51,22 @@ complex_ang (
 
 /*
 =======================================
+    复数共轭
+=======================================
+*/
+CR_API sCOMPLEX*
+complex_con (
+  __CR_OT__ sCOMPLEX*       r,
+  __CR_IN__ const sCOMPLEX* c
+    )
+{
+    r->re =  c->re;
+    r->im = -c->im;
+    return (r);
+}
+
+/*
+=======================================
     复数指数
 =======================================
 */
@@ -63,6 +79,25 @@ complex_exp (
     r->re = XEXP(c->re) * XCOS(c->im);
     r->im = XEXP(c->re) * XSIN(c->im);
     return (r);
+}
+
+/*
+=======================================
+    复数比较
+=======================================
+*/
+CR_API bool_t
+complex_equ (
+  __CR_IN__ const sCOMPLEX* c1,
+  __CR_IN__ const sCOMPLEX* c2,
+  __CR_IN__ fpxx_t          dlt
+    )
+{
+    if (XABS(c1->re - c2->re) > dlt)
+        return (FALSE);
+    if (XABS(c1->im - c2->im) > dlt)
+        return (FALSE);
+    return (TRUE);
 }
 
 /*

@@ -28,8 +28,10 @@ SRC_3RD=..$(L)src$(L)ex3rd$(L)
 OBJS=$(OBJ)math.$(O) \
      $(OBJ)combine.$(O) \
      $(OBJ)complex.$(O) \
+     $(OBJ)matrix2.$(O) \
      $(OBJ)winfunc.$(O) \
      $(OBJ)fft1.$(O) \
+     $(OBJ)motors.$(O) \
      $(OBJ)bspace.$(O) \
      $(OBJ)cu50_r2t.$(O) \
      $(OBJ)cu50_t2r.$(O) \
@@ -81,8 +83,10 @@ OBJS=$(OBJ)math.$(O) \
 CPPS=$(SRC)math.$(C) \
      $(SRC)combine.$(C) \
      $(SRC)complex.$(C) \
+     $(SRC)matrix2.$(C) \
      $(SRC)winfunc.$(C) \
      $(SRC)fft1.$(C) \
+     $(SRC)motors.$(C) \
      $(SRC)bspace.$(C) \
      $(SRC)cu50_r2t.$(C) \
      $(SRC)cu50_t2r.$(C) \

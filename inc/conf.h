@@ -655,7 +655,9 @@
     /*
 #undef  _CR_USE_FP32_
     */
-#define _CR_USE_FP64_
+#ifndef _CR_USE_FP32_
+    #define _CR_USE_FP64_
+#endif
 
 #endif  /* !__CR_CONF_H__ */
 
