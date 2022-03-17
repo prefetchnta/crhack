@@ -58,49 +58,42 @@ radar_fmcw_init (
         fmcw->bit_size = sizeof(int32u);
 
     /* 缓存区分配 */
-    fmcw->fft_tmp1 = mem_talloc(fmcw->fft_max, fpxx_t);
-    if (fmcw->fft_tmp1 == NULL)
+    fmcw->fft_temp = mem_talloc(fmcw->fft_max, fpxx_t);
+    if (fmcw->fft_temp == NULL)
         goto _failure2;
-    fmcw->fft_tmp2 = mem_talloc(fmcw->fft_max, fpxx_t);
-    if (fmcw->fft_tmp2 == NULL)
-        goto _failure3;
     fmcw->fft_back = mem_talloc(fmcw->fft_max, fpxx_t);
     if (fmcw->fft_back == NULL)
-        goto _failure4;
+        goto _failure3;
     fmcw->fft_bits = mem_talloc(fmcw->bit_size, byte_t);
     if (fmcw->fft_bits == NULL)
-        goto _failure5;
+        goto _failure4;
     fmcw->fmcw_fft = mem_talloc(fmcw->fft_max, sCOMPLEX);
     if (fmcw->fmcw_fft == NULL)
-        goto _failure6;
+        goto _failure5;
 
     /* FFT 初始化 */
     fmcw->fft_coes = fft1_init(NULL, fmcw->npower);
     if (fmcw->fft_coes == NULL)
-        goto _failure7;
+        goto _failure6;
     fmcw->chk_time = 0;
-    mem_zero(fmcw->fft_tmp1, fmcw->fft_max * sizeof(fpxx_t));
-    mem_zero(fmcw->fft_tmp2, fmcw->fft_max * sizeof(fpxx_t));
+    mem_zero(fmcw->fft_temp, fmcw->fft_max * sizeof(fpxx_t));
     mem_zero(fmcw->fft_back, fmcw->fft_max * sizeof(fpxx_t));
     mem_zero(fmcw->fft_bits, fmcw->bit_size * sizeof(byte_t));
     mem_zero(fmcw->fmcw_fft, fmcw->fft_max * sizeof(sCOMPLEX));
     return (TRUE);
 
-_failure7:
+_failure6:
     mem_free(fmcw->fmcw_fft);
     fmcw->fmcw_fft = NULL;
-_failure6:
+_failure5:
     mem_free(fmcw->fft_bits);
     fmcw->fft_bits = NULL;
-_failure5:
+_failure4:
     mem_free(fmcw->fft_back);
     fmcw->fft_back = NULL;
-_failure4:
-    mem_free(fmcw->fft_tmp2);
-    fmcw->fft_tmp2 = NULL;
 _failure3:
-    mem_free(fmcw->fft_tmp1);
-    fmcw->fft_tmp1 = NULL;
+    mem_free(fmcw->fft_temp);
+    fmcw->fft_temp = NULL;
 _failure2:
     mem_free(fmcw->fft_vals);
     fmcw->fft_vals = NULL;
@@ -120,8 +113,7 @@ radar_fmcw_free (
   __CR_IN__ sFMCW*  fmcw
     )
 {
-    SAFE_FREE(fmcw->fft_tmp1);
-    SAFE_FREE(fmcw->fft_tmp2);
+    SAFE_FREE(fmcw->fft_temp);
     SAFE_FREE(fmcw->fft_back);
     SAFE_FREE(fmcw->fft_data);
     SAFE_FREE(fmcw->fft_coes);
@@ -142,7 +134,6 @@ radar_fmcw_pass (
   __CR_IN__ bool_t          reset
     )
 {
-    fpxx_t  pxy;
     sint_t  cnt, rst;
     sint_t  idx, chalf;
 
@@ -177,17 +168,9 @@ radar_fmcw_pass (
 
     /* 计算幅值 */
     chalf = fmcw->fft_cnts / 2;
-    for (idx = 0; idx < fmcw->fft_max; idx++)
-        fmcw->fft_tmp1[idx] = complex_abs(&fmcw->fft_vals[idx]) / chalf;
-
-    /* 相关性测试 */
-    covariance(fmcw->fft_tmp2, fmcw->fft_tmp1, fmcw->fft_max, &pxy);
-    mem_cpy(fmcw->fft_tmp2, fmcw->fft_tmp1, fmcw->fft_max * sizeof(fpxx_t));
-
-    /* 丢弃不相关数据 */
-    if (XABS(pxy) <= fmcw->cut_pxy) {
-        fmcw->chk_time = 0;
-        return (0);
+    for (idx = 0; idx < fmcw->fft_max; idx++) {
+        fmcw->fft_temp[idx] = complex_abs(&fmcw->fft_vals[idx]) / chalf;
+        fmcw->fft_temp[idx] *= fmcw->fft_mul;
     }
 
     /* 谱线采样的类型 */
@@ -195,7 +178,7 @@ radar_fmcw_pass (
     {
         /* 单次采样 */
         for (idx = 0; idx < fmcw->fft_max; idx++)
-            fmcw->fmcw_fft[idx].re = fmcw->fft_tmp1[idx];
+            fmcw->fmcw_fft[idx].re = fmcw->fft_temp[idx];
     }
     else
     {
@@ -208,13 +191,13 @@ radar_fmcw_pass (
 
                 case CR_FMCW_AVG:
                     for (idx = 0; idx < fmcw->fft_max; idx++)
-                        fmcw->fmcw_fft[idx].re += fmcw->fft_tmp1[idx];
+                        fmcw->fmcw_fft[idx].re += fmcw->fft_temp[idx];
                     break;
 
                 case CR_FMCW_MAX:
                     for (idx = 0; idx < fmcw->fft_max; idx++) {
-                        if (fmcw->fmcw_fft[idx].re < fmcw->fft_tmp1[idx])
-                            fmcw->fmcw_fft[idx].re = fmcw->fft_tmp1[idx];
+                        if (fmcw->fmcw_fft[idx].re < fmcw->fft_temp[idx])
+                            fmcw->fmcw_fft[idx].re = fmcw->fft_temp[idx];
                     }
                     break;
             }
@@ -257,7 +240,8 @@ radar_fmcw_pass (
 */
 CR_API void_t
 radar_fmcw_cutdown (
-  __CR_IN__ const sFMCW*    fmcw
+  __CR_IN__ const sFMCW*    fmcw,
+  __CR_IN__ bool_t          noback
     )
 {
     byte_t  mask;
@@ -276,6 +260,8 @@ radar_fmcw_cutdown (
                 continue;
             if (fmcw->fmcw_fft[idx].re <= fmcw->cut_fft)
                 fmcw->fft_bits[cnt] &= ~mask;
+            if (noback && fmcw->fmcw_fft[idx].re <= fmcw->fft_back[idx])
+                fmcw->fft_bits[cnt] &= ~mask;
         }
     }
     else
@@ -290,6 +276,8 @@ radar_fmcw_cutdown (
             if (!(fmcw->fft_bits[cnt] & mask))
                 continue;
             if (fmcw->fmcw_fft[idx].re <= fmcw->cut_lst[idx])
+                fmcw->fft_bits[cnt] &= ~mask;
+            if (noback && fmcw->fmcw_fft[idx].re <= fmcw->fft_back[idx])
                 fmcw->fft_bits[cnt] &= ~mask;
         }
     }

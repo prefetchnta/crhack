@@ -35,7 +35,7 @@ typedef struct
         fp32_t          ka, kb;     /* 测距标定参数 */
         sint_t          npower;     /* FFT 点数参数 */
         sint_t          fft_max;    /* 最远频谱点位 */
-        fpxx_t          cut_pxy;    /* 频谱相关系数 */
+        fpxx_t          fft_mul;    /* 频谱修正系数 */
         fpxx_t          cut_fft;    /* 幅值掐断门限 */
         const fpxx_t*   cut_lst;    /* 幅值掐断门限 */
         const fpxx_t*   fft_win;    /* FFT 的窗函数 */
@@ -43,8 +43,7 @@ typedef struct
         /* 临时缓存 */
         uint_t      chk_time;
         uint_t      bit_size;
-        fpxx_t*     fft_tmp1;
-        fpxx_t*     fft_tmp2;
+        fpxx_t*     fft_temp;
         fpxx_t*     fft_back;
         sCOMPLEX*   fft_data;
         sCOMPLEX*   fft_coes;
@@ -65,7 +64,7 @@ CR_API bool_t   radar_fmcw_init (sFMCW *fmcw);
 CR_API void_t   radar_fmcw_free (sFMCW *fmcw);
 CR_API sint_t   radar_fmcw_pass (sFMCW *fmcw, const sint_t *data,
                                  bool_t reset);
-CR_API void_t   radar_fmcw_cutdown (const sFMCW *fmcw);
+CR_API void_t   radar_fmcw_cutdown (const sFMCW *fmcw, bool_t noback);
 CR_API sint_t   radar_fmcw_dist (const sFMCW *fmcw, fp32_t *dist);
 CR_API fp32_t   radar_fmcw_dist_ex (const sFMCW *fmcw, sint_t k_idx);
 CR_API fp32_t   radar_fmcw_base_ex (const sFMCW *fmcw, sint_t k_idx);
