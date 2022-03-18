@@ -245,6 +245,7 @@ radar_fmcw_cutdown (
     )
 {
     byte_t  mask;
+    fpxx_t  value;
     sint_t  idx, cnt, rst;
 
     if (fmcw->cut_lst == NULL)
@@ -258,9 +259,9 @@ radar_fmcw_cutdown (
             mask = (byte_t)(1 << (7 - rst));
             if (!(fmcw->fft_bits[cnt] & mask))
                 continue;
-            if (fmcw->fmcw_fft[idx].re <= fmcw->cut_fft)
-                fmcw->fft_bits[cnt] &= ~mask;
-            if (noback && fmcw->fmcw_fft[idx].re <= fmcw->fft_back[idx])
+            value = fmcw->fmcw_fft[idx].re;
+            if (noback) value -= fmcw->fft_back[idx];
+            if (value <= fmcw->cut_fft)
                 fmcw->fft_bits[cnt] &= ~mask;
         }
     }
@@ -275,9 +276,9 @@ radar_fmcw_cutdown (
             mask = (byte_t)(1 << (7 - rst));
             if (!(fmcw->fft_bits[cnt] & mask))
                 continue;
-            if (fmcw->fmcw_fft[idx].re <= fmcw->cut_lst[idx])
-                fmcw->fft_bits[cnt] &= ~mask;
-            if (noback && fmcw->fmcw_fft[idx].re <= fmcw->fft_back[idx])
+            value = fmcw->fmcw_fft[idx].re;
+            if (noback) value -= fmcw->fft_back[idx];
+            if (value <= fmcw->cut_lst[idx])
                 fmcw->fft_bits[cnt] &= ~mask;
         }
     }
