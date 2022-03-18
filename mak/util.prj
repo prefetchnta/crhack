@@ -109,20 +109,7 @@ LUA_CPPS=$(SRC)lua$(L)lapi.$(C) \
 ##                               CRHACK/UTIL                                 ##
 ###############################################################################
 
-OBJS=$(OBJ)rfgeo.$(O) \
-     $(OBJ)rfgeo_halo.$(O) \
-     $(OBJ)rfgeo_lpass.$(O) \
-     $(OBJ)rfgeo_average.$(O) \
-     $(OBJ)rfgeo_median.$(O) \
-     $(OBJ)rfgeo_kalman.$(O) \
-     $(OBJ)rfgeo_gate9.$(O) \
-     $(OBJ)rfgeo_vector.$(O) \
-     $(OBJ)rfgeo_tempc.$(O) \
-     $(OBJ)rfgeo_evals.$(O) \
-     $(OBJ)rfgeo_judge.$(O) \
-     $(OBJ)rfgeo_float.$(O) \
-     $(OBJ)rfgeo_total.$(O) \
-     $(OBJ)cpage437.$(O) \
+OBJS=$(OBJ)cpage437.$(O) \
      $(OBJ)cpage720.$(O) \
      $(OBJ)cpage737.$(O) \
      $(OBJ)cpage771.$(O) \
@@ -148,20 +135,7 @@ OBJS=$(OBJ)rfgeo.$(O) \
      $(OBJ)holidays.$(O) \
      $(OBJ)bjnetcomm.$(O)
 
-CPPS=$(SRC)rfgeo.$(C) \
-     $(SRC)rfgeo_halo.$(C) \
-     $(SRC)rfgeo_lpass.$(C) \
-     $(SRC)rfgeo_average.$(C) \
-     $(SRC)rfgeo_median.$(C) \
-     $(SRC)rfgeo_kalman.$(C) \
-     $(SRC)rfgeo_gate9.$(C) \
-     $(SRC)rfgeo_vector.$(C) \
-     $(SRC)rfgeo_tempc.$(C) \
-     $(SRC)rfgeo_evals.$(C) \
-     $(SRC)rfgeo_judge.$(C) \
-     $(SRC)rfgeo_float.$(C) \
-     $(SRC)rfgeo_total.$(C) \
-     $(SRC)cpage437.$(C) \
+CPPS=$(SRC)cpage437.$(C) \
      $(SRC)cpage720.$(C) \
      $(SRC)cpage737.$(C) \
      $(SRC)cpage771.$(C) \

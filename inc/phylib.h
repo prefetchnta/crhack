@@ -125,8 +125,47 @@ typedef struct
 
 } sMAGGEO;
 
+/* 基础计算 */
 CR_API bool_t   maggeo_param (sMAGGEO *mag, sint_t x, sint_t z, sint_t y);
 CR_API fp32_t   maggeo_angle (const sMAGGEO *mag1, const sMAGGEO *mag2);
+
+/* 9维特征向量 [dX, dY, dZ, dH, dF, dD, dI, dE, dC] */
+/*              曼哈顿距离, 极坐标下的偏差, 欧氏距离, 余玄相似度 */
+CR_API void_t   maggeo_delta (fp32_t dvec[9], const sMAGGEO *mag_crrt,
+                                    const sMAGGEO *mag_base);
+/* 九门估值算法参数 */
+typedef struct
+{
+        /* X, Y, Z 大中小取值 */
+        sint_t  gate_x_lms[3];
+        sint_t  gate_y_lms[3];
+        sint_t  gate_z_lms[3];
+
+        /* X, Y, Z 轴的缩放值 */
+        /* < 0 默认 (1.0, 1.0, 1.0) */
+        fp32_t  scale_xyz[3];
+
+        /* X, Y, Z 轴影响权重 */
+        /* < 0 默认 (1.0, 1.0, 1.0) */
+        fp32_t  weight_xyz[3];
+
+        /* 大中小百分比取值 */
+        /* <=0 默认 X(121%, 55%, 33%)
+                    Y(99%, 44%, 16.5%)
+                    Z(121%, 55%, 33%) */
+        fp32_t  probe_x_lms[3];
+        fp32_t  probe_y_lms[3];
+        fp32_t  probe_z_lms[3];
+
+} sRFGEO_GATE9;
+
+/* 九门估值算法 */
+CR_API bool_t   gate9_check (sRFGEO_GATE9 *param);
+CR_API fp32_t   gate9_evaluate (const sint_t *xyzt, const sint_t *base,
+                                const sRFGEO_GATE9 *param);
+/* 九门判定算法 */
+CR_API bool_t   gate9_judgment (const sint_t *xyzt, const sint_t *base,
+                                const sRFGEO_GATE9 *param, fp32_t updn);
 
 /*****************************************************************************/
 /*                                   颜色                                    */
@@ -856,7 +895,7 @@ typedef struct
 #define CR_FMCW_AVG     1   /* 均值滤波 */
 #define CR_FMCW_MAX     2   /* 大值滤波 */
 
-/* FMCW 计算 */
+/* FMCW 测距 */
 CR_API bool_t   radar_fmcw_init (sFMCW *fmcw);
 CR_API void_t   radar_fmcw_free (sFMCW *fmcw);
 CR_API sint_t   radar_fmcw_pass (sFMCW *fmcw, const sint_t *data,
@@ -866,7 +905,7 @@ CR_API sint_t   radar_fmcw_dist (const sFMCW *fmcw, fp32_t *dist);
 CR_API fp32_t   radar_fmcw_dist_ex (const sFMCW *fmcw, sint_t k_idx);
 CR_API fp32_t   radar_fmcw_base_ex (const sFMCW *fmcw, sint_t k_idx);
 
-/* CFAR 计算 */
+/* CFAR 滤波 */
 CR_API void_t   radar_cfar_ca (fpxx_t *cut_lst, const sFMCW *input,
                                fpxx_t param_mul, fpxx_t param_add,
                                sint_t guard_len, sint_t noise_len);
