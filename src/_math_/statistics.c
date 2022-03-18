@@ -103,11 +103,82 @@ covariance (
     if (pxy != NULL) {
         sdx *= sdy;
         if (sdx <= CR_ABITX)
-            *pxy = 0;
+            *pxy = (XABS(exy) <= CR_ABITX) ? 1 : 0;
         else
             *pxy = exy / XSQRT(sdx);
     }
     return (exy);
+}
+
+/*
+=======================================
+    皮尔逊相似度
+=======================================
+*/
+CR_API fpxx_t
+sim_pearson (
+  __CR_IN__ const fpxx_t*   x,
+  __CR_IN__ const fpxx_t*   y,
+  __CR_IN__ uint_t          num
+    )
+{
+    fpxx_t  pxy;
+
+    covariance(x, y, num, &pxy);
+    return (pxy);
+}
+
+/*
+=======================================
+    欧式相似度
+=======================================
+*/
+CR_API fpxx_t
+sim_euclidean (
+  __CR_IN__ const fpxx_t*   x,
+  __CR_IN__ const fpxx_t*   y,
+  __CR_IN__ uint_t          num
+    )
+{
+    uint_t  idx;
+    fpxx_t  tmp, dlt2 = 0, sum2 = 0;
+
+    for (idx = 0; idx < num; idx++) {
+        tmp  = x[idx];
+        sum2 += tmp * tmp;
+        tmp -= y[idx];
+        dlt2 += tmp * tmp;
+    }
+    if (sum2 <= CR_ABITX)
+        return ((dlt2 <= CR_ABITX) ? 1 : 0);
+    return (1 - XSQRT(dlt2 / sum2));
+}
+
+/*
+=======================================
+    余弦相似度
+=======================================
+*/
+CR_API fpxx_t
+sim_cosine (
+  __CR_IN__ const fpxx_t*   x,
+  __CR_IN__ const fpxx_t*   y,
+  __CR_IN__ uint_t          num
+    )
+{
+    uint_t  idx;
+    fpxx_t  mul = 0, dv1 = 0, dv2 = 0;
+
+    for (idx = 0; idx < num; idx++) {
+        mul += x[idx] * y[idx];
+        dv1 += x[idx] * x[idx];
+        dv2 += y[idx] * y[idx];
+    }
+    dv1  = XSQRT(dv1);
+    dv1 *= XSQRT(dv2);
+    if (dv1 <= CR_ABITX)
+        return ((XABS(mul) <= CR_ABITX) ? 1 : 0);
+    return (mul / dv1);
 }
 
 /*****************************************************************************/

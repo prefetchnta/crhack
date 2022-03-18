@@ -33,6 +33,7 @@ OBJS=$(OBJ)math.$(O) \
      $(OBJ)fft1.$(O) \
      $(OBJ)motors.$(O) \
      $(OBJ)bspace.$(O) \
+     $(OBJ)rf_loc.$(O) \
      $(OBJ)cu50_r2t.$(O) \
      $(OBJ)cu50_t2r.$(O) \
      $(OBJ)pt100_r2t.$(O) \
@@ -71,6 +72,8 @@ OBJS=$(OBJ)math.$(O) \
      $(OBJ)pregnant.$(O) \
      $(OBJ)pf_astar.$(O) \
      $(OBJ)pf_dijkstra.$(O) \
+     $(OBJ)radar_cfar.$(O) \
+     $(OBJ)radar_fmcw.$(O) \
      $(OBJ)earth.$(O) \
      $(OBJ)vmaggeo.$(O) \
      $(OBJ)ctl_pid.$(O) \
@@ -88,6 +91,7 @@ CPPS=$(SRC)math.$(C) \
      $(SRC)fft1.$(C) \
      $(SRC)motors.$(C) \
      $(SRC)bspace.$(C) \
+     $(SRC)rf_loc.$(C) \
      $(SRC)cu50_r2t.$(C) \
      $(SRC)cu50_t2r.$(C) \
      $(SRC)pt100_r2t.$(C) \
@@ -126,6 +130,8 @@ CPPS=$(SRC)math.$(C) \
      $(SRC)pregnant.$(C) \
      $(SRC)pf_astar.$(C) \
      $(SRC)pf_dijkstra.$(C) \
+     $(SRC)radar_cfar.$(C) \
+     $(SRC)radar_fmcw.$(C) \
      $(SRC)earth.$(C) \
      $(SRC)vmaggeo.$(C) \
      $(SRC)ctl_pid.$(C) \
