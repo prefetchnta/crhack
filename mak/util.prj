@@ -131,9 +131,7 @@ OBJS=$(OBJ)cpage437.$(O) \
      $(OBJ)cpage949.$(O) \
      $(OBJ)cpage950.$(O) \
      $(OBJ)filelib.$(O) \
-     $(OBJ)httplib.$(O) \
-     $(OBJ)holidays.$(O) \
-     $(OBJ)bjnetcomm.$(O)
+     $(OBJ)httplib.$(O)
 
 CPPS=$(SRC)cpage437.$(C) \
      $(SRC)cpage720.$(C) \
@@ -157,9 +155,7 @@ CPPS=$(SRC)cpage437.$(C) \
      $(SRC)cpage949.$(C) \
      $(SRC)cpage950.$(C) \
      $(SRC)filelib.$(C) \
-     $(SRC)httplib.$(C) \
-     $(SRC)holidays.$(C) \
-     $(SRC)bjnetcomm.$(C)
+     $(SRC)httplib.$(C)
 
 ###############################################################################
 ##                             各个编译器的配置                              ##
