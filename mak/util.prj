@@ -109,7 +109,9 @@ LUA_CPPS=$(SRC)lua$(L)lapi.$(C) \
 ##                               CRHACK/UTIL                                 ##
 ###############################################################################
 
-OBJS=$(OBJ)cpage437.$(O) \
+OBJS=$(OBJ)filelib.$(O) \
+     $(OBJ)httplib.$(O) \
+     $(OBJ)cpage437.$(O) \
      $(OBJ)cpage720.$(O) \
      $(OBJ)cpage737.$(O) \
      $(OBJ)cpage771.$(O) \
@@ -129,11 +131,11 @@ OBJS=$(OBJ)cpage437.$(O) \
      $(OBJ)cpage932.$(O) \
      $(OBJ)cpage936.$(O) \
      $(OBJ)cpage949.$(O) \
-     $(OBJ)cpage950.$(O) \
-     $(OBJ)filelib.$(O) \
-     $(OBJ)httplib.$(O)
+     $(OBJ)cpage950.$(O)
 
-CPPS=$(SRC)cpage437.$(C) \
+CPPS=$(SRC)filelib.$(C) \
+     $(SRC)httplib.$(C) \
+     $(SRC)cpage437.$(C) \
      $(SRC)cpage720.$(C) \
      $(SRC)cpage737.$(C) \
      $(SRC)cpage771.$(C) \
@@ -153,9 +155,7 @@ CPPS=$(SRC)cpage437.$(C) \
      $(SRC)cpage932.$(C) \
      $(SRC)cpage936.$(C) \
      $(SRC)cpage949.$(C) \
-     $(SRC)cpage950.$(C) \
-     $(SRC)filelib.$(C) \
-     $(SRC)httplib.$(C)
+     $(SRC)cpage950.$(C)
 
 ###############################################################################
 ##                             各个编译器的配置                              ##
