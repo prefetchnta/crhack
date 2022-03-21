@@ -744,6 +744,9 @@ CR_API void_t   xfilter_normal (fpxx_t *a, fpxx_t *b, uint_t nab);
 CR_API void_t   xfilter (fpxx_t *y, const fpxx_t *x, uint_t nxy,
                          const fpxx_t *a, const fpxx_t *b, uint_t nab,
                          const fpxx_t *zi CR_DEFAULT(NULL));
+/* 零相位滤波器 */
+CR_API bool_t   xfiltfilt (fpxx_t *y, const fpxx_t *x, uint_t nxy,
+                           const fpxx_t *a, const fpxx_t *b, uint_t nab);
 
 /*****************************************************************************/
 /*                                   统计                                    */
