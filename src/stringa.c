@@ -94,7 +94,8 @@ str_half2full (
 */
 CR_API ansi_t*
 url_encode (
-  __CR_IN__ const ansi_t*   str
+  __CR_IN__ const ansi_t*   str,
+  __CR_IN__ bool_t          slash
     )
 {
     byte_t  cha;
@@ -110,66 +111,16 @@ url_encode (
 
     /* 开始转换编码 */
     for (idx = 0; idx < len; idx++) {
-        cha = *str++;
-        if (cha < 0x20 || cha > 0x7E) {
+        cha = *str++;   /* ~ 也转义掉 */
+        if (is_alnumA(cha) || cha == CR_AC('-') ||
+            cha == CR_AC('_') || cha == CR_AC('.') ||
+            (cha == CR_AC('/') && !slash)) {
+            *ptr++ = (ansi_t)cha;
+        }
+        else {
             *ptr++ = CR_AC('%');
             *ptr++ = s_hex2asc[cha >>   4];
             *ptr++ = s_hex2asc[cha & 0x0F];
-            continue;
-        }
-
-        /* 只转义需要转义的特殊字符 */
-        switch (cha)
-        {
-            default:
-                *ptr++ = (ansi_t)cha;
-                break;
-
-            case CR_AC(' '):
-                *ptr++ = CR_AC('+');
-                break;
-
-            case CR_AC('#'):
-                *ptr++ = CR_AC('%');
-                *ptr++ = CR_AC('2');
-                *ptr++ = CR_AC('3');
-                break;
-
-            case CR_AC('%'):
-                *ptr++ = CR_AC('%');
-                *ptr++ = CR_AC('2');
-                *ptr++ = CR_AC('5');
-                break;
-
-            case CR_AC('&'):
-                *ptr++ = CR_AC('%');
-                *ptr++ = CR_AC('2');
-                *ptr++ = CR_AC('6');
-                break;
-
-            case CR_AC('+'):
-                *ptr++ = CR_AC('%');
-                *ptr++ = CR_AC('2');
-                *ptr++ = CR_AC('B');
-                break;
-
-            case CR_AC('/'):
-                *ptr++ = CR_AC('%');
-                *ptr++ = CR_AC('2');
-                *ptr++ = CR_AC('F');
-                break;
-
-            case CR_AC('='):
-                *ptr++ = CR_AC('%');
-                *ptr++ = CR_AC('3');
-                *ptr++ = CR_AC('D');
-                break;
-
-            case CR_AC('?'):
-                *ptr++ = CR_AC('%');
-                *ptr++ = CR_AC('3');
-                *ptr++ = CR_AC('F');
-                break;
         }
     }
     *ptr++ = CR_AC(NIL);
@@ -217,13 +168,16 @@ url_decode (
         if (cha == CR_AC('%')) {
             if (idx + 3 > len)
                 goto _failure;
-            if (is_digitA(*str))
+            if (is_digitA(*str)) {
                 val = (byte_t)((0x0F & *str++));
+            }
             else
-            if (is_xnumbA(*str))
+            if (is_xnumbA(*str)) {
                 val = (byte_t)((0x0F & *str++) + 9);
-            else
+            }
+            else {
                 goto _failure;
+            }
 
             if (is_digitA(*str)) {
                 val <<= 4;

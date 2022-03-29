@@ -326,7 +326,7 @@ CR_API ansi_t*  text_wrap1 (const ansi_t *text, uint_t count,
 CR_API ansi_t*  text_wrap2 (const ansi_t *text, uint_t count,
                             offs_cha_t get_offs);
 /* URL 编码转换 */
-CR_API ansi_t*  url_encode (const ansi_t *str);
+CR_API ansi_t*  url_encode (const ansi_t *str, bool_t slash);
 CR_API ansi_t*  url_decode (const ansi_t *str);
 
 /*****************************************************************************/

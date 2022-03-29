@@ -767,6 +767,12 @@ CR_API fpxx_t   sim_pearson (const fpxx_t *x, const fpxx_t *y, uint_t num);
 CR_API fpxx_t   sim_euclidean (const fpxx_t *x, const fpxx_t *y, uint_t num);
 CR_API fpxx_t   sim_cosine (const fpxx_t *x, const fpxx_t *y, uint_t num);
 
+/* DTW 距离计算 */
+CR_API fpxx_t   distance_dtw (const fpxx_t *x, uint_t nx,
+                              const fpxx_t *y, uint_t ny,
+                              uint_t **path CR_DEFAULT(NULL),
+                              uint_t *count CR_DEFAULT(NULL));
+
 /*****************************************************************************/
 /*                                   代数                                    */
 /*****************************************************************************/
