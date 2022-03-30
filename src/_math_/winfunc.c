@@ -131,11 +131,11 @@ winfunc_sine (
 
 /*
 =======================================
-    汉宁/海明窗
+    海明窗
 =======================================
 */
 CR_API void_t
-winfunc_hann (
+winfunc_hamming (
   __CR_OT__ double* W,
   __CR_IN__ sint_t  N,
   __CR_IN__ double  alpha

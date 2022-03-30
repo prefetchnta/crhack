@@ -767,10 +767,17 @@ CR_API fpxx_t   sim_pearson (const fpxx_t *x, const fpxx_t *y, uint_t num);
 CR_API fpxx_t   sim_euclidean (const fpxx_t *x, const fpxx_t *y, uint_t num);
 CR_API fpxx_t   sim_cosine (const fpxx_t *x, const fpxx_t *y, uint_t num);
 
-/* DTW 距离计算 */
-CR_API fpxx_t   distance_dtw (const fpxx_t *x, uint_t nx,
-                              const fpxx_t *y, uint_t ny,
-                              uint_t **path CR_DEFAULT(NULL),
+/* 距离计算 */
+CR_API fpxx_t   distance_manhattan (const fpxx_t *x, const fpxx_t *y,
+                                    uint_t count);
+CR_API fpxx_t   distance_euclidean (const fpxx_t *x, const fpxx_t *y,
+                                    uint_t count);
+CR_API fpxx_t   distance_chebyshev (const fpxx_t *x, const fpxx_t *y,
+                                    uint_t count, fpxx_t p);
+CR_API fpxx_t   distance_cosine (const fpxx_t *x, const fpxx_t *y,
+                                 uint_t count);
+CR_API fpxx_t   distance_dtw (const fpxx_t *x, uint_t nx, const fpxx_t *y,
+                              uint_t ny, uint_t **path CR_DEFAULT(NULL),
                               uint_t *count CR_DEFAULT(NULL));
 
 /*****************************************************************************/
@@ -853,7 +860,7 @@ CR_API void_t   winfunc_triange (double *W, sint_t N, sint_t bias);
 CR_API void_t   winfunc_parzen (double *W, sint_t N);
 CR_API void_t   winfunc_welch (double *W, sint_t N);
 CR_API void_t   winfunc_sine (double *W, sint_t N, double alpha);
-CR_API void_t   winfunc_hann (double *W, sint_t N, double alpha);
+CR_API void_t   winfunc_hamming (double *W, sint_t N, double alpha);
 CR_API void_t   winfunc_hann_periodic (double *W, sint_t N);
 CR_API void_t   winfunc_hann_symmetric (double *W, sint_t N);
 CR_API void_t   winfunc_hanning_symmetric (double *W, sint_t N);

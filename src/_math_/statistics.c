@@ -183,7 +183,89 @@ sim_cosine (
 
 /*
 =======================================
-    DTW 距离计算
+    曼哈顿距离
+=======================================
+*/
+CR_API fpxx_t
+distance_manhattan (
+  __CR_IN__ const fpxx_t*   x,
+  __CR_IN__ const fpxx_t*   y,
+  __CR_IN__ uint_t          count
+    )
+{
+    uint_t  idx;
+    fpxx_t  dlt, sum = 0;
+
+    for (idx = 0; idx < count; idx++) {
+        dlt = x[idx] - y[idx];
+        sum += XABS(dlt);
+    }
+    return (sum);
+}
+
+/*
+=======================================
+    欧式距离
+=======================================
+*/
+CR_API fpxx_t
+distance_euclidean (
+  __CR_IN__ const fpxx_t*   x,
+  __CR_IN__ const fpxx_t*   y,
+  __CR_IN__ uint_t          count
+    )
+{
+    uint_t  idx;
+    fpxx_t  dlt, sum = 0;
+
+    for (idx = 0; idx < count; idx++) {
+        dlt = x[idx] - y[idx];
+        sum += dlt * dlt;
+    }
+    return (XSQRT(sum));
+}
+
+/*
+=======================================
+    切比雪夫距离
+=======================================
+*/
+CR_API fpxx_t
+distance_chebyshev (
+  __CR_IN__ const fpxx_t*   x,
+  __CR_IN__ const fpxx_t*   y,
+  __CR_IN__ uint_t          count,
+  __CR_IN__ fpxx_t          p
+    )
+{
+    uint_t  idx;
+    fpxx_t  dlt, sum = 0;
+
+    for (idx = 0; idx < count; idx++) {
+        dlt = x[idx] - y[idx];
+        sum += XPOW(dlt, p);
+    }
+    return (XPOW(sum, 1 / p));
+}
+
+/*
+=======================================
+    余弦距离
+=======================================
+*/
+CR_API fpxx_t
+distance_cosine (
+  __CR_IN__ const fpxx_t*   x,
+  __CR_IN__ const fpxx_t*   y,
+  __CR_IN__ uint_t          count
+    )
+{
+    return (1 - sim_cosine(x, y, count));
+}
+
+/*
+=======================================
+    DTW 距离
 =======================================
 */
 CR_API fpxx_t
