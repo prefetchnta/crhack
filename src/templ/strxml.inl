@@ -339,7 +339,7 @@ CR_FUW(xml_node_fp64) (
 
 /*
 =======================================
-    从 XML 节点读取转义字符串T
+    从 XML 节点读取字符串T
 =======================================
 */
 CR_API XCHAR*
@@ -352,8 +352,8 @@ CR_FUW(xml_node_string) (
     tmp = CR_FUW(xml_node_buffer)(node);
     if (tmp == NULL)
         return (NULL);
-    tmp = CR_FAW(skip_space)(tmp);
-    return (CR_FUW(str_esc_dup)(tmp, &node->size, NULL));
+    node->size = CR_FAW(str_size)(tmp);
+    return (CR_FAW(str_dup)(tmp));
 }
 
 /*
