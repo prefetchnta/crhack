@@ -109,10 +109,14 @@ load_cr_jpg (
     if (datin == NULL)
         return (NULL);
 
-    /* 读取 & 检查头部 */
-    if (CR_VCALL(datin)->read(datin, head, 11) != 11)
+    /* 检查头部与尾部 */
+    if (CR_VCALL(datin)->read(datin, &head[0], 2) != 2)
         return (NULL);
-    if (mem_cmp2(head, "\xFF\xD8\xFF\xE0**JFIF", 11) != 0)
+    if (!CR_VCALL(datin)->seek(datin, -2L, SEEK_END))
+        return (NULL);
+    if (CR_VCALL(datin)->read(datin, &head[2], 2) != 2)
+        return (NULL);
+    if (mem_cmp(head, "\xFF\xD8\xFF\xD9", 4) != 0)
         return (NULL);
     if (!CR_VCALL(datin)->rewind(datin))
         return (NULL);
