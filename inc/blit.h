@@ -564,6 +564,14 @@ CR_API void_t   draw_polygon (const sIMAGE *dst, const sPNT2 *pos,
                               uint_t count, leng_t skip, cpix_t color,
                               pixdraw_t pixel_draw);
 
+CR_API void_t   draw_bezier (const sIMAGE *dst, const sPNT2 *pos,
+                             uint_t count, uint_t step, cpix_t color,
+                             pixdraw_t pixel_draw);
+
+CR_API void_t   draw_curve3 (const sIMAGE *dst, const sPNT2 *pos,
+                             uint_t count, uint_t step, fp32_t tension,
+                             cpix_t color, pixdraw_t pixel_draw);
+
 /*****************************************************************************/
 /*                                 填充操作                                  */
 /*****************************************************************************/

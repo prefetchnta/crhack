@@ -18,6 +18,8 @@
 /*****************************************************************************/
 
 #include "blit.h"
+#include "gfx3.h"
+#include "memlib.h"
 
 #ifndef _CR_NO_STDC_
     #include <math.h>
@@ -390,7 +392,7 @@ draw_ellipse (
     yy = r2;
     r12 = r1 * r1;
     r22 = r2 * r2;
-    xmax = (sint_t)(r12 / sqrt(r12 + r22));
+    xmax = (sint_t)((fp32_t)r12 / FSQRT((fp32_t)(r12 + r22)));
     tn = r12 - 2 * r2 * r12;
     while (xx <= xmax)
     {
@@ -434,7 +436,7 @@ draw_ellipse (
     yy = r2;
     r12 = r1 * r1;
     r22 = r2 * r2;
-    xmax = (sint_t)(r12 / sqrt(r12 + r22));
+    xmax = (sint_t)((fp32_t)r12 / FSQRT((fp32_t)(r12 + r22)));
     tn = r12 - 2 * r2 * r12;
     while (xx <= xmax)
     {
@@ -471,6 +473,203 @@ draw_ellipse (
 
     if (clip_pixel(cx - yy, cy - xx, clip))
         pixel_draw(dst, cx - yy, cy - xx, color);
+}
+
+/*
+---------------------------------------
+    计算贝塞尔系数
+---------------------------------------
+*/
+static sint_t*
+bezier_coe (
+  __CR_IN__ uint_t  dim
+    )
+{
+    uint_t  ii, jj, kk, *coe;
+
+    if (dim < 3)
+        return (NULL);
+    coe = mem_talloc(dim + 1, uint_t);
+    if (coe == NULL)
+        return (NULL);
+    for (ii = 0; ii <= dim; ii++) {
+        coe[ii] = kk = 1;
+        for (jj = dim; jj >= ii + 1; jj--)
+            coe[ii] *= jj;
+        for (jj = dim - ii; jj >= 2; jj--)
+            kk *= jj;
+        coe[ii] /= kk;
+    }
+    return ((sint_t*)coe);
+}
+
+/*
+=======================================
+    画贝塞尔曲线 (多次拟合)
+=======================================
+*/
+CR_API void_t
+draw_bezier (
+  __CR_IO__ const sIMAGE*   dst,
+  __CR_IN__ const sPNT2*    pos,
+  __CR_IN__ uint_t          count,
+  __CR_IN__ uint_t          step,
+  __CR_IN__ cpix_t          color,
+  __CR_IN__ pixdraw_t       pixel_draw
+    )
+{
+    sLINE   line;
+    uint_t  ii, jj;
+    fp32_t  tt, mm, px, py, ss;
+    sint_t  x1, y1, x2, y2, *cc;
+
+    /* 至少4个控制点 */
+    cc = bezier_coe(count - 1);
+    if (cc == NULL)
+        return;
+    x1 = pos[0].x;
+    y1 = pos[0].y;
+    ss = (fp32_t)step;
+    for (ii = 0; ii <= step; ii++) {
+        px = py = 0;
+        tt = (fp32_t)ii / ss;
+        for (jj = 0; jj < count; jj++) {
+            mm = (fp32_t)cc[jj];
+            mm *= FPOW(1 - tt, (fp32_t)(count - jj - 1));
+            mm *= FPOW(tt, (fp32_t)jj);
+            px += mm * pos[jj].x;
+            py += mm * pos[jj].y;
+        }
+        x2 = fp32_to_sint(px);
+        y2 = fp32_to_sint(py);
+        line_set_xy(&line, x1, y1, x2, y2);
+        draw_line(dst, &line, color, pixel_draw);
+        x1 = x2;
+        y1 = y2;
+    }
+    mem_free(cc);
+}
+
+/*
+---------------------------------------
+    绘制插值的三次贝塞尔曲线
+---------------------------------------
+*/
+static void_t
+draw_bezier3_int (
+  __CR_IO__ const sIMAGE*   dst,
+  __CR_IN__ const vec2d_t*  p0,
+  __CR_IN__ const vec2d_t*  p1,
+  __CR_IN__ const vec2d_t*  p2,
+  __CR_IN__ const vec2d_t*  p3,
+  __CR_IN__ uint_t          step,
+  __CR_IN__ cpix_t          color,
+  __CR_IN__ pixdraw_t       pixel_draw,
+  __CR_IO__ sPNT2*          prev_point
+    )
+{
+    sLINE   ln;
+    uint_t  ii;
+    sint_t  xx, yy;
+    fp32_t  tt, nt, cc[4];
+    fp32_t  px, py, ss = (fp32_t)step;
+
+    for (ii = 0; ii <= step; ii++) {
+        tt = (fp32_t)ii / ss;
+        nt = 1 - tt;
+        cc[1] = nt * nt;
+        cc[2] = tt * tt;
+        cc[0] = cc[1] * nt;
+        cc[1] *= 3 * tt;
+        cc[3] = cc[2] * tt;
+        cc[2] *= 3 * nt;
+        px = p0->x * cc[0] + p1->x * cc[1] + p2->x * cc[2] + p3->x * cc[3];
+        py = p0->y * cc[0] + p1->y * cc[1] + p2->y * cc[2] + p3->y * cc[3];
+        xx = fp32_to_sint(px);
+        yy = fp32_to_sint(py);
+        line_set_xy(&ln, prev_point->x, prev_point->y, xx, yy);
+        draw_line(dst, &ln, color, pixel_draw);
+        prev_point->x = xx;
+        prev_point->y = yy;
+    }
+}
+
+/*
+---------------------------------------
+    计算三次贝塞尔的控制点
+---------------------------------------
+*/
+static void_t
+intrplt_bz3 (
+  __CR_IO__ const sIMAGE*   dst,
+  __CR_IN__ const sPNT2*    p0,
+  __CR_IN__ const sPNT2*    p1,
+  __CR_IN__ const sPNT2*    p2,
+  __CR_IN__ const sPNT2*    p3,
+  __CR_IN__ uint_t          step,
+  __CR_IN__ fp32_t          tension,
+  __CR_IN__ cpix_t          color,
+  __CR_IN__ pixdraw_t       pixel_draw,
+  __CR_IO__ sPNT2*          prev_point
+    )
+{
+    vec2d_t u1, u2, uu, vv;
+
+    u1.x = (fp32_t)p1->x;
+    u1.y = (fp32_t)p1->y;
+
+    u2.x = (fp32_t)p2->x;
+    u2.y = (fp32_t)p2->y;
+
+    uu.x = (p2->x - p0->x) * tension + u1.x;
+    uu.y = (p2->y - p0->y) * tension + u1.y;
+
+    vv.x = (p1->x - p3->x) * tension + u2.x;
+    vv.y = (p1->y - p3->y) * tension + u2.y;
+
+    draw_bezier3_int(dst, &u1, &uu, &vv, &u2, step, color,
+                        pixel_draw, prev_point);
+}
+
+/*
+=======================================
+    画贝塞尔曲线 (三次插值)
+=======================================
+*/
+CR_API void_t
+draw_curve3 (
+  __CR_IO__ const sIMAGE*   dst,
+  __CR_IN__ const sPNT2*    pos,
+  __CR_IN__ uint_t          count,
+  __CR_IN__ uint_t          step,
+  __CR_IN__ fp32_t          tension,
+  __CR_IN__ cpix_t          color,
+  __CR_IN__ pixdraw_t       pixel_draw
+    )
+{
+    sPNT2           prev;
+    uint_t          idxs;
+    const sPNT2*    pnt0;
+    const sPNT2*    pnt1;
+    const sPNT2*    pnt2;
+    const sPNT2*    pnt3;
+
+    /* 至少4个点 */
+    if (count < 4)
+        return;
+    count -= 1;
+    tension /= 3;
+    prev.x = prev.y = 0;
+    for (idxs = 0; idxs < count; idxs++) {
+        prev.x = pos[idxs].x;
+        prev.y = pos[idxs].y;
+        pnt0 = (idxs <= 1) ? &pos[0] : &pos[idxs - 1];
+        pnt1 = &pos[idxs];
+        pnt2 = &pos[idxs + 1];
+        pnt3 = (idxs + 2 >= count) ? &pos[count] : &pos[idxs + 2];
+        intrplt_bz3(dst, pnt0, pnt1, pnt2, pnt3, step, tension,
+                        color, pixel_draw, &prev);
+    }
 }
 
 /*****************************************************************************/
