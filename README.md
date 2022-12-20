@@ -25,6 +25,7 @@ mak/vc2013.bat | Microsoft Visual Studio 2013 (Win32-X86-X64)
 mak/vc2015.bat | Microsoft Visual Studio 2015 (Win32-X86-X64)
 mak/vc2017.bat | Microsoft Visual Studio 2017 (Win32-X86-X64)
 mak/vc2019.bat | Microsoft Visual Studio 2019 (Win32-X86-X64)
+mak/vc2022.bat | Microsoft Visual Studio 2022 (Win32-X86-X64)
 mak/linux.sh | GCC (Linux-ALL) [base]
 mak/naked.bat | GCC (Naked-ALL) [base]
 usr/linux-arm32.sh | GCC (Linux for ARM32 non cross-compilation)

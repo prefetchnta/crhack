@@ -11,7 +11,7 @@ echo AFLAGS=$(AFLAGS_WIN32) >> conf.inc
 echo LFLAGS=$(LFLAGS_WIN32) >> conf.inc
 echo ALL_OBJS=$(MSC64_WIN32_X86_OBJS) >> conf.inc
 echo ALL_CPPS=$(MSC64_WIN32_X86_CPPS) >> conf.inc
-call "%VS141COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat" x86
+call "%VS143COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat" x86
 nmake /NOLOGO /Fmsc64\win32\x86\core.mak
 nmake /NOLOGO /Fmsc64\win32\x86\gfx2.mak
 nmake /NOLOGO /Fmsc64\win32\x86\gfx3.mak
@@ -20,8 +20,8 @@ nmake /NOLOGO /Fmsc64\win32\x86\fmtz.mak
 nmake /NOLOGO /Fmsc64\win32\x86\util.mak
 del GFX2_DX8.dll
 del GFX3_D3D8.dll
-move *.dll ..\bin\vc2017_win32_x86
-move *.lib ..\bin\vc2017_win32_x86
+move *.dll ..\bin\vc2022_win32_x86
+move *.lib ..\bin\vc2022_win32_x86
 del conf.inc
 
 echo R_ADDONS= > conf.inc
@@ -36,13 +36,13 @@ echo AFLAGS=$(AFLAGS_WIN32) >> conf.inc
 echo LFLAGS=$(LFLAGS_WIN32) >> conf.inc
 echo ALL_OBJS=$(MSC64_WIN32_X64_OBJS) >> conf.inc
 echo ALL_CPPS=$(MSC64_WIN32_X64_CPPS) >> conf.inc
-call "%VS141COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
+call "%VS143COMNTOOLS%..\..\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
 nmake /NOLOGO /Fmsc64\win32\x64\core.mak
 nmake /NOLOGO /Fmsc64\win32\x64\gfx2.mak
 nmake /NOLOGO /Fmsc64\win32\x64\gfx3.mak
 nmake /NOLOGO /Fmsc64\win32\x64\math.mak
 nmake /NOLOGO /Fmsc64\win32\x64\fmtz.mak
 nmake /NOLOGO /Fmsc64\win32\x64\util.mak
-move *.dll ..\bin\vc2017_win32_x64
-move *.lib ..\bin\vc2017_win32_x64
+move *.dll ..\bin\vc2022_win32_x64
+move *.lib ..\bin\vc2022_win32_x64
 del conf.inc

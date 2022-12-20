@@ -25,7 +25,7 @@ move *.lib ..\bin\vc2015_win32_x86
 del conf.inc
 
 echo R_ADDONS= > conf.inc
-echo C_ADDONS=/D "WIN64" /D "_WIN64" /I "..\inc\l3rd\dxsdk" /wd4819 /Oy- /WX- /Gm- /sdl /Zc:forScope /Zc:inline /fp:precise >> conf.inc
+echo C_ADDONS=/D "WIN64" /D "_WIN64" /I "..\inc\l3rd\dxsdk" /wd4819 /WX- /Gm- /sdl /Zc:forScope /Zc:inline /fp:precise >> conf.inc
 echo A_ADDONS= >> conf.inc
 echo L_ADDONS=/MACHINE:X64 /LIBPATH:$(SDK_COFF_X64)dxsdk >> conf.inc
 echo SUBSYSTEM=WINDOWS >> conf.inc
