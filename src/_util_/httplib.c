@@ -29,6 +29,7 @@ typedef struct
 {
         /* 请求部分 */
         ansi_t*     urls;
+        ansi_t*     prtc;
         ansi_t*     host;
         ansi_t*     path;
         uint_t      port;
@@ -97,7 +98,7 @@ chttp_open (
         return (NULL);
 
     /* 解析输入 URL */
-    rett->urls = str_url_splitA(host, NULL, NULL, NULL, &rett->host,
+    rett->urls = str_url_splitA(host, &rett->prtc, NULL, NULL, &rett->host,
                                 &rett->port, &rett->path, NULL, NULL);
     if (rett->urls == NULL)
         goto _failure1;
@@ -124,7 +125,7 @@ chttp_open (
     rett->tout = timeout;
     rett->wout = 5000;
     rett->rout = 60000;
-    rett->head = create_buff_out(128);
+    rett->head = create_buff_out(32);
     if (rett->head == NULL)
         goto _failure3;
 
@@ -179,7 +180,8 @@ chttp_close (
     sHTTPLIB*   real;
 
     real = (sHTTPLIB*)conn;
-    CR_VCALL(real->head)->release(real->head);
+    if (real->head != NULL)
+        CR_VCALL(real->head)->release(real->head);
     if (real->netw != NULL)
         socket_close(real->netw);
     if (real->res_ini != NULL)
@@ -564,11 +566,11 @@ chttp_do_recv (
 
 /*
 =======================================
-    发送 HTTP 请求 (二进制)
+    发送 HTTP 请求 (直接)
 =======================================
 */
 CR_API bool_t
-chttp_req_bin (
+chttp_req_direct (
   __CR_IN__ chttp_t         conn,
   __CR_IN__ uint_t          method,
   __CR_IN__ const ansi_t*   path,
@@ -896,6 +898,175 @@ chttp_hdr_find (
             return (val);
     }
     return (NULL);
+}
+
+/*
+---------------------------------------
+    释放浅拷贝的成员
+---------------------------------------
+*/
+static void_t
+chttp_free_copy (
+  __CR_IN__ chttp_t conn,
+  __CR_IN__ iDATOT* save
+    )
+{
+    sHTTPLIB*   real;
+
+    real = (sHTTPLIB*)conn;
+    real->cb_buff = NULL;
+    real->head = save;
+    chttp_close(conn);
+}
+
+/*
+=======================================
+    发送 HTTP 请求 (二进制)
+=======================================
+*/
+CR_API bool_t
+chttp_req_bin (
+  __CR_IN__ chttp_t         conn,
+  __CR_IN__ uint_t          method,
+  __CR_IN__ const ansi_t*   path,
+  __CR_IN__ const void_t*   data,
+  __CR_IN__ uint_t          size
+    )
+{
+    leng_t      idxs;
+    leng_t      leng;
+    ansi_t*     rdir;
+    ansi_t*     temp;
+    ansi_t*     stmp;
+    uint_t      retc;
+    iDATOT*     save = NULL;
+    bool_t      frt1 = FALSE;
+    bool_t      frt2 = FALSE;
+    sHTTPLIB*   jump = (sHTTPLIB*)conn;
+    sHTTPLIB*   back = (sHTTPLIB*)conn;
+
+    for (;;)
+    {
+        /* 发送请求 */
+        if (!chttp_req_direct(conn, method, path, data, size))
+            goto _failure;
+
+        /* 跳转请求 */
+        retc = chttp_response(conn, NULL, NULL);
+        if (retc == 303) {
+            size = 0;
+            data = NULL;
+            method = HTTPLIB_GET;
+        }
+        else if (retc != 301 && retc != 302 && retc != 307 && retc != 308) {
+            break;
+        }
+
+        /* 获取地址 */
+        chttp_disconn(conn);
+        rdir = chttp_hdr_find(conn, "Location");
+        if (rdir == NULL)
+            break;
+
+        /* 是否为相对路径 */
+        if (rdir[0] == CR_AC('/')) {
+            if (frt1) {
+                mem_free(path);
+                frt1 = FALSE;
+            }
+            if (rdir[1] != CR_AC('/'))
+            {
+                /* 站内跳转 */
+                path = rdir;
+                continue;
+            }
+            path = NULL;
+            rdir = str_fmtA("%s:%s", jump->prtc, rdir);
+        }
+        else {
+            if (str_strA(rdir, "://") == NULL)
+            {
+                /* 替换文件名的站内跳转 */
+                if (path == NULL)
+                    temp = jump->path;
+                else
+                    temp = (ansi_t*)path;
+                for (idxs = str_lenA(temp); idxs != 0; idxs--) {
+                    if (temp[idxs - 1] == CR_AC('/'))
+                        break;
+                }
+                leng = str_sizeA(rdir);
+                leng += idxs;
+                stmp = str_allocA(leng);
+                if (stmp == NULL)
+                    goto _failure;
+                mem_cpy(stmp, temp, idxs);
+                str_cpyA(stmp + idxs, rdir);
+                if (frt1)
+                    mem_free(path);
+                path = stmp;
+                frt1 = TRUE;
+                continue;
+            }
+            if (frt1) {
+                mem_free(path);
+                frt1 = FALSE;
+            }
+            path = NULL;
+            rdir = str_dupA(rdir);
+        }
+        if (rdir == NULL)
+            goto _failure;
+
+        /* 跨站跳转重建链接 */
+        if (frt2) {
+            chttp_free_copy(conn, save);
+            frt2 = FALSE;
+        }
+        conn = chttp_open(rdir, 0, back->vers, back->tout);
+        mem_free(rdir);
+        if (conn == NULL)
+            goto _failure;
+        chttp_timeout(conn, back->wout, back->rout);
+        chttp_safe_size(conn, back->res_max);
+        jump = (sHTTPLIB*)conn;
+        save = jump->head;
+        jump->head = back->head;
+        jump->cb_parm = back->cb_parm;
+        jump->cb_size = back->cb_size;
+        jump->cb_buff = back->cb_buff;
+        jump->cb_func = back->cb_func;
+        frt2 = TRUE;
+    }
+
+    /* 返回响应 */
+    if (frt2) {
+        if (back->res_ini != NULL)
+            ini_closeU(back->res_ini);
+        back->res_ini = jump->res_ini;
+        back->res_len = jump->res_len;
+        TRY_FREE(back->res_dat);
+        back->res_dat = jump->res_dat;
+        TRY_FREE(back->res_hdr);
+        back->res_hdr = jump->res_hdr;
+        back->res_ver = jump->res_ver;
+        back->res_num = jump->res_num;
+        back->res_str = jump->res_str;
+        jump->res_ini = NULL;
+        jump->res_dat = NULL;
+        jump->res_hdr = NULL;
+        chttp_free_copy(conn, save);
+    }
+    if (frt1)
+        mem_free(path);
+    return (TRUE);
+
+_failure:
+    if (frt2)
+        chttp_free_copy(conn, save);
+    if (frt1)
+        mem_free(path);
+    return (FALSE);
 }
 
 /*****************************************************************************/

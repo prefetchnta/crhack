@@ -56,6 +56,9 @@ CR_API bool_t   chttp_req_str (chttp_t conn, uint_t method,
 CR_API bool_t   chttp_req_bin (chttp_t conn, uint_t method,
                                const ansi_t *path, const void_t *data,
                                uint_t size);
+CR_API bool_t   chttp_req_direct (chttp_t conn, uint_t method,
+                                  const ansi_t *path, const void_t *data,
+                                  uint_t size);
 CR_API ansi_t*  chttp_res_hdr (chttp_t conn);
 CR_API ansi_t*  chttp_res_str (chttp_t conn);
 CR_API void_t*  chttp_res_bin (chttp_t conn, uint_t *size);

@@ -549,6 +549,14 @@ CR_API void_t   draw_lineh (const sIMAGE *dst, sint_t x1, sint_t x2,
 CR_API void_t   draw_linev (const sIMAGE *dst, sint_t dx, sint_t y1,
                             sint_t y2, cpix_t color, pixdraw_t pixel_draw);
 
+CR_API void_t   draw_lineh_dot (const sIMAGE *dst, sint_t x1, sint_t x2,
+                                sint_t dy, uint_t dash, cpix_t color,
+                                pixdraw_t pixel_draw);
+
+CR_API void_t   draw_linev_dot (const sIMAGE *dst, sint_t dx, sint_t y1,
+                                sint_t y2, uint_t dash, cpix_t color,
+                                pixdraw_t pixel_draw);
+
 CR_API void_t   draw_lines (const sIMAGE *dst, const sPNT2 *pos,
                             uint_t count, leng_t skip, cpix_t color,
                             pixdraw_t pixel_draw);

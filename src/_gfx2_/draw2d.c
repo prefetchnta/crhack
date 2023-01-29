@@ -167,7 +167,7 @@ draw_line (
 
 /*
 =======================================
-    画水平线
+    画水平实线
 =======================================
 */
 CR_API void_t
@@ -198,7 +198,7 @@ draw_lineh (
 
 /*
 =======================================
-    画垂直线
+    画垂直实线
 =======================================
 */
 CR_API void_t
@@ -225,6 +225,96 @@ draw_linev (
 
     while (y1 <= y2)
         pixel_draw(dst, dx, y1++, color);
+}
+
+/*
+=======================================
+    画水平虚线
+=======================================
+*/
+CR_API void_t
+draw_lineh_dot (
+  __CR_IO__ const sIMAGE*   dst,
+  __CR_IN__ sint_t          x1,
+  __CR_IN__ sint_t          x2,
+  __CR_IN__ sint_t          dy,
+  __CR_IN__ uint_t          dash,
+  __CR_IN__ cpix_t          color,
+  __CR_IN__ pixdraw_t       pixel_draw
+    )
+{
+    sint_t  end;
+    bool_t  solid;
+    uint_t  count;
+
+    /* 绘制实线 */
+    if (dash == 0) {
+        draw_lineh(dst, x1, x2, dy, color, pixel_draw);
+        return;
+    }
+
+    /* 计算断点 */
+    if (x1 > x2) CR_SWAP(x1, x2, end);
+    count = (uint_t)(x2 - x1 + 1) / dash;
+    if (count < 3) {
+        draw_lineh(dst, x1, x2, dy, color, pixel_draw);
+        return;
+    }
+
+    /* 绘制虚线 */
+    for (solid = TRUE; x1 <= x2; x1 += dash) {
+        end = x1 + dash - 1;
+        if (end > x2)
+            end = x2;
+        if (solid)
+            draw_lineh(dst, x1, end, dy, color, pixel_draw);
+        solid = !solid;
+    }
+}
+
+/*
+=======================================
+    画垂直虚线
+=======================================
+*/
+CR_API void_t
+draw_linev_dot (
+  __CR_IO__ const sIMAGE*   dst,
+  __CR_IN__ sint_t          dx,
+  __CR_IN__ sint_t          y1,
+  __CR_IN__ sint_t          y2,
+  __CR_IN__ uint_t          dash,
+  __CR_IN__ cpix_t          color,
+  __CR_IN__ pixdraw_t       pixel_draw
+    )
+{
+    sint_t  end;
+    bool_t  solid;
+    uint_t  count;
+
+    /* 绘制实线 */
+    if (dash == 0) {
+        draw_linev(dst, dx, y1, y2, color, pixel_draw);
+        return;
+    }
+
+    /* 计算断点 */
+    if (y1 > y2) CR_SWAP(y1, y2, end);
+    count = (uint_t)(y2 - y1 + 1) / dash;
+    if (count < 3) {
+        draw_linev(dst, dx, y1, y2, color, pixel_draw);
+        return;
+    }
+
+    /* 绘制虚线 */
+    for (solid = TRUE; y1 <= y2; y1 += dash) {
+        end = y1 + dash - 1;
+        if (end > y2)
+            end = y2;
+        if (solid)
+            draw_linev(dst, dx, y1, end, color, pixel_draw);
+        solid = !solid;
+    }
 }
 
 /*
