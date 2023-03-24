@@ -99,11 +99,14 @@ static void_t
 astar_node_init (
   __CR_OT__ asNode* node,
   __CR_IN__ sint_t  x,
-  __CR_IN__ sint_t  y
+  __CR_IN__ sint_t  y,
+  __CR_IN__ sint_t  number
     )
 {
     struct_zero(node, asNode);
-    node->x = x;  node->y = y;
+    node->x = x;
+    node->y = y;
+    node->number = number;
 }
 
 /*
@@ -128,7 +131,7 @@ astar_step_init (
     temp = struct_new(asNode);
     if (temp == NULL)
         return (FALSE);
-    astar_node_init(temp, sx, sy);
+    astar_node_init(temp, sx, sy, ASTAR_COORD2NUM(sx, sy));
 
     as->iSX = sx;
     as->iSY = sy;
@@ -139,7 +142,6 @@ astar_step_init (
     temp->g = 0;
     temp->h = as->udHeuristic(NULL, temp, 0, as->cbData);
     temp->f = temp->g + temp->h;
-    temp->number = ASTAR_COORD2NUM(sx, sy);
 
     astar_clear_nodes(as);
     as->pOpen = temp;
@@ -411,12 +413,11 @@ astar_link_child (
         newnode = struct_new(asNode);
         if (newnode == NULL)
             msg_stopA("struct_new() failure", "crhack");
-        astar_node_init(newnode, xx, yy);
+        astar_node_init(newnode, xx, yy, num);
         newnode->parent = node;
         newnode->g = gg;
         newnode->h = as->udHeuristic(node, newnode, 0, as->cbData);
         newnode->f = newnode->g + newnode->h;
-        newnode->number = num;
         astar_add2open(as, newnode);
         node->children[node->numchildren++] = newnode;
 #if defined(_CR_ASTAR_SXS_)
@@ -442,7 +443,7 @@ astar_create_children (
     sint_t  xx = node->x;
     sint_t  yy = node->y;
 
-    astar_node_init(&temp, -1, -1);
+    astar_node_init(&temp, 0, 0, 0);
     for (ii = -1; ii < 2; ii++) {
         for (jj = -1; jj < 2; jj++) {
             if (ii == 0 && jj == 0)

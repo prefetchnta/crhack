@@ -531,7 +531,11 @@ typedef struct
         void_t* ncData;         /* 回调函数的用户数据 */
 
         /* 私有成员 */
-        sint_t      iSX, iSY, iDX, iDY, iCols, iRows, iDNum;
+        sint_t      iSX, iSY;   /* 源点坐标 */
+        sint_t      iDX, iDY;   /* 目标点坐标 */
+        sint_t      iCols;      /* 地图的宽 */
+        sint_t      iRows;      /* 地图的高 */
+        sint_t      iDNum;      /* 目标编号 */
         asNode*     pOpen;      /* Open 列表 */
         asNode*     pClosed;    /* Closed 列表 */
         asNode*     pBest;      /* 最佳节点 */
@@ -569,7 +573,7 @@ CR_API sPNT2*   astar_get_path (const sASTAR *as, leng_t *count);
 typedef struct  _djNode
 {
         sARRAY  children;
-        sint_t  g, number;
+        sint_t  f, g, h, number;
         sint_t  numchildren;
         struct _djNode* parent;
         struct _djNode* next;
@@ -593,13 +597,14 @@ typedef struct
         /* 公用成员 */
         djFunc  udCost;         /* 代价计算回调 */
         djFunc  udValid;        /* 节点有效性检查回调 */
+        djFunc  udHeuristic;    /* 预估值计算回调 (可为空) */
         djFunc  udNotifyChild;  /* 子节点增加/检查时调用 */
         djFunc  udNotifyList;   /* 节点加入 Open/Closed 列表时调用 */
         void_t* cbData;         /* 回调函数的用户数据 */
         void_t* ncData;         /* 回调函数的用户数据 */
 
         /* 私有成员 */
-        sint_t      iDNum;
+        sint_t      iDNum;      /* 目标编号 */
         djNode*     pOpen;      /* Open 列表 */
         djNode*     pClosed;    /* Closed 列表 */
         djNode*     pBest;      /* 最佳节点 */

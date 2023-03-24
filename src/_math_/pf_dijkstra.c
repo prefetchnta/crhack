@@ -104,10 +104,12 @@ dijkstra_reset (
 */
 static void_t
 dijkstra_node_init (
-  __CR_OT__ djNode* node
+  __CR_OT__ djNode* node,
+  __CR_IN__ sint_t  number
     )
 {
     struct_zero(node, djNode);
+    node->number = number;
 }
 
 /*
@@ -129,12 +131,14 @@ dijkstra_step_init (
     temp = struct_new(djNode);
     if (temp == NULL)
         return (FALSE);
-    dijkstra_node_init(temp);
+    dijkstra_node_init(temp, beg);
 
     dj->iDNum = end;
 
     temp->g = 0;
-    temp->number = beg;
+    if (dj->udHeuristic != NULL)
+        temp->h = dj->udHeuristic(NULL, temp, 0, dj->cbData);
+    temp->f = temp->g + temp->h;
 
     dijkstra_clear_nodes(dj);
     dj->pOpen = temp;
@@ -223,7 +227,7 @@ dijkstra_add2open (
     }
 
     while (node != NULL) {
-        if (addnode->g > node->g) {
+        if (addnode->f > node->f) {
             prev = node;
             node = node->next;
         }
@@ -325,6 +329,7 @@ dijkstra_update_parents (
         cost = dj->udCost(node, kid, ii, dj->cbData);
         if (gg + cost < kid->g) {
             kid->g = gg + cost;
+            kid->f = kid->g + kid->h;
             kid->parent = node;
             dijkstra_push(dj, kid);
         }
@@ -339,6 +344,7 @@ dijkstra_update_parents (
             cost = dj->udCost(parent, kid, ii, dj->cbData);
             if (parent->g + cost < kid->g) {
                 kid->g = parent->g + cost;
+                kid->f = kid->g + kid->h;
                 kid->parent = parent;
                 dijkstra_push(dj, kid);
             }
@@ -384,6 +390,7 @@ dijkstra_link_child (
         if (gg < check->g) {
             check->parent = node;
             check->g = gg;
+            check->f = gg + check->h;
 #if defined(_CR_DIJKSTRA_SXS_)
             if (dj->udNotifyChild != NULL)
                 dj->udNotifyChild(node, check, DJNC_OPENADD_UP, dj->ncData);
@@ -402,6 +409,7 @@ dijkstra_link_child (
         if (gg < check->g) {
             check->parent = node;
             check->g = gg;
+            check->f = gg + check->h;
 #if defined(_CR_DIJKSTRA_SXS_)
             if (dj->udNotifyChild != NULL)
                 dj->udNotifyChild(node, check, DJNC_CLOSEDADD_UP, dj->ncData);
@@ -419,10 +427,12 @@ dijkstra_link_child (
         newnode = struct_new(djNode);
         if (newnode == NULL)
             msg_stopA("struct_new() failure", "crhack");
-        dijkstra_node_init(newnode);
+        dijkstra_node_init(newnode, num);
         newnode->parent = node;
         newnode->g = gg;
-        newnode->number = num;
+        if (dj->udHeuristic != NULL)
+            newnode->h = dj->udHeuristic(node, newnode, 0, dj->cbData);
+        newnode->f = newnode->g + newnode->h;
         dijkstra_add2open(dj, newnode);
         dijkstra_add_child(node, newnode);
 #if defined(_CR_DIJKSTRA_SXS_)
@@ -443,16 +453,19 @@ dijkstra_create_children (
   __CR_IN__ djNode*     node
     )
 {
-    sint_t  idx;
     djNode  temp;
+    sint_t  idx, ret;
 
     /* 找到没有节点为止 */
-    dijkstra_node_init(&temp);
+    dijkstra_node_init(&temp, 0);
     for (idx = 0; ; idx++)
     {
         /* 这个回调必须填写 temp.number 成员 */
-        if (!dj->udValid(node, &temp, idx, dj->cbData))
+        ret = dj->udValid(node, &temp, idx, dj->cbData);
+        if (ret == 0)   /* 返回0表示查找结束 */
             break;
+        if (ret < 0)    /* 返回负数表示跳过节点 */
+            continue;
         dijkstra_link_child(dj, node, &temp, idx);
     }
 }
