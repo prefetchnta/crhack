@@ -174,8 +174,7 @@ sim_cosine (
         dv1 += x[idx] * x[idx];
         dv2 += y[idx] * y[idx];
     }
-    dv1  = XSQRT(dv1);
-    dv1 *= XSQRT(dv2);
+    dv1 = XSQRT(dv1 * dv2);
     if (dv1 <= CR_ABITX)
         return ((XABS(mul) <= CR_ABITX) ? 1 : 0);
     return (mul / dv1);
