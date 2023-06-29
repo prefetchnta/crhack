@@ -775,6 +775,11 @@ pltable_get_size (
     return (that->__size__);
 }
 
+/* 信息类型 */
+#define CR_PLTABLE_NONE     0   /* 无占用 */
+#define CR_PLTABLE_HAVE     1   /* 占  用 */
+#define CR_PLTABLE_SKIP     2   /* 曾占用 */
+
 /*
 =======================================
     获取指定成员指针
@@ -787,7 +792,7 @@ pltable_get_unit (
   __CR_IN__ leng_t          index
     )
 {
-    if (!that->__info__[index])
+    if (that->__info__[index] != CR_PLTABLE_HAVE)
         return (NULL);
     return (that->__buff__ + index * unit);
 }

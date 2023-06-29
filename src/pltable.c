@@ -134,11 +134,13 @@ pltable_find (
 
     for (idx = 0; idx < that->__size__; idx++)
     {
-        data = pltable_get_unit(that, unit, beg);
-        if (data == NULL)
-            break;
-        if (that->comp(key, data))
-            return (data);
+        if (that->__info__[beg] != CR_PLTABLE_SKIP) {
+            data = pltable_get_unit(that, unit, beg);
+            if (data == NULL)
+                break;
+            if (that->comp(key, data))
+                return (data);
+        }
         if (++beg >= that->__size__)
             beg = 0;
     }
@@ -170,14 +172,16 @@ pltable_delete (
 
     for (idx = 0; idx < that->__size__; idx++)
     {
-        data = pltable_get_unit(that, unit, beg);
-        if (data == NULL)
-            break;
-        if (that->comp(key, data)) {
-            if (that->free != NULL)
-                that->free(data);
-            that->__info__[beg] = FALSE;
-            return (TRUE);
+        if (that->__info__[beg] != CR_PLTABLE_SKIP) {
+            data = pltable_get_unit(that, unit, beg);
+            if (data == NULL)
+                break;
+            if (that->comp(key, data)) {
+                if (that->free != NULL)
+                    that->free(data);
+                that->__info__[beg] = CR_PLTABLE_SKIP;
+                return (TRUE);
+            }
         }
         if (++beg >= that->__size__)
             beg = 0;
@@ -215,7 +219,7 @@ pltable_insert (
     {
         find = pltable_get_unit(that, unit, beg);
         if (find == NULL) {
-            that->__info__[beg] = TRUE;
+            that->__info__[beg] = CR_PLTABLE_HAVE;
             find = that->__buff__ + beg * unit;
             return (mem_cpy(find, data, unit));
         }
