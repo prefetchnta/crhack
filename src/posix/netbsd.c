@@ -111,12 +111,14 @@ socket_dns_lookup (
     dest->sin_addr.s_addr = *(in_addr_t*)host->h_addr_list[0];
     return (TRUE);
 #else
-    bool_t  rett;
+    bool_t  rett = FALSE;
 
     mtlock_acquire(&s_dns_lock);
     host = gethostbyname(addr);
-    rett = (host == NULL) ? FALSE : TRUE;
-    dest->sin_addr.s_addr = *(in_addr_t*)host->h_addr_list[0];
+    if (host != NULL) {
+        dest->sin_addr.s_addr = *(in_addr_t*)host->h_addr_list[0];
+        rett = TRUE;
+    }
     mtlock_release(&s_dns_lock);
     return (rett);
 #endif
