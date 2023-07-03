@@ -41,7 +41,7 @@ typedef void_t  (*chttp_recv_t) (void_t*, const void_t*, uint_t, uint_t);
 CR_API chttp_t  chttp_open (const ansi_t *host, int16u port,
                             uint_t vers, int32s timeout);
 CR_API void_t   chttp_close (chttp_t conn);
-CR_API void_t   chttp_timeout (chttp_t conn, int32s wr_time,
+CR_API void_t   chttp_timeout (chttp_t conn, int32s cn_time, int32s wr_time,
                                int32s rd_time);
 CR_API void_t   chttp_disconn (chttp_t conn);
 CR_API void_t   chttp_restart (chttp_t conn);

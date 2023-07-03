@@ -202,6 +202,7 @@ chttp_close (
 CR_API void_t
 chttp_timeout (
   __CR_IN__ chttp_t conn,
+  __CR_IN__ int32s  cn_time,
   __CR_IN__ int32s  wr_time,
   __CR_IN__ int32s  rd_time
     )
@@ -211,6 +212,7 @@ chttp_timeout (
     real = (sHTTPLIB*)conn;
     if (real->netw != NULL)
         socket_set_timeout(real->netw, wr_time, rd_time);
+    real->tout = cn_time;
     real->wout = wr_time;
     real->rout = rd_time;
 }
