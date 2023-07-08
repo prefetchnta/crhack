@@ -1029,7 +1029,7 @@ chttp_req_bin (
         mem_free(rdir);
         if (conn == NULL)
             goto _failure;
-        chttp_timeout(conn, back->wout, back->rout);
+        chttp_timeout(conn, back->tout, back->wout, back->rout);
         chttp_safe_size(conn, back->res_max);
         jump = (sHTTPLIB*)conn;
         save = jump->head;

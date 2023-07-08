@@ -92,11 +92,11 @@ hashtab_find (
     hash = HASHTAB_HASH(key, str_lenA(key));
     beg = (leng_t)(hash % _CR_N_);
     for (idx = 0; idx < _CR_N_; idx++) {
-        if (htab->list[beg].name == NULL)
-            break;
-        if (hash == htab->hash[beg] &&
-            str_cmpA(key, htab->list[beg].name) == 0)
-            return (beg);
+        if (htab->list[beg].name != NULL) {
+            if (hash == htab->hash[beg] &&
+                str_cmpA(key, htab->list[beg].name) == 0)
+                return (beg);
+        }
         if (++beg >= _CR_N_)
             beg = 0;
     }
