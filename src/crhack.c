@@ -147,6 +147,7 @@ crhack_core_init (void_t)
         sio_init();
         rand_seed(0);
         error_hook(NULL);
+        timer_get64();
 
         quit_set(NULL);
         set_msg_callA(NULL);
