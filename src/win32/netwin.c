@@ -144,12 +144,40 @@ socket_set_addr (
         else {
             /* 直接的 IP 地址 */
             dest->sin_addr.s_addr = inet_addr(addr);
-            if (dest->sin_addr.s_addr == INADDR_NONE)
-                return (FALSE);
         }
     }
     dest->sin_family = AF_INET;
     dest->sin_port = htons(port);
+    return (TRUE);
+}
+
+/*
+---------------------------------------
+    SOCKET 公用参数设置
+---------------------------------------
+*/
+static bool_t
+socket_setup (
+  __CR_IN__ sSOCKET*    sckt,
+  __CR_IN__ bool_t      bind,
+  __CR_IN__ bool_t      is_udp
+    )
+{
+    u_long  opts = TRUE;
+
+    /* 打开广播选项 */
+    if (is_udp) {
+        if (setsockopt(sckt->socket, SOL_SOCKET, SO_BROADCAST,
+                (char*)(&opts), sizeof(opts)) == SOCKET_ERROR)
+            return (FALSE);
+    }
+
+    /* 开启地址复用 */
+    if (bind) {
+        if (setsockopt(sckt->socket, SOL_SOCKET, SO_REUSEADDR,
+                (char*)(&opts), sizeof(opts)) == SOCKET_ERROR)
+            return (FALSE);
+    }
     return (TRUE);
 }
 
@@ -256,7 +284,7 @@ socket_input_size (
     /*
         在使用 UDP 的情况下，Win32 与 WinCE 平台这里有差异。
         Win32 返回的是总数据长度，可能包含多个包。WinCE 下返回
-        的是最前面一个包的大小，不读掉大小是不会变的（同 UNIX 下）。
+        的是最前面一个包的大小，不读掉大小是不会变的（同 UNIX 下）
     */
     real = (sSOCKET*)netw;
     if (ioctlsocket(real->socket, FIONREAD, &rdsz) == SOCKET_ERROR)
@@ -376,7 +404,6 @@ server_tcp_open (
   __CR_IN__ int16u          port
     )
 {
-    u_long      opts;
     sSOCKET     temp;
     sSOCKET*    rett;
 
@@ -389,9 +416,7 @@ server_tcp_open (
     temp.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (temp.socket == INVALID_SOCKET)
         return (NULL);
-    opts = TRUE;
-    if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
-            (char*)(&opts), sizeof(opts)) == SOCKET_ERROR)
+    if (!socket_setup(&temp, TRUE, FALSE))
         goto _failure;
 
     /* 绑定套接字并监听端口 */
@@ -536,9 +561,7 @@ client_tcp_open2 (
     temp.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (temp.socket == INVALID_SOCKET)
         return (NULL);
-    opts = TRUE;
-    if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
-            (char*)(&opts), sizeof(opts)) == SOCKET_ERROR)
+    if (!socket_setup(&temp, TRUE, FALSE))
         goto _failure;
 
     /* 绑定本地地址和端口 */
@@ -618,7 +641,6 @@ server_udp_open (
   __CR_IN__ int16u          port
     )
 {
-    u_long      opts;
     sSOCKET     temp;
     sSOCKET*    rett;
 
@@ -631,9 +653,7 @@ server_udp_open (
     temp.socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (temp.socket == INVALID_SOCKET)
         return (NULL);
-    opts = TRUE;
-    if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
-            (char*)(&opts), sizeof(opts)) == SOCKET_ERROR)
+    if (!socket_setup(&temp, TRUE, TRUE))
         goto _failure;
 
     /* 绑定套接字到本地地址 */
@@ -676,6 +696,10 @@ client_udp_open (
     temp.socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (temp.socket == INVALID_SOCKET)
         return (NULL);
+    if (!socket_setup(&temp, FALSE, TRUE)) {
+        closesocket(temp.socket);
+        return (NULL);
+    }
 
     /* 返回生成的对象 */
     temp.remote_have = TRUE;
@@ -698,7 +722,6 @@ client_udp_open2 (
   __CR_IN__ int16u          lport
     )
 {
-    u_long      opts;
     sSOCKET     temp;
     sSOCKET*    rett;
 
@@ -713,9 +736,7 @@ client_udp_open2 (
     temp.socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (temp.socket == INVALID_SOCKET)
         return (NULL);
-    opts = TRUE;
-    if (setsockopt(temp.socket, SOL_SOCKET, SO_REUSEADDR,
-            (char*)(&opts), sizeof(opts)) == SOCKET_ERROR)
+    if (!socket_setup(&temp, TRUE, TRUE))
         goto _failure;
 
     /* 绑定本地地址和端口 */
