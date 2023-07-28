@@ -61,10 +61,15 @@ file_raw_openA (
   __CR_IN__ uint_t          mode
     )
 {
+    sint_t  file;
+
     mode &= (~CR_FO_SEQ);
     if (mode > CR_FO_AW)
         return (NULL);
-    return ((fraw_t)((leng_t)open(name, s_open_mode[mode], 0777)));
+    file = open(name, s_open_mode[mode], 0777);
+    if (file <= 0)
+        return (NULL);
+    return ((fraw_t)((leng_t)file));
 }
 
 /*
@@ -89,6 +94,8 @@ file_raw_openW (
         return (NULL);
     file = open(ansi, s_open_mode[mode], 0777);
     mem_free(ansi);
+    if (file <= 0)
+        return (NULL);
     return ((fraw_t)((leng_t)file));
 }
 
