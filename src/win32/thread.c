@@ -633,6 +633,32 @@ event_fire (
 /*                                 系统杂项                                  */
 /*****************************************************************************/
 
+/*
+=======================================
+    进程互斥锁 (通过文件)
+=======================================
+*/
+CR_API bool_t
+process_lock (
+  __CR_UU__ const ansi_t*   root,
+  __CR_IN__ const ansi_t*   name,
+  __CR_OT__ bool_t*         locked
+    )
+{
+    HANDLE  mutex;
+
+    /* 进程互斥对象 */
+    mutex = CreateMutexA(NULL, FALSE, name);
+    if (mutex == NULL)
+        return (FALSE);
+    if (GetLastError() == ERROR_ALREADY_EXISTS)
+        *locked = TRUE;
+    else
+        *locked = FALSE;
+    CR_NOUSE(root);
+    return (TRUE);
+}
+
 #if !defined(_CR_NO_STDC_)
 /*
 =======================================

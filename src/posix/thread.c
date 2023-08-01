@@ -21,12 +21,14 @@
 #include "memlib.h"
 #include "mtplib.h"
 
+#include <sys/file.h>
 #include <sys/wait.h>
 #include <time.h>
 #include <errno.h>
 #include <sched.h>
 #include <signal.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <pthread.h>
 #if defined(_CR_SYS32_) && \
     defined(_CR_NO_FAST_ATOM_)
@@ -799,6 +801,43 @@ event_fire (
 /*****************************************************************************/
 /*                                 系统杂项                                  */
 /*****************************************************************************/
+
+/*
+=======================================
+    进程互斥锁 (通过文件)
+=======================================
+*/
+CR_API bool_t
+process_lock (
+  __CR_IN__ const ansi_t*   root,
+  __CR_IN__ const ansi_t*   name,
+  __CR_OT__ bool_t*         locked
+    )
+{
+    sint_t  fd;
+    achar*  full;
+    leng_t  len1, len2;
+
+    /* 通过文件来判断 */
+    len1 = str_lenA(root);
+    len2 = str_lenA(name);
+    full = str_allocA(len1 + len2 + 1);
+    if (full == NULL)
+        return (FALSE);
+    mem_cpy(full, root, len1);
+    mem_cpy(full + len1, name, len2 + 1);
+    fd = open(full, O_CREAT | O_WRONLY, 0777);
+    if (fd < 0) {
+        mem_free(full);
+        return (FALSE);
+    }
+    if (flock(fd, LOCK_EX | LOCK_NB) < 0)
+        *locked = TRUE;
+    else
+        *locked = FALSE;
+    mem_free(full);
+    return (TRUE);
+}
 
 #if !defined(_CR_NO_API_SYSTEM_)
 /*

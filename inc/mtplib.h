@@ -96,6 +96,9 @@ CR_API void_t   event_del (evts_t event);
 CR_API bool_t   event_wait (evts_t event);
 CR_API bool_t   event_fire (evts_t event, bool_t broadcast);
 
+/* 进程互斥锁 (通过文件) */
+CR_API bool_t   process_lock (const ansi_t *root, const ansi_t *name,
+                              bool_t *locked);
 #else
 #if !defined(_CR_SICK_INLINE_)
 /*

@@ -471,13 +471,22 @@
     #define CR_NL   "\r\n"      /* DOS 风格 */
 #endif
 
-/*  网络 SOCKET 不支持 PEEK 操作 */
-#if defined(_CR_OS_WINCE_)
-    #define _CR_NET_NO_PEEK_
-#endif
+/* 一些系统缺失的函数 */
+#if     defined(_CR_OS_WINCE_)
 
-/* 安卓低版本 NDK C 库的一些缺失 */
-#if defined(_CR_OS_ANDROID_)
+    /* 网络 SOCKET 不支持 PEEK 操作 */
+    #define _CR_NO_LOCALE_
+    #define _CR_NET_NO_PEEK_
+
+#elif   defined(_CR_OS_MACOSX_)
+
+    #define _CR_NO_API_SYSTEM_
+    #define _CR_NO_API_CLOCK_GETTIME_
+    #define _CR_NO_API_GETHOSTBYNAME_R_
+
+#elif   defined(_CR_OS_ANDROID_)
+
+    /* 安卓低版本 NDK C 库的一些缺失 */
     #if (ANDROID_API <= 17)
         #define _CR_NO_LOG2_
     #endif
@@ -489,13 +498,7 @@
         #define _CR_NDK_LOW_
         #define _CR_NO_LOCALE_
     #endif
-#endif
 
-/* 一些系统缺失的函数 */
-#if defined(_CR_OS_MACOSX_)
-    #define _CR_NO_API_SYSTEM_
-    #define _CR_NO_API_CLOCK_GETTIME_
-    #define _CR_NO_API_GETHOSTBYNAME_R_
 #endif
 
 /*****************************************************************************/

@@ -20,14 +20,25 @@
 !INCLUDE util.prj
 !INCLUDE msc32.mak
 LIB_NAME=UTILs.lib
+BIN_NAME=CrH_UTIL.dll
+EXT_NAME=CrH_CORE.lib
 
-build_all: build_lib
+build_all: build_lib \
+           build_dll
     pause
+    del *.exp /Q
 
 build_lib:
     $(CC) $(CFLAGS) $(ALL_CPPS)
     $(AR) $(AFLAGS) $(ALL_OBJS)
     del *.obj /Q
+
+build_dll:
+    $(RC) $(RFLAGS) /fo.$(L)util.res .$(L)util.ver
+    $(CC) $(CFLAGS) /D "_CR_BUILD_DLL_" $(ALL_CPPS)
+    $(LD) $(LFLAGS) $(ALL_OBJS) .$(L)util.res
+    del *.obj /Q
+    del *.res /Q
 
 ###############################################################################
 ## _________________________________________________________________________ ##

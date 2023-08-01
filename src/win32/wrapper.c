@@ -111,12 +111,18 @@ GetModuleHandleA (
     HMODULE rett;
     LPCWSTR name;
 
-    name = ansi2wide(lpModuleName);
-    if (name == NULL)
-        return (NULL);
+    if (lpModuleName != NULL) {
+        name = ansi2wide(lpModuleName);
+        if (name == NULL)
+            return (NULL);
+    }
+    else {
+        name = NULL;
+    }
 
     rett = GetModuleHandleW(name);
-    string_free(name);
+    if (name != NULL)
+        string_free(name);
     return (rett);
 }
 
@@ -478,12 +484,41 @@ CreateFontIndirectA (
 {
     LOGFONTW    info;
 
-    /* 转换字体名的编码 */
     mem_cpy(&info, lplf, sizeof(info) - LF_FACESIZE * sizeof(wide_t));
     if (MultiByteToWideChar(CP_ACP, 0, lplf->lfFaceName, -1,
                             info.lfFaceName, LF_FACESIZE) == 0)
         return (NULL);
     return (CreateFontIndirectW(&info));
+}
+
+/*
+=======================================
+    CreateMutexA
+=======================================
+*/
+HANDLE WINAPI
+CreateMutexA (
+  __CR_IN__ LPSECURITY_ATTRIBUTES   lpMutexAttributes,
+  __CR_IN__ BOOL                    bInitialOwner,
+  __CR_IN__ LPCSTR                  lpName
+    )
+{
+    HANDLE  rett;
+    LPCWSTR name;
+
+    if (lpName != NULL) {
+        name = ansi2wide(lpName);
+        if (name == NULL)
+            return (NULL);
+    }
+    else {
+        name = NULL;
+    }
+
+    rett = CreateMutexW(lpMutexAttributes, bInitialOwner, name);
+    if (name != NULL)
+        string_free(name);
+    return (rett);
 }
 
 /* Windows 9x 不支持宽字符版本 */

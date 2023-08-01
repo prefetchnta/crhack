@@ -109,8 +109,11 @@ LUA_CPPS=$(SRC)lua$(L)lapi.$(C) \
 ##                               CRHACK/UTIL                                 ##
 ###############################################################################
 
-OBJS=$(OBJ)filelib.$(O) \
-     $(OBJ)httplib.$(O) \
+OBJS=$(OBJ)file_md5.$(O) \
+     $(OBJ)file_crc2.$(O) \
+     $(OBJ)file_crc4.$(O) \
+     $(OBJ)chttplib.$(O) \
+     $(OBJ)cjsonlib.$(O) \
      $(OBJ)cpage437.$(O) \
      $(OBJ)cpage720.$(O) \
      $(OBJ)cpage737.$(O) \
@@ -133,8 +136,11 @@ OBJS=$(OBJ)filelib.$(O) \
      $(OBJ)cpage949.$(O) \
      $(OBJ)cpage950.$(O)
 
-CPPS=$(SRC)filelib.$(C) \
-     $(SRC)httplib.$(C) \
+CPPS=$(SRC)file_md5.$(C) \
+     $(SRC)file_crc2.$(C) \
+     $(SRC)file_crc4.$(C) \
+     $(SRC)chttplib.$(C) \
+     $(SRC)cjsonlib.$(C) \
      $(SRC)cpage437.$(C) \
      $(SRC)cpage720.$(C) \
      $(SRC)cpage737.$(C) \

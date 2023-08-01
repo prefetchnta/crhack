@@ -20,6 +20,9 @@
 #include "../../../inc/memlib.h"
 #if     defined(_CR_OS_MSWIN_)
     #define LUA_USE_WINDOWS
+    #if defined(_CR_BUILD_DLL_)
+        #define LUA_BUILD_AS_DLL
+    #endif
 #elif   defined(_CR_OS_MACOSX_)
     #define LUA_USE_MACOSX
 #else

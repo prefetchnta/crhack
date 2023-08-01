@@ -61,15 +61,16 @@ file_raw_openA (
   __CR_IN__ uint_t          mode
     )
 {
-    sint_t  file;
+    sint_t  fd;
 
     mode &= (~CR_FO_SEQ);
     if (mode > CR_FO_AW)
         return (NULL);
-    file = open(name, s_open_mode[mode], 0777);
-    if (file <= 0)
+    fd = open(name, s_open_mode[mode], 0777);
+    if (fd < 0)
         return (NULL);
-    return ((fraw_t)((leng_t)file));
+    if (fd == 0) fd = -1;
+    return ((fraw_t)((leng_t)fd));
 }
 
 /*
@@ -83,7 +84,7 @@ file_raw_openW (
   __CR_IN__ uint_t          mode
     )
 {
-    sint_t  file;
+    sint_t  fd;
     ansi_t* ansi;
 
     mode &= (~CR_FO_SEQ);
@@ -92,11 +93,12 @@ file_raw_openW (
     ansi = utf16_to_local(CR_LOCAL, name);
     if (ansi == NULL)
         return (NULL);
-    file = open(ansi, s_open_mode[mode], 0777);
+    fd = open(ansi, s_open_mode[mode], 0777);
     mem_free(ansi);
-    if (file <= 0)
+    if (fd < 0)
         return (NULL);
-    return ((fraw_t)((leng_t)file));
+    if (fd == 0) fd = -1;
+    return ((fraw_t)((leng_t)fd));
 }
 
 /*
@@ -109,7 +111,11 @@ file_raw_close (
   __CR_IN__ fraw_t  file
     )
 {
-    close((int)((leng_t)file));
+    sint_t  fd;
+
+    fd = (sint_t)((leng_t)file);
+    if (fd == -1) fd = 0;
+    close(fd);
 }
 
 /*
@@ -122,7 +128,11 @@ file_raw_tell (
   __CR_IN__ fraw_t  file
     )
 {
-    return ((fsize_t)cr_lseek((int)((leng_t)file), 0, SEEK_CUR));
+    sint_t  fd;
+
+    fd = (sint_t)((leng_t)file);
+    if (fd == -1) fd = 0;
+    return ((fsize_t)cr_lseek(fd, 0, SEEK_CUR));
 }
 
 /*
@@ -135,9 +145,12 @@ file_raw_size (
   __CR_IN__ fraw_t  file
     )
 {
+    sint_t          fd;
     struct cr_stat  info;
 
-    if (cr_fstat((int)((leng_t)file), &info) != 0)
+    fd = (sint_t)((leng_t)file);
+    if (fd == -1) fd = 0;
+    if (cr_fstat(fd, &info) != 0)
         return (CR_F_ERROR);
     return ((fsize_t)info.st_size);
 }
@@ -154,9 +167,13 @@ file_raw_seek (
   __CR_IN__ uint_t  whence
     )
 {
+    sint_t  fd;
+
     if (whence > SEEK_END)
         return (FALSE);
-    if (cr_lseek((int)((leng_t)file), offset, whence) == -1)
+    fd = (sint_t)((leng_t)file);
+    if (fd == -1) fd = 0;
+    if (cr_lseek(fd, offset, whence) == -1)
         return (FALSE);
     return (TRUE);
 }
@@ -171,7 +188,11 @@ file_raw_flush (
   __CR_IN__ fraw_t  file
     )
 {
-    if (fsync((int)((leng_t)file)) == -1)
+    sint_t  fd;
+
+    fd = (sint_t)((leng_t)file);
+    if (fd == -1) fd = 0;
+    if (fsync(fd) == -1)
         return (FALSE);
     return (TRUE);
 }
@@ -188,9 +209,12 @@ file_raw_read (
   __CR_IN__ fraw_t  file
     )
 {
+    sint_t  fd;
     leng_t  back;
 
-    back = (leng_t)read((int)((leng_t)file), data, size);
+    fd = (sint_t)((leng_t)file);
+    if (fd == -1) fd = 0;
+    back = (leng_t)read(fd, data, size);
     return ((back == (leng_t)-1) ? 0 : back);
 }
 
@@ -206,9 +230,12 @@ file_raw_write (
   __CR_IN__ fraw_t          file
     )
 {
+    sint_t  fd;
     leng_t  back;
 
-    back = (leng_t)write((int)((leng_t)file), data, size);
+    fd = (sint_t)((leng_t)file);
+    if (fd == -1) fd = 0;
+    back = (leng_t)write(fd, data, size);
     return ((back == (leng_t)-1) ? 0 : back);
 }
 

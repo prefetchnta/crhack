@@ -20,13 +20,24 @@
 include util.prj
 include gcc.mak
 LIB_NAME=UTILs.a
+IMP_NAME=CrH_UTIL.a
+BIN_NAME=CrH_UTIL.dll
+EXT_NAME=CrH_CORE.a
 
-build_all: build_lib
+build_all: build_lib \
+           build_dll
 	pause
 
 build_lib:
 	$(CC) $(CFLAGS) $(ALL_CPPS)
 	$(AR) $(AFLAGS) $(ALL_OBJS)
+	del *.o /Q
+
+build_dll:
+	$(RC) $(RFLAGS) -o.$(L)util.res.o .$(L)util.ver
+	$(CC) $(CFLAGS) -D_CR_BUILD_DLL_ $(ALL_CPPS)
+	$(LD) $(LFLAGS) $(ALL_OBJS) .$(L)util.res.o $(LFLAGS_1)
+	$(SP) $(SFLAGS)
 	del *.o /Q
 
 ###############################################################################

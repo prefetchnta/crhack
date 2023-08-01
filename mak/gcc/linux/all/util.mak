@@ -20,13 +20,21 @@
 include util.prj
 include gcc.mak
 LIB_NAME=libUTILs.a
+BIN_NAME=libCrH_UTIL.so
+EXT_NAME=-lm -lCrH_CORE
 
-build_all: build_lib
+build_all: build_lib build_dll
 	echo ========================================
 
 build_lib:
 	$(CC) $(CFLAGS) $(ALL_CPPS)
 	$(AR) $(AFLAGS) $(ALL_OBJS)
+	rm -f *.o
+
+build_dll:
+	$(CC) $(CFLAGS) -D_CR_BUILD_DLL_ $(ALL_CPPS)
+	$(LD) $(LFLAGS) $(ALL_OBJS)
+	$(SP) $(SFLAGS)
 	rm -f *.o
 
 ###############################################################################

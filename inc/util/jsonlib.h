@@ -1,6 +1,6 @@
 /*****************************************************************************/
 /*                                                  ###                      */
-/*       #####          ###    ###                  ###  CREATE: 2016-06-23  */
+/*       #####          ###    ###                  ###  CREATE: 2023-07-31  */
 /*     #######          ###    ###      [UTIL]      ###  ~~~~~~~~~~~~~~~~~~  */
 /*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
 /*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
@@ -13,32 +13,38 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>>>>>>>>>>>>> FILELIB 头文件 <<<<<<<<<<<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>>>>>>>>>>>>> JSONLIB 头文件 <<<<<<<<<<<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
-#ifndef __CR_FILELIB_H__
-#define __CR_FILELIB_H__
+#ifndef __CR_JSONLIB_H__
+#define __CR_JSONLIB_H__
 
 #include "../defs.h"
+#include "cjson/cJSON.h"
+#include "cjson/cJSON_Utils.h"
 
-/* 带 MD5 校验文件 */
-CR_API ansi_t*  file_load_str_md5 (const ansi_t *name);
-CR_API void_t*  file_load_bin_md5 (const ansi_t *name, leng_t *size);
-CR_API bool_t   file_save_md5 (const ansi_t *name, const void_t *data,
+/* 一些简化 cJSON 代码的助手函数 */
+CR_API cJSON*   cjson_object (cJSON *node, const ansi_t *name);
+CR_API ansi_t*  cjson_string (cJSON *node, const ansi_t *name);
+CR_API ansi_t*  cjson_str_dup (cJSON *node, const ansi_t *name);
+CR_API bool_t   cjson_str_cpy (ansi_t *dest, size_t size, cJSON *node,
+                               const ansi_t *name);
+CR_API bool_t   cjson_array_cnt (cJSON *node, const ansi_t *name,
+                                 uint_t *count);
+CR_API cJSON*   cjson_array_get (cJSON *node, uint_t index);
+CR_API bool_t   cjson_int (cJSON *node, const ansi_t *name, sint_t *numb);
+CR_API bool_t   cjson_int32 (cJSON *node, const ansi_t *name, int32s *numb);
+CR_API bool_t   cjson_int64 (cJSON *node, const ansi_t *name, int64s *numb);
+CR_API bool_t   cjson_real (cJSON *node, const ansi_t *name, real_t *numb);
+CR_API bool_t   cjson_fp32 (cJSON *node, const ansi_t *name, fp32_t *numb);
+CR_API bool_t   cjson_fp64 (cJSON *node, const ansi_t *name, fp64_t *numb);
+CR_API bool_t   cjson_hex_dat (cJSON *node, const ansi_t *name, void_t *data,
                                leng_t size);
-/* 带 CRC32 校验文件 */
-CR_API ansi_t*  file_load_str_crc4 (const ansi_t *name);
-CR_API void_t*  file_load_bin_crc4 (const ansi_t *name, leng_t *size);
-CR_API bool_t   file_save_crc4 (const ansi_t *name, const void_t *data,
-                                leng_t size);
-/* 带 CRC16 校验文件 */
-CR_API ansi_t*  file_load_str_crc2 (const ansi_t *name);
-CR_API void_t*  file_load_bin_crc2 (const ansi_t *name, leng_t *size);
-CR_API bool_t   file_save_crc2 (const ansi_t *name, const void_t *data,
-                                leng_t size);
+CR_API bool_t   cjson_hex_dat2 (cJSON *node, const ansi_t *name, void_t *data,
+                                leng_t *size);
 
-#endif  /* !__CR_FILELIB_H__ */
+#endif  /* !__CR_JSONLIB_H__ */
 
 /*****************************************************************************/
 /* _________________________________________________________________________ */
