@@ -13,19 +13,13 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>>>>>>>> CrHack 字符串操作函数库A <<<<<<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>>>>> CrHack 字符串工具函数库转换组A <<<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
 #define _CR_BUILD_ANSI_
 #include "datlib.h"
-#include "morder.h"
-#include "parser.h"
 #include "strlib.h"
-
-#define sINIx   sINIu
-#define sXMLx   sXMLu
-#define sXNODEx sXNODEu
 
 /* 字符转换用查表 */
 static const ansi_t _rom_ s_hex2asc[] =
@@ -36,56 +30,7 @@ static const ansi_t _rom_ s_hex2asc[] =
     CR_AC('C'), CR_AC('D'), CR_AC('E'), CR_AC('F'),
 };
 
-#include "templ/ctype.inl"
-#include "templ/strini.inl"
-#include "templ/strxml.inl"
-#include "templ/strbase.inl"
 #include "templ/strcnvt.inl"
-#include "templ/strhtml.inl"
-#include "templ/strpath.inl"
-#include "templ/strtool.inl"
-
-/*
-=======================================
-    半角字符转全角字符
-=======================================
-*/
-CR_API void_t*
-str_half2full (
-  __CR_IO__ const void_t*   half,
-  __CR_IN__ uint_t          codepage
-    )
-{
-    wide_t* ptr;
-    ansi_t* temp;
-    wide_t* utf16;
-
-    if (codepage == CR_UTF16X)
-        utf16 = str_dupW((wide_t*)half);
-    else
-        utf16 = str_acp2uni(codepage, (ansi_t*)half, NULL, TRUE);
-    if (utf16 == NULL)
-        return (NULL);
-
-    /* 空格比较特殊, 其他一一对应 */
-    for (ptr = utf16; *ptr != CR_NC(NIL); ptr++)
-    {
-        if (*ptr == CR_WC(' '))
-            *ptr  = 0x3000;
-        else
-        if (*ptr >= CR_WC('!') && *ptr <= CR_WC('~'))
-            *ptr += 0xFEE0;
-    }
-
-    /* 无需转换, 直接返回 */
-    if (codepage == CR_UTF16X)
-        return ((void_t*)utf16);
-
-    /* 完成后转换回本地编码 */
-    temp = str_uni2acp(codepage, utf16, NULL, TRUE);
-    mem_free(utf16);
-    return ((void_t*)temp);
-}
 
 /*
 =======================================

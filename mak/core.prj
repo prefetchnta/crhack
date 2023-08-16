@@ -189,8 +189,23 @@ OBJS=$(OBJ)defs.$(O) \
      $(OBJ)d3dfmt.$(O) \
      $(OBJ)bitfont.$(O) \
      $(OBJ)clipper.$(O) \
-     $(OBJ)stringa.$(O) \
-     $(OBJ)stringw.$(O) \
+     $(OBJ)strbase_a.$(O) \
+     $(OBJ)strbase_w.$(O) \
+     $(OBJ)strcnvt_a.$(O) \
+     $(OBJ)strcnvt_w.$(O) \
+     $(OBJ)strhtml_a.$(O) \
+     $(OBJ)strhtml_w.$(O) \
+     $(OBJ)strini_a.$(O) \
+     $(OBJ)strini_w.$(O) \
+     $(OBJ)strpath_a.$(O) \
+     $(OBJ)strpath_w.$(O) \
+     $(OBJ)strtool_a.$(O) \
+     $(OBJ)strtool_w.$(O) \
+     $(OBJ)strtype_a.$(O) \
+     $(OBJ)strtype_w.$(O) \
+     $(OBJ)strxml_a.$(O) \
+     $(OBJ)strxml_w.$(O) \
+     $(OBJ)halfull.$(O) \
      $(OBJ)xmlcall.$(O) \
      $(OBJ)mltbyte.$(O) \
      $(OBJ)unicode.$(O) \
@@ -294,8 +309,23 @@ CPPS=$(SRC)defs.$(C) \
      $(SRC)d3dfmt.$(C) \
      $(SRC)bitfont.$(C) \
      $(SRC)clipper.$(C) \
-     $(SRC)stringa.$(C) \
-     $(SRC)stringw.$(C) \
+     $(SRC)strbase_a.$(C) \
+     $(SRC)strbase_w.$(C) \
+     $(SRC)strcnvt_a.$(C) \
+     $(SRC)strcnvt_w.$(C) \
+     $(SRC)strhtml_a.$(C) \
+     $(SRC)strhtml_w.$(C) \
+     $(SRC)strini_a.$(C) \
+     $(SRC)strini_w.$(C) \
+     $(SRC)strpath_a.$(C) \
+     $(SRC)strpath_w.$(C) \
+     $(SRC)strtool_a.$(C) \
+     $(SRC)strtool_w.$(C) \
+     $(SRC)strtype_a.$(C) \
+     $(SRC)strtype_w.$(C) \
+     $(SRC)strxml_a.$(C) \
+     $(SRC)strxml_w.$(C) \
+     $(SRC)halfull.$(C) \
      $(SRC)xmlcall.$(C) \
      $(SRC)mltbyte.$(C) \
      $(SRC)unicode.$(C) \

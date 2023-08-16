@@ -1,6 +1,6 @@
 /*****************************************************************************/
 /*                                                  ###                      */
-/*       #####          ###    ###                  ###  CREATE: 2010-01-06  */
+/*       #####          ###    ###                  ###  CREATE: 2023-08-16  */
 /*     #######          ###    ###      [CORE]      ###  ~~~~~~~~~~~~~~~~~~  */
 /*    ########          ###    ###                  ###  MODIFY: XXXX-XX-XX  */
 /*    ####  ##          ###    ###                  ###  ~~~~~~~~~~~~~~~~~~  */
@@ -13,109 +13,54 @@
 /*   #######   ###      ###    ### ########  ###### ###  ###  | COMPILERS |  */
 /*    #####    ###      ###    ###  #### ##   ####  ###   ##  +-----------+  */
 /*  =======================================================================  */
-/*  >>>>>>>>>>>>>>>>>>>>>>> CrHack 字符串操作函数库W <<<<<<<<<<<<<<<<<<<<<<  */
+/*  >>>>>>>>>>>>>>>>>>>> CrHack 半/全角字符串转换函数库 <<<<<<<<<<<<<<<<<<<  */
 /*  =======================================================================  */
 /*****************************************************************************/
 
-#define _CR_BUILD_WIDE_
-#include "datlib.h"
-#include "morder.h"
-#include "parser.h"
+#include "memlib.h"
 #include "strlib.h"
 
-#define sINIx   sINIw
-#define sXMLx   sXMLw
-#define sXNODEx sXNODEw
-
-/* 不支持宽字符串 */
-#if defined(_CR_NO_WIDE_)
-    #define _CR_NO_WIDE_FUNC_
-#endif
-#if defined(_CR_NO_WIDE_FUNC_)
-
-/* for L"true" */
-static const wide_t _rom_ s_wcs_true[] =
+/*
+=======================================
+    半角字符转全角字符
+=======================================
+*/
+CR_API void_t*
+str_half2full (
+  __CR_IO__ const void_t*   half,
+  __CR_IN__ uint_t          codepage
+    )
 {
-    CR_WC('t'), CR_WC('r'), CR_WC('u'),
-    CR_WC('e'), CR_WC('\0'),
-};
+    wide_t* ptr;
+    ansi_t* temp;
+    wide_t* utf16;
 
-/* for L"false" */
-static const wide_t _rom_ s_wcs_false[] =
-{
-    CR_WC('f'), CR_WC('a'), CR_WC('l'),
-    CR_WC('s'), CR_WC('e'), CR_WC('\0'),
-};
+    if (codepage == CR_UTF16X)
+        utf16 = str_dupW((wide_t*)half);
+    else
+        utf16 = str_acp2uni(codepage, (ansi_t*)half, NULL, TRUE);
+    if (utf16 == NULL)
+        return (NULL);
 
-/* for L"\"\"\"" */
-static const wide_t _rom_ s_wcs_raws[] =
-{
-    CR_WC('\"'), CR_WC('\"'), CR_WC('\"'),
-    CR_WC('\0'),
-};
+    /* 空格比较特殊, 其他一一对应 */
+    for (ptr = utf16; *ptr != CR_NC(NIL); ptr++)
+    {
+        if (*ptr == CR_WC(' '))
+            *ptr  = 0x3000;
+        else
+        if (*ptr >= CR_WC('!') && *ptr <= CR_WC('~'))
+            *ptr += 0xFEE0;
+    }
 
-/* for L"<!--" */
-static const wide_t _rom_ s_wcs_xcmts1[] =
-{
-    CR_WC('<'), CR_WC('!'), CR_WC('-'),
-    CR_WC('-'), CR_WC('\0'),
-};
+    /* 无需转换, 直接返回 */
+    if (codepage == CR_UTF16X)
+        return ((void_t*)utf16);
 
-/* for L"-->" */
-static const wide_t _rom_ s_wcs_xcmte1[] =
-{
-    CR_WC('-'), CR_WC('-'), CR_WC('>'),
-    CR_WC('\0'),
-};
-
-/* for L"<![CDATA[" */
-static const wide_t _rom_ s_wcs_xcmts2[] =
-{
-    CR_WC('<'), CR_WC('!'), CR_WC('['),
-    CR_WC('C'), CR_WC('D'), CR_WC('A'),
-    CR_WC('T'), CR_WC('A'), CR_WC('['),
-    CR_WC('\0'),
-};
-
-/* for L"]]>" */
-static const wide_t _rom_ s_wcs_xcmte2[] =
-{
-    CR_WC(']'), CR_WC(']'), CR_WC('>'),
-    CR_WC('\0'),
-};
-
-/* for L"*-/" */
-static const wide_t _rom_ s_wcs_ccmte[] =
-{
-    CR_WC('*'), CR_WC('/'), CR_WC('\0'),
-};
-
-/* for L"://" */
-static const wide_t _rom_ s_wcs_scheme[] =
-{
-    CR_WC(':'), CR_WC('/'), CR_WC('/'),
-    CR_WC('\0'),
-};
-
-#endif  /* _CR_NO_WIDE_FUNC_ */
-
-/* 字符转换用查表 */
-static const wide_t _rom_ s_hex2asc[] =
-{
-    CR_WC('0'), CR_WC('1'), CR_WC('2'), CR_WC('3'),
-    CR_WC('4'), CR_WC('5'), CR_WC('6'), CR_WC('7'),
-    CR_WC('8'), CR_WC('9'), CR_WC('A'), CR_WC('B'),
-    CR_WC('C'), CR_WC('D'), CR_WC('E'), CR_WC('F'),
-};
-
-#include "templ/ctype.inl"
-#include "templ/strini.inl"
-#include "templ/strxml.inl"
-#include "templ/strbase.inl"
-#include "templ/strcnvt.inl"
-#include "templ/strhtml.inl"
-#include "templ/strpath.inl"
-#include "templ/strtool.inl"
+    /* 完成后转换回本地编码 */
+    temp = str_uni2acp(codepage, utf16, NULL, TRUE);
+    mem_free(utf16);
+    return ((void_t*)temp);
+}
 
 /*
 =======================================
