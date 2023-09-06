@@ -157,6 +157,7 @@ cjson_int (
     )
 {
     cJSON*  obj;
+    leng_t  skp;
 
     obj = cJSON_GetObjectItem(node, name);
     if (cJSON_IsNumber(obj)) {
@@ -165,8 +166,9 @@ cjson_int (
     }
     if (!cJSON_IsString(obj))
         return (FALSE);
-    *numb = str2intxA(obj->valuestring, NULL);
-    return (TRUE);
+    skp = 0;
+    *numb = str2intxA(obj->valuestring, &skp);
+    return ((skp == 0) ? FALSE : TRUE);
 }
 
 /*
@@ -182,6 +184,7 @@ cjson_int32 (
     )
 {
     cJSON*  obj;
+    leng_t  skp;
 
     obj = cJSON_GetObjectItem(node, name);
     if (cJSON_IsNumber(obj)) {
@@ -190,8 +193,9 @@ cjson_int32 (
     }
     if (!cJSON_IsString(obj))
         return (FALSE);
-    *numb = str2intx32A(obj->valuestring, NULL);
-    return (TRUE);
+    skp = 0;
+    *numb = str2intx32A(obj->valuestring, &skp);
+    return ((skp == 0) ? FALSE : TRUE);
 }
 
 /*
@@ -207,6 +211,7 @@ cjson_int64 (
     )
 {
     cJSON*  obj;
+    leng_t  skp;
 
     obj = cJSON_GetObjectItem(node, name);
     if (cJSON_IsNumber(obj)) {
@@ -215,8 +220,9 @@ cjson_int64 (
     }
     if (!cJSON_IsString(obj))
         return (FALSE);
-    *numb = str2intx64A(obj->valuestring, NULL);
-    return (TRUE);
+    skp = 0;
+    *numb = str2intx64A(obj->valuestring, &skp);
+    return ((skp == 0) ? FALSE : TRUE);
 }
 
 /*
@@ -232,6 +238,7 @@ cjson_real (
     )
 {
     cJSON*  obj;
+    leng_t  skp;
 
     obj = cJSON_GetObjectItem(node, name);
     if (cJSON_IsNumber(obj)) {
@@ -240,8 +247,9 @@ cjson_real (
     }
     if (!cJSON_IsString(obj))
         return (FALSE);
-    *numb = str2realA(obj->valuestring, NULL);
-    return (TRUE);
+    skp = 0;
+    *numb = str2realA(obj->valuestring, &skp);
+    return ((skp == 0) ? FALSE : TRUE);
 }
 
 /*
@@ -257,6 +265,7 @@ cjson_fp32 (
     )
 {
     cJSON*  obj;
+    leng_t  skp;
 
     obj = cJSON_GetObjectItem(node, name);
     if (cJSON_IsNumber(obj)) {
@@ -265,8 +274,9 @@ cjson_fp32 (
     }
     if (!cJSON_IsString(obj))
         return (FALSE);
-    *numb = str2fp32A(obj->valuestring, NULL);
-    return (TRUE);
+    skp = 0;
+    *numb = str2fp32A(obj->valuestring, &skp);
+    return ((skp == 0) ? FALSE : TRUE);
 }
 
 /*
@@ -282,6 +292,7 @@ cjson_fp64 (
     )
 {
     cJSON*  obj;
+    leng_t  skp;
 
     obj = cJSON_GetObjectItem(node, name);
     if (cJSON_IsNumber(obj)) {
@@ -290,8 +301,9 @@ cjson_fp64 (
     }
     if (!cJSON_IsString(obj))
         return (FALSE);
-    *numb = str2fp64A(obj->valuestring, NULL);
-    return (TRUE);
+    skp = 0;
+    *numb = str2fp64A(obj->valuestring, &skp);
+    return ((skp == 0) ? FALSE : TRUE);
 }
 
 /*
@@ -317,9 +329,7 @@ cjson_hex_dat (
         return (FALSE);
     len = size;
     str2datA(data, &len, obj->valuestring);
-    if (len != size)
-        return (FALSE);
-    return (TRUE);
+    return ((len != size) ? FALSE : TRUE);
 }
 
 /*
