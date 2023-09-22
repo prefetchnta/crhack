@@ -345,10 +345,10 @@ static const int32u _rom_ s_bzz5[0x500] =
     0xB0099EF4UL, 0xC5F653A5UL, 0x4C10790DUL, 0x7303286CUL,
 };
 
-/* 表格数据生成函数 */
-    /*
+#if 0
 int32u  cryptTable[0x500];
 
+/* 表格数据生成函数 */
 void_t  prepareCryptTable (void_t)
 {
     int32u  index1, index2;
@@ -368,7 +368,7 @@ void_t  prepareCryptTable (void_t)
         cryptTable[index2] = (temp1 | temp2);
     }
 }
-    */
+#endif
 
 /*
 =======================================

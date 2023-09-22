@@ -741,6 +741,7 @@ str_acp2uni (
     iconv_t         cd;
     const ansi_t*   to;
     const ansi_t*   from;
+    /* --------------- */
     ansi_t  *temp, *dest;
     leng_t  dst_size, src_size;
 

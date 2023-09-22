@@ -48,7 +48,7 @@ iif97_ws_de (
         if (sec != NULL)
             *sec = 5;
         if (e != NULL)
-           *e = iif97_5_ws_e(t, mpa);
+            *e = iif97_5_ws_e(t, mpa);
         return (iif97_5_ws_d(t, mpa));
     }
     if (t <= 350.0)
@@ -60,7 +60,7 @@ iif97_ws_de (
             if (sec != NULL)
                 *sec = 1;
             if (e != NULL)
-               *e = iif97_1_ws_e(t, mpa);
+                *e = iif97_1_ws_e(t, mpa);
             return (iif97_1_ws_d(t, mpa));
         }
 
@@ -68,7 +68,7 @@ iif97_ws_de (
         if (sec != NULL)
             *sec = 2;
         if (e != NULL)
-           *e = iif97_2_ws_e(t, mpa);
+            *e = iif97_2_ws_e(t, mpa);
         return (iif97_2_ws_d(t, mpa));
     }
     if (t >= 590.0)
@@ -77,7 +77,7 @@ iif97_ws_de (
         if (sec != NULL)
             *sec = 2;
         if (e != NULL)
-           *e = iif97_2_ws_e(t, mpa);
+            *e = iif97_2_ws_e(t, mpa);
         return (iif97_2_ws_d(t, mpa));
     }
     ps = iif97_2_3_t2mpa(t);
@@ -89,11 +89,11 @@ iif97_ws_de (
         ps = iif97_3_ws_d(t, mpa, wx);
         if (ps > 0.0) {
             if (e != NULL)
-               *e = iif97_3_ws_e(t, ps);
+                *e = iif97_3_ws_e(t, ps);
         }
         else {
             if (e != NULL)
-               *e = CR_PHY_INV;
+                *e = CR_PHY_INV;
         }
         return (ps);
     }
@@ -102,7 +102,7 @@ iif97_ws_de (
     if (sec != NULL)
         *sec = 2;
     if (e != NULL)
-       *e = iif97_2_ws_e(t, mpa);
+        *e = iif97_2_ws_e(t, mpa);
     return (iif97_2_ws_d(t, mpa));
 }
 

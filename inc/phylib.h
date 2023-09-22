@@ -412,6 +412,24 @@ CR_API bool_t   tex_project_y (uint_t *prj, const sIMAGE *img, byte_t idx);
 /* 纹理网格压缩 */
 CR_API sIMAGE*  tex_compress (const sIMAGE *img, uint_t tile_w,
                               uint_t tile_h, byte_t gate);
+
+/*****************************************************************************/
+/*                                   空间                                    */
+/*****************************************************************************/
+
+/* 点的空间划分 */
+CR_API uint_t   space_divide (byte_t *bits, fpxx_t min, fpxx_t max,
+                              fpxx_t value, uint_t times);
+CR_API uint_t   space_genbit (byte_t *bits, uint_t size, byte_t **list,
+                              uint_t count);
+/* 空间坐标哈希 */
+CR_API ansi_t*  space_hash2d (fpxx_t min_x, fpxx_t max_x,
+                              fpxx_t min_y, fpxx_t max_y,
+                              fpxx_t x, fpxx_t y, uint_t times);
+CR_API ansi_t*  space_hash3d (fpxx_t min_x, fpxx_t max_x,
+                              fpxx_t min_y, fpxx_t max_y,
+                              fpxx_t min_z, fpxx_t max_z,
+                              fpxx_t x, fpxx_t y, fpxx_t z, uint_t times);
 /* 多维空间直方图 */
 typedef struct
 {
@@ -457,24 +475,6 @@ typedef struct
 
 /* 按照频率的降序排列输出 */
 CR_API sHISTO_XD_NODE*  histo_xd_sort (sHISTO_XD *hist, leng_t *size);
-
-/*****************************************************************************/
-/*                                   空间                                    */
-/*****************************************************************************/
-
-/* 点的空间划分 */
-CR_API uint_t   space_divide (byte_t *bits, fpxx_t min, fpxx_t max,
-                              fpxx_t value, uint_t times);
-CR_API uint_t   space_genbit (byte_t *bits, uint_t size, byte_t **list,
-                              uint_t count);
-/* 空间坐标哈希 */
-CR_API ansi_t*  space_hash2d (fpxx_t min_x, fpxx_t max_x,
-                              fpxx_t min_y, fpxx_t max_y,
-                              fpxx_t x, fpxx_t y, uint_t times);
-CR_API ansi_t*  space_hash3d (fpxx_t min_x, fpxx_t max_x,
-                              fpxx_t min_y, fpxx_t max_y,
-                              fpxx_t min_z, fpxx_t max_z,
-                              fpxx_t x, fpxx_t y, fpxx_t z, uint_t times);
 
 /*****************************************************************************/
 /*                                   寻路                                    */
@@ -925,7 +925,8 @@ CR_API void_t   radar_fmcw_cutdown (const sFMCW *fmcw, bool_t noback);
 CR_API sint_t   radar_fmcw_dist (const sFMCW *fmcw, fp32_t *dist);
 CR_API fp32_t   radar_fmcw_dist_ex (const sFMCW *fmcw, sint_t k_idx);
 CR_API fp32_t   radar_fmcw_base_ex (const sFMCW *fmcw, sint_t k_idx);
-
+CR_API fp32_t   radar_fmcw_power_sum (const sFMCW *fmcw, uint_t beg,
+                                      uint_t end, sint_t type);
 /* CFAR 滤波 */
 CR_API void_t   radar_cfar_ca (fpxx_t *cut_lst, const sFMCW *input,
                                fpxx_t param_mul, fpxx_t param_add,

@@ -378,6 +378,52 @@ radar_fmcw_base_ex (
     return ((fp32_t)(ki * fmcw->ka + fmcw->kb));
 }
 
+/*
+=======================================
+    雷达 FMCW 频谱能量累计
+=======================================
+*/
+CR_API fp32_t
+radar_fmcw_power_sum (
+  __CR_IN__ const sFMCW*    fmcw,
+  __CR_IN__ uint_t          beg,
+  __CR_IN__ uint_t          end,
+  __CR_IN__ sint_t          type
+    )
+{
+    uint_t  idx;
+    fp32_t  front, backs;
+
+    if (beg >= end ||
+        beg >= fmcw->fft_max ||
+        end >= fmcw->fft_max)
+        return (0);
+    front = backs = 0;
+
+    if (type == 0)
+    {
+        /* 计算前景值和背景值的差值 */
+        for (idx = beg; idx <= end; idx++) {
+            front += fmcw->fmcw_fft[idx].re;
+            backs += fmcw->fft_back[idx];
+        }
+        return (front - backs);
+    }
+
+    if (type > 0)
+    {
+        /* 计算前景值 */
+        for (idx = beg; idx <= end; idx++)
+            front += fmcw->fmcw_fft[idx].re;
+        return (front);
+    }
+
+    /* 计算背景值 */
+    for (idx = beg; idx <= end; idx++)
+        backs += fmcw->fft_back[idx];
+    return (backs);
+}
+
 /*****************************************************************************/
 /* _________________________________________________________________________ */
 /* uBMAzRBoAKAHaACQD6FoAIAPqbgA/7rIA+5CM9uKw8D4Au7u7mSIJ0t18mYz0mYz9rAQZCgHc */
