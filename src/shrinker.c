@@ -267,7 +267,7 @@ uncompr_shrinker (
     for (;;)
     {
         if (srclen-- == 0)
-            return (0);
+            goto _failure;
         flag = *p_src++;
         literal_len = flag >> 5;
         match_len = flag & 0x0F;
@@ -276,7 +276,7 @@ uncompr_shrinker (
         if (literal_len == 7) {
             for (;;) {
                 if (srclen-- == 0)
-                    return (0);
+                    goto _failure;
                 flag = *p_src++;
                 if (flag != 255)
                     break;
@@ -288,7 +288,7 @@ uncompr_shrinker (
         if (match_len == 15) {
             for (;;) {
                 if (srclen-- == 0)
-                    return (0);
+                    goto _failure;
                 flag = *p_src++;
                 if (flag != 255)
                     break;
@@ -298,11 +298,11 @@ uncompr_shrinker (
         }
 
         if (srclen-- == 0)
-            return (0);
+            goto _failure;
         match_dist = *p_src++;
         if (long_dist) {
             if (srclen-- == 0)
-                return (0);
+                goto _failure;
             match_dist |= ((*p_src++) << 8);
             if (match_dist == 0xFFFF) {
                 pend = p_src + literal_len;
@@ -317,10 +317,13 @@ uncompr_shrinker (
         pcpy = p_dst - match_dist - 1;
         pend = pcpy + match_len + SHRINKER_MINMATCH;
         if (pcpy < (byte_t*)dst)
-            return (0);
+            goto _failure;
         SHRINKER_MEMCPY(p_dst, pcpy, pend);
     }
     return ((leng_t)(p_dst - (byte_t*)dst));
+
+_failure:
+    return (0);
 }
 
 /*****************************************************************************/

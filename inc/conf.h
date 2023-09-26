@@ -667,6 +667,12 @@
     #define _CR_USE_FP64_
 #endif
 
+/* 内部大整数运算的最大位数
+   默认: 4096 */
+#ifndef CR_BIGINT_CNT
+    #define CR_BIGINT_CNT   4096
+#endif
+
 #endif  /* !__CR_CONF_H__ */
 
 /*****************************************************************************/

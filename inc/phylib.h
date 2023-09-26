@@ -925,7 +925,7 @@ CR_API void_t   radar_fmcw_cutdown (const sFMCW *fmcw, bool_t noback);
 CR_API sint_t   radar_fmcw_dist (const sFMCW *fmcw, fp32_t *dist);
 CR_API fp32_t   radar_fmcw_dist_ex (const sFMCW *fmcw, sint_t k_idx);
 CR_API fp32_t   radar_fmcw_base_ex (const sFMCW *fmcw, sint_t k_idx);
-CR_API fp32_t   radar_fmcw_power_sum (const sFMCW *fmcw, uint_t beg,
+CR_API fpxx_t   radar_fmcw_power_sum (const sFMCW *fmcw, uint_t beg,
                                       uint_t end, sint_t type);
 /* CFAR 滤波 */
 CR_API void_t   radar_cfar_ca (fpxx_t *cut_lst, const sFMCW *input,

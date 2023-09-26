@@ -383,7 +383,7 @@ radar_fmcw_base_ex (
     雷达 FMCW 频谱能量累计
 =======================================
 */
-CR_API fp32_t
+CR_API fpxx_t
 radar_fmcw_power_sum (
   __CR_IN__ const sFMCW*    fmcw,
   __CR_IN__ uint_t          beg,
@@ -392,11 +392,11 @@ radar_fmcw_power_sum (
     )
 {
     uint_t  idx;
-    fp32_t  front, backs;
+    fpxx_t  front, backs;
 
     if (beg >= end ||
-        beg >= fmcw->fft_max ||
-        end >= fmcw->fft_max)
+        beg >= (uint_t)fmcw->fft_max ||
+        end >= (uint_t)fmcw->fft_max)
         return (0);
     front = backs = 0;
 

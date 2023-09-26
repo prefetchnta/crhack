@@ -72,11 +72,11 @@ crypto_rsa_key (
     /* 设置附加参数 */
     pub->block = bits / 8;
     pub->split = split;
-    if (pub->split == 0)
+    if (pub->split == 0 || pub->split >= pub->block)
+    {
+        /* 加密分组必须比取模的数小 */
         pub->split = pub->block - 1;
-    else
-    if (pub->split > pub->block)
-        pub->split = pub->block;
+    }
     prv->block = pub->block;
     prv->split = pub->split;
     bigint_cpy(&prv->N, &pub->N);

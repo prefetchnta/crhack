@@ -102,7 +102,7 @@ prime_tbl_ptr (void_t)
 }
 
 #define CR_NO_STRUCT
-#define BI_MAXLEN   128
+#define BI_MAXLEN   CR_BIGINT_CNT32
 #include "tmpl/bigint.inl"
 
 /*****************************************************************************/

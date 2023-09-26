@@ -30,11 +30,12 @@
 CR_API sint_t           prime_tbl_num (void_t);
 CR_API const sint_t*    prime_tbl_ptr (void_t);
 
-/* 4096位正整数结构 */
+/* 内部使用的大整数 */
+#define CR_BIGINT_CNT32 (CR_BIGINT_CNT / 32)
 typedef struct
 {
         sint_t  len;
-        int32u  val[128];
+        int32u  val[CR_BIGINT_CNT32];
 
 } sBIGINT;
 
