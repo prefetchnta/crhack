@@ -62,7 +62,11 @@ then using the CJSON_API_VISIBILITY flag to "export" the same symbols the way CJ
 
 /* export symbols by default, this is necessary for copy pasting the C and header file */
 #if !defined(CJSON_HIDE_SYMBOLS) && !defined(CJSON_IMPORT_SYMBOLS) && !defined(CJSON_EXPORT_SYMBOLS)
-#define CJSON_EXPORT_SYMBOLS
+#if !defined(_CR_BUILD_DLL_)
+    #define CJSON_HIDE_SYMBOLS
+#else
+    #define CJSON_EXPORT_SYMBOLS
+#endif
 #endif
 
 #if defined(CJSON_HIDE_SYMBOLS)

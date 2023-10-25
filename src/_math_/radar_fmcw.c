@@ -64,7 +64,7 @@ radar_fmcw_init (
     fmcw->fft_back = mem_talloc(fmcw->fft_max, fpxx_t);
     if (fmcw->fft_back == NULL)
         goto _failure3;
-    fmcw->fft_bits = mem_talloc(fmcw->bit_size, byte_t);
+    fmcw->fft_bits = mem_talloc(fmcw->bit_size * 2, byte_t);
     if (fmcw->fft_bits == NULL)
         goto _failure4;
     fmcw->fmcw_fft = mem_talloc(fmcw->fft_max, sCOMPLEX);
@@ -78,7 +78,7 @@ radar_fmcw_init (
     fmcw->chk_time = 0;
     mem_zero(fmcw->fft_temp, fmcw->fft_max * sizeof(fpxx_t));
     mem_zero(fmcw->fft_back, fmcw->fft_max * sizeof(fpxx_t));
-    mem_zero(fmcw->fft_bits, fmcw->bit_size * sizeof(byte_t));
+    mem_zero(fmcw->fft_bits, fmcw->bit_size * sizeof(int16u));
     mem_zero(fmcw->fmcw_fft, fmcw->fft_max * sizeof(sCOMPLEX));
     return (TRUE);
 
@@ -134,12 +134,11 @@ radar_fmcw_pass (
   __CR_IN__ bool_t          reset
     )
 {
-    sint_t  cnt, rst;
     sint_t  idx, chalf;
 
     /* 清上次结果 */
     if (fmcw->chk_time == 0) {
-        mem_zero(fmcw->fft_bits, fmcw->bit_size * sizeof(byte_t));
+        mem_zero(fmcw->fft_bits, fmcw->bit_size * sizeof(int16u));
         mem_zero(fmcw->fmcw_fft, fmcw->fft_max * sizeof(sCOMPLEX));
     }
 
@@ -210,22 +209,23 @@ radar_fmcw_pass (
         }
     }
 
+    /* 把峰值标记成有效谱线 */
+    if (fmcw->fmcw_fft[0].re >= fmcw->fmcw_fft[1].re)
+        fmcw->fft_bits[0] = 0x80;
+    for (idx = 1; idx < fmcw->fft_max - 1; idx++) {
+        if ((fmcw->fmcw_fft[idx].re >= fmcw->fmcw_fft[idx - 1].re) &&
+            (fmcw->fmcw_fft[idx].re >= fmcw->fmcw_fft[idx + 1].re))
+            fmcw->fft_bits[idx / 8] |= (byte_t)(1 << (7 - idx % 8));
+    }
+
     /* 是否进行复位操作 */
     if (reset)
     {
-        /* 保存背景频谱 */
+        /* 保存背景频谱和尖峰位置 */
         for (idx = 0; idx < fmcw->fft_max; idx++)
             fmcw->fft_back[idx] = fmcw->fmcw_fft[idx].re;
-    }
-
-    /* 把峰值标记成有效谱线 */
-    for (idx = 1; idx < fmcw->fft_max - 1; idx++) {
-        if ((fmcw->fmcw_fft[idx].re >= fmcw->fmcw_fft[idx - 1].re) &&
-            (fmcw->fmcw_fft[idx].re >= fmcw->fmcw_fft[idx + 1].re)) {
-            cnt = idx / 8;
-            rst = idx % 8;
-            fmcw->fft_bits[cnt] |= (byte_t)(1 << (7 - rst));
-        }
+        mem_cpy(&fmcw->fft_bits[fmcw->bit_size], &fmcw->fft_bits[0],
+                                fmcw->bit_size);
     }
 
     /* 处理完成 */
@@ -246,7 +246,7 @@ radar_fmcw_cutdown (
 {
     byte_t  mask;
     fpxx_t  value;
-    sint_t  idx, cnt, rst;
+    sint_t  idx, cnt;
 
     if (fmcw->cut_lst == NULL)
     {
@@ -255,8 +255,7 @@ radar_fmcw_cutdown (
         {
             /* 跳过非峰值 */
             cnt = idx / 8;
-            rst = idx % 8;
-            mask = (byte_t)(1 << (7 - rst));
+            mask = (byte_t)(1 << (7 - idx % 8));
             if (!(fmcw->fft_bits[cnt] & mask))
                 continue;
             value = fmcw->fmcw_fft[idx].re;
@@ -272,8 +271,7 @@ radar_fmcw_cutdown (
         {
             /* 跳过非峰值 */
             cnt = idx / 8;
-            rst = idx % 8;
-            mask = (byte_t)(1 << (7 - rst));
+            mask = (byte_t)(1 << (7 - idx % 8));
             if (!(fmcw->fft_bits[cnt] & mask))
                 continue;
             value = fmcw->fmcw_fft[idx].re;
@@ -296,17 +294,14 @@ radar_fmcw_dist (
     )
 {
     byte_t  mask;
-    sint_t  cnt, rst;
     fpxx_t  k_max = -1;
     sint_t  idx, k_idx = -1;
 
     for (idx = 0; idx < fmcw->fft_max; idx++)
     {
         /* 跳过非峰值 */
-        cnt = idx / 8;
-        rst = idx % 8;
-        mask = (byte_t)(1 << (7 - rst));
-        if (!(fmcw->fft_bits[cnt] & mask)) {
+        mask = (byte_t)(1 << (7 - idx % 8));
+        if (!(fmcw->fft_bits[idx / 8] & mask)) {
             dist[idx] = -1.0f;
             continue;
         }
@@ -391,7 +386,8 @@ radar_fmcw_power_sum (
   __CR_IN__ sint_t          type
     )
 {
-    uint_t  idx;
+    byte_t  mask;
+    uint_t  idx, cnt;
     fpxx_t  front, backs;
 
     if (beg >= end ||
@@ -403,9 +399,15 @@ radar_fmcw_power_sum (
     if (type == 0)
     {
         /* 计算前景值和背景值的差值 */
-        for (idx = beg; idx <= end; idx++) {
-            front += fmcw->fmcw_fft[idx].re;
-            backs += fmcw->fft_back[idx];
+        for (idx = beg; idx <= end; idx++)
+        {
+            /* 只计算峰值 */
+            cnt = idx / 8;
+            mask = (byte_t)(1 << (7 - idx % 8));
+            if (fmcw->fft_bits[cnt] & mask)
+                front += fmcw->fmcw_fft[idx].re;
+            if (fmcw->fft_bits[fmcw->bit_size + cnt] & mask)
+                backs += fmcw->fft_back[idx];
         }
         return (front - backs);
     }
@@ -414,13 +416,23 @@ radar_fmcw_power_sum (
     {
         /* 计算前景值 */
         for (idx = beg; idx <= end; idx++)
-            front += fmcw->fmcw_fft[idx].re;
+        {
+            /* 只计算峰值 */
+            mask = (byte_t)(1 << (7 - idx % 8));
+            if (fmcw->fft_bits[idx / 8] & mask)
+                front += fmcw->fmcw_fft[idx].re;
+        }
         return (front);
     }
 
     /* 计算背景值 */
     for (idx = beg; idx <= end; idx++)
-        backs += fmcw->fft_back[idx];
+    {
+        /* 只计算峰值 */
+        mask = (byte_t)(1 << (7 - idx % 8));
+        if (fmcw->fft_bits[fmcw->bit_size + idx / 8] & mask)
+            backs += fmcw->fft_back[idx];
+    }
     return (backs);
 }
 
