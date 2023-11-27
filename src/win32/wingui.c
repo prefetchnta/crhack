@@ -141,6 +141,122 @@ window_open (
 
 /*
 =======================================
+    应用程序窗口创建A
+=======================================
+*/
+CR_API hwnd_t
+window_openA (
+  __CR_IN__ void_t*         instance,
+  __CR_IN__ void_t*         msg_proc,
+  __CR_IN__ sint_t          x,
+  __CR_IN__ sint_t          y,
+  __CR_IN__ uint_t          w,
+  __CR_IN__ uint_t          h,
+  __CR_IN__ const ansi_t*   title,
+  __CR_IN__ const ansi_t*   name,
+  __CR_IN__ const ansi_t*   icon,
+  __CR_IN__ uint_t          style
+    )
+{
+    return (window_open(instance, msg_proc, x, y, w, h,
+                        title, name, icon, style));
+}
+
+/*
+=======================================
+    应用程序窗口创建W
+=======================================
+*/
+CR_API hwnd_t
+window_openW (
+  __CR_IN__ void_t*         instance,
+  __CR_IN__ void_t*         msg_proc,
+  __CR_IN__ sint_t          x,
+  __CR_IN__ sint_t          y,
+  __CR_IN__ uint_t          w,
+  __CR_IN__ uint_t          h,
+  __CR_IN__ const wide_t*   title,
+  __CR_IN__ const wide_t*   name,
+  __CR_IN__ const ansi_t*   icon,
+  __CR_IN__ uint_t          style
+    )
+{
+    RECT        full;
+    HWND        hwnd;
+    HICON       hicon;
+    DWORD       flags;
+    HBRUSH      hbrush;
+    HCURSOR     hcursor;
+    WNDCLASSW   winclass;
+
+    /* 处理额外的标志 */
+    if (style & CR_WSTYLE_TOPMOST) {
+        flags = WS_EX_TOPMOST;
+        style &= (~CR_WSTYLE_TOPMOST);
+    }
+    else {
+        flags = 0;
+    }
+
+    /* 过滤窗口风格 */
+    if (style > CR_WSTYLE_MAXVV)
+        return (NULL);
+    hicon = LoadIconA(instance, icon);
+    if (hicon == NULL)
+        return (NULL);
+    hcursor = LoadCursor(NULL, (LPCTSTR)IDC_ARROW);
+    if (hcursor == NULL)
+        return (NULL);
+    hbrush = (HBRUSH)GetStockObject(BLACK_BRUSH);
+    if (hbrush == NULL)
+        return (NULL);
+
+    /* 是否生成全屏程序 */
+    if (w == 0 || h == 0) {
+        if (w == 0 && h == 0) {     /* 全屏幕 */
+            x = 0;
+            y = 0;
+            w = GetSystemMetrics(SM_CXSCREEN);
+            h = GetSystemMetrics(SM_CYSCREEN);
+        }
+        else {                      /* 全桌面 */
+            if (!SystemParametersInfo(SPI_GETWORKAREA, 0, &full, 0))
+                return (NULL);
+            x = full.left;
+            y = full.top;
+            w = full.right - full.left;
+            h = full.bottom - full.top;
+        }
+    }
+
+    /* 注册窗口类别 */
+    winclass.style = WINGUI_STYLE;
+    winclass.lpfnWndProc = (WNDPROC)msg_proc;
+    winclass.cbClsExtra = 0;
+    winclass.cbWndExtra = 0;
+    winclass.hInstance = (HINSTANCE)instance;
+    winclass.hIcon = hicon;
+    winclass.hCursor = hcursor;
+    winclass.hbrBackground = hbrush;
+    winclass.lpszMenuName = NULL;
+    winclass.lpszClassName = name;
+    if (!RegisterClassW(&winclass))
+        return (NULL);
+
+    /* 生成并显示窗口 */
+    hwnd = CreateWindowExW(flags, name, title, s_win_style[style],
+                           x, y, w, h, NULL, NULL, instance, NULL);
+    if (hwnd == NULL) {
+        UnregisterClassW(name, (HINSTANCE)instance);
+        return (NULL);
+    }
+    ShowWindow(hwnd, SW_SHOWNORMAL);
+    UpdateWindow(hwnd);
+    return ((hwnd_t)hwnd);
+}
+
+/*
+=======================================
     应用程序窗口销毁
 =======================================
 */
@@ -154,6 +270,40 @@ window_kill (
     if (!DestroyWindow((HWND)hwnd))
         return (FALSE);
     if (!UnregisterClassA(name, (HINSTANCE)instance))
+        return (FALSE);
+    return (TRUE);
+}
+
+/*
+=======================================
+    应用程序窗口销毁A
+=======================================
+*/
+CR_API bool_t
+window_killA (
+  __CR_IN__ hwnd_t          hwnd,
+  __CR_IN__ void_t*         instance,
+  __CR_IN__ const ansi_t*   name
+    )
+{
+    return (window_kill(hwnd, instance, name));
+}
+
+/*
+=======================================
+    应用程序窗口销毁W
+=======================================
+*/
+CR_API bool_t
+window_killW (
+  __CR_IN__ hwnd_t          hwnd,
+  __CR_IN__ void_t*         instance,
+  __CR_IN__ const wide_t*   name
+    )
+{
+    if (!DestroyWindow((HWND)hwnd))
+        return (FALSE);
+    if (!UnregisterClassW(name, (HINSTANCE)instance))
         return (FALSE);
     return (TRUE);
 }

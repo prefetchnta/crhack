@@ -148,9 +148,25 @@ CR_API hwnd_t   window_open (void_t *instance, void_t *msg_proc,
                              sint_t x, sint_t y, uint_t w, uint_t h,
                              const ansi_t *title, const ansi_t *name,
                              const ansi_t *icon, uint_t style);
+
+CR_API hwnd_t   window_openA (void_t *instance, void_t *msg_proc,
+                              sint_t x, sint_t y, uint_t w, uint_t h,
+                              const ansi_t *title, const ansi_t *name,
+                              const ansi_t *icon, uint_t style);
+
+CR_API hwnd_t   window_openW (void_t *instance, void_t *msg_proc,
+                              sint_t x, sint_t y, uint_t w, uint_t h,
+                              const wide_t *title, const wide_t *name,
+                              const ansi_t *icon, uint_t style);
 /* 应用程序窗口销毁 */
 CR_API bool_t   window_kill (hwnd_t hwnd, void_t *instance,
                              const ansi_t *name);
+
+CR_API bool_t   window_killA (hwnd_t hwnd, void_t *instance,
+                              const ansi_t *name);
+
+CR_API bool_t   window_killW (hwnd_t hwnd, void_t *instance,
+                              const wide_t *name);
 /* 应用程序输入相关 */
 CR_API bool_t   key_input_test (uint_t vkey);
 CR_API bool_t   key_input_click (uint_t vkey);
