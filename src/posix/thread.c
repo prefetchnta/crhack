@@ -32,6 +32,9 @@
 #include <pthread.h>
 #if defined(_CR_SYS32_) && \
     defined(_CR_NO_FAST_ATOM_)
+    #if defined(_CR_USE_PTHREAD_ATOM_)
+        #define AO_USE_PTHREAD_DEFS
+    #endif
     #undef  AO_REQUIRE_CAS
     #include "../ex3rd/atom/atomic_ops.h"
     #define _CR_USE_ATOM_OPS_

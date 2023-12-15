@@ -24,6 +24,7 @@
 #else
     #include "templ/qsort.inl"
 #endif
+#define CR_RAND_MASK    0x7FFF
 
 /* 伪随机数的种子变量 */
 static int32u   s_rand_seed = 0UL;
@@ -57,8 +58,19 @@ rand_get (void_t)
     temp += 2531011UL;
     s_rand_seed = temp;
     temp >>= 16;
-    temp &= 0x7FFF;
+    temp &= CR_RAND_MASK;
     return ((sint_t)temp);
+}
+
+/*
+=======================================
+    返回最大的伪随机数
+=======================================
+*/
+CR_API sint_t
+rand_get_max (void_t)
+{
+    return (CR_RAND_MASK);
 }
 
 /*
@@ -78,26 +90,19 @@ rand_getx (
 
 /*
 =======================================
-    计算伪随机数 (坐标映射到随机空间)
+    返回伪随机数 (有范围)
 =======================================
 */
 CR_API fp32_t
-random3d (
-  __CR_IN__ uint_t  x,
-  __CR_IN__ uint_t  y,
-  __CR_IN__ uint_t  z,
-  __CR_IN__ uint_t  p0,     /* 质数 */
-  __CR_IN__ uint_t  p1,     /* 质数 */
-  __CR_IN__ uint_t  p2,     /* 质数 */
-  __CR_IN__ uint_t  p3      /* 质数 */
+rand_getr (
+  __CR_IN__ fp32_t  min,
+  __CR_IN__ fp32_t  max
     )
 {
+    fp32_t  scale = (fp32_t)rand_get();
 
-    uint_t  nn = x + p0 * y + p1 * z;
-
-    nn = (nn << 13) ^ nn;
-
-    return ((fp32_t)(nn * (nn * p2) + p3) / 4294967296.0f);
+    scale /= CR_RAND_MASK;
+    return (min + scale * (max - min));
 }
 
 /*

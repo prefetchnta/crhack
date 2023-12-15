@@ -784,6 +784,19 @@ CR_API fpxx_t   distance_cosine (const fpxx_t *x, const fpxx_t *y,
 CR_API fpxx_t   distance_dtw (const fpxx_t *x, uint_t nx, const fpxx_t *y,
                               uint_t ny, uint_t **path CR_DEFAULT(NULL),
                               uint_t *count CR_DEFAULT(NULL));
+/* 高斯随机 */
+typedef struct
+{
+        fpxx_t  S, M;
+        fpxx_t  V1, V2;
+        sint_t  phase;
+
+} sGAUSS_RND;
+
+CR_API void_t   gauss_rnd_init (sGAUSS_RND *grnd);
+CR_API fpxx_t   gauss_rnd_get (sGAUSS_RND *grnd);
+CR_API void_t   gauss_rnd_make (sGAUSS_RND *grnd, fpxx_t mean, fpxx_t sd,
+                                fpxx_t *output, leng_t count);
 
 /*****************************************************************************/
 /*                                   代数                                    */

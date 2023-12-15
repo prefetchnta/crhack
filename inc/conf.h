@@ -564,6 +564,7 @@
    默认: 使用编译器的 */
     /*
 #undef  _CR_NO_FAST_ATOM_
+#undef  _CR_USE_PTHREAD_ATOM_
 #undef  _CR_USE_SYNC_LOCK_RELEASE_
     */
 

@@ -81,6 +81,7 @@ OBJS=$(OBJ)math.$(O) \
      $(OBJ)xfilter.$(O) \
      $(OBJ)fir_lpass.$(O) \
      $(OBJ)fir_nline.$(O) \
+     $(OBJ)gauss_ops.$(O) \
      $(OBJ)statistics.$(O)
 
 CPPS=$(SRC)math.$(C) \
@@ -139,6 +140,7 @@ CPPS=$(SRC)math.$(C) \
      $(SRC)xfilter.$(C) \
      $(SRC)fir_lpass.$(C) \
      $(SRC)fir_nline.$(C) \
+     $(SRC)gauss_ops.$(C) \
      $(SRC)statistics.$(C)
 
 ###############################################################################
