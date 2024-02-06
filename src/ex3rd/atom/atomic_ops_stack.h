@@ -45,7 +45,7 @@
   /* Use the almost-non-blocking implementation regardless of the       */
   /* double-word CAS availability.                                      */
 #elif !defined(AO_HAVE_compare_double_and_swap_double) \
-      && !defined(AO_HAVE_compare_double_and_swap) \
+      && !defined(AO_HAVE_compare_and_swap_double) \
       && defined(AO_HAVE_compare_and_swap)
 # define AO_USE_ALMOST_LOCK_FREE
 #else
@@ -71,7 +71,7 @@
  *
  * We make some machine-dependent assumptions:
  *   - We have a compare-and-swap operation.
- *   - At least _AO_N_BITS low order bits in pointers are
+ *   - At least AO_N_BITS low order bits in pointers are
  *     zero and normally unused.
  *   - size_t and pointers have the same size.
  *

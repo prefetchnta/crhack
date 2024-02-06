@@ -66,7 +66,7 @@
  *      The binary log of the object size in bytes (small objects)
  *      The object size (a multiple of CHUNK_SIZE) for large objects.
  * The second case only arises if mmap-based allocation is supported.
- * We align the user-visible part of each object on a GRANULARITY
+ * We align the user-visible part of each object on an ALIGNMENT
  * byte boundary.  That means that the actual (hidden) start of
  * the object starts a word before this boundary.
  */
@@ -240,8 +240,8 @@ get_chunk(void)
                                     (AO_t)initial_ptr, (AO_t)my_chunk_ptr);
       }
 
-    if (AO_EXPECT_FALSE((AO_t)my_chunk_ptr
-            > (AO_t)(AO_initial_heap + AO_INITIAL_HEAP_SIZE - CHUNK_SIZE))) {
+    if (AO_EXPECT_FALSE((AO_t)my_chunk_ptr - (AO_t)AO_initial_heap
+                        > (size_t)(AO_INITIAL_HEAP_SIZE - CHUNK_SIZE))) {
       /* We failed.  The initial heap is used up.       */
       my_chunk_ptr = get_mmaped(CHUNK_SIZE);
 #     if !defined(CPPCHECK)
@@ -268,7 +268,7 @@ static void add_chunk_as(void * chunk, unsigned log_sz)
   size_t ofs, limit;
   size_t sz = (size_t)1 << log_sz;
 
-  assert(CHUNK_SIZE >= sz);
+  assert((size_t)CHUNK_SIZE >= sz);
   assert(sz % sizeof(AO_t) == 0);
   limit = (size_t)CHUNK_SIZE - sz;
   for (ofs = ALIGNMENT - sizeof(AO_t); ofs <= limit; ofs += sz) {

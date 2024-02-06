@@ -953,7 +953,7 @@ CR_API void_t   radar_cfar_go (fpxx_t *cut_lst, const sFMCW *input,
 CR_API bool_t   radar_cfar_os (fpxx_t *cut_lst, const sFMCW *input,
                                fpxx_t param_mul, fpxx_t param_add,
                                sint_t guard_len, sint_t noise_len,
-                               sint_t select);
+                               fp32_t select, fpxx_t *buffer);
 
 #endif  /* !__CR_PHYLIB_H__ */
 

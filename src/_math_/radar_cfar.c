@@ -38,22 +38,27 @@ radar_cfar_ca (
     sint_t  idx, out_idx, length;
     sint_t  idx_left_next, idx_left_prev;
     sint_t  idx_right_next, idx_right_prev;
-    fpxx_t  sum, sum_left = 0, sum_right = 0;
+    fpxx_t  sum, sum_left, sum_right;
 
-    /* 跳过 */
-    for (out_idx = 0; out_idx < guard_len; out_idx++)
-        cut_lst[out_idx] = CR_LARGX;
+    /* 检查 */
+    if (noise_len <= 0 || guard_len < 0 ||
+        input->fft_max <= 2 * (noise_len + guard_len))
+        return;
+    out_idx = 0;
+    sum_left = sum_right = 0;
 
-    /* 单面 */
+    /* 右面 */
     param_mul /= 2;
     for (idx = 0; idx < noise_len; idx++)
         sum_right += input->fmcw_fft[idx + guard_len + 1].re;
     cut_lst[out_idx++] = sum_right * param_mul + param_add;
-    idx_left_next = guard_len;
+    idx_left_next = 0;
     idx_right_prev = guard_len + 1;
     idx_right_next = idx_right_prev + noise_len;
-    for (idx = 0; idx < noise_len - 1; idx++) {
-        sum_left += input->fmcw_fft[idx_left_next++].re;
+    length = noise_len + guard_len - 1;
+    for (idx = 0; idx < length; idx++) {
+        if (idx < noise_len)
+            sum_left += input->fmcw_fft[idx_left_next++].re;
         sum_right += input->fmcw_fft[idx_right_next++].re;
         sum_right -= input->fmcw_fft[idx_right_prev++].re;
         cut_lst[out_idx++] = sum_right * param_mul + param_add;
@@ -61,13 +66,12 @@ radar_cfar_ca (
 
     /* 双面 */
     param_mul *= 2;
-    sum_left += input->fmcw_fft[idx_left_next++].re;
     sum_right += input->fmcw_fft[idx_right_next++].re;
     sum_right -= input->fmcw_fft[idx_right_prev++].re;
     sum = sum_left + sum_right;
     cut_lst[out_idx++] = sum * param_mul + param_add;
-    idx_left_prev = guard_len;
-    length = input->fft_max - guard_len - 2 * noise_len - 1;
+    idx_left_prev = 0;
+    length = input->fft_max - 2 * (noise_len + guard_len) - 1;
     for (idx = 0; idx < length; idx++) {
         sum_left += input->fmcw_fft[idx_left_next++].re;
         sum_left -= input->fmcw_fft[idx_left_prev++].re;
@@ -77,9 +81,10 @@ radar_cfar_ca (
         cut_lst[out_idx++] = sum * param_mul + param_add;
     }
 
-    /* 单面 */
+    /* 左面 */
     param_mul /= 2;
-    for (idx = 0; idx < noise_len; idx++) {
+    length = noise_len + guard_len;
+    for (idx = 0; idx < length; idx++) {
         sum_left += input->fmcw_fft[idx_left_next++].re;
         sum_left -= input->fmcw_fft[idx_left_prev++].re;
         cut_lst[out_idx++] = sum_left * param_mul + param_add;
@@ -104,35 +109,40 @@ radar_cfar_so (
     sint_t  idx, out_idx, length;
     sint_t  idx_left_next, idx_left_prev;
     sint_t  idx_right_next, idx_right_prev;
-    fpxx_t  sum, sum_left = 0, sum_right = 0;
+    fpxx_t  sum, sum_left, sum_right;
 
-    /* 跳过 */
-    for (out_idx = 0; out_idx < guard_len; out_idx++)
-        cut_lst[out_idx] = CR_LARGX;
+    /* 检查 */
+    if (noise_len <= 0 || guard_len < 0 ||
+        input->fft_max <= 2 * (noise_len + guard_len))
+        return;
+    out_idx = 0;
+    sum_left = sum_right = 0;
 
-    /* 单面 */
+    /* 右面 */
     param_mul /= 2;
     for (idx = 0; idx < noise_len; idx++)
         sum_right += input->fmcw_fft[idx + guard_len + 1].re;
     cut_lst[out_idx++] = sum_right * param_mul + param_add;
-    idx_left_next = guard_len;
+    idx_left_next = 0;
     idx_right_prev = guard_len + 1;
     idx_right_next = idx_right_prev + noise_len;
-    for (idx = 0; idx < noise_len - 1; idx++) {
-        sum_left += input->fmcw_fft[idx_left_next++].re;
+    length = noise_len + guard_len - 1;
+    for (idx = 0; idx < length; idx++) {
+        if (idx < noise_len)
+            sum_left += input->fmcw_fft[idx_left_next++].re;
         sum_right += input->fmcw_fft[idx_right_next++].re;
         sum_right -= input->fmcw_fft[idx_right_prev++].re;
         cut_lst[out_idx++] = sum_right * param_mul + param_add;
     }
 
     /* 双面 */
-    sum_left += input->fmcw_fft[idx_left_next++].re;
+    param_mul *= 2;
     sum_right += input->fmcw_fft[idx_right_next++].re;
     sum_right -= input->fmcw_fft[idx_right_prev++].re;
     sum = (sum_left < sum_right) ? sum_left : sum_right;
     cut_lst[out_idx++] = sum * param_mul + param_add;
-    idx_left_prev = guard_len;
-    length = input->fft_max - guard_len - 2 * noise_len - 1;
+    idx_left_prev = 0;
+    length = input->fft_max - 2 * (noise_len + guard_len) - 1;
     for (idx = 0; idx < length; idx++) {
         sum_left += input->fmcw_fft[idx_left_next++].re;
         sum_left -= input->fmcw_fft[idx_left_prev++].re;
@@ -142,8 +152,10 @@ radar_cfar_so (
         cut_lst[out_idx++] = sum * param_mul + param_add;
     }
 
-    /* 单面 */
-    for (idx = 0; idx < noise_len; idx++) {
+    /* 左面 */
+    param_mul /= 2;
+    length = noise_len + guard_len;
+    for (idx = 0; idx < length; idx++) {
         sum_left += input->fmcw_fft[idx_left_next++].re;
         sum_left -= input->fmcw_fft[idx_left_prev++].re;
         cut_lst[out_idx++] = sum_left * param_mul + param_add;
@@ -168,35 +180,40 @@ radar_cfar_go (
     sint_t  idx, out_idx, length;
     sint_t  idx_left_next, idx_left_prev;
     sint_t  idx_right_next, idx_right_prev;
-    fpxx_t  sum, sum_left = 0, sum_right = 0;
+    fpxx_t  sum, sum_left, sum_right;
 
-    /* 跳过 */
-    for (out_idx = 0; out_idx < guard_len; out_idx++)
-        cut_lst[out_idx] = CR_LARGX;
+    /* 检查 */
+    if (noise_len <= 0 || guard_len < 0 ||
+        input->fft_max <= 2 * (noise_len + guard_len))
+        return;
+    out_idx = 0;
+    sum_left = sum_right = 0;
 
-    /* 单面 */
+    /* 右面 */
     param_mul /= 2;
     for (idx = 0; idx < noise_len; idx++)
         sum_right += input->fmcw_fft[idx + guard_len + 1].re;
     cut_lst[out_idx++] = sum_right * param_mul + param_add;
-    idx_left_next = guard_len;
+    idx_left_next = 0;
     idx_right_prev = guard_len + 1;
     idx_right_next = idx_right_prev + noise_len;
-    for (idx = 0; idx < noise_len - 1; idx++) {
-        sum_left += input->fmcw_fft[idx_left_next++].re;
+    length = noise_len + guard_len - 1;
+    for (idx = 0; idx < length; idx++) {
+        if (idx < noise_len)
+            sum_left += input->fmcw_fft[idx_left_next++].re;
         sum_right += input->fmcw_fft[idx_right_next++].re;
         sum_right -= input->fmcw_fft[idx_right_prev++].re;
         cut_lst[out_idx++] = sum_right * param_mul + param_add;
     }
 
     /* 双面 */
-    sum_left += input->fmcw_fft[idx_left_next++].re;
+    param_mul *= 2;
     sum_right += input->fmcw_fft[idx_right_next++].re;
     sum_right -= input->fmcw_fft[idx_right_prev++].re;
     sum = (sum_left > sum_right) ? sum_left : sum_right;
     cut_lst[out_idx++] = sum * param_mul + param_add;
-    idx_left_prev = guard_len;
-    length = input->fft_max - guard_len - 2 * noise_len - 1;
+    idx_left_prev = 0;
+    length = input->fft_max - 2 * (noise_len + guard_len) - 1;
     for (idx = 0; idx < length; idx++) {
         sum_left += input->fmcw_fft[idx_left_next++].re;
         sum_left -= input->fmcw_fft[idx_left_prev++].re;
@@ -206,8 +223,10 @@ radar_cfar_go (
         cut_lst[out_idx++] = sum * param_mul + param_add;
     }
 
-    /* 单面 */
-    for (idx = 0; idx < noise_len; idx++) {
+    /* 左面 */
+    param_mul /= 2;
+    length = noise_len + guard_len;
+    for (idx = 0; idx < length; idx++) {
         sum_left += input->fmcw_fft[idx_left_next++].re;
         sum_left -= input->fmcw_fft[idx_left_prev++].re;
         cut_lst[out_idx++] = sum_left * param_mul + param_add;
@@ -247,54 +266,57 @@ radar_cfar_os (
   __CR_IN__ fpxx_t          param_add,
   __CR_IN__ sint_t          guard_len,
   __CR_IN__ sint_t          noise_len,
-  __CR_IN__ sint_t          select
+  __CR_IN__ fp32_t          select,
+  __CR_IN__ fpxx_t*         buffer
     )
 {
-    fpxx_t  *buffer;
-    sint_t  ptr, len;
     sint_t  idx, out_idx;
+    sint_t  ptr, beg, end, len;
 
-    /* 分配临时缓冲 */
-    len = noise_len * 2;
-    buffer = mem_talloc(len, fpxx_t);
-    if (buffer == NULL)
+    /* 检查 */
+    if (noise_len <= 0 || guard_len < 0 ||
+        input->fft_max <= 2 * (noise_len + guard_len))
         return (FALSE);
-
-    /* 默认参数设置 */
-    if (select < noise_len || select >= len)
-        select = 3 * len / 4;
-
-    /* 跳过 */
-    for (out_idx = 0; out_idx < guard_len; out_idx++)
-        cut_lst[out_idx] = CR_LARGX;
+    if (buffer == NULL) {
+        len = noise_len * 2;
+        buffer = mem_talloc(len, fpxx_t);
+        if (buffer == NULL)
+            return (FALSE);
+    }
+    else {
+        len = 0;
+    }
+    if (select <= 0.5f || select >= 1.0f)
+        select = 0.75f;
 
     /* 滑窗 */
-    for (; out_idx < input->fft_max; out_idx++)
+    for (out_idx = 0; out_idx < input->fft_max; out_idx++)
     {
-        ptr = 0;
+        /* 边界 */
+        beg = out_idx - guard_len - noise_len;
+        end = out_idx + guard_len + noise_len;
 
-        /* 复制数据到滑窗 */
-        for (idx = out_idx - noise_len; idx <= out_idx + noise_len; idx++)
+        /* 复制 */
+        for (ptr = 0, idx = beg; idx <= end; idx++)
         {
-            /* 跳过自己 */
-            if (idx == out_idx)
+            /* 跳过 */
+            if (idx >= out_idx - guard_len && idx <= out_idx + guard_len)
                 continue;
-
-            /* 超出边界的值放弃 */
-            if (idx < guard_len || idx >= input->fft_max)
-                buffer[ptr] = 0;
-            else
-                buffer[ptr] = input->fmcw_fft[idx].re;
-            ptr += 1;
+            if (idx >= 0 && idx < input->fft_max)
+                buffer[ptr++] = input->fmcw_fft[idx].re;
         }
 
-        /* 升序排序并计算阈值 */
-        quick_sort(buffer, len, sizeof(fpxx_t), radar_cfar_os_comp);
-        cut_lst[out_idx] = buffer[select] * param_mul + param_add;
+        /* 排序 */
+        quick_sort(buffer, ptr, sizeof(fpxx_t), radar_cfar_os_comp);
+
+        /* 选择 */
+        ptr = (sint_t)(ptr * select) - 1;
+        cut_lst[out_idx] = buffer[ptr] * param_mul + param_add;
     }
 
     /* 释放 */
-    mem_free(buffer);
+    if (len != 0)
+        mem_free(buffer);
     return (TRUE);
 }
 
