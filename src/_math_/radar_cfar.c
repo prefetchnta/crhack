@@ -66,6 +66,8 @@ radar_cfar_ca (
 
     /* 双面 */
     param_mul *= 2;
+    if (guard_len == 0)
+        sum_left += input->fmcw_fft[idx_left_next++].re;
     sum_right += input->fmcw_fft[idx_right_next++].re;
     sum_right -= input->fmcw_fft[idx_right_prev++].re;
     sum = sum_left + sum_right;
@@ -137,6 +139,8 @@ radar_cfar_so (
 
     /* 双面 */
     param_mul *= 2;
+    if (guard_len == 0)
+        sum_left += input->fmcw_fft[idx_left_next++].re;
     sum_right += input->fmcw_fft[idx_right_next++].re;
     sum_right -= input->fmcw_fft[idx_right_prev++].re;
     sum = (sum_left < sum_right) ? sum_left : sum_right;
@@ -208,6 +212,8 @@ radar_cfar_go (
 
     /* 双面 */
     param_mul *= 2;
+    if (guard_len == 0)
+        sum_left += input->fmcw_fft[idx_left_next++].re;
     sum_right += input->fmcw_fft[idx_right_next++].re;
     sum_right -= input->fmcw_fft[idx_right_prev++].re;
     sum = (sum_left > sum_right) ? sum_left : sum_right;
