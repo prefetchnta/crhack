@@ -198,7 +198,7 @@ crypto_all_cbc_enc (
     )
 {
     leng_t  idx, blk, rst, size;
-    byte_t  cha, tmp1[32], tmp2[32];
+    byte_t  cha, tmp1[64], tmp2[64];
 
     /* 安全检查 */
     if (block > sizeof(tmp1))
@@ -309,8 +309,8 @@ crypto_all_cbc_dec (
   __CR_IN__ enc_parm_t      func
     )
 {
-    byte_t  tmp1[32];
-    byte_t  tmp2[32];
+    byte_t  tmp1[64];
+    byte_t  tmp2[64];
     leng_t  idx, blk;
 
     /* 安全检查 */
@@ -341,6 +341,118 @@ crypto_all_cbc_dec (
         dst = (byte_t*)dst + block;
     }
     return (srclen);
+}
+
+/*****************************************************************************/
+/*                                   CTR                                     */
+/*****************************************************************************/
+
+/*
+---------------------------------------
+    计数器加1
+---------------------------------------
+*/
+static void_t
+counter_add_one (
+  __CR_IO__ byte_t* value,
+  __CR_IN__ leng_t  block,
+  __CR_IN__ bool_t  is_be
+    )
+{
+    leng_t  idx;
+
+    if (is_be) {
+        for (idx = block; idx != 0; idx--) {
+            if (value[idx - 1]++ != 0xFF)
+                break;
+        }
+    }
+    else {
+        for (idx = 0; idx < block; idx++) {
+            if (value[idx]++ == 0xFF)
+                break;
+        }
+    }
+}
+
+/*
+=======================================
+    CTR 模式加密
+=======================================
+*/
+CR_API leng_t
+crypto_all_ctr_enc (
+  __CR_IN__ void_t*         ctx,
+  __CR_OT__ void_t*         dst,
+  __CR_IN__ leng_t          dstlen,
+  __CR_IN__ const void_t*   src,
+  __CR_IN__ leng_t          srclen,
+  __CR_IN__ const void_t*   cntr,
+  __CR_IN__ leng_t          block,
+  __CR_IN__ bool_t          is_be,
+  __CR_IN__ enc_parm_t      func
+    )
+{
+    leng_t  idx, blk, rst;
+    byte_t  tmp1[64], tmp2[64];
+
+    /* 安全检查 */
+    if (block > sizeof(tmp1))
+        return (0);
+
+    /* 计算目标大小 */
+    if (dst == NULL)
+        return (srclen);
+
+    /* 安全检查 */
+    if (srclen > dstlen)
+        return (0);
+    blk = srclen / block;
+    rst = srclen % block;
+
+    /* 分块加密 */
+    if (cntr != NULL)
+        mem_cpy(tmp1, cntr, block);
+    else
+        mem_zero(tmp1, block);
+    for (; blk != 0; blk--) {
+        func(tmp2, block, tmp1, block, ctx);
+        for (idx = 0; idx < block; idx++)
+            ((byte_t*)dst)[idx] = ((byte_t*)src)[idx] ^ tmp2[idx];
+        src = (byte_t*)src + block;
+        dst = (byte_t*)dst + block;
+        counter_add_one((byte_t*)tmp1, block, is_be);
+    }
+
+    /* 处理尾部 */
+    if (rst != 0) {
+        func(tmp2, block, tmp1, block, ctx);
+        for (idx = 0; idx < rst; idx++)
+            ((byte_t*)dst)[idx] = ((byte_t*)src)[idx] ^ tmp2[idx];
+    }
+    return (srclen);
+}
+
+/*
+=======================================
+    CTR 模式解密
+=======================================
+*/
+CR_API leng_t
+crypto_all_ctr_dec (
+  __CR_IN__ void_t*         ctx,
+  __CR_OT__ void_t*         dst,
+  __CR_IN__ leng_t          dstlen,
+  __CR_IN__ const void_t*   src,
+  __CR_IN__ leng_t          srclen,
+  __CR_IN__ const void_t*   cntr,
+  __CR_IN__ leng_t          block,
+  __CR_IN__ bool_t          is_be,
+  __CR_IN__ enc_parm_t      func
+    )
+{
+    return (crypto_all_ctr_enc(ctx, dst, dstlen, src, srclen,
+                               cntr, block, is_be, func));
 }
 
 /*****************************************************************************/

@@ -241,43 +241,66 @@ radar_fmcw_pass (
 CR_API void_t
 radar_fmcw_cutdown (
   __CR_IN__ const sFMCW*    fmcw,
-  __CR_IN__ bool_t          noback
+  __CR_IN__ bool_t          back
     )
 {
     byte_t  mask;
-    fpxx_t  value;
     sint_t  idx, cnt;
 
     if (fmcw->cut_lst == NULL)
     {
         /* 使用固定的阈值 */
-        for (idx = 0; idx < fmcw->fft_max; idx++)
+        if (back)
         {
-            /* 跳过非峰值 */
-            cnt = idx / 8;
-            mask = (byte_t)(1 << (7 - idx % 8));
-            if (!(fmcw->fft_bits[cnt] & mask))
-                continue;
-            value = fmcw->fmcw_fft[idx].re;
-            if (noback) value -= fmcw->fft_back[idx];
-            if (value <= fmcw->cut_fft)
-                fmcw->fft_bits[cnt] &= ~mask;
+            /* 针对背景值 */
+            for (idx = 0; idx < fmcw->fft_max; idx++) {
+                cnt = fmcw->bit_size + idx / 8;
+                mask = (byte_t)(1 << (7 - idx % 8));
+                if (!(fmcw->fft_bits[cnt] & mask))
+                    continue;
+                if (fmcw->fft_back[idx] <= fmcw->cut_fft)
+                    fmcw->fft_bits[cnt] &= ~mask;
+            }
+        }
+        else
+        {
+            /* 针对当前值 */
+            for (idx = 0; idx < fmcw->fft_max; idx++) {
+                cnt = idx / 8;
+                mask = (byte_t)(1 << (7 - idx % 8));
+                if (!(fmcw->fft_bits[cnt] & mask))
+                    continue;
+                if (fmcw->fmcw_fft[idx].re <= fmcw->cut_fft)
+                    fmcw->fft_bits[cnt] &= ~mask;
+            }
         }
     }
     else
     {
         /* 使用可变的阈值 */
-        for (idx = 0; idx < fmcw->fft_max; idx++)
+        if (back)
         {
-            /* 跳过非峰值 */
-            cnt = idx / 8;
-            mask = (byte_t)(1 << (7 - idx % 8));
-            if (!(fmcw->fft_bits[cnt] & mask))
-                continue;
-            value = fmcw->fmcw_fft[idx].re;
-            if (noback) value -= fmcw->fft_back[idx];
-            if (value <= fmcw->cut_lst[idx])
-                fmcw->fft_bits[cnt] &= ~mask;
+            /* 针对背景值 */
+            for (idx = 0; idx < fmcw->fft_max; idx++) {
+                cnt = fmcw->bit_size + idx / 8;
+                mask = (byte_t)(1 << (7 - idx % 8));
+                if (!(fmcw->fft_bits[cnt] & mask))
+                    continue;
+                if (fmcw->fft_back[idx] <= fmcw->cut_lst[idx])
+                    fmcw->fft_bits[cnt] &= ~mask;
+            }
+        }
+        else
+        {
+            /* 针对当前值 */
+            for (idx = 0; idx < fmcw->fft_max; idx++) {
+                cnt = idx / 8;
+                mask = (byte_t)(1 << (7 - idx % 8));
+                if (!(fmcw->fft_bits[cnt] & mask))
+                    continue;
+                if (fmcw->fmcw_fft[idx].re <= fmcw->cut_lst[idx])
+                    fmcw->fft_bits[cnt] &= ~mask;
+            }
         }
     }
 }
@@ -313,6 +336,38 @@ radar_fmcw_dist (
 
         /* 计算谱线相位 */
         fmcw->fmcw_fft[idx].im = complex_ang(&fmcw->fft_vals[idx]);
+    }
+    return (k_idx);
+}
+
+/*
+=======================================
+    雷达 FMCW 计算距离 (基值)
+=======================================
+*/
+CR_API sint_t
+radar_fmcw_base (
+  __CR_IN__ const sFMCW*    fmcw,
+  __CR_OT__ fp32_t*         dist
+    )
+{
+    byte_t  mask;
+    fpxx_t  k_max = -1;
+    sint_t  idx, k_idx = -1;
+
+    for (idx = 0; idx < fmcw->fft_max; idx++)
+    {
+        /* 跳过非峰值 */
+        mask = (byte_t)(1 << (7 - idx % 8));
+        if (!(fmcw->fft_bits[fmcw->bit_size + idx / 8] & mask)) {
+            dist[idx] = -1.0f;
+            continue;
+        }
+        if (k_max < fmcw->fft_back[idx]) {
+            k_max = fmcw->fft_back[idx];
+            k_idx = idx;
+        }
+        dist[idx] = radar_fmcw_base_ex(fmcw, idx);
     }
     return (k_idx);
 }

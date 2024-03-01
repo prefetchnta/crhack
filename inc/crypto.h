@@ -278,6 +278,18 @@ CR_API leng_t   crypto_all_cbc_dec (void_t *ctx, void_t *dst,
                                     leng_t dstlen, const void_t *src,
                                     leng_t srclen, const void_t *ivec,
                                     leng_t block, enc_parm_t func);
+/* ALL-CTR */
+CR_API leng_t   crypto_all_ctr_enc (void_t *ctx, void_t *dst,
+                                    leng_t dstlen, const void_t *src,
+                                    leng_t srclen, const void_t *cntr,
+                                    leng_t block, bool_t is_be,
+                                    enc_parm_t func);
+
+CR_API leng_t   crypto_all_ctr_dec (void_t *ctx, void_t *dst,
+                                    leng_t dstlen, const void_t *src,
+                                    leng_t srclen, const void_t *cntr,
+                                    leng_t block, bool_t is_be,
+                                    enc_parm_t func);
 
 #endif  /* !__CR_CRYPTO_H__ */
 
