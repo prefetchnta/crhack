@@ -91,7 +91,7 @@ fft1_func (
         return (NULL);
     }
 
-    /* 蝴形计算 */
+    /* 蝶形计算 */
     mem_cpy(X1, TD, count * sizeof(sCOMPLEX));
     for (kk = 0; kk < power; kk++) {
         for (jj = 0; jj < (1 << kk); jj++) {

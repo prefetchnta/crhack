@@ -900,7 +900,6 @@ typedef struct
 {
         /* 输入参数 */
         uint_t          filter;     /* 频谱滤波类型 */
-        uint_t          totals;     /* 采集的总次数 */
         fp32_t          ka, kb;     /* 测距标定参数 */
         sint_t          npower;     /* FFT 点数参数 */
         sint_t          fft_max;    /* 最远频谱点位 */
@@ -910,9 +909,7 @@ typedef struct
         const fpxx_t*   fft_win;    /* FFT 的窗函数 */
 
         /* 临时缓存 */
-        uint_t      chk_time;
         uint_t      bit_size;
-        fpxx_t*     fft_temp;
         fpxx_t*     fft_back;
         sCOMPLEX*   fft_data;
         sCOMPLEX*   fft_coes;
@@ -924,15 +921,10 @@ typedef struct
         sCOMPLEX*   fmcw_fft;   /* FMCW 返回结果 */
 } sFMCW;
 
-/* FMCW 滤波 */
-#define CR_FMCW_DIR     0   /* 直接使用 */
-#define CR_FMCW_AVG     1   /* 均值滤波 */
-#define CR_FMCW_MAX     2   /* 大值滤波 */
-
 /* FMCW 测距 */
 CR_API bool_t   radar_fmcw_init (sFMCW *fmcw);
 CR_API void_t   radar_fmcw_free (sFMCW *fmcw);
-CR_API sint_t   radar_fmcw_pass (sFMCW *fmcw, const sint_t *data,
+CR_API bool_t   radar_fmcw_doit (sFMCW *fmcw, const sint_t *data,
                                  bool_t reset);
 CR_API void_t   radar_fmcw_cutdown (const sFMCW *fmcw, bool_t back);
 CR_API sint_t   radar_fmcw_dist (const sFMCW *fmcw, fp32_t *dist);

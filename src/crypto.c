@@ -21,51 +21,24 @@
 #include "memlib.h"
 #include "msclib.h"
 
-/*****************************************************************************/
-/*                                   EBC                                     */
-/*****************************************************************************/
+/* 最大块的字节数 */
+#ifndef _CR_CRYPTO_MAX_BLK_
+    #define _CR_CRYPTO_MAX_BLK_ 256
+#endif
 
 /*
-=======================================
-    EBC 模式加密
-=======================================
+---------------------------------------
+    计算目标填充大小
+---------------------------------------
 */
-CR_API leng_t
-crypto_all_ebc_enc (
-  __CR_IN__ void_t*         ctx,
-  __CR_OT__ void_t*         dst,
-  __CR_IN__ leng_t          dstlen,
-  __CR_IN__ leng_t          dstblk,
-  __CR_IN__ const void_t*   src,
-  __CR_IN__ leng_t          srclen,
-  __CR_IN__ leng_t          srcblk,
-  __CR_IN__ uint_t          fill,
-  __CR_IN__ enc_parm_t      func
+static leng_t
+crypto_padding_size (
+  __CR_IN__ leng_t  unit,
+  __CR_IN__ leng_t  rest,
+  __CR_IN__ uint_t  fill,
+  __CR_IN__ leng_t  count
     )
 {
-    byte_t  cha, tmp[512];
-    leng_t  blk, rst, size;
-
-    /* 安全检查 */
-    if (srcblk > sizeof(tmp))
-        return (0);
-
-    /* 计算目标大小 */
-    if (dstblk == 0)
-        dstblk = srcblk;
-    blk = srclen / srcblk;
-    rst = srclen % srcblk;
-    size = blk * dstblk;
-    if (rst != 0)
-        size += dstblk;
-    if (dst == NULL)
-        return (size);
-
-    /* 安全检查 */
-    if (size > dstlen)
-        return (0);
-
-    /* 填充类型检查 */
     if (fill > 0xFF) {
         switch (fill & (~0xFF))
         {
@@ -73,71 +46,153 @@ crypto_all_ebc_enc (
                 return (0);
 
             case CR_PADDING_PKCS5:
-                if (srcblk != 8)
+                if (unit != 8)
                     return (0);
             case CR_PADDING_PKCS7:
             case CR_PADDING_ANSI_X923:
             case CR_PADDING_ISO10126:
                 break;
+
+            case CR_PADDING_NOTHING:
+                if (rest != 0 || count == 0)
+                    return (0);
+                count--;
+                break;
         }
     }
+    return ((count + 1) * unit);
+}
 
-    /* 分块加密 */
-    for (; blk != 0; blk--) {
-        func(dst, dstblk, src, srcblk, ctx);
-        dst = (byte_t*)dst + dstblk;
-        src = (byte_t*)src + srcblk;
+/*
+---------------------------------------
+    填充目标数据数组
+---------------------------------------
+*/
+static void_t
+crypto_padding_data (
+  __CR_IN__ leng_t  unit,
+  __CR_IN__ leng_t  rest,
+  __CR_IN__ uint_t  fill,
+  __CR_IO__ void_t* buffs
+    )
+{
+    byte_t  cha;
+
+    unit -= rest;
+    if (fill <= 0xFF) {
+        cha = (byte_t)fill;
+        for (; unit != 0; unit--, rest++)
+            ((byte_t*)buffs)[rest] = cha;
+        return;
     }
 
-    /* 处理尾部 */
-    if (rst != 0) {
-        mem_cpy(tmp, src, rst);
-        blk = srcblk - rst;
-        if (fill <= 0xFF) {
-            cha = (byte_t)fill;
-            for (; blk != 0; blk--, rst++)
-                tmp[rst] = cha;
-        }
-        else {
-            switch (fill & (~0xFF))
-            {
-                default:
-                    break;
+    switch (fill & (~0xFF))
+    {
+        default:
+            break;
 
-                case CR_PADDING_PKCS5:
-                case CR_PADDING_PKCS7:
-                    cha = (byte_t)blk;
-                    for (; blk != 0; blk--, rst++)
-                        tmp[rst] = cha;
-                    break;
+        case CR_PADDING_PKCS5:
+        case CR_PADDING_PKCS7:
+            cha = (byte_t)unit;
+            for (; unit != 0; unit--, rest++)
+                ((byte_t*)buffs)[rest] = cha;
+            break;
 
-                case CR_PADDING_ANSI_X923:
-                    cha = (byte_t)blk;
-                    for (; blk > 1; blk--, rst++)
-                        tmp[rst] = 0x00;
-                    tmp[rst] = cha;
-                    break;
+        case CR_PADDING_ANSI_X923:
+            cha = (byte_t)unit;
+            for (; unit > 1; unit--, rest++)
+                ((byte_t*)buffs)[rest] = 0x00;
+            ((byte_t*)buffs)[rest] = cha;
+            break;
 
-                case CR_PADDING_ISO10126:
-                    cha = (byte_t)blk;
-                    for (; blk > 1; blk--, rst++)
-                        tmp[rst] = (byte_t)rand_getx(256);
-                    tmp[rst] = cha;
-                    break;
-            }
-        }
-        func(dst, dstblk, tmp, srcblk, ctx);
+        case CR_PADDING_ISO10126:
+            cha = (byte_t)unit;
+            for (; unit > 1; unit--, rest++)
+                ((byte_t*)buffs)[rest] = (byte_t)rand_getx(256);
+            ((byte_t*)buffs)[rest] = cha;
+            break;
     }
+}
+
+/*
+=======================================
+    处理尾部数据填充
+=======================================
+*/
+CR_API leng_t
+crypto_padding (
+  __CR_IO__ void_t* data,
+  __CR_IN__ leng_t  size,
+  __CR_IN__ leng_t  unit,
+  __CR_IN__ uint_t  fill
+    )
+{
+    leng_t  blk = size / unit;
+    leng_t  rst = size % unit;
+
+    /* 计算填充长度 */
+    size = crypto_padding_size(unit, rst, fill, blk);
+    if (data == NULL || size == 0)
+        return (size);
+    blk *= unit;
+
+    /* 执行填充的动作 */
+    crypto_padding_data(unit, rst, fill, ((byte_t*)data) + blk);
     return (size);
 }
 
 /*
 =======================================
-    EBC 模式解密
+    返回真实数据长度
 =======================================
 */
 CR_API leng_t
-crypto_all_ebc_dec (
+crypto_real_size (
+  __CR_IN__ const void_t*   data,
+  __CR_IN__ leng_t          size,
+  __CR_IN__ leng_t          unit,
+  __CR_IN__ uint_t          fill
+    )
+{
+    uint_t  cha;
+
+    if (size == 0 || size % unit != 0)
+        return (size);
+
+    cha = ((byte_t*)data)[size - 1];
+    if (fill <= 0xFF)
+        return ((cha != fill) ? 0 : size);
+
+    switch (fill & (~0xFF))
+    {
+        default:
+            break;
+
+        case CR_PADDING_PKCS5:
+        case CR_PADDING_PKCS7:
+        case CR_PADDING_ANSI_X923:
+        case CR_PADDING_ISO10126:
+            if (cha > unit)
+                break;
+            return (size - cha);
+
+        case CR_PADDING_NOTHING:
+            return (size);
+    }
+    return (0);
+}
+
+/*****************************************************************************/
+/*                                   EBC                                     */
+/*****************************************************************************/
+
+/*
+=======================================
+    EBC 模式变换
+=======================================
+*/
+CR_API leng_t
+crypto_all_ebc_ops (
   __CR_IN__ void_t*         ctx,
   __CR_OT__ void_t*         dst,
   __CR_IN__ leng_t          dstlen,
@@ -151,7 +206,9 @@ crypto_all_ebc_dec (
     leng_t  blk, size;
 
     /* 安全检查 */
-    if (srclen % srcblk != 0)
+    if (srclen == 0 ||
+        srcblk <= 1 ||
+        srclen % srcblk != 0)
         return (0);
 
     /* 计算目标大小 */
@@ -166,7 +223,7 @@ crypto_all_ebc_dec (
     if (size > dstlen)
         return (0);
 
-    /* 分块解密 */
+    /* 分块变换 */
     for (; blk != 0; blk--) {
         func(dst, dstblk, src, srcblk, ctx);
         dst = (byte_t*)dst + dstblk;
@@ -193,103 +250,40 @@ crypto_all_cbc_enc (
   __CR_IN__ leng_t          srclen,
   __CR_IN__ const void_t*   ivec,
   __CR_IN__ leng_t          block,
-  __CR_IN__ uint_t          fill,
   __CR_IN__ enc_parm_t      func
     )
 {
-    leng_t  idx, blk, rst, size;
-    byte_t  cha, tmp1[64], tmp2[64];
+    leng_t  idx, blk;
+    byte_t  tmp[_CR_CRYPTO_MAX_BLK_];
 
     /* 安全检查 */
-    if (block > sizeof(tmp1))
+    if (srclen == 0 || block <= 1 ||
+        block > sizeof(tmp) || srclen % block != 0)
         return (0);
 
     /* 计算目标大小 */
-    blk = srclen / block;
-    rst = srclen % block;
-    size = blk * block;
-    if (rst != 0)
-        size += block;
     if (dst == NULL)
-        return (size);
+        return (srclen);
 
     /* 安全检查 */
-    if (size > dstlen)
+    if (srclen > dstlen)
         return (0);
-
-    /* 填充类型检查 */
-    if (fill > 0xFF) {
-        switch (fill & (~0xFF))
-        {
-            default:
-                return (0);
-
-            case CR_PADDING_PKCS5:
-                if (block != 8)
-                    return (0);
-            case CR_PADDING_PKCS7:
-            case CR_PADDING_ANSI_X923:
-            case CR_PADDING_ISO10126:
-                break;
-        }
-    }
+    blk = srclen / block;
 
     /* 分块加密 */
     if (ivec != NULL)
-        mem_cpy(tmp1, ivec, block);
+        mem_cpy(tmp, ivec, block);
     else
-        mem_zero(tmp1, block);
+        mem_zero(tmp, block);
     for (; blk != 0; blk--) {
         for (idx = 0; idx < block; idx++)
-            tmp1[idx] ^= ((byte_t*)src)[idx];
-        func(dst, block, tmp1, block, ctx);
-        mem_cpy(tmp1, dst, block);
+            tmp[idx] ^= ((byte_t*)src)[idx];
+        func(dst, block, tmp, block, ctx);
+        mem_cpy(tmp, dst, block);
         src = (byte_t*)src + block;
         dst = (byte_t*)dst + block;
     }
-
-    /* 处理尾部 */
-    if (rst != 0) {
-        mem_cpy(tmp2, src, rst);
-        blk = block - rst;
-        if (fill <= 0xFF) {
-            cha = (byte_t)fill;
-            for (; blk != 0; blk--, rst++)
-                tmp2[rst] = cha;
-        }
-        else {
-            switch (fill & (~0xFF))
-            {
-                default:
-                    break;
-
-                case CR_PADDING_PKCS5:
-                case CR_PADDING_PKCS7:
-                    cha = (byte_t)blk;
-                    for (; blk != 0; blk--, rst++)
-                        tmp2[rst] = cha;
-                    break;
-
-                case CR_PADDING_ANSI_X923:
-                    cha = (byte_t)blk;
-                    for (; blk > 1; blk--, rst++)
-                        tmp2[rst] = 0x00;
-                    tmp2[rst] = cha;
-                    break;
-
-                case CR_PADDING_ISO10126:
-                    cha = (byte_t)blk;
-                    for (; blk > 1; blk--, rst++)
-                        tmp2[rst] = (byte_t)rand_getx(256);
-                    tmp2[rst] = cha;
-                    break;
-            }
-        }
-        for (idx = 0; idx < block; idx++)
-            tmp1[idx] ^= tmp2[idx];
-        func(dst, block, tmp1, block, ctx);
-    }
-    return (size);
+    return (srclen);
 }
 
 /*
@@ -309,12 +303,13 @@ crypto_all_cbc_dec (
   __CR_IN__ enc_parm_t      func
     )
 {
-    byte_t  tmp1[64];
-    byte_t  tmp2[64];
     leng_t  idx, blk;
+    byte_t  tmp1[_CR_CRYPTO_MAX_BLK_];
+    byte_t  tmp2[_CR_CRYPTO_MAX_BLK_];
 
     /* 安全检查 */
-    if (srclen % block != 0)
+    if (srclen == 0 || block <= 1 ||
+        block > sizeof(tmp1) || srclen % block != 0)
         return (0);
 
     /* 计算目标大小 */
@@ -377,11 +372,11 @@ counter_add_one (
 
 /*
 =======================================
-    CTR 模式加密
+    CTR 模式变换
 =======================================
 */
 CR_API leng_t
-crypto_all_ctr_enc (
+crypto_all_ctr_ops (
   __CR_IN__ void_t*         ctx,
   __CR_OT__ void_t*         dst,
   __CR_IN__ leng_t          dstlen,
@@ -394,10 +389,12 @@ crypto_all_ctr_enc (
     )
 {
     leng_t  idx, blk, rst;
-    byte_t  tmp1[64], tmp2[64];
+    byte_t  tmp1[_CR_CRYPTO_MAX_BLK_];
+    byte_t  tmp2[_CR_CRYPTO_MAX_BLK_];
 
     /* 安全检查 */
-    if (block > sizeof(tmp1))
+    if (srclen == 0 ||
+        block <= 1 || block > sizeof(tmp1))
         return (0);
 
     /* 计算目标大小 */
@@ -410,7 +407,7 @@ crypto_all_ctr_enc (
     blk = srclen / block;
     rst = srclen % block;
 
-    /* 分块加密 */
+    /* 分块变换 */
     if (cntr != NULL)
         mem_cpy(tmp1, cntr, block);
     else
@@ -421,7 +418,7 @@ crypto_all_ctr_enc (
             ((byte_t*)dst)[idx] = ((byte_t*)src)[idx] ^ tmp2[idx];
         src = (byte_t*)src + block;
         dst = (byte_t*)dst + block;
-        counter_add_one((byte_t*)tmp1, block, is_be);
+        counter_add_one(tmp1, block, is_be);
     }
 
     /* 处理尾部 */
@@ -431,28 +428,6 @@ crypto_all_ctr_enc (
             ((byte_t*)dst)[idx] = ((byte_t*)src)[idx] ^ tmp2[idx];
     }
     return (srclen);
-}
-
-/*
-=======================================
-    CTR 模式解密
-=======================================
-*/
-CR_API leng_t
-crypto_all_ctr_dec (
-  __CR_IN__ void_t*         ctx,
-  __CR_OT__ void_t*         dst,
-  __CR_IN__ leng_t          dstlen,
-  __CR_IN__ const void_t*   src,
-  __CR_IN__ leng_t          srclen,
-  __CR_IN__ const void_t*   cntr,
-  __CR_IN__ leng_t          block,
-  __CR_IN__ bool_t          is_be,
-  __CR_IN__ enc_parm_t      func
-    )
-{
-    return (crypto_all_ctr_enc(ctx, dst, dstlen, src, srclen,
-                               cntr, block, is_be, func));
 }
 
 /*****************************************************************************/

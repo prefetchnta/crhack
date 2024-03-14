@@ -58,42 +58,34 @@ radar_fmcw_init (
         fmcw->bit_size = sizeof(int32u);
 
     /* 缓存区分配 */
-    fmcw->fft_temp = mem_talloc(fmcw->fft_max, fpxx_t);
-    if (fmcw->fft_temp == NULL)
-        goto _failure2;
     fmcw->fft_back = mem_talloc(fmcw->fft_max, fpxx_t);
     if (fmcw->fft_back == NULL)
-        goto _failure3;
+        goto _failure2;
     fmcw->fft_bits = mem_talloc(fmcw->bit_size * 2, byte_t);
     if (fmcw->fft_bits == NULL)
-        goto _failure4;
+        goto _failure3;
     fmcw->fmcw_fft = mem_talloc(fmcw->fft_max, sCOMPLEX);
     if (fmcw->fmcw_fft == NULL)
-        goto _failure5;
+        goto _failure4;
 
     /* FFT 初始化 */
     fmcw->fft_coes = fft1_init(NULL, fmcw->npower);
     if (fmcw->fft_coes == NULL)
-        goto _failure6;
-    fmcw->chk_time = 0;
-    mem_zero(fmcw->fft_temp, fmcw->fft_max * sizeof(fpxx_t));
+        goto _failure5;
     mem_zero(fmcw->fft_back, fmcw->fft_max * sizeof(fpxx_t));
     mem_zero(fmcw->fft_bits, fmcw->bit_size * sizeof(int16u));
     mem_zero(fmcw->fmcw_fft, fmcw->fft_max * sizeof(sCOMPLEX));
     return (TRUE);
 
-_failure6:
+_failure5:
     mem_free(fmcw->fmcw_fft);
     fmcw->fmcw_fft = NULL;
-_failure5:
+_failure4:
     mem_free(fmcw->fft_bits);
     fmcw->fft_bits = NULL;
-_failure4:
+_failure3:
     mem_free(fmcw->fft_back);
     fmcw->fft_back = NULL;
-_failure3:
-    mem_free(fmcw->fft_temp);
-    fmcw->fft_temp = NULL;
 _failure2:
     mem_free(fmcw->fft_vals);
     fmcw->fft_vals = NULL;
@@ -113,7 +105,6 @@ radar_fmcw_free (
   __CR_IN__ sFMCW*  fmcw
     )
 {
-    SAFE_FREE(fmcw->fft_temp);
     SAFE_FREE(fmcw->fft_back);
     SAFE_FREE(fmcw->fft_data);
     SAFE_FREE(fmcw->fft_coes);
@@ -124,11 +115,11 @@ radar_fmcw_free (
 
 /*
 =======================================
-    雷达 FMCW 一遍计算
+    雷达 FMCW 主流程
 =======================================
 */
-CR_API sint_t
-radar_fmcw_pass (
+CR_API bool_t
+radar_fmcw_doit (
   __CR_IO__ sFMCW*          fmcw,
   __CR_IN__ const sint_t*   data,
   __CR_IN__ bool_t          reset
@@ -137,10 +128,8 @@ radar_fmcw_pass (
     sint_t  idx, chalf;
 
     /* 清上次结果 */
-    if (fmcw->chk_time == 0) {
-        mem_zero(fmcw->fft_bits, fmcw->bit_size * sizeof(int16u));
-        mem_zero(fmcw->fmcw_fft, fmcw->fft_max * sizeof(sCOMPLEX));
-    }
+    mem_zero(fmcw->fft_bits, fmcw->bit_size * sizeof(int16u));
+    mem_zero(fmcw->fmcw_fft, fmcw->fft_max * sizeof(sCOMPLEX));
 
     /* 转成虚数数组 */
     if (fmcw->fft_win != NULL)
@@ -163,59 +152,26 @@ radar_fmcw_pass (
     /* 计算频谱 */
     if (fft1_func(fmcw->fft_vals, fmcw->fft_data,
             fmcw->fft_coes, fmcw->npower) == NULL)
-        return (-1);
+        return (FALSE);
 
     /* 计算幅值 */
     chalf = fmcw->fft_cnts / 2;
     for (idx = 0; idx < fmcw->fft_max; idx++) {
-        fmcw->fft_temp[idx] = complex_abs(&fmcw->fft_vals[idx]) / chalf;
-        fmcw->fft_temp[idx] *= fmcw->fft_mul;
-    }
-
-    /* 谱线采样的类型 */
-    if (fmcw->filter == CR_FMCW_DIR || fmcw->totals <= 1)
-    {
-        /* 单次采样 */
-        for (idx = 0; idx < fmcw->fft_max; idx++)
-            fmcw->fmcw_fft[idx].re = fmcw->fft_temp[idx];
-    }
-    else
-    {
-        /* 多重采样 */
-        if (fmcw->chk_time++ < fmcw->totals) {
-            switch (fmcw->filter)
-            {
-                default:
-                    break;
-
-                case CR_FMCW_AVG:
-                    for (idx = 0; idx < fmcw->fft_max; idx++)
-                        fmcw->fmcw_fft[idx].re += fmcw->fft_temp[idx];
-                    break;
-
-                case CR_FMCW_MAX:
-                    for (idx = 0; idx < fmcw->fft_max; idx++) {
-                        if (fmcw->fmcw_fft[idx].re < fmcw->fft_temp[idx])
-                            fmcw->fmcw_fft[idx].re = fmcw->fft_temp[idx];
-                    }
-                    break;
-            }
-            if (fmcw->chk_time != fmcw->totals)
-                return (0);
-        }
-        if (fmcw->filter == CR_FMCW_AVG) {
-            for (idx = 0; idx < fmcw->fft_max; idx++)
-                fmcw->fmcw_fft[idx].re /= fmcw->totals;
-        }
+        fmcw->fmcw_fft[idx].re = complex_abs(&fmcw->fft_vals[idx]) / chalf;
+        fmcw->fmcw_fft[idx].re *= fmcw->fft_mul;
     }
 
     /* 把峰值标记成有效谱线 */
-    if (fmcw->fmcw_fft[0].re >= fmcw->fmcw_fft[1].re)
+    if (fmcw->fmcw_fft[0].re >= fmcw->fmcw_fft[1].re) {
         fmcw->fft_bits[0] = 0x80;
+        fmcw->fmcw_fft[0].im = complex_ang(&fmcw->fft_vals[0]);
+    }
     for (idx = 1; idx < fmcw->fft_max - 1; idx++) {
         if ((fmcw->fmcw_fft[idx].re >= fmcw->fmcw_fft[idx - 1].re) &&
-            (fmcw->fmcw_fft[idx].re >= fmcw->fmcw_fft[idx + 1].re))
+            (fmcw->fmcw_fft[idx].re >= fmcw->fmcw_fft[idx + 1].re)) {
             fmcw->fft_bits[idx / 8] |= (byte_t)(1 << (7 - idx % 8));
+            fmcw->fmcw_fft[idx].im = complex_ang(&fmcw->fft_vals[idx]);
+        }
     }
 
     /* 是否进行复位操作 */
@@ -229,8 +185,7 @@ radar_fmcw_pass (
     }
 
     /* 处理完成 */
-    fmcw->chk_time = 0;
-    return (1);
+    return (TRUE);
 }
 
 /*
@@ -333,9 +288,6 @@ radar_fmcw_dist (
             k_idx = idx;
         }
         dist[idx] = radar_fmcw_dist_ex(fmcw, idx);
-
-        /* 计算谱线相位 */
-        fmcw->fmcw_fft[idx].im = complex_ang(&fmcw->fft_vals[idx]);
     }
     return (k_idx);
 }
@@ -374,7 +326,7 @@ radar_fmcw_base (
 
 /*
 =======================================
-    雷达 FMCW 谱估计距离 (结果)
+    雷达 FMCW 谱估计距离
 =======================================
 */
 CR_API fp32_t
