@@ -127,10 +127,13 @@ crypto_padding (
   __CR_IN__ uint_t  fill
     )
 {
-    leng_t  blk = size / unit;
-    leng_t  rst = size % unit;
+    leng_t  blk, rst;
 
     /* 计算填充长度 */
+    if (unit <= 1)
+        return (0);
+    blk = size / unit;
+    rst = size % unit;
     size = crypto_padding_size(unit, rst, fill, blk);
     if (data == NULL || size == 0)
         return (size);
@@ -156,7 +159,9 @@ crypto_real_size (
 {
     uint_t  cha;
 
-    if (size == 0 || size % unit != 0)
+    if (size == 0 ||
+        unit <= 1 ||
+        size % unit != 0)
         return (size);
 
     cha = ((byte_t*)data)[size - 1];
@@ -394,7 +399,7 @@ crypto_all_ctr_ops (
 
     /* 安全检查 */
     if (srclen == 0 ||
-        block <= 1 || block > sizeof(tmp1))
+        block  <= 1 || block > sizeof(tmp1))
         return (0);
 
     /* 计算目标大小 */
