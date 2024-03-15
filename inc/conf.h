@@ -127,6 +127,17 @@
     #define _CR_ORDER_BE_
     #define _CR_AR_STR_ "[PPC]"
 
+/* RISC-V
+  (32bit/64bit Bi-Endian) */
+#elif   defined(_CR_AR_RISCV_)
+    #if defined(_CR_AR_RISCV64_)
+        #define _CR_SYS64_
+        #define _CR_AR_STR_ "[RISCV64]"
+    #else
+        #define _CR_SYS32_
+        #define _CR_AR_STR_ "[RISCV]"
+    #endif
+
 /* MOTO 68000
   (32bit Big-Endian) */
 #elif   defined(_CR_AR_68K_)
@@ -283,6 +294,14 @@
             defined(WORDS_BIGENDIAN)
         #define _CR_ORDER_BE_
 
+    #elif   defined(__BYTE_ORDER__) && \
+            defined(__ORDER_LITTLE_ENDIAN__) && \
+            defined(__ORDER_BIG_ENDIAN__)
+        #if (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)
+            #define _CR_ORDER_BE_
+        #else
+            #define _CR_ORDER_LE_
+        #endif
     #else
         #define _CR_ORDER_LE_   /* (默认) */
     #endif

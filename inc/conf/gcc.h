@@ -120,6 +120,13 @@
             defined(__powerpc__) || defined(__POWERPC__)
         #define _CR_AR_PPC_     /* PowerPC */
 
+    #elif   defined(__riscv) || defined(__riscv__)
+        #define _CR_AR_RISCV_   /* RISC-V */
+        #if defined(__riscv64) || defined(__riscv64__) || \
+            (defined(__riscv_xlen) && (__riscv_xlen == 64))
+            #define _CR_AR_RISCV64_ /* RISC-V 64 */
+        #endif
+
     #elif   defined(__sparc__)
         #define _CR_AR_SPARC_   /* SPARC */
 

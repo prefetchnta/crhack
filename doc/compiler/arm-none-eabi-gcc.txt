@@ -90,6 +90,7 @@ cortex-a78ae
 cortex-a78c
 cortex-a710
 cortex-x1
+cortex-x1c
 neoverse-n1
 cortex-a75.cortex-a55
 cortex-a76.cortex-a55
@@ -99,6 +100,8 @@ cortex-m23
 cortex-m33
 cortex-m35p
 cortex-m55
+star-mc1
+cortex-m85
 cortex-r52
 cortex-r52plus
 
