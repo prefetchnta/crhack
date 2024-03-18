@@ -48,7 +48,7 @@ static sint_t   s_dbg_cnts = 0; /* 已分配的次数 */
 =======================================
 */
 CR_API void_t
-mem_init (
+mem_hook (
   __CR_IN__ cr_malloc_t alloc,
   __CR_IN__ cr_free_t   mfree
     )

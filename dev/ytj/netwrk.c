@@ -17,18 +17,9 @@
 /*  =======================================================================  */
 /*****************************************************************************/
 
-/* 函数名会冲突 */
-#define mem_init    cr_mem_init
-#define mem_malloc  cr_mem_malloc
-#define mem_calloc  cr_mem_calloc
-#define mem_free    cr_mem_free
 #include "hash.h"
 #include "applib.h"
 #include "device.h"
-#undef  mem_init
-#undef  mem_malloc
-#undef  mem_calloc
-#undef  mem_free
 
 #include "stm32_eth.h"
 #include <lwip/init.h>
@@ -39,6 +30,7 @@
 #include <lwip/priv/tcp_priv.h>
 #include <netif/etharp.h>
 #include "ethernetif.h"
+#include "port/ulwip.h"
 
 /* 网卡参数 */
 static ip4_addr_t   s_ip;

@@ -37,7 +37,7 @@ typedef void_t  (*cr_free_t) (void_t*);
 typedef void_t* (*cr_realloc_t) (void_t*, size_t);
 
 CR_API void_t   mem_reset (void_t);
-CR_API void_t   mem_init (cr_malloc_t alloc, cr_free_t mfree);
+CR_API void_t   mem_hook (cr_malloc_t alloc, cr_free_t mfree);
 CR_API void_t*  mem_size (const void_t *ptr, leng_t *size);
 CR_API void_t   mem_info (msize_t *total, msize_t *avail);
 CR_API void_t   mem_count (dist_t *size, leng_t *maxs,

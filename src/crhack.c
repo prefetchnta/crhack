@@ -138,9 +138,9 @@ crhack_core_init (void_t)
     if (!s_crh_okay)
     {
 #ifndef _CR_NO_STDC_
-        mem_init(malloc, free);
+        mem_hook(malloc, free);
 #else
-        mem_init(NULL, NULL);
+        mem_hook(NULL, NULL);
 #endif
         mem_reset();
 
