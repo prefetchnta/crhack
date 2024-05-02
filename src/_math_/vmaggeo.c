@@ -32,7 +32,7 @@
     计算磁场参数
 =======================================
 */
-CR_API bool_t
+CR_API void_t
 maggeo_param (
   __CR_OT__ sMAGGEO*    mag,
   __CR_IN__ sint_t      x,
@@ -54,13 +54,20 @@ maggeo_param (
     mag->F = FSQRT(zz);
     if (x == 0 && y == 0) {
         mag->D = 0.0f;
-        if (z > 0)
+        if (z > 0) {
             mag->I = 90.0f;
+        }
         else
-        if (z < 0)
+        if (z < 0) {
             mag->I = -90.0f;
-        else
-            return (FALSE);
+        }
+        else {
+            mag->I = 0.0f;
+            mag->V[0] = 0.0f;
+            mag->V[1] = 0.0f;
+            mag->V[2] = 0.0f;
+            return;
+        }
     }
     else {
         mag->D = FACOS(mag->X / mag->H) * CR_RTOD;
@@ -70,7 +77,6 @@ maggeo_param (
     mag->V[0] = mag->X / mag->F;
     mag->V[1] = mag->Y / mag->F;
     mag->V[2] = mag->Z / mag->F;
-    return (TRUE);
 }
 
 /*

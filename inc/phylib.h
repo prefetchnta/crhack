@@ -126,7 +126,7 @@ typedef struct
 } sMAGGEO;
 
 /* 基础计算 */
-CR_API bool_t   maggeo_param (sMAGGEO *mag, sint_t x, sint_t z, sint_t y);
+CR_API void_t   maggeo_param (sMAGGEO *mag, sint_t x, sint_t z, sint_t y);
 CR_API fp32_t   maggeo_angle (const sMAGGEO *mag1, const sMAGGEO *mag2);
 
 /* 9维特征向量 [dX, dY, dZ, dH, dF, dD, dI, dE, dC] */
