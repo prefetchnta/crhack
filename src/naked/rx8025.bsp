@@ -98,10 +98,9 @@ rx8025_set_time (
 CR_API retc_t
 rx8025_init_time (void_t)
 {
-    byte_t  state;
-    byte_t  ctl[2] = { 0x20, 0x20 };
-    /* ----------- */
     sDATETIME   temp;
+    /* ----------- */
+    byte_t  state, ctl[2] = { 0x20, 0x20 };
 
     if (i2c_read_device(RX8025_DEV, 0xF0, &state, 1) != 1)
         return (FALSE);

@@ -61,6 +61,14 @@
     #define i2c_leng_t  i2c_addr_t
 #endif
 
+/* 缺省的等待芯片时间 */
+#ifndef I2C_READ_WAITING
+    #define I2C_READ_WAITING
+#endif
+#ifndef I2C_WRITE_WAITING
+    #define I2C_WRITE_WAITING
+#endif
+
 /*
 =======================================
     模拟 I2C 初始化
@@ -400,6 +408,7 @@ i2c_read_device (
         goto _func_out;
     if (!i2c_send_address(addr))
         goto _func_out;
+    I2C_READ_WAITING
 
     /* 发送起始位 */
     i2c_enter();
@@ -454,6 +463,7 @@ i2c_write_device (
         goto _func_out;
     if (!i2c_send_address(addr))
         goto _func_out;
+    I2C_WRITE_WAITING
 
     /* 开始连续写入数据 */
     for (; ptr < size; ptr++) {
