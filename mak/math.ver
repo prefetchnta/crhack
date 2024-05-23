@@ -1,6 +1,6 @@
 1 VERSIONINFO
-    FILEVERSION 1,2,1,11482
-    PRODUCTVERSION 1,2,1,11482
+    FILEVERSION 1,2,2,11860
+    PRODUCTVERSION 1,2,2,11860
     FILEFLAGSMASK 0x17L
 #ifdef  _DEBUG
     FILEFLAGS 0x1L
@@ -16,11 +16,11 @@ BEGIN
         BLOCK "080404b0"
         BEGIN
             VALUE "ProductName"     , "CrHack MATH Library\0"
-            VALUE "ProductVersion"  , "1.2.1.11482\0"
-            VALUE "FileVersion"     , "1.2.1.11482\0"
+            VALUE "ProductVersion"  , "1.2.2.11860\0"
+            VALUE "FileVersion"     , "1.2.2.11860\0"
             VALUE "FileDescription" , "CrHack MATH Library\0"
             VALUE "LegalCopyright"  , "Copyright 2009+ by CrHackOS\0"
-            VALUE "Comments"        , "Release Date: 2024-03-18\0"
+            VALUE "Comments"        , "Release Date: 2024-05-23\0"
         END
     END
     BLOCK "VarFileInfo"

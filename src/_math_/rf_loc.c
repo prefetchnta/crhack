@@ -291,7 +291,8 @@ rfloc_3_circles (
         return (0);
     total = ll;
 
-    /* 分摊误差 */
+    /* 分摊误差, 半径越小分摊到的误差越小 */
+    /* 因为半径越小信号强度越强, 距离的可信度越高 */
     ll = delta * r1 / r12;
 
     /* 假设两圆相切, 计算出切点 */
@@ -526,7 +527,8 @@ rfloc_doit (
         return (TRUE);
     }
 
-    /* 根据得到的点按距离权重合成 */
+    /* 根据得到的点按距离的倒数作为权重合成 */
+    /* 因为半径越小信号强度越强, 距离的可信度越高 */
     for (zz = 0.0f, num = 0; num < param->size; num++) {
         for (dd = 0.0f, idx = 0; idx < param->num; idx++) {
             dx = param->list[num].x - param->buffer[idx].x;

@@ -156,7 +156,7 @@ fir_lp_double_z (
   __CR_IN__ fpxx_t          input,
   __CR_IN__ sint_t          ntaps,
   __CR_IN__ const fpxx_t    h[],
-  __CR_IO__ fpxx_t          z[],
+  __CR_IO__ fpxx_t          z[],    /* 两倍 ntaps 大小, 提供空间即可 */
   __CR_IO__ sint_t*         p_state
     )
 {
@@ -183,7 +183,7 @@ CR_API fpxx_t
 fir_lp_double_h (
   __CR_IN__ fpxx_t          input,
   __CR_IN__ sint_t          ntaps,
-  __CR_IN__ const fpxx_t    h[],
+  __CR_IN__ const fpxx_t    h[],    /* 两倍 ntaps 大小, 数据重复两遍 */
   __CR_IO__ fpxx_t          z[],
   __CR_IO__ sint_t*         p_state
     )
