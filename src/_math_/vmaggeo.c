@@ -308,6 +308,67 @@ gate9_evaluate (
 
 /*
 =======================================
+    九门估值算法 (扩展)
+=======================================
+*/
+CR_API fp32_t
+gate9_evaluate2 (
+  __CR_IN__ const sint_t*       xyzt,
+  __CR_IN__ const sint_t*       base,
+  __CR_IN__ const sRFGEO_GATE9* param,
+  __CR_IN__ uint_t              type
+    )
+{
+    sint_t  delta[3];
+    fp32_t  value[3];
+
+    /* 计算差值 */
+    delta[0] = xyzt[0] - base[0];
+    delta[1] = xyzt[1] - base[1];
+    delta[2] = xyzt[2] - base[2];
+    if (delta[0] < 0) delta[0] = -delta[0];
+    if (delta[1] < 0) delta[1] = -delta[1];
+    if (delta[2] < 0) delta[2] = -delta[2];
+
+    /* 缩放调整 */
+    delta[0] = (sint_t)((fp32_t)delta[0] * param->scale_xyz[0] + 0.5f);
+    delta[1] = (sint_t)((fp32_t)delta[1] * param->scale_xyz[1] + 0.5f);
+    delta[2] = (sint_t)((fp32_t)delta[2] * param->scale_xyz[2] + 0.5f);
+
+    /* 三轴处理 */
+    value[0] = gate9_compute(delta[0], param->probe_x_lms, param->gate_x_lms);
+    value[1] = gate9_compute(delta[1], param->probe_y_lms, param->gate_y_lms);
+    value[2] = gate9_compute(delta[2], param->probe_z_lms, param->gate_z_lms);
+
+    /* 权重合成 */
+    switch (type)
+    {
+        case GATE9_EVA_TYPE_MIN:    /* 最小 */
+            if (value[0] > value[1])
+                value[0] = value[1];
+            if (value[0] > value[2])
+                value[0] = value[2];
+            break;
+
+        case GATE9_EVA_TYPE_MAX:    /* 最大 */
+            if (value[0] < value[1])
+                value[0] = value[1];
+            if (value[0] < value[2])
+                value[0] = value[2];
+            break;
+
+        default:
+        case GATE9_EVA_TYPE_ADD:    /* 加法 */
+            value[0] *= param->weight_xyz[0];
+            value[1] *= param->weight_xyz[1];
+            value[2] *= param->weight_xyz[2];
+            return (value[0] + value[1] + value[2]);
+    }
+    return (value[0]);
+}
+
+/*
+=======================================
     九门判定算法
 =======================================
 */

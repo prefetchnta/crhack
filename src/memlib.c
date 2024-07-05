@@ -570,6 +570,46 @@ buffer_load_as_bin (
     return (data);
 }
 
+/*
+=======================================
+    释放字符串列表A
+=======================================
+*/
+CR_API void_t
+strlst_freeA (
+  __CR_IN__ str_lstA_t  list,
+  __CR_IN__ leng_t      size
+    )
+{
+    leng_t  idx;
+
+    if (list != NULL) {
+        for (idx = 0; idx < size; idx++)
+            TRY_FREE(list[idx]);
+        mem_free(list);
+    }
+}
+
+/*
+=======================================
+    释放字符串列表W
+=======================================
+*/
+CR_API void_t
+strlst_freeW (
+  __CR_IN__ str_lstW_t  list,
+  __CR_IN__ leng_t      size
+    )
+{
+    leng_t  idx;
+
+    if (list != NULL) {
+        for (idx = 0; idx < size; idx++)
+            TRY_FREE(list[idx]);
+        mem_free(list);
+    }
+}
+
 /*****************************************************************************/
 /* _________________________________________________________________________ */
 /* uBMAzRBoAKAHaACQD6FoAIAPqbgA/7rIA+5CM9uKw8D4Au7u7mSIJ0t18mYz0mYz9rAQZCgHc */

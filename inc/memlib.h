@@ -65,6 +65,12 @@ CR_API void_t*  mem_realloc (void_t *ptr, leng_t new_size);
 #define mem_talloc32(s,t)   (t*)mem_calloc32(s, sizeof(t))
 #define mem_talloc64(s,t)   (t*)mem_calloc64(s, sizeof(t))
 
+typedef ansi_t**    str_lstA_t;
+typedef wide_t**    str_lstW_t;
+
+CR_API void_t   strlst_freeA (str_lstA_t list, leng_t size);
+CR_API void_t   strlst_freeW (str_lstW_t list, leng_t size);
+
 /*****************************************************************************/
 /*                               内存基本操作                                */
 /*****************************************************************************/

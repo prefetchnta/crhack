@@ -160,9 +160,14 @@ typedef struct
 } sRFGEO_GATE9;
 
 /* 九门估值算法 */
+#define GATE9_EVA_TYPE_ADD  0   /* 权重加法 */
+#define GATE9_EVA_TYPE_MIN  1   /* 最小取值 */
+#define GATE9_EVA_TYPE_MAX  2   /* 最大取值 */
 CR_API bool_t   gate9_check (sRFGEO_GATE9 *param);
 CR_API fp32_t   gate9_evaluate (const sint_t *xyzt, const sint_t *base,
                                 const sRFGEO_GATE9 *param);
+CR_API fp32_t   gate9_evaluate2 (const sint_t *xyzt, const sint_t *base,
+                                 const sRFGEO_GATE9 *param, uint_t type);
 /* 九门判定算法 */
 CR_API bool_t   gate9_judgment (const sint_t *xyzt, const sint_t *base,
                                 const sRFGEO_GATE9 *param, fp32_t updn);
@@ -933,6 +938,8 @@ CR_API fp32_t   radar_fmcw_dist_ex (const sFMCW *fmcw, sint_t k_idx);
 CR_API fp32_t   radar_fmcw_base_ex (const sFMCW *fmcw, sint_t k_idx);
 CR_API fpxx_t   radar_fmcw_power_sum (const sFMCW *fmcw, uint_t beg,
                                       uint_t end, sint_t type);
+CR_API void_t   radar_fmcw_tango_sum (const sFMCW *fmcw, fpxx_t *sums,
+                                      bool_t back);
 /* CFAR 滤波 */
 CR_API void_t   radar_cfar_ca (fpxx_t *cut_lst, const sFMCW *input,
                                fpxx_t param_mul, fpxx_t param_add,

@@ -443,6 +443,96 @@ radar_fmcw_power_sum (
     return (backs);
 }
 
+/* 代码简化 */
+#define FPXX_GET(_idx) \
+    *(fpxx_t*)(&vals[(_idx) * step])
+/*
+---------------------------------------
+    雷达 FMCW 计算尖峰能量 (内部)
+---------------------------------------
+*/
+static void_t
+radar_fmcw_tango_sum_int (
+  __CR_OT__ fpxx_t*         sums,
+  __CR_IN__ const byte_t*   vals,
+  __CR_IN__ leng_t          step,
+  __CR_IN__ const byte_t*   tango,
+  __CR_IN__ sint_t          length
+    )
+{
+    byte_t  mask;
+    sint_t  idx, fnd;
+    fpxx_t  prev, next;
+
+    // 只需计算单边的能量
+    sums[0] = 0;
+    if (tango[0] & 0x80)
+    {
+        // 向一边查找拐点
+        prev = FPXX_GET(0);
+        sums[0] = prev;
+        for (fnd = 1; fnd < length; fnd++) {
+            next = FPXX_GET(fnd);
+            if (next >= prev)
+                break;
+            prev = next;
+            sums[0] += prev * 2;    /* 镜像 */
+        }
+    }
+
+    // 需要计算两边的能量
+    for (idx = 1; idx < length; idx++)
+    {
+        // 定位到尖峰
+        sums[idx] = 0;
+        mask = (byte_t)(1 << (7 - idx % 8));
+        if (!(tango[idx / 8] & mask))
+            continue;
+
+        // 向两边查找拐点
+        prev = FPXX_GET(idx);
+        sums[idx] = prev;
+        for (fnd = idx + 1; fnd < length; fnd++) {
+            next = FPXX_GET(fnd);
+            if (next >= prev)
+                break;
+            prev = next;
+            sums[idx] += prev;
+        }
+        prev = FPXX_GET(idx);
+        for (fnd = idx - 1; fnd >= 0; fnd--) {
+            next = FPXX_GET(fnd);
+            if (next >= prev)
+                break;
+            prev = next;
+            sums[idx] += prev;
+        }
+    }
+}
+
+/*
+=======================================
+    雷达 FMCW 计算尖峰能量
+=======================================
+*/
+CR_API void_t
+radar_fmcw_tango_sum (
+  __CR_IN__ const sFMCW*    fmcw,
+  __CR_OT__ fpxx_t*         sums,
+  __CR_IN__ bool_t          back
+    )
+{
+    if (back) {
+        radar_fmcw_tango_sum_int(sums, (byte_t*)fmcw->fft_back,
+            sizeof(fpxx_t), &fmcw->fft_bits[fmcw->bit_size],
+                            fmcw->fft_max);
+    }
+    else {
+        radar_fmcw_tango_sum_int(sums, (byte_t*)fmcw->fmcw_fft,
+            sizeof(sCOMPLEX), fmcw->fft_bits, fmcw->fft_max);
+    }
+}
+
 /*****************************************************************************/
 /* _________________________________________________________________________ */
 /* uBMAzRBoAKAHaACQD6FoAIAPqbgA/7rIA+5CM9uKw8D4Au7u7mSIJ0t18mYz0mYz9rAQZCgHc */
