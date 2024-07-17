@@ -8,21 +8,20 @@
   *          is using in the C source code, usually in main.c. This file contains:
   *            - Configuration section that allows to select:
   *              - The STM32L1xx device used in the target application
-  *              - To use or not the peripheral’s drivers in application code(i.e. 
-  *                code will be based on direct access to peripheral’s registers 
+  *              - To use or not the peripheral's drivers in application code(i.e. 
+  *                code will be based on direct access to peripheral's registers 
   *                rather than drivers API), this option is controlled by 
   *                "#define USE_HAL_DRIVER"
   *  
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2017-2021 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -70,19 +69,19 @@
   /* #define STM32L151xC  */   /*!< STM32L151CC, STM32L151UC, STM32L151RC and STM32L151VC */
   /* #define STM32L151xCA */   /*!< STM32L151RC-A, STM32L151VC-A, STM32L151QC and STM32L151ZC */
   /* #define STM32L151xD  */   /*!< STM32L151QD, STM32L151RD, STM32L151VD & STM32L151ZD */
-  /* #define STM32L151xDX  */  /*!< STM32L151VD-X Devices */
+  /* #define STM32L151xDX */   /*!< STM32L151VD-X Devices */
   /* #define STM32L151xE  */   /*!< STM32L151QE, STM32L151RE, STM32L151VE and STM32L151ZE */
   /* #define STM32L152xB  */   /*!< STM32L152C6, STM32L152R6, STM32L152C8, STM32L152R8, STM32L152V8, STM32L152CB, STM32L152RB and STM32L152VB */
   /* #define STM32L152xBA */   /*!< STM32L152C6-A, STM32L152R6-A, STM32L152C8-A, STM32L152R8-A, STM32L152V8-A, STM32L152CB-A, STM32L152RB-A and STM32L152VB-A */
   /* #define STM32L152xC  */   /*!< STM32L152CC, STM32L152UC, STM32L152RC and STM32L152VC */
   /* #define STM32L152xCA */   /*!< STM32L152RC-A, STM32L152VC-A, STM32L152QC and STM32L152ZC */
   /* #define STM32L152xD  */   /*!< STM32L152QD, STM32L152RD, STM32L152VD and STM32L152ZD */
-  /* #define STM32L152xDX  */  /*!< STM32L152VD-X Devices */
+  /* #define STM32L152xDX */   /*!< STM32L152VD-X Devices */
   /* #define STM32L152xE  */   /*!< STM32L152QE, STM32L152RE, STM32L152VE and STM32L152ZE */
   /* #define STM32L162xC  */   /*!< STM32L162RC and STM32L162VC */
   /* #define STM32L162xCA */   /*!< STM32L162RC-A, STM32L162VC-A, STM32L162QC and STM32L162ZC */
   /* #define STM32L162xD  */   /*!< STM32L162QD, STM32L162RD, STM32L162VD and STM32L162ZD */
-  /* #define STM32L162xDX  */  /*!< STM32L162VD-X Devices */
+  /* #define STM32L162xDX */   /*!< STM32L162VD-X Devices */
   /* #define STM32L162xE  */   /*!< STM32L162RE, STM32L162VE and STM32L162ZE */
 #endif
 
@@ -102,9 +101,9 @@
 /**
   * @brief CMSIS Device version number
   */
-#define __STM32L1xx_CMSIS_VERSION_MAIN   (0x02) /*!< [31:24] main version */                                  
+#define __STM32L1xx_CMSIS_VERSION_MAIN   (0x02) /*!< [31:24] main version */
 #define __STM32L1xx_CMSIS_VERSION_SUB1   (0x03) /*!< [23:16] sub1 version */
-#define __STM32L1xx_CMSIS_VERSION_SUB2   (0x00) /*!< [15:8]  sub2 version */
+#define __STM32L1xx_CMSIS_VERSION_SUB2   (0x03) /*!< [15:8]  sub2 version */
 #define __STM32L1xx_CMSIS_VERSION_RC     (0x00) /*!< [7:0]  release candidate */ 
 #define __STM32L1xx_CMSIS_VERSION        ((__STM32L1xx_CMSIS_VERSION_MAIN << 24)\
                                          |(__STM32L1xx_CMSIS_VERSION_SUB1 << 16)\
@@ -215,6 +214,61 @@ typedef enum
 
 #define MODIFY_REG(REG, CLEARMASK, SETMASK)  WRITE_REG((REG), (((READ_REG(REG)) & (~(CLEARMASK))) | (SETMASK)))
 
+/* Use of CMSIS compiler intrinsics for register exclusive access */
+/* Atomic 32-bit register access macro to set one or several bits */
+#define ATOMIC_SET_BIT(REG, BIT)                             \
+  do {                                                       \
+    uint32_t val;                                            \
+    do {                                                     \
+      val = __LDREXW((__IO uint32_t *)&(REG)) | (BIT);       \
+    } while ((__STREXW(val,(__IO uint32_t *)&(REG))) != 0U); \
+  } while(0)
+
+/* Atomic 32-bit register access macro to clear one or several bits */
+#define ATOMIC_CLEAR_BIT(REG, BIT)                           \
+  do {                                                       \
+    uint32_t val;                                            \
+    do {                                                     \
+      val = __LDREXW((__IO uint32_t *)&(REG)) & ~(BIT);      \
+    } while ((__STREXW(val,(__IO uint32_t *)&(REG))) != 0U); \
+  } while(0)
+
+/* Atomic 32-bit register access macro to clear and set one or several bits */
+#define ATOMIC_MODIFY_REG(REG, CLEARMSK, SETMASK)                          \
+  do {                                                                     \
+    uint32_t val;                                                          \
+    do {                                                                   \
+      val = (__LDREXW((__IO uint32_t *)&(REG)) & ~(CLEARMSK)) | (SETMASK); \
+    } while ((__STREXW(val,(__IO uint32_t *)&(REG))) != 0U);               \
+  } while(0)
+
+/* Atomic 16-bit register access macro to set one or several bits */
+#define ATOMIC_SETH_BIT(REG, BIT)                            \
+  do {                                                       \
+    uint16_t val;                                            \
+    do {                                                     \
+      val = __LDREXH((__IO uint16_t *)&(REG)) | (BIT);       \
+    } while ((__STREXH(val,(__IO uint16_t *)&(REG))) != 0U); \
+  } while(0)
+
+/* Atomic 16-bit register access macro to clear one or several bits */
+#define ATOMIC_CLEARH_BIT(REG, BIT)                          \
+  do {                                                       \
+    uint16_t val;                                            \
+    do {                                                     \
+      val = __LDREXH((__IO uint16_t *)&(REG)) & ~(BIT);      \
+    } while ((__STREXH(val,(__IO uint16_t *)&(REG))) != 0U); \
+  } while(0)
+
+/* Atomic 16-bit register access macro to clear and set one or several bits */
+#define ATOMIC_MODIFYH_REG(REG, CLEARMSK, SETMASK)                         \
+  do {                                                                     \
+    uint16_t val;                                                          \
+    do {                                                                   \
+      val = (__LDREXH((__IO uint16_t *)&(REG)) & ~(CLEARMSK)) | (SETMASK); \
+    } while ((__STREXH(val,(__IO uint16_t *)&(REG))) != 0U);               \
+  } while(0)
+
 #define POSITION_VAL(VAL)     (__CLZ(__RBIT(VAL))) 
 
 
@@ -243,4 +297,3 @@ typedef enum
 
 
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

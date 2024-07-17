@@ -12,13 +12,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright(c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -43,10 +42,10 @@
 /** @defgroup PWR_PVD_Mode_Mask PWR PVD Mode Mask
   * @{
   */ 
-#define PVD_MODE_IT               ((uint32_t)0x00010000U)
-#define PVD_MODE_EVT              ((uint32_t)0x00020000U)
-#define PVD_RISING_EDGE           ((uint32_t)0x00000001U)
-#define PVD_FALLING_EDGE          ((uint32_t)0x00000002U)
+#define PVD_MODE_IT               (0x00010000U)
+#define PVD_MODE_EVT              (0x00020000U)
+#define PVD_RISING_EDGE           (0x00000001U)
+#define PVD_FALLING_EDGE          (0x00000002U)
 /**
   * @}
   */
@@ -465,9 +464,20 @@ void HAL_PWR_DisableWakeUpPin(uint32_t WakeUpPinx)
 void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SLEEPEntry)
 {
    uint32_t tmpreg = 0U;
+   uint32_t ulpbit, vrefinbit;
+
   /* Check the parameters */
   assert_param(IS_PWR_REGULATOR(Regulator));
   assert_param(IS_PWR_SLEEP_ENTRY(SLEEPEntry));
+
+  /* It is forbidden to configure both EN_VREFINT=1 and ULP=1 if the device is
+     in Stop mode or in Sleep/Low-power sleep mode */
+  ulpbit = READ_BIT(PWR->CR, PWR_CR_ULP);
+  vrefinbit = READ_BIT(SYSCFG->CFGR3, SYSCFG_CFGR3_EN_VREFINT);
+  if((ulpbit != 0) && (vrefinbit != 0))
+  {
+    CLEAR_BIT(PWR->CR, PWR_CR_ULP);
+  }
 
   /* Select the regulator state in Sleep mode ---------------------------------*/
   tmpreg = PWR->CR;
@@ -496,6 +506,11 @@ void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SLEEPEntry)
     __SEV();
     __WFE();
     __WFE();
+  }
+
+  if((ulpbit != 0) && (vrefinbit != 0))
+  {
+    SET_BIT(PWR->CR, PWR_CR_ULP);
   }
 
   /* Additional NOP to ensure all pending instructions are flushed before entering low power mode */
@@ -530,10 +545,20 @@ void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SLEEPEntry)
 void HAL_PWR_EnterSTOPMode(uint32_t Regulator, uint8_t STOPEntry)
 {
   uint32_t tmpreg = 0U;
+  uint32_t ulpbit, vrefinbit;
 
   /* Check the parameters */
   assert_param(IS_PWR_REGULATOR(Regulator));
   assert_param(IS_PWR_STOP_ENTRY(STOPEntry));
+
+  /* It is forbidden to configure both EN_VREFINT=1 and ULP=1 if the device is
+     in Stop mode or in Sleep/Low-power sleep mode */
+  ulpbit = READ_BIT(PWR->CR, PWR_CR_ULP);
+  vrefinbit = READ_BIT(SYSCFG->CFGR3, SYSCFG_CFGR3_EN_VREFINT);
+  if((ulpbit != 0) && (vrefinbit != 0))
+  {
+    CLEAR_BIT(PWR->CR, PWR_CR_ULP);
+  }
 
   /* Select the regulator state in Stop mode ---------------------------------*/
   tmpreg = PWR->CR;
@@ -567,6 +592,10 @@ void HAL_PWR_EnterSTOPMode(uint32_t Regulator, uint8_t STOPEntry)
   /* Reset SLEEPDEEP bit of Cortex System Control Register */
   CLEAR_BIT(SCB->SCR, SCB_SCR_SLEEPDEEP_Msk);
 
+  if((ulpbit != 0) && (vrefinbit != 0))
+  {
+    SET_BIT(PWR->CR, PWR_CR_ULP);
+  }
 }
 
 /**
@@ -698,6 +727,3 @@ __weak void HAL_PWR_PVDCallback(void)
 /**
   * @}
   */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-

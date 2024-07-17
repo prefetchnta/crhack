@@ -6,11 +6,20 @@
   *          This file provides firmware functions to manage the following
   *          functionalities of the COMP peripheral:
   *           + Initialization and de-initialization functions
-  *           + Start/Stop operation functions in polling mode.
-  *           + Start/Stop operation functions in interrupt mode.
   *           + Peripheral Control functions
   *           + Peripheral State functions
   *
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
   @verbatim
 ================================================================================
           ##### COMP Peripheral features #####
@@ -98,11 +107,11 @@
 
      The compilation flag USE_HAL_COMP_REGISTER_CALLBACKS, when set to 1,
      allows the user to configure dynamically the driver callbacks.
-     Use Functions @ref HAL_COMP_RegisterCallback()
+     Use Functions HAL_COMP_RegisterCallback()
      to register an interrupt callback.
     [..]
 
-     Function @ref HAL_COMP_RegisterCallback() allows to register following callbacks:
+     Function HAL_COMP_RegisterCallback() allows to register following callbacks:
        (+) OperationCpltCallback : callback for End of operation.
        (+) ErrorCallback         : callback for error detection.
        (+) MspInitCallback       : callback for Msp Init.
@@ -111,11 +120,11 @@
      and a pointer to the user callback function.
     [..]
 
-     Use function @ref HAL_COMP_UnRegisterCallback to reset a callback to the default
+     Use function HAL_COMP_UnRegisterCallback to reset a callback to the default
      weak function.
     [..]
 
-     @ref HAL_COMP_UnRegisterCallback takes as parameters the HAL peripheral handle,
+     HAL_COMP_UnRegisterCallback takes as parameters the HAL peripheral handle,
      and the Callback ID.
      This function allows to reset following callbacks:
        (+) OperationCpltCallback : callback for End of operation.
@@ -124,45 +133,33 @@
        (+) MspDeInitCallback     : callback for Msp DeInit.
      [..]
 
-     By default, after the @ref HAL_COMP_Init() and when the state is @ref HAL_COMP_STATE_RESET
+     By default, after the HAL_COMP_Init() and when the state is HAL_COMP_STATE_RESET
      all callbacks are set to the corresponding weak functions:
-     examples @ref HAL_COMP_OperationCpltCallback(), @ref HAL_COMP_ErrorCallback().
+     examples HAL_COMP_OperationCpltCallback(), HAL_COMP_ErrorCallback().
      Exception done for MspInit and MspDeInit functions that are
-     reset to the legacy weak functions in the @ref HAL_COMP_Init()/ @ref HAL_COMP_DeInit() only when
+     reset to the legacy weak functions in the HAL_COMP_Init()/ HAL_COMP_DeInit() only when
      these callbacks are null (not registered beforehand).
     [..]
 
-     If MspInit or MspDeInit are not null, the @ref HAL_COMP_Init()/ @ref HAL_COMP_DeInit()
+     If MspInit or MspDeInit are not null, the HAL_COMP_Init()/ HAL_COMP_DeInit()
      keep and use the user MspInit/MspDeInit callbacks (registered beforehand) whatever the state.
      [..]
 
-     Callbacks can be registered/unregistered in @ref HAL_COMP_STATE_READY state only.
+     Callbacks can be registered/unregistered in HAL_COMP_STATE_READY state only.
      Exception done MspInit/MspDeInit functions that can be registered/unregistered
-     in @ref HAL_COMP_STATE_READY or @ref HAL_COMP_STATE_RESET state,
+     in HAL_COMP_STATE_READY or HAL_COMP_STATE_RESET state,
      thus registered (user) MspInit/DeInit callbacks can be used during the Init/DeInit.
     [..]
 
      Then, the user first registers the MspInit/MspDeInit user callbacks
-     using @ref HAL_COMP_RegisterCallback() before calling @ref HAL_COMP_DeInit()
-     or @ref HAL_COMP_Init() function.
+     using HAL_COMP_RegisterCallback() before calling HAL_COMP_DeInit()
+     or HAL_COMP_Init() function.
      [..]
 
      When the compilation flag USE_HAL_COMP_REGISTER_CALLBACKS is set to 0 or
      not defined, the callback registration feature is not available and all callbacks
      are set to the corresponding weak functions.
 
-  @endverbatim
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
   ******************************************************************************
   */
 
@@ -304,6 +301,20 @@
   */
 #define COMP_LOCK_DISABLE                      (0x00000000U)
 #define COMP_LOCK_ENABLE                       COMP_CSR_COMPxLOCK
+
+/* Delay for COMP startup time.                                               */
+/* Note: Delay required to reach propagation delay specification.             */
+/* Literal set to maximum value (refer to device datasheet,                   */
+/* parameter "tSTART").                                                       */
+/* Unit: us                                                                   */
+#define COMP_DELAY_STARTUP_US          (80UL)      /*!< Delay for COMP startup time */
+
+/* Delay for COMP voltage scaler stabilization time.                          */
+/* Literal set to maximum value (refer to device datasheet,                   */
+/* parameter "tSTART_SCALER").                                                */
+/* Unit: us                                                                   */
+#define COMP_DELAY_VOLTAGE_SCALER_STAB_US (200UL)  /*!< Delay for COMP voltage scaler stabilization time */
+
 /**
   * @}
   */
@@ -340,6 +351,8 @@
   */
 HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
 {
+  uint32_t comp_voltage_scaler_initialized; /* Value "0" if comparator voltage scaler is not initialized */
+  __IO uint32_t wait_loop_index = 0UL;
   HAL_StatusTypeDef status = HAL_OK;
 
   /* Check the COMP handle allocation and lock status */
@@ -388,6 +401,9 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
       HAL_COMP_MspInit(hcomp);
 #endif /* USE_HAL_COMP_REGISTER_CALLBACKS */
 
+    /* Memorize voltage scaler state before initialization */
+    comp_voltage_scaler_initialized = READ_BIT(hcomp->Instance->CSR, (COMP_CSR_COMPxINSEL_1 | COMP_CSR_COMPxINSEL_0));
+
     if (hcomp->State == HAL_COMP_STATE_RESET)
     {
       /* Allocate lock resource and initialize it */
@@ -407,6 +423,22 @@ HAL_StatusTypeDef HAL_COMP_Init(COMP_HandleTypeDef *hcomp)
     /*     Set COMPxHYST bits according to hcomp->Init.Hysteresis value             */
     /*     Set COMPxMODE bits according to hcomp->Init.Mode value                   */
     COMP_INIT(hcomp);
+
+    /* Delay for COMP scaler bridge voltage stabilization */
+    /* Apply the delay if voltage scaler bridge is required and not already enabled */
+    if ((READ_BIT(hcomp->Instance->CSR, (COMP_CSR_COMPxINSEL_1 | COMP_CSR_COMPxINSEL_0)) != 0UL) &&
+        (comp_voltage_scaler_initialized == 0UL))
+    {
+      /* Wait loop initialization and execution */
+      /* Note: Variable divided by 2 to compensate partially              */
+      /*       CPU processing cycles, scaling in us split to not          */
+      /*       exceed 32 bits register capacity and handle low frequency. */
+      wait_loop_index = ((COMP_DELAY_VOLTAGE_SCALER_STAB_US / 10UL) * ((SystemCoreClock / (100000UL * 2UL)) + 1UL));
+      while (wait_loop_index != 0UL)
+      {
+        wait_loop_index--;
+      }
+    }
 
     /* Initialize the COMP state*/
     hcomp->State = HAL_COMP_STATE_READY;
@@ -680,6 +712,7 @@ HAL_StatusTypeDef HAL_COMP_UnRegisterCallback(COMP_HandleTypeDef *hcomp, HAL_COM
   */
 HAL_StatusTypeDef HAL_COMP_Start(COMP_HandleTypeDef *hcomp)
 {
+  __IO uint32_t wait_loop_index = 0UL;
   HAL_StatusTypeDef status = HAL_OK;
   uint32_t extiline = 0U;
 
@@ -732,6 +765,17 @@ HAL_StatusTypeDef HAL_COMP_Start(COMP_HandleTypeDef *hcomp)
       __HAL_COMP_ENABLE(hcomp);
 
       hcomp->State = HAL_COMP_STATE_BUSY;
+
+      /* Delay for COMP startup time */
+      /* Wait loop initialization and execution */
+      /* Note: Variable divided by 2 to compensate partially              */
+      /*       CPU processing cycles, scaling in us split to not          */
+      /*       exceed 32 bits register capacity and handle low frequency. */
+      wait_loop_index = ((COMP_DELAY_STARTUP_US / 10UL) * ((SystemCoreClock / (100000UL * 2UL)) + 1UL));
+      while (wait_loop_index != 0UL)
+      {
+        wait_loop_index--;
+      }
     }
     else
     {
@@ -1074,4 +1118,3 @@ uint32_t HAL_COMP_GetError(COMP_HandleTypeDef *hcomp)
   * @}
   */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -80,7 +79,7 @@
 /* Check of parameters for configuration of ADC hierarchical scope:           */
 /* common to several ADC instances.                                           */
 #define IS_LL_ADC_COMMON_CLOCK(__CLOCK__)                                      \
-  (   ((__CLOCK__) == LL_ADC_CLOCK_SYNC_PCLK_DIV1)                             \
+  (((__CLOCK__) == LL_ADC_CLOCK_SYNC_PCLK_DIV1)                                \
    || ((__CLOCK__) == LL_ADC_CLOCK_SYNC_PCLK_DIV2)                             \
    || ((__CLOCK__) == LL_ADC_CLOCK_SYNC_PCLK_DIV4)                             \
    || ((__CLOCK__) == LL_ADC_CLOCK_ASYNC_DIV1)                                 \
@@ -100,7 +99,7 @@
 /* Check of parameters for configuration of ADC hierarchical scope:           */
 /* ADC instance.                                                              */
 #define IS_LL_ADC_RESOLUTION(__RESOLUTION__)                                   \
-  (   ((__RESOLUTION__) == LL_ADC_RESOLUTION_16B)                              \
+  (((__RESOLUTION__) == LL_ADC_RESOLUTION_16B)                                 \
    || ((__RESOLUTION__) == LL_ADC_RESOLUTION_14B)                              \
    || ((__RESOLUTION__) == LL_ADC_RESOLUTION_12B)                              \
    || ((__RESOLUTION__) == LL_ADC_RESOLUTION_10B)                              \
@@ -108,7 +107,7 @@
   )
 
 #define IS_LL_ADC_LEFT_BIT_SHIFT(__LEFT_BIT_SHIFT__)                           \
-  (   ((__LEFT_BIT_SHIFT__) == LL_ADC_LEFT_BIT_SHIFT_NONE)                     \
+  (((__LEFT_BIT_SHIFT__) == LL_ADC_LEFT_BIT_SHIFT_NONE)                        \
    || ((__LEFT_BIT_SHIFT__) == LL_ADC_LEFT_BIT_SHIFT_1)                        \
    || ((__LEFT_BIT_SHIFT__) == LL_ADC_LEFT_BIT_SHIFT_2)                        \
    || ((__LEFT_BIT_SHIFT__) == LL_ADC_LEFT_BIT_SHIFT_3)                        \
@@ -127,14 +126,14 @@
   )
 
 #define IS_LL_ADC_LOW_POWER(__LOW_POWER__)                                     \
-  (   ((__LOW_POWER__) == LL_ADC_LP_MODE_NONE)                                 \
+  (((__LOW_POWER__) == LL_ADC_LP_MODE_NONE)                                    \
    || ((__LOW_POWER__) == LL_ADC_LP_AUTOWAIT)                                  \
   )
 
 /* Check of parameters for configuration of ADC hierarchical scope:           */
 /* ADC group regular                                                          */
 #define IS_LL_ADC_REG_TRIG_SOURCE(__REG_TRIG_SOURCE__)                         \
-  (   ((__REG_TRIG_SOURCE__) == LL_ADC_REG_TRIG_SOFTWARE)                      \
+  (((__REG_TRIG_SOURCE__) == LL_ADC_REG_TRIG_SOFTWARE)                         \
    || ((__REG_TRIG_SOURCE__) == LL_ADC_REG_TRIG_EXT_TIM1_CH1)                  \
    || ((__REG_TRIG_SOURCE__) == LL_ADC_REG_TRIG_EXT_TIM1_CH2)                  \
    || ((__REG_TRIG_SOURCE__) == LL_ADC_REG_TRIG_EXT_TIM1_CH3)                  \
@@ -157,24 +156,24 @@
   )
 
 #define IS_LL_ADC_REG_CONTINUOUS_MODE(__REG_CONTINUOUS_MODE__)                 \
-  (   ((__REG_CONTINUOUS_MODE__) == LL_ADC_REG_CONV_SINGLE)                    \
+  (((__REG_CONTINUOUS_MODE__) == LL_ADC_REG_CONV_SINGLE)                       \
    || ((__REG_CONTINUOUS_MODE__) == LL_ADC_REG_CONV_CONTINUOUS)                \
   )
 
 #define IS_LL_ADC_REG_DATA_TRANSFER_MODE(__REG_DATA_TRANSFER_MODE__)           \
-  (   ((__REG_DATA_TRANSFER_MODE__) == LL_ADC_REG_DR_TRANSFER)                 \
+  (((__REG_DATA_TRANSFER_MODE__) == LL_ADC_REG_DR_TRANSFER)                    \
    || ((__REG_DATA_TRANSFER_MODE__) == LL_ADC_REG_DMA_TRANSFER_LIMITED)        \
    || ((__REG_DATA_TRANSFER_MODE__) == LL_ADC_REG_DMA_TRANSFER_UNLIMITED)      \
    || ((__REG_DATA_TRANSFER_MODE__) == LL_ADC_REG_DFSDM_TRANSFER)              \
   )
 
 #define IS_LL_ADC_REG_OVR_DATA_BEHAVIOR(__REG_OVR_DATA_BEHAVIOR__)             \
-  (   ((__REG_OVR_DATA_BEHAVIOR__) == LL_ADC_REG_OVR_DATA_PRESERVED)           \
+  (((__REG_OVR_DATA_BEHAVIOR__) == LL_ADC_REG_OVR_DATA_PRESERVED)              \
    || ((__REG_OVR_DATA_BEHAVIOR__) == LL_ADC_REG_OVR_DATA_OVERWRITTEN)         \
   )
 
 #define IS_LL_ADC_REG_SEQ_SCAN_LENGTH(__REG_SEQ_SCAN_LENGTH__)                 \
-  (   ((__REG_SEQ_SCAN_LENGTH__) == LL_ADC_REG_SEQ_SCAN_DISABLE)               \
+  (((__REG_SEQ_SCAN_LENGTH__) == LL_ADC_REG_SEQ_SCAN_DISABLE)                  \
    || ((__REG_SEQ_SCAN_LENGTH__) == LL_ADC_REG_SEQ_SCAN_ENABLE_2RANKS)         \
    || ((__REG_SEQ_SCAN_LENGTH__) == LL_ADC_REG_SEQ_SCAN_ENABLE_3RANKS)         \
    || ((__REG_SEQ_SCAN_LENGTH__) == LL_ADC_REG_SEQ_SCAN_ENABLE_4RANKS)         \
@@ -193,7 +192,7 @@
   )
 
 #define IS_LL_ADC_REG_SEQ_SCAN_DISCONT_MODE(__REG_SEQ_DISCONT_MODE__)          \
-  (   ((__REG_SEQ_DISCONT_MODE__) == LL_ADC_REG_SEQ_DISCONT_DISABLE)           \
+  (((__REG_SEQ_DISCONT_MODE__) == LL_ADC_REG_SEQ_DISCONT_DISABLE)              \
    || ((__REG_SEQ_DISCONT_MODE__) == LL_ADC_REG_SEQ_DISCONT_1RANK)             \
    || ((__REG_SEQ_DISCONT_MODE__) == LL_ADC_REG_SEQ_DISCONT_2RANKS)            \
    || ((__REG_SEQ_DISCONT_MODE__) == LL_ADC_REG_SEQ_DISCONT_3RANKS)            \
@@ -207,7 +206,7 @@
 /* Check of parameters for configuration of ADC hierarchical scope:           */
 /* ADC group injected                                                         */
 #define IS_LL_ADC_INJ_TRIG_SOURCE(__INJ_TRIG_SOURCE__)                         \
-  (   ((__INJ_TRIG_SOURCE__) == LL_ADC_INJ_TRIG_SOFTWARE)                      \
+  (((__INJ_TRIG_SOURCE__) == LL_ADC_INJ_TRIG_SOFTWARE)                         \
    || ((__INJ_TRIG_SOURCE__) == LL_ADC_INJ_TRIG_EXT_TIM1_TRGO)                 \
    || ((__INJ_TRIG_SOURCE__) == LL_ADC_INJ_TRIG_EXT_TIM1_CH4)                  \
    || ((__INJ_TRIG_SOURCE__) == LL_ADC_INJ_TRIG_EXT_TIM2_TRGO)                 \
@@ -230,25 +229,25 @@
   )
 
 #define IS_LL_ADC_INJ_TRIG_EXT_EDGE(__INJ_TRIG_EXT_EDGE__)                     \
-  (   ((__INJ_TRIG_EXT_EDGE__) == LL_ADC_INJ_TRIG_EXT_RISING)                  \
+  (((__INJ_TRIG_EXT_EDGE__) == LL_ADC_INJ_TRIG_EXT_RISING)                     \
    || ((__INJ_TRIG_EXT_EDGE__) == LL_ADC_INJ_TRIG_EXT_FALLING)                 \
    || ((__INJ_TRIG_EXT_EDGE__) == LL_ADC_INJ_TRIG_EXT_RISINGFALLING)           \
   )
 
 #define IS_LL_ADC_INJ_TRIG_AUTO(__INJ_TRIG_AUTO__)                             \
-  (   ((__INJ_TRIG_AUTO__) == LL_ADC_INJ_TRIG_INDEPENDENT)                     \
+  (((__INJ_TRIG_AUTO__) == LL_ADC_INJ_TRIG_INDEPENDENT)                        \
    || ((__INJ_TRIG_AUTO__) == LL_ADC_INJ_TRIG_FROM_GRP_REGULAR)                \
   )
 
 #define IS_LL_ADC_INJ_SEQ_SCAN_LENGTH(__INJ_SEQ_SCAN_LENGTH__)                 \
-  (   ((__INJ_SEQ_SCAN_LENGTH__) == LL_ADC_INJ_SEQ_SCAN_DISABLE)               \
+  (((__INJ_SEQ_SCAN_LENGTH__) == LL_ADC_INJ_SEQ_SCAN_DISABLE)                  \
    || ((__INJ_SEQ_SCAN_LENGTH__) == LL_ADC_INJ_SEQ_SCAN_ENABLE_2RANKS)         \
    || ((__INJ_SEQ_SCAN_LENGTH__) == LL_ADC_INJ_SEQ_SCAN_ENABLE_3RANKS)         \
    || ((__INJ_SEQ_SCAN_LENGTH__) == LL_ADC_INJ_SEQ_SCAN_ENABLE_4RANKS)         \
   )
 
 #define IS_LL_ADC_INJ_SEQ_SCAN_DISCONT_MODE(__INJ_SEQ_DISCONT_MODE__)          \
-  (   ((__INJ_SEQ_DISCONT_MODE__) == LL_ADC_INJ_SEQ_DISCONT_DISABLE)           \
+  (((__INJ_SEQ_DISCONT_MODE__) == LL_ADC_INJ_SEQ_DISCONT_DISABLE)              \
    || ((__INJ_SEQ_DISCONT_MODE__) == LL_ADC_INJ_SEQ_DISCONT_1RANK)             \
   )
 
@@ -256,7 +255,7 @@
 /* Check of parameters for configuration of ADC hierarchical scope:           */
 /* multimode.                                                                 */
 #define IS_LL_ADC_MULTI_MODE(__MULTI_MODE__)                                   \
-  (   ((__MULTI_MODE__) == LL_ADC_MULTI_INDEPENDENT)                           \
+  (((__MULTI_MODE__) == LL_ADC_MULTI_INDEPENDENT)                              \
    || ((__MULTI_MODE__) == LL_ADC_MULTI_DUAL_REG_SIMULT)                       \
    || ((__MULTI_MODE__) == LL_ADC_MULTI_DUAL_REG_INTERL)                       \
    || ((__MULTI_MODE__) == LL_ADC_MULTI_DUAL_INJ_SIMULT)                       \
@@ -267,12 +266,12 @@
   )
 
 #define IS_LL_ADC_MULTI_DMA_TRANSFER(__MULTI_DMA_TRANSFER__)                   \
-  (   ((__MULTI_DMA_TRANSFER__) == LL_ADC_MULTI_REG_DMA_EACH_ADC)              \
+  (((__MULTI_DMA_TRANSFER__) == LL_ADC_MULTI_REG_DMA_EACH_ADC)                 \
    || ((__MULTI_DMA_TRANSFER__) == LL_ADC_MULTI_REG_DMA_RES_32_10B)            \
    || ((__MULTI_DMA_TRANSFER__) == LL_ADC_MULTI_REG_DMA_RES_8B)                \
   )
 #define IS_LL_ADC_MULTI_TWOSMP_DELAY(__MULTI_TWOSMP_DELAY__)                    \
-  (   ((__MULTI_TWOSMP_DELAY__) == LL_ADC_MULTI_TWOSMP_DELAY_1CYCLE_5)          \
+  (((__MULTI_TWOSMP_DELAY__) == LL_ADC_MULTI_TWOSMP_DELAY_1CYCLE_5)             \
    || ((__MULTI_TWOSMP_DELAY__) == LL_ADC_MULTI_TWOSMP_DELAY_2CYCLES_5)         \
    || ((__MULTI_TWOSMP_DELAY__) == LL_ADC_MULTI_TWOSMP_DELAY_3CYCLES_5)         \
    || ((__MULTI_TWOSMP_DELAY__) == LL_ADC_MULTI_TWOSMP_DELAY_4CYCLES_5)         \
@@ -283,10 +282,10 @@
    || ((__MULTI_TWOSMP_DELAY__) == LL_ADC_MULTI_TWOSMP_DELAY_6CYCLES_5_12_BITS) \
    || ((__MULTI_TWOSMP_DELAY__) == LL_ADC_MULTI_TWOSMP_DELAY_7CYCLES_5)         \
    || ((__MULTI_TWOSMP_DELAY__) == LL_ADC_MULTI_TWOSMP_DELAY_7CYCLES_5_14_BITS) \
-   || ((__MULTI_TWOSMP_DELAY__) == LL_ADC_MULTI_TWOSMP_DELAY_8CYCLES_5)           \
+   || ((__MULTI_TWOSMP_DELAY__) == LL_ADC_MULTI_TWOSMP_DELAY_8CYCLES_5)         \
   )
 #define IS_LL_ADC_MULTI_MASTER_SLAVE(__MULTI_MASTER_SLAVE__)                   \
-  (   ((__MULTI_MASTER_SLAVE__) == LL_ADC_MULTI_MASTER)                        \
+  (((__MULTI_MASTER_SLAVE__) == LL_ADC_MULTI_MASTER)                           \
    || ((__MULTI_MASTER_SLAVE__) == LL_ADC_MULTI_SLAVE)                         \
    || ((__MULTI_MASTER_SLAVE__) == LL_ADC_MULTI_MASTER_SLAVE)                  \
   )
@@ -313,7 +312,7 @@
   *         the same ADC common instance to their default reset values.
   * @note   This function is performing a hard reset, using high level
   *         clock source RCC ADC reset.
-  *         Caution: On this STM32 serie, if several ADC instances are available
+  *         Caution: On this STM32 series, if several ADC instances are available
   *         on the selected device, RCC ADC reset will reset
   *         all ADC instances belonging to the common ADC instance.
   *         To de-initialize only 1 ADC instance, use
@@ -348,31 +347,31 @@ ErrorStatus LL_ADC_CommonDeInit(ADC_Common_TypeDef *ADCxy_COMMON)
   *         must be disabled.
   * @param  ADCxy_COMMON ADC common instance
   *         (can be set directly from CMSIS definition or by using helper macro @ref __LL_ADC_COMMON_INSTANCE() )
-  * @param  ADC_CommonInitStruct Pointer to a @ref LL_ADC_CommonInitTypeDef structure
+  * @param  pADC_CommonInitStruct Pointer to a @ref LL_ADC_CommonInitTypeDef structure
   * @retval An ErrorStatus enumeration value:
   *          - SUCCESS: ADC common registers are initialized
   *          - ERROR: ADC common registers are not initialized
   */
-ErrorStatus LL_ADC_CommonInit(ADC_Common_TypeDef *ADCxy_COMMON, LL_ADC_CommonInitTypeDef *ADC_CommonInitStruct)
+ErrorStatus LL_ADC_CommonInit(ADC_Common_TypeDef *ADCxy_COMMON, LL_ADC_CommonInitTypeDef *pADC_CommonInitStruct)
 {
   ErrorStatus status = SUCCESS;
 
   /* Check the parameters */
   assert_param(IS_ADC_COMMON_INSTANCE(ADCxy_COMMON));
-  assert_param(IS_LL_ADC_COMMON_CLOCK(ADC_CommonInitStruct->CommonClock));
+  assert_param(IS_LL_ADC_COMMON_CLOCK(pADC_CommonInitStruct->CommonClock));
 
 #if defined(ADC_MULTIMODE_SUPPORT)
-  assert_param(IS_LL_ADC_MULTI_MODE(ADC_CommonInitStruct->Multimode));
-  if (ADC_CommonInitStruct->Multimode != LL_ADC_MULTI_INDEPENDENT)
+  assert_param(IS_LL_ADC_MULTI_MODE(pADC_CommonInitStruct->Multimode));
+  if (pADC_CommonInitStruct->Multimode != LL_ADC_MULTI_INDEPENDENT)
   {
-    assert_param(IS_LL_ADC_MULTI_DMA_TRANSFER(ADC_CommonInitStruct->MultiDMATransfer));
-    assert_param(IS_LL_ADC_MULTI_TWOSMP_DELAY(ADC_CommonInitStruct->MultiTwoSamplingDelay));
+    assert_param(IS_LL_ADC_MULTI_DMA_TRANSFER(pADC_CommonInitStruct->MultiDMATransfer));
+    assert_param(IS_LL_ADC_MULTI_TWOSMP_DELAY(pADC_CommonInitStruct->MultiTwoSamplingDelay));
   }
 #endif /* ADC_MULTIMODE_SUPPORT */
 
   /* Note: Hardware constraint (refer to description of functions             */
   /*       "LL_ADC_SetCommonXXX()" and "LL_ADC_SetMultiXXX()"):               */
-  /*       On this STM32 serie, setting of these features is conditioned to   */
+  /*       On this STM32 series, setting of these features is conditioned to  */
   /*       ADC state:                                                         */
   /*       All ADC instances of the ADC common group must be disabled.        */
   if (__LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE(ADCxy_COMMON) == 0UL)
@@ -387,7 +386,7 @@ ErrorStatus LL_ADC_CommonInit(ADC_Common_TypeDef *ADCxy_COMMON, LL_ADC_CommonIni
     /*    - Set ADC multimode DMA transfer                                    */
     /*    - Set ADC multimode: delay between 2 sampling phases                */
 #if defined(ADC_MULTIMODE_SUPPORT)
-    if (ADC_CommonInitStruct->Multimode != LL_ADC_MULTI_INDEPENDENT)
+    if (pADC_CommonInitStruct->Multimode != LL_ADC_MULTI_INDEPENDENT)
     {
       MODIFY_REG(ADCxy_COMMON->CCR,
                  ADC_CCR_CKMODE
@@ -396,10 +395,10 @@ ErrorStatus LL_ADC_CommonInit(ADC_Common_TypeDef *ADCxy_COMMON, LL_ADC_CommonIni
                  | ADC_CCR_DAMDF
                  | ADC_CCR_DELAY
                  ,
-                 ADC_CommonInitStruct->CommonClock
-                 | ADC_CommonInitStruct->Multimode
-                 | ADC_CommonInitStruct->MultiDMATransfer
-                 | ADC_CommonInitStruct->MultiTwoSamplingDelay
+                 pADC_CommonInitStruct->CommonClock
+                 | pADC_CommonInitStruct->Multimode
+                 | pADC_CommonInitStruct->MultiDMATransfer
+                 | pADC_CommonInitStruct->MultiTwoSamplingDelay
                 );
     }
     else
@@ -411,12 +410,12 @@ ErrorStatus LL_ADC_CommonInit(ADC_Common_TypeDef *ADCxy_COMMON, LL_ADC_CommonIni
                  | ADC_CCR_DAMDF
                  | ADC_CCR_DELAY
                  ,
-                 ADC_CommonInitStruct->CommonClock
+                 pADC_CommonInitStruct->CommonClock
                  | LL_ADC_MULTI_INDEPENDENT
                 );
     }
 #else
-    LL_ADC_SetCommonClock(ADCxy_COMMON, ADC_CommonInitStruct->CommonClock);
+    LL_ADC_SetCommonClock(ADCxy_COMMON, pADC_CommonInitStruct->CommonClock);
 #endif
   }
   else
@@ -431,22 +430,22 @@ ErrorStatus LL_ADC_CommonInit(ADC_Common_TypeDef *ADCxy_COMMON, LL_ADC_CommonIni
 
 /**
   * @brief  Set each @ref LL_ADC_CommonInitTypeDef field to default value.
-  * @param  ADC_CommonInitStruct Pointer to a @ref LL_ADC_CommonInitTypeDef structure
+  * @param  pADC_CommonInitStruct Pointer to a @ref LL_ADC_CommonInitTypeDef structure
   *                              whose fields will be set to default values.
   * @retval None
   */
-void LL_ADC_CommonStructInit(LL_ADC_CommonInitTypeDef *ADC_CommonInitStruct)
+void LL_ADC_CommonStructInit(LL_ADC_CommonInitTypeDef *pADC_CommonInitStruct)
 {
   /* Set ADC_CommonInitStruct fields to default values */
   /* Set fields of ADC common */
   /* (all ADC instances belonging to the same ADC common instance) */
-  ADC_CommonInitStruct->CommonClock = LL_ADC_CLOCK_SYNC_PCLK_DIV2;
+  pADC_CommonInitStruct->CommonClock = LL_ADC_CLOCK_SYNC_PCLK_DIV2;
 
 #if defined(ADC_MULTIMODE_SUPPORT)
   /* Set fields of ADC multimode */
-  ADC_CommonInitStruct->Multimode             = LL_ADC_MULTI_INDEPENDENT;
-  ADC_CommonInitStruct->MultiDMATransfer      = LL_ADC_MULTI_REG_DMA_EACH_ADC;
-  ADC_CommonInitStruct->MultiTwoSamplingDelay = LL_ADC_MULTI_TWOSMP_DELAY_1CYCLE_5;
+  pADC_CommonInitStruct->Multimode             = LL_ADC_MULTI_INDEPENDENT;
+  pADC_CommonInitStruct->MultiDMATransfer      = LL_ADC_MULTI_REG_DMA_EACH_ADC;
+  pADC_CommonInitStruct->MultiTwoSamplingDelay = LL_ADC_MULTI_TWOSMP_DELAY_1CYCLE_5;
 #endif /* ADC_MULTIMODE_SUPPORT */
 }
 
@@ -459,7 +458,7 @@ void LL_ADC_CommonStructInit(LL_ADC_CommonInitTypeDef *ADC_CommonInitStruct)
   *         is in an unknown state.
   *         In this case, perform a hard reset using high level
   *         clock source RCC ADC reset.
-  *         Caution: On this STM32 serie, if several ADC instances are available
+  *         Caution: On this STM32 series, if several ADC instances are available
   *         on the selected device, RCC ADC reset will reset
   *         all ADC instances belonging to the common ADC instance.
   *         Refer to function @ref LL_ADC_CommonDeInit().
@@ -705,10 +704,10 @@ ErrorStatus LL_ADC_DeInit(ADC_TypeDef *ADCx)
     /* ADC instance is in an unknown state */
     /* Need to performing a hard reset of ADC instance, using high level      */
     /* clock source RCC ADC reset.                                            */
-    /* Caution: On this STM32 serie, if several ADC instances are available   */
+    /* Caution: On this STM32 series, if several ADC instances are available  */
     /*          on the selected device, RCC ADC reset will reset              */
     /*          all ADC instances belonging to the common ADC instance.       */
-    /* Caution: On this STM32 serie, if several ADC instances are available   */
+    /* Caution: On this STM32 series, if several ADC instances are available  */
     /*          on the selected device, RCC ADC reset will reset              */
     /*          all ADC instances belonging to the common ADC instance.       */
     status = ERROR;
@@ -745,21 +744,21 @@ ErrorStatus LL_ADC_DeInit(ADC_TypeDef *ADCx)
   *          - Set ADC channel sampling time
   *            Refer to function LL_ADC_SetChannelSamplingTime();
   * @param  ADCx ADC instance
-  * @param  ADC_InitStruct Pointer to a @ref LL_ADC_REG_InitTypeDef structure
+  * @param  pADC_InitStruct Pointer to a @ref LL_ADC_REG_InitTypeDef structure
   * @retval An ErrorStatus enumeration value:
   *          - SUCCESS: ADC registers are initialized
   *          - ERROR: ADC registers are not initialized
   */
-ErrorStatus LL_ADC_Init(ADC_TypeDef *ADCx, LL_ADC_InitTypeDef *ADC_InitStruct)
+ErrorStatus LL_ADC_Init(ADC_TypeDef *ADCx, LL_ADC_InitTypeDef *pADC_InitStruct)
 {
   ErrorStatus status = SUCCESS;
 
   /* Check the parameters */
   assert_param(IS_ADC_ALL_INSTANCE(ADCx));
 
-  assert_param(IS_LL_ADC_RESOLUTION(ADC_InitStruct->Resolution));
-  assert_param(IS_LL_ADC_LEFT_BIT_SHIFT(ADC_InitStruct->LeftBitShift));
-  assert_param(IS_LL_ADC_LOW_POWER(ADC_InitStruct->LowPowerMode));
+  assert_param(IS_LL_ADC_RESOLUTION(pADC_InitStruct->Resolution));
+  assert_param(IS_LL_ADC_LEFT_BIT_SHIFT(pADC_InitStruct->LeftBitShift));
+  assert_param(IS_LL_ADC_LOW_POWER(pADC_InitStruct->LowPowerMode));
 
   /* Note: Hardware constraint (refer to description of this function):       */
   /*       ADC instance must be disabled.                                     */
@@ -774,33 +773,34 @@ ErrorStatus LL_ADC_Init(ADC_TypeDef *ADCx, LL_ADC_InitTypeDef *ADC_InitStruct)
                ADC_CFGR_RES
                | ADC_CFGR_AUTDLY
                ,
-               ADC_InitStruct->Resolution
-               | ADC_InitStruct->LowPowerMode
+               pADC_InitStruct->Resolution
+               | pADC_InitStruct->LowPowerMode
               );
 
-    MODIFY_REG(ADCx->CFGR2, ADC_CFGR2_LSHIFT, ADC_InitStruct->LeftBitShift);
+    MODIFY_REG(ADCx->CFGR2, ADC_CFGR2_LSHIFT, pADC_InitStruct->LeftBitShift);
   }
   else
   {
     /* Initialization error: ADC instance is not disabled. */
     status = ERROR;
   }
+
   return status;
 }
 
 /**
   * @brief  Set each @ref LL_ADC_InitTypeDef field to default value.
-  * @param  ADC_InitStruct Pointer to a @ref LL_ADC_InitTypeDef structure
+  * @param  pADC_InitStruct Pointer to a @ref LL_ADC_InitTypeDef structure
   *                        whose fields will be set to default values.
   * @retval None
   */
-void LL_ADC_StructInit(LL_ADC_InitTypeDef *ADC_InitStruct)
+void LL_ADC_StructInit(LL_ADC_InitTypeDef *pADC_InitStruct)
 {
   /* Set ADC_InitStruct fields to default values */
   /* Set fields of ADC instance */
-  ADC_InitStruct->Resolution    = LL_ADC_RESOLUTION_16B;
-  ADC_InitStruct->LeftBitShift  = LL_ADC_LEFT_BIT_SHIFT_NONE;
-  ADC_InitStruct->LowPowerMode  = LL_ADC_LP_MODE_NONE;
+  pADC_InitStruct->Resolution    = LL_ADC_RESOLUTION_16B;
+  pADC_InitStruct->LeftBitShift  = LL_ADC_LEFT_BIT_SHIFT_NONE;
+  pADC_InitStruct->LowPowerMode  = LL_ADC_LP_MODE_NONE;
 
 }
 
@@ -831,26 +831,31 @@ void LL_ADC_StructInit(LL_ADC_InitTypeDef *ADC_InitStruct)
   *          - Set ADC channel sampling time
   *            Refer to function LL_ADC_SetChannelSamplingTime();
   * @param  ADCx ADC instance
-  * @param  ADC_REG_InitStruct Pointer to a @ref LL_ADC_REG_InitTypeDef structure
+  * @param  pADC_REG_InitStruct Pointer to a @ref LL_ADC_REG_InitTypeDef structure
   * @retval An ErrorStatus enumeration value:
   *          - SUCCESS: ADC registers are initialized
   *          - ERROR: ADC registers are not initialized
   */
-ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *ADCx, LL_ADC_REG_InitTypeDef *ADC_REG_InitStruct)
+ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *ADCx, LL_ADC_REG_InitTypeDef *pADC_REG_InitStruct)
 {
   ErrorStatus status = SUCCESS;
 
   /* Check the parameters */
   assert_param(IS_ADC_ALL_INSTANCE(ADCx));
-  assert_param(IS_LL_ADC_REG_TRIG_SOURCE(ADC_REG_InitStruct->TriggerSource));
-  assert_param(IS_LL_ADC_REG_SEQ_SCAN_LENGTH(ADC_REG_InitStruct->SequencerLength));
-  if (ADC_REG_InitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE)
+  assert_param(IS_LL_ADC_REG_TRIG_SOURCE(pADC_REG_InitStruct->TriggerSource));
+  assert_param(IS_LL_ADC_REG_SEQ_SCAN_LENGTH(pADC_REG_InitStruct->SequencerLength));
+  if (pADC_REG_InitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE)
   {
-    assert_param(IS_LL_ADC_REG_SEQ_SCAN_DISCONT_MODE(ADC_REG_InitStruct->SequencerDiscont));
+    assert_param(IS_LL_ADC_REG_SEQ_SCAN_DISCONT_MODE(pADC_REG_InitStruct->SequencerDiscont));
+
+    /* ADC group regular continuous mode and discontinuous mode                 */
+    /* can not be enabled simultenaeously                                       */
+    assert_param((pADC_REG_InitStruct->ContinuousMode == LL_ADC_REG_CONV_SINGLE)
+                 || (pADC_REG_InitStruct->SequencerDiscont == LL_ADC_REG_SEQ_DISCONT_DISABLE));
   }
-  assert_param(IS_LL_ADC_REG_CONTINUOUS_MODE(ADC_REG_InitStruct->ContinuousMode));
-  assert_param(IS_LL_ADC_REG_DATA_TRANSFER_MODE(ADC_REG_InitStruct->DataTransferMode));
-  assert_param(IS_LL_ADC_REG_OVR_DATA_BEHAVIOR(ADC_REG_InitStruct->Overrun));
+  assert_param(IS_LL_ADC_REG_CONTINUOUS_MODE(pADC_REG_InitStruct->ContinuousMode));
+  assert_param(IS_LL_ADC_REG_DATA_TRANSFER_MODE(pADC_REG_InitStruct->DataTransferMode));
+  assert_param(IS_LL_ADC_REG_OVR_DATA_BEHAVIOR(pADC_REG_InitStruct->Overrun));
 
   /* Note: Hardware constraint (refer to description of this function):       */
   /*       ADC instance must be disabled.                                     */
@@ -865,9 +870,9 @@ ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *ADCx, LL_ADC_REG_InitTypeDef *ADC_REG_I
     /*    - Set ADC group regular conversion data transfer: no transfer or    */
     /*      transfer by DMA, and DMA requests mode                            */
     /*    - Set ADC group regular overrun behavior                            */
-    /* Note: On this STM32 serie, ADC trigger edge is set to value 0x0 by     */
+    /* Note: On this STM32 series, ADC trigger edge is set to value 0x0 by    */
     /*       setting of trigger source to SW start.                           */
-    if (ADC_REG_InitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE)
+    if (pADC_REG_InitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE)
     {
       MODIFY_REG(ADCx->CFGR,
                  ADC_CFGR_EXTSEL
@@ -878,11 +883,11 @@ ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *ADCx, LL_ADC_REG_InitTypeDef *ADC_REG_I
                  | ADC_CFGR_DMNGT
                  | ADC_CFGR_OVRMOD
                  ,
-                 ADC_REG_InitStruct->TriggerSource
-                 | ADC_REG_InitStruct->SequencerDiscont
-                 | ADC_REG_InitStruct->ContinuousMode
-                 | ADC_REG_InitStruct->DataTransferMode
-                 | ADC_REG_InitStruct->Overrun
+                 pADC_REG_InitStruct->TriggerSource
+                 | pADC_REG_InitStruct->SequencerDiscont
+                 | pADC_REG_InitStruct->ContinuousMode
+                 | pADC_REG_InitStruct->DataTransferMode
+                 | pADC_REG_InitStruct->Overrun
                 );
     }
     else
@@ -896,16 +901,16 @@ ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *ADCx, LL_ADC_REG_InitTypeDef *ADC_REG_I
                  | ADC_CFGR_DMNGT
                  | ADC_CFGR_OVRMOD
                  ,
-                 ADC_REG_InitStruct->TriggerSource
+                 pADC_REG_InitStruct->TriggerSource
                  | LL_ADC_REG_SEQ_DISCONT_DISABLE
-                 | ADC_REG_InitStruct->ContinuousMode
-                 | ADC_REG_InitStruct->DataTransferMode
-                 | ADC_REG_InitStruct->Overrun
+                 | pADC_REG_InitStruct->ContinuousMode
+                 | pADC_REG_InitStruct->DataTransferMode
+                 | pADC_REG_InitStruct->Overrun
                 );
     }
 
     /* Set ADC group regular sequencer length and scan direction */
-    LL_ADC_REG_SetSequencerLength(ADCx, ADC_REG_InitStruct->SequencerLength);
+    LL_ADC_REG_SetSequencerLength(ADCx, pADC_REG_InitStruct->SequencerLength);
   }
   else
   {
@@ -917,22 +922,22 @@ ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *ADCx, LL_ADC_REG_InitTypeDef *ADC_REG_I
 
 /**
   * @brief  Set each @ref LL_ADC_REG_InitTypeDef field to default value.
-  * @param  ADC_REG_InitStruct Pointer to a @ref LL_ADC_REG_InitTypeDef structure
+  * @param  pADC_REG_InitStruct Pointer to a @ref LL_ADC_REG_InitTypeDef structure
   *                            whose fields will be set to default values.
   * @retval None
   */
-void LL_ADC_REG_StructInit(LL_ADC_REG_InitTypeDef *ADC_REG_InitStruct)
+void LL_ADC_REG_StructInit(LL_ADC_REG_InitTypeDef *pADC_REG_InitStruct)
 {
   /* Set ADC_REG_InitStruct fields to default values */
   /* Set fields of ADC group regular */
-  /* Note: On this STM32 serie, ADC trigger edge is set to value 0x0 by       */
+  /* Note: On this STM32 series, ADC trigger edge is set to value 0x0 by      */
   /*       setting of trigger source to SW start.                             */
-  ADC_REG_InitStruct->TriggerSource    = LL_ADC_REG_TRIG_SOFTWARE;
-  ADC_REG_InitStruct->SequencerLength  = LL_ADC_REG_SEQ_SCAN_DISABLE;
-  ADC_REG_InitStruct->SequencerDiscont = LL_ADC_REG_SEQ_DISCONT_DISABLE;
-  ADC_REG_InitStruct->ContinuousMode   = LL_ADC_REG_CONV_SINGLE;
-  ADC_REG_InitStruct->DataTransferMode = LL_ADC_REG_DR_TRANSFER;
-  ADC_REG_InitStruct->Overrun          = LL_ADC_REG_OVR_DATA_OVERWRITTEN;
+  pADC_REG_InitStruct->TriggerSource    = LL_ADC_REG_TRIG_SOFTWARE;
+  pADC_REG_InitStruct->SequencerLength  = LL_ADC_REG_SEQ_SCAN_DISABLE;
+  pADC_REG_InitStruct->SequencerDiscont = LL_ADC_REG_SEQ_DISCONT_DISABLE;
+  pADC_REG_InitStruct->ContinuousMode   = LL_ADC_REG_CONV_SINGLE;
+  pADC_REG_InitStruct->DataTransferMode = LL_ADC_REG_DR_TRANSFER;
+  pADC_REG_InitStruct->Overrun          = LL_ADC_REG_OVR_DATA_OVERWRITTEN;
 }
 
 /**
@@ -961,25 +966,31 @@ void LL_ADC_REG_StructInit(LL_ADC_REG_InitTypeDef *ADC_REG_InitStruct)
   *            Refer to function @ref LL_ADC_INJ_SetSequencerRanks().
   *          - Set ADC channel sampling time
   *            Refer to function LL_ADC_SetChannelSamplingTime();
+  * @note   Caution if feature ADC group injected contexts queue is enabled
+  *         (refer to with function @ref LL_ADC_INJ_SetQueueMode() ):
+  *         using successively several times this function will appear as
+  *         having no effect.
+  *         To set several features of ADC group injected, use
+  *         function @ref LL_ADC_INJ_ConfigQueueContext().
   * @param  ADCx ADC instance
-  * @param  ADC_INJ_InitStruct Pointer to a @ref LL_ADC_INJ_InitTypeDef structure
+  * @param  pADC_INJ_InitStruct Pointer to a @ref LL_ADC_INJ_InitTypeDef structure
   * @retval An ErrorStatus enumeration value:
   *          - SUCCESS: ADC registers are initialized
   *          - ERROR: ADC registers are not initialized
   */
-ErrorStatus LL_ADC_INJ_Init(ADC_TypeDef *ADCx, LL_ADC_INJ_InitTypeDef *ADC_INJ_InitStruct)
+ErrorStatus LL_ADC_INJ_Init(ADC_TypeDef *ADCx, LL_ADC_INJ_InitTypeDef *pADC_INJ_InitStruct)
 {
   ErrorStatus status = SUCCESS;
 
   /* Check the parameters */
   assert_param(IS_ADC_ALL_INSTANCE(ADCx));
-  assert_param(IS_LL_ADC_INJ_TRIG_SOURCE(ADC_INJ_InitStruct->TriggerSource));
-  assert_param(IS_LL_ADC_INJ_SEQ_SCAN_LENGTH(ADC_INJ_InitStruct->SequencerLength));
-  if (ADC_INJ_InitStruct->SequencerLength != LL_ADC_INJ_SEQ_SCAN_DISABLE)
+  assert_param(IS_LL_ADC_INJ_TRIG_SOURCE(pADC_INJ_InitStruct->TriggerSource));
+  assert_param(IS_LL_ADC_INJ_SEQ_SCAN_LENGTH(pADC_INJ_InitStruct->SequencerLength));
+  if (pADC_INJ_InitStruct->SequencerLength != LL_ADC_INJ_SEQ_SCAN_DISABLE)
   {
-    assert_param(IS_LL_ADC_INJ_SEQ_SCAN_DISCONT_MODE(ADC_INJ_InitStruct->SequencerDiscont));
+    assert_param(IS_LL_ADC_INJ_SEQ_SCAN_DISCONT_MODE(pADC_INJ_InitStruct->SequencerDiscont));
   }
-  assert_param(IS_LL_ADC_INJ_TRIG_AUTO(ADC_INJ_InitStruct->TrigAuto));
+  assert_param(IS_LL_ADC_INJ_TRIG_AUTO(pADC_INJ_InitStruct->TrigAuto));
 
   /* Note: Hardware constraint (refer to description of this function):       */
   /*       ADC instance must be disabled.                                     */
@@ -992,16 +1003,16 @@ ErrorStatus LL_ADC_INJ_Init(ADC_TypeDef *ADCx, LL_ADC_INJ_InitTypeDef *ADC_INJ_I
     /*    - Set ADC group injected sequencer discontinuous mode               */
     /*    - Set ADC group injected conversion trigger: independent or         */
     /*      from ADC group regular                                            */
-    /* Note: On this STM32 serie, ADC trigger edge is set to value 0x0 by     */
+    /* Note: On this STM32 series, ADC trigger edge is set to value 0x0 by    */
     /*       setting of trigger source to SW start.                           */
-    if (ADC_INJ_InitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE)
+    if (pADC_INJ_InitStruct->SequencerLength != LL_ADC_REG_SEQ_SCAN_DISABLE)
     {
       MODIFY_REG(ADCx->CFGR,
                  ADC_CFGR_JDISCEN
                  | ADC_CFGR_JAUTO
                  ,
-                 ADC_INJ_InitStruct->SequencerDiscont
-                 | ADC_INJ_InitStruct->TrigAuto
+                 pADC_INJ_InitStruct->SequencerDiscont
+                 | pADC_INJ_InitStruct->TrigAuto
                 );
     }
     else
@@ -1011,7 +1022,7 @@ ErrorStatus LL_ADC_INJ_Init(ADC_TypeDef *ADCx, LL_ADC_INJ_InitTypeDef *ADC_INJ_I
                  | ADC_CFGR_JAUTO
                  ,
                  LL_ADC_REG_SEQ_DISCONT_DISABLE
-                 | ADC_INJ_InitStruct->TrigAuto
+                 | pADC_INJ_InitStruct->TrigAuto
                 );
     }
 
@@ -1020,8 +1031,8 @@ ErrorStatus LL_ADC_INJ_Init(ADC_TypeDef *ADCx, LL_ADC_INJ_InitTypeDef *ADC_INJ_I
                | ADC_JSQR_JEXTEN
                | ADC_JSQR_JL
                ,
-               ADC_INJ_InitStruct->TriggerSource
-               | ADC_INJ_InitStruct->SequencerLength
+               pADC_INJ_InitStruct->TriggerSource
+               | pADC_INJ_InitStruct->SequencerLength
               );
   }
   else
@@ -1034,18 +1045,18 @@ ErrorStatus LL_ADC_INJ_Init(ADC_TypeDef *ADCx, LL_ADC_INJ_InitTypeDef *ADC_INJ_I
 
 /**
   * @brief  Set each @ref LL_ADC_INJ_InitTypeDef field to default value.
-  * @param  ADC_INJ_InitStruct Pointer to a @ref LL_ADC_INJ_InitTypeDef structure
+  * @param  pADC_INJ_InitStruct Pointer to a @ref LL_ADC_INJ_InitTypeDef structure
   *                            whose fields will be set to default values.
   * @retval None
   */
-void LL_ADC_INJ_StructInit(LL_ADC_INJ_InitTypeDef *ADC_INJ_InitStruct)
+void LL_ADC_INJ_StructInit(LL_ADC_INJ_InitTypeDef *pADC_INJ_InitStruct)
 {
   /* Set ADC_INJ_InitStruct fields to default values */
   /* Set fields of ADC group injected */
-  ADC_INJ_InitStruct->TriggerSource    = LL_ADC_INJ_TRIG_SOFTWARE;
-  ADC_INJ_InitStruct->SequencerLength  = LL_ADC_INJ_SEQ_SCAN_DISABLE;
-  ADC_INJ_InitStruct->SequencerDiscont = LL_ADC_INJ_SEQ_DISCONT_DISABLE;
-  ADC_INJ_InitStruct->TrigAuto         = LL_ADC_INJ_TRIG_INDEPENDENT;
+  pADC_INJ_InitStruct->TriggerSource    = LL_ADC_INJ_TRIG_SOFTWARE;
+  pADC_INJ_InitStruct->SequencerLength  = LL_ADC_INJ_SEQ_SCAN_DISABLE;
+  pADC_INJ_InitStruct->SequencerDiscont = LL_ADC_INJ_SEQ_DISCONT_DISABLE;
+  pADC_INJ_InitStruct->TrigAuto         = LL_ADC_INJ_TRIG_INDEPENDENT;
 }
 
 /**
@@ -1067,5 +1078,3 @@ void LL_ADC_INJ_StructInit(LL_ADC_INJ_InitTypeDef *ADC_INJ_InitStruct)
   */
 
 #endif /* USE_FULL_LL_DRIVER */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

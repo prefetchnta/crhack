@@ -10,13 +10,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -37,9 +36,15 @@
 /* Private types -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private constants ---------------------------------------------------------*/
+/** @defgroup SAIEx_Private_Defines SAIEx Extended Private Defines
+  * @{
+  */
 #define SAI_PDM_DELAY_MASK          0x77U
 #define SAI_PDM_DELAY_OFFSET        8U
 #define SAI_PDM_RIGHT_DELAY_OFFSET  4U
+/**
+  * @}
+  */
 
 /* Private macros ------------------------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -71,12 +76,18 @@
 HAL_StatusTypeDef HAL_SAIEx_ConfigPdmMicDelay(SAI_HandleTypeDef *hsai, SAIEx_PdmMicDelayParamTypeDef *pdmMicDelay)
 {
   HAL_StatusTypeDef status = HAL_OK;
+  uint32_t offset;
   SAI_TypeDef *SaiBaseAddress;
 
+#if defined(SAI4)
   /* Get the SAI base address according to the SAI handle */
   SaiBaseAddress = (hsai->Instance == SAI1_Block_A) ? SAI1 : \
                    ((hsai->Instance == SAI4_Block_A) ? SAI4 : \
                      NULL);
+#else
+  /* Get the SAI base address according to the SAI handle */
+  SaiBaseAddress = (hsai->Instance == SAI1_Block_A) ? SAI1 : NULL;
+#endif
 
   /* Check that SAI sub-block is SAI sub-block A */
   if (SaiBaseAddress == NULL)
@@ -90,15 +101,17 @@ HAL_StatusTypeDef HAL_SAIEx_ConfigPdmMicDelay(SAI_HandleTypeDef *hsai, SAIEx_Pdm
     assert_param(IS_SAI_PDM_MIC_DELAY(pdmMicDelay->LeftDelay));
     assert_param(IS_SAI_PDM_MIC_DELAY(pdmMicDelay->RightDelay));
 
-    /* Check SAI state */
-    if (hsai->State != HAL_SAI_STATE_RESET)
+    /* Compute offset on PDMDLY register according mic pair number */
+    offset = SAI_PDM_DELAY_OFFSET * (pdmMicDelay->MicPair - 1U);
+
+    /* Check SAI state and offset */
+    if ((hsai->State != HAL_SAI_STATE_RESET) && (offset <= 24U))
     {
       /* Reset current delays for specified microphone */
-      SaiBaseAddress->PDMDLY &= ~(SAI_PDM_DELAY_MASK << (SAI_PDM_DELAY_OFFSET * (pdmMicDelay->MicPair - 1)));
+      SaiBaseAddress->PDMDLY &= ~(SAI_PDM_DELAY_MASK << offset);
 
       /* Apply new microphone delays */
-      SaiBaseAddress->PDMDLY |= (((pdmMicDelay->RightDelay << SAI_PDM_RIGHT_DELAY_OFFSET) | pdmMicDelay->LeftDelay) << \
-                                 (SAI_PDM_DELAY_OFFSET * (pdmMicDelay->MicPair - 1)));
+      SaiBaseAddress->PDMDLY |= (((pdmMicDelay->RightDelay << SAI_PDM_RIGHT_DELAY_OFFSET) | pdmMicDelay->LeftDelay) << offset);
     }
     else
     {
@@ -124,5 +137,3 @@ HAL_StatusTypeDef HAL_SAIEx_ConfigPdmMicDelay(SAI_HandleTypeDef *hsai, SAIEx_Pdm
 /**
   * @}
   */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

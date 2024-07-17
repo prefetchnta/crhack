@@ -24,13 +24,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2017 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -83,11 +82,29 @@
 /*!< Uncomment the following line if you need to use initialized data in D2 domain SRAM (AHB SRAM) */
 /* #define DATA_IN_D2_SRAM */
 
-/*!< Uncomment the following line if you need to relocate your vector Table in
-     Internal SRAM. */
+/* Note: Following vector table addresses must be defined in line with linker
+         configuration. */
+/*!< Uncomment the following line if you need to relocate the vector table
+     anywhere in FLASH BANK1 or AXI SRAM, else the vector table is kept at the automatic
+     remap of boot address selected */
+/* #define USER_VECT_TAB_ADDRESS */
+
+#if defined(USER_VECT_TAB_ADDRESS)
+/*!< Uncomment the following line if you need to relocate your vector Table
+     in D1 AXI SRAM else user remap will be done in FLASH BANK1. */
 /* #define VECT_TAB_SRAM */
-#define VECT_TAB_OFFSET  0x00000000UL /*!< Vector Table base offset field.
-                                      This value must be a multiple of 0x200. */
+#if defined(VECT_TAB_SRAM)
+#define VECT_TAB_BASE_ADDRESS   D1_AXISRAM_BASE   /*!< Vector Table base address field.
+                                                       This value must be a multiple of 0x400. */
+#define VECT_TAB_OFFSET         0x00000000U       /*!< Vector Table base offset field.
+                                                       This value must be a multiple of 0x400. */
+#else
+#define VECT_TAB_BASE_ADDRESS   FLASH_BANK1_BASE  /*!< Vector Table base address field.
+                                                       This value must be a multiple of 0x400. */
+#define VECT_TAB_OFFSET         0x00000000U       /*!< Vector Table base offset field.
+                                                       This value must be a multiple of 0x400. */
+#endif /* VECT_TAB_SRAM */
+#endif /* USER_VECT_TAB_ADDRESS */
 /******************************************************************************/
 
 /**
@@ -151,14 +168,29 @@ void SystemInit (void)
     SCB->CPACR |= ((3UL << (10*2))|(3UL << (11*2)));  /* set CP10 and CP11 Full Access */
   #endif
   /* Reset the RCC clock configuration to the default reset state ------------*/
+
+   /* Increasing the CPU frequency */
+  if(FLASH_LATENCY_DEFAULT  > (READ_BIT((FLASH->ACR), FLASH_ACR_LATENCY)))
+  {
+    /* Program the new number of wait states to the LATENCY bits in the FLASH_ACR register */
+    MODIFY_REG(FLASH->ACR, FLASH_ACR_LATENCY, (uint32_t)(FLASH_LATENCY_DEFAULT));
+  }
+
   /* Set HSION bit */
   RCC->CR |= RCC_CR_HSION;
 
   /* Reset CFGR register */
   RCC->CFGR = 0x00000000;
 
-  /* Reset HSEON, CSSON , CSION,RC48ON, CSIKERON PLL1ON, PLL2ON and PLL3ON bits */
+  /* Reset HSEON, HSECSSON, CSION, HSI48ON, CSIKERON, PLL1ON, PLL2ON and PLL3ON bits */
   RCC->CR &= 0xEAF6ED7FU;
+
+   /* Decreasing the number of wait states because of lower CPU frequency */
+  if(FLASH_LATENCY_DEFAULT  < (READ_BIT((FLASH->ACR), FLASH_ACR_LATENCY)))
+  {
+    /* Program the new number of wait states to the LATENCY bits in the FLASH_ACR register */
+    MODIFY_REG(FLASH->ACR, FLASH_ACR_LATENCY, (uint32_t)(FLASH_LATENCY_DEFAULT));
+  }
 
 #if defined(D3_SRAM_BASE)
   /* Reset D1CFGR register */
@@ -180,23 +212,23 @@ void SystemInit (void)
   RCC->SRDCFGR = 0x00000000;
 #endif
   /* Reset PLLCKSELR register */
-  RCC->PLLCKSELR = 0x00000000;
+  RCC->PLLCKSELR = 0x02020200;
 
   /* Reset PLLCFGR register */
-  RCC->PLLCFGR = 0x00000000;
+  RCC->PLLCFGR = 0x01FF0000;
   /* Reset PLL1DIVR register */
-  RCC->PLL1DIVR = 0x00000000;
+  RCC->PLL1DIVR = 0x01010280;
   /* Reset PLL1FRACR register */
   RCC->PLL1FRACR = 0x00000000;
 
   /* Reset PLL2DIVR register */
-  RCC->PLL2DIVR = 0x00000000;
+  RCC->PLL2DIVR = 0x01010280;
 
   /* Reset PLL2FRACR register */
 
   RCC->PLL2FRACR = 0x00000000;
   /* Reset PLL3DIVR register */
-  RCC->PLL3DIVR = 0x00000000;
+  RCC->PLL3DIVR = 0x01010280;
 
   /* Reset PLL3FRACR register */
   RCC->PLL3FRACR = 0x00000000;
@@ -226,18 +258,22 @@ void SystemInit (void)
 #else
   RCC->AHB2ENR |= (RCC_AHB2ENR_AHBSRAM1EN | RCC_AHB2ENR_AHBSRAM2EN);
 #endif /* RCC_AHB2ENR_D2SRAM3EN */
+
   tmpreg = RCC->AHB2ENR;
   (void) tmpreg;
 #endif /* DATA_IN_D2_SRAM */
 
+  /*
+   * Disable the FMC bank1 (enabled after reset).
+   * This, prevents CPU speculation access on this bank which blocks the use of FMC during
+   * 24us. During this time the others FMC master (such as LTDC) cannot use it!
+   */
+  FMC_Bank1_R->BTCR[0] = 0x000030D2;
+
   /* Configure the Vector Table location add offset address ------------------*/
-#ifdef VECT_TAB_SRAM
-  SCB->VTOR = D1_AXISRAM_BASE  | VECT_TAB_OFFSET;       /* Vector Table Relocation in Internal AXI-RAM */
-#else
-  SCB->VTOR = FLASH_BANK1_BASE | VECT_TAB_OFFSET;       /* Vector Table Relocation in Internal FLASH */
-#endif
-
-
+#if defined(USER_VECT_TAB_ADDRESS)
+  SCB->VTOR = VECT_TAB_BASE_ADDRESS | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal D1 AXI-RAM or in Internal FLASH */
+#endif /* USER_VECT_TAB_ADDRESS */
 }
 
 /**
@@ -329,7 +365,8 @@ void SystemCoreClockUpdate (void)
         break;
 
       default:
-          pllvco = ((float_t)CSI_VALUE / (float_t)pllm) * ((float_t)(uint32_t)(RCC->PLL1DIVR & RCC_PLL1DIVR_N1) + (fracn1/(float_t)0x2000) +(float_t)1 );
+          hsivalue = (HSI_VALUE >> ((RCC->CR & RCC_CR_HSIDIV)>> 3)) ;
+          pllvco = ((float_t)hsivalue / (float_t)pllm) * ((float_t)(uint32_t)(RCC->PLL1DIVR & RCC_PLL1DIVR_N1) + (fracn1/(float_t)0x2000) +(float_t)1 );
         break;
       }
       pllp = (((RCC->PLL1DIVR & RCC_PLL1DIVR_P1) >>9) + 1U ) ;
@@ -342,7 +379,7 @@ void SystemCoreClockUpdate (void)
     break;
 
   default:
-    SystemCoreClock = CSI_VALUE;
+    SystemCoreClock = (uint32_t) (HSI_VALUE >> ((RCC->CR & RCC_CR_HSIDIV)>> 3));
     break;
   }
 
@@ -375,4 +412,3 @@ void SystemCoreClockUpdate (void)
 /**
   * @}
   */
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

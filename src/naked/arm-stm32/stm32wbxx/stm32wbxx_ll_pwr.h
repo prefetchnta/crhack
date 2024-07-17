@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the 
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -49,7 +48,7 @@ extern "C" {
 #if defined(PWR_CR5_SMPSEN)
 /** @defgroup PWR_SMPS_Calibration PWR SMPS calibration
   * @{
-  */ 
+  */
 #define SMPS_VOLTAGE_CAL_ADDR              ((uint32_t*) (0x1FFF7558UL))         /* SMPS output voltage calibration level corresponding to voltage "SMPS_VOLTAGE_CAL_VOLTAGE_MV" */
 #define SMPS_VOLTAGE_CAL_POS               (8UL)                                /* SMPS output voltage calibration level bitfield position */
 #define SMPS_VOLTAGE_CAL                   (0xFUL << SMPS_VOLTAGE_CAL_POS)      /* SMPS output voltage calibration level bitfield mask */
@@ -59,7 +58,7 @@ extern "C" {
 /**
   * @}
   */
-#endif
+#endif /* PWR_CR5_SMPSEN */
 
 /**
   * @}
@@ -80,25 +79,27 @@ extern "C" {
 #define LL_PWR_SCR_CWUF                    PWR_SCR_CWUF
 #if defined(PWR_CR3_EWUP2)
 #define LL_PWR_SCR_CWUF5                   PWR_SCR_CWUF5
-#endif
+#endif /* PWR_CR3_EWUP2 */
 #define LL_PWR_SCR_CWUF4                   PWR_SCR_CWUF4
 #if defined(PWR_CR3_EWUP3)
 #define LL_PWR_SCR_CWUF3                   PWR_SCR_CWUF3
-#endif
+#endif /* PWR_CR3_EWUP3 */
 #if defined(PWR_CR3_EWUP2)
 #define LL_PWR_SCR_CWUF2                   PWR_SCR_CWUF2
-#endif
+#endif /* PWR_CR3_EWUP2 */
 #define LL_PWR_SCR_CWUF1                   PWR_SCR_CWUF1
 #define LL_PWR_SCR_CC2HF                   PWR_SCR_CC2HF
-#define LL_PWR_SCR_C802AF                  PWR_SCR_C802AF
 #define LL_PWR_SCR_CBLEAF                  PWR_SCR_CBLEAF
 #define LL_PWR_SCR_CCRPEF                  PWR_SCR_CCRPEF
+#if defined(PWR_CR3_E802A)
+#define LL_PWR_SCR_C802AF                  PWR_SCR_C802AF
 #define LL_PWR_SCR_C802WUF                 PWR_SCR_C802WUF
+#endif /* PWR_CR3_E802A */
 #define LL_PWR_SCR_CBLEWUF                 PWR_SCR_CBLEWUF
 #if defined(PWR_CR5_SMPSEN)
 #define LL_PWR_SCR_CBORHF                  PWR_SCR_CBORHF
 #define LL_PWR_SCR_CSMPSFBF                PWR_SCR_CSMPSFBF
-#endif
+#endif /* PWR_CR5_SMPSEN */
 #define LL_PWR_EXTSCR_CCRPF                PWR_EXTSCR_CCRPF
 #define LL_PWR_EXTSCR_C2CSSF               PWR_EXTSCR_C2CSSF
 #define LL_PWR_EXTSCR_C1CSSF               PWR_EXTSCR_C1CSSF
@@ -113,23 +114,23 @@ extern "C" {
 #define LL_PWR_SR1_WUFI                    PWR_SR1_WUFI
 #if defined(PWR_CR3_EWUP5)
 #define LL_PWR_SR1_WUF5                    PWR_SR1_WUF5
-#endif
+#endif /* PWR_CR3_EWUP5 */
 #define LL_PWR_SR1_WUF4                    PWR_SR1_WUF4
 #if defined(PWR_CR3_EWUP3)
 #define LL_PWR_SR1_WUF3                    PWR_SR1_WUF3
-#endif
+#endif /* PWR_CR3_EWUP3 */
 #if defined(PWR_CR3_EWUP2)
 #define LL_PWR_SR1_WUF2                    PWR_SR1_WUF2
-#endif
+#endif /* PWR_CR3_EWUP2 */
 #define LL_PWR_SR1_WUF1                    PWR_SR1_WUF1
 #define LL_PWR_SR2_PVMO3                   PWR_SR2_PVMO3
 #if defined(PWR_CR2_PVME1)
 #define LL_PWR_SR2_PVMO1                   PWR_SR2_PVMO1
-#endif
+#endif /* PWR_CR2_PVME1 */
 #define LL_PWR_SR2_PVDO                    PWR_SR2_PVDO
 #if defined(PWR_CR1_VOS)
 #define LL_PWR_SR2_VOSF                    PWR_SR2_VOSF
-#endif
+#endif /* PWR_CR1_VOS */
 #define LL_PWR_SR2_REGLPF                  PWR_SR2_REGLPF
 #define LL_PWR_SR2_REGLPS                  PWR_SR2_REGLPS
 
@@ -141,13 +142,16 @@ extern "C" {
 #define LL_PWR_FLAG_SMPS                   PWR_SR2_SMPSF  /* SMPS step down converter ready flag */
 #define LL_PWR_FLAG_SMPSB                  PWR_SR2_SMPSBF /* SMPS step down converter in bypass mode flag */
 #define LL_PWR_FLAG_SMPSFB                 PWR_SR1_SMPSFB /* SMPS step down converter forced in bypass mode interrupt flag */
-#endif
+#endif /* PWR_CR5_SMPSEN */
 
 /* Radio (BLE or 802.15.4) flags */
 #define LL_PWR_FLAG_BLEWU                  PWR_SR1_BLEWUF  /* BLE wakeup interrupt flag */
-#define LL_PWR_FLAG_802WU                  PWR_SR1_802WUF  /* 802.15.4 wakeup interrupt flag */
+
 #define LL_PWR_FLAG_BLEA                   PWR_SR1_BLEAF   /* BLE end of activity interrupt flag */
+#if defined(PWR_CR3_E802A)
+#define LL_PWR_FLAG_802WU                  PWR_SR1_802WUF  /* 802.15.4 wakeup interrupt flag */
 #define LL_PWR_FLAG_802A                   PWR_SR1_802AF   /* 802.15.4 end of activity interrupt flag */
+#endif /* PWR_CR3_E802A */
 #define LL_PWR_FLAG_CRPE                   PWR_SR1_CRPEF   /* Critical radio phase end of activity interrupt flag */
 #define LL_PWR_FLAG_CRP                    PWR_EXTSCR_CRPF /* Critical radio system phase */
 
@@ -172,14 +176,16 @@ extern "C" {
 /**
   * @}
   */
-#endif
+#endif /* PWR_CR1_VOS */
 
 /** @defgroup PWR_LL_EC_MODE_PWR MODE PWR
   * @{
   */
 #define LL_PWR_MODE_STOP0                  (0x000000000U)
 #define LL_PWR_MODE_STOP1                  (PWR_CR1_LPMS_0)
+#if defined(PWR_SUPPORT_STOP2)
 #define LL_PWR_MODE_STOP2                  (PWR_CR1_LPMS_1)
+#endif /* PWR_SUPPORT_STOP2 */
 #define LL_PWR_MODE_STANDBY                (PWR_CR1_LPMS_1 | PWR_CR1_LPMS_0)
 #define LL_PWR_MODE_SHUTDOWN               (PWR_CR1_LPMS_2)
 /**
@@ -209,12 +215,12 @@ extern "C" {
   */
 #if defined(PWR_CR2_PVME1)
 #define LL_PWR_PVM_VDDUSB_1_2V             (PWR_CR2_PVME1)     /* Monitoring VDDUSB vs. 1.2V */
-#endif
+#endif /* PWR_CR2_PVME1 */
 #define LL_PWR_PVM_VDDA_1_62V              (PWR_CR2_PVME3)     /* Monitoring VDDA vs. 1.62V  */
 /**
   * @}
   */
-  
+
 /** @defgroup PWR_LL_EC_PVDLEVEL PVDLEVEL
   * @{
   */
@@ -236,14 +242,14 @@ extern "C" {
 #define LL_PWR_WAKEUP_PIN1                 (PWR_CR3_EWUP1)
 #if defined(PWR_CR3_EWUP2)
 #define LL_PWR_WAKEUP_PIN2                 (PWR_CR3_EWUP2)
-#endif
+#endif /* PWR_CR3_EWUP2 */
 #if defined(PWR_CR3_EWUP3)
 #define LL_PWR_WAKEUP_PIN3                 (PWR_CR3_EWUP3)
-#endif
+#endif /* PWR_CR3_EWUP3 */
 #define LL_PWR_WAKEUP_PIN4                 (PWR_CR3_EWUP4)
 #if defined(PWR_CR3_EWUP5)
 #define LL_PWR_WAKEUP_PIN5                 (PWR_CR3_EWUP5)
-#endif
+#endif /* PWR_CR3_EWUP5 */
 /**
   * @}
   */
@@ -309,7 +315,7 @@ extern "C" {
 #define LL_PWR_GPIO_BIT_13                 (PWR_PUCRA_PA13)
 #define LL_PWR_GPIO_BIT_14                 (PWR_PUCRC_PC14)
 #define LL_PWR_GPIO_BIT_15                 (PWR_PUCRC_PC15)
-#endif
+#endif /* PWR_PUCRC_PC0 */
 /**
   * @}
   */
@@ -329,7 +335,7 @@ extern "C" {
   */
 /* Note: Literals values are defined from register SR2 bits SMPSF and SMPSBF  */
 /*       but they are also used as register CR5 bits SMPSEN and SMPSBEN,      */
-/*       as used by all SMPS operating mode functions targetting different    */
+/*       as used by all SMPS operating mode functions targeting different    */
 /*       registers:                                                           */
 /*       "LL_PWR_SMPS_SetMode()", "LL_PWR_SMPS_GetMode()"                     */
 /*       and "LL_PWR_SMPS_GetEffectiveMode()".                                */
@@ -377,7 +383,7 @@ extern "C" {
 /**
   * @}
   */
-#endif
+#endif /* PWR_CR5_SMPSEN */
 
 /**
   * @}
@@ -457,7 +463,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledLowPowerRunMode(void)
 #if defined(PWR_CR1_VOS)
 /**
   * @brief  Set the main internal regulator output voltage
-  * @note   A delay is required for the internal regulator to be ready 
+  * @note   A delay is required for the internal regulator to be ready
   *         after the voltage scaling has been changed.
   *         Check whether regulator reached the selected voltage level
   *         can be done using function @ref LL_PWR_IsActiveFlag_VOS().
@@ -483,7 +489,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetRegulVoltageScaling(void)
 {
   return (uint32_t)(READ_BIT(PWR->CR1, PWR_CR1_VOS));
 }
-#endif
+#endif /* PWR_CR1_VOS */
 
 /**
   * @brief  Enable access to the backup domain
@@ -521,9 +527,11 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledBkUpAccess(void)
   * @param  LowPowerMode This parameter can be one of the following values:
   *         @arg @ref LL_PWR_MODE_STOP0
   *         @arg @ref LL_PWR_MODE_STOP1
-  *         @arg @ref LL_PWR_MODE_STOP2
+  *         @arg @ref LL_PWR_MODE_STOP2 (*)
   *         @arg @ref LL_PWR_MODE_STANDBY
   *         @arg @ref LL_PWR_MODE_SHUTDOWN
+  *
+  *         (*) Not available on devices STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SetPowerMode(uint32_t LowPowerMode)
@@ -537,9 +545,11 @@ __STATIC_INLINE void LL_PWR_SetPowerMode(uint32_t LowPowerMode)
   * @retval Returned value can be one of the following values:
   *         @arg @ref LL_PWR_MODE_STOP0
   *         @arg @ref LL_PWR_MODE_STOP1
-  *         @arg @ref LL_PWR_MODE_STOP2
+  *         @arg @ref LL_PWR_MODE_STOP2 (*)
   *         @arg @ref LL_PWR_MODE_STANDBY
   *         @arg @ref LL_PWR_MODE_SHUTDOWN
+  *
+  *         (*) Not available on devices STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   */
 __STATIC_INLINE uint32_t LL_PWR_GetPowerMode(void)
 {
@@ -557,8 +567,8 @@ __STATIC_INLINE uint32_t LL_PWR_GetPowerMode(void)
 __STATIC_INLINE void LL_PWR_SetFlashPowerModeLPRun(uint32_t FlashLowPowerMode)
 {
   /* Unlock bit FPDR */
-  WRITE_REG(PWR->CR1, 0x0000C1B0U);
-  
+  WRITE_REG(PWR->CR1, 0x0000C1B0UL);
+
   /* Update bit FPDR */
   MODIFY_REG(PWR->CR1, PWR_CR1_FPDR, FlashLowPowerMode);
 }
@@ -640,7 +650,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledVddUSB(void)
   *         @arg @ref LL_PWR_PVM_VDDUSB_1_2V (*)
   *         @arg @ref LL_PWR_PVM_VDDA_1_62V
   *
-  *         (*) Not available on devices STM32WB50xx
+  *         (*) Not available on devices STM32WB50xx, STM32WB30xx, STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_EnablePVM(uint32_t PeriphVoltage)
@@ -656,7 +666,7 @@ __STATIC_INLINE void LL_PWR_EnablePVM(uint32_t PeriphVoltage)
   *         @arg @ref LL_PWR_PVM_VDDUSB_1_2V (*)
   *         @arg @ref LL_PWR_PVM_VDDA_1_62V
   *
-  *         (*) Not available on devices STM32WB50xx
+  *         (*) Not available on devices STM32WB50xx, STM32WB30xx, STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_DisablePVM(uint32_t PeriphVoltage)
@@ -672,7 +682,7 @@ __STATIC_INLINE void LL_PWR_DisablePVM(uint32_t PeriphVoltage)
   *         @arg @ref LL_PWR_PVM_VDDUSB_1_2V (*)
   *         @arg @ref LL_PWR_PVM_VDDA_1_62V
   *
-  *         (*) Not available on devices STM32WB50xx
+  *         (*) Not available on devices STM32WB50xx, STM32WB30xx, STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledPVM(uint32_t PeriphVoltage)
@@ -808,7 +818,9 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledPUPDCfg(void)
 }
 
 /**
-  * @brief  Enable SRAM2 content retention in Standby mode
+  * @brief  Enable SRAM2a content retention in Standby mode
+  * @note   On devices STM32WB15xx, STM32WB10xx, STM32WB1Mxx, retention is extended
+  *         to SRAM1, SRAM2a and SRAM2b.
   * @rmtoll CR3          RRS           LL_PWR_EnableSRAM2Retention
   * @retval None
   */
@@ -818,7 +830,9 @@ __STATIC_INLINE void LL_PWR_EnableSRAM2Retention(void)
 }
 
 /**
-  * @brief  Disable SRAM2 content retention in Standby mode
+  * @brief  Disable SRAM2a content retention in Standby mode
+  * @note   On devices STM32WB15xx, STM32WB10xx, STM32WB1Mxx, retention is extended
+  *         to SRAM1, SRAM2a and SRAM2b.
   * @rmtoll CR3          RRS           LL_PWR_DisableSRAM2Retention
   * @retval None
   */
@@ -829,6 +843,8 @@ __STATIC_INLINE void LL_PWR_DisableSRAM2Retention(void)
 
 /**
   * @brief  Check if SRAM2 content retention in Standby mode  is enabled
+  * @note   On devices STM32WB15xx, STM32WB10xx, STM32WB1Mxx, retention is extended
+  *         to SRAM1, SRAM2a and SRAM2b.
   * @rmtoll CR3          RRS           LL_PWR_IsEnabledSRAM2Retention
   * @retval State of bit (1 or 0).
   */
@@ -851,7 +867,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledSRAM2Retention(void)
   *         @arg @ref LL_PWR_WAKEUP_PIN4
   *         @arg @ref LL_PWR_WAKEUP_PIN5 (*)
   *
-  *         (*) Not available on devices STM32WB50xx
+  *         (*) Not available on devices STM32WB50xx, STM32WB35xx, STM32WB30xx, STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_EnableWakeUpPin(uint32_t WakeUpPin)
@@ -873,7 +889,7 @@ __STATIC_INLINE void LL_PWR_EnableWakeUpPin(uint32_t WakeUpPin)
   *         @arg @ref LL_PWR_WAKEUP_PIN4
   *         @arg @ref LL_PWR_WAKEUP_PIN5 (*)
   *
-  *         (*) Not available on devices STM32WB50xx
+  *         (*) Not available on devices STM32WB50xx, STM32WB35xx, STM32WB30xx, STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_DisableWakeUpPin(uint32_t WakeUpPin)
@@ -895,7 +911,7 @@ __STATIC_INLINE void LL_PWR_DisableWakeUpPin(uint32_t WakeUpPin)
   *         @arg @ref LL_PWR_WAKEUP_PIN4
   *         @arg @ref LL_PWR_WAKEUP_PIN5 (*)
   *
-  *         (*) Not available on devices STM32WB50xx
+  *         (*) Not available on devices STM32WB50xx, STM32WB35xx, STM32WB30xx, STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledWakeUpPin(uint32_t WakeUpPin)
@@ -972,7 +988,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledBatteryCharging(void)
   *         @arg @ref LL_PWR_WAKEUP_PIN4
   *         @arg @ref LL_PWR_WAKEUP_PIN5 (*)
   *
-  *         (*) Not available on devices STM32WB50xx
+  *         (*) Not available on devices STM32WB50xx, STM32WB35xx, STM32WB30xx, STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SetWakeUpPinPolarityLow(uint32_t WakeUpPin)
@@ -994,7 +1010,7 @@ __STATIC_INLINE void LL_PWR_SetWakeUpPinPolarityLow(uint32_t WakeUpPin)
   *         @arg @ref LL_PWR_WAKEUP_PIN4
   *         @arg @ref LL_PWR_WAKEUP_PIN5 (*)
   *
-  *         (*) Not available on devices STM32WB50xx
+  *         (*) Not available on devices STM32WB50xx, STM32WB35xx, STM32WB30xx, STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SetWakeUpPinPolarityHigh(uint32_t WakeUpPin)
@@ -1016,7 +1032,7 @@ __STATIC_INLINE void LL_PWR_SetWakeUpPinPolarityHigh(uint32_t WakeUpPin)
   *         @arg @ref LL_PWR_WAKEUP_PIN4
   *         @arg @ref LL_PWR_WAKEUP_PIN5 (*)
   *
-  *         (*) Not available on devices STM32WB50xx
+  *         (*) Not available on devices STM32WB50xx, STM32WB35xx, STM32WB30xx, STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_PWR_IsWakeUpPinPolarityLow(uint32_t WakeUpPin)
@@ -1290,7 +1306,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetBORConfig(void)
 {
   return (uint32_t)(READ_BIT(PWR->CR5, PWR_CR5_BORHC));
 }
-#endif
+#endif /* PWR_CR5_SMPSEN */
 
 /**
   * @}
@@ -1306,11 +1322,11 @@ __STATIC_INLINE uint32_t LL_PWR_GetBORConfig(void)
   * @note   When SMPS step down converter SMPS mode is enabled,
   *         it is good practice to enable the BORH to monitor the supply:
   *         in this case, when the supply drops below the SMPS step down
-  *         converter SMPS mode operating supply level, 
+  *         converter SMPS mode operating supply level,
   *         switching on the fly is performed automaticcaly
   *         and interruption is generated.
   *         Refer to function @ref LL_PWR_SetBORConfig().
-  * @note   Occurence of SMPS step down converter forced in bypass mode
+  * @note   Occurrence of SMPS step down converter forced in bypass mode
   *         can be monitored by flag and interruption.
   *         Refer to functions
   *         @ref LL_PWR_IsActiveFlag_SMPSFB(), @ref LL_PWR_ClearFlag_SMPSFB(),
@@ -1323,7 +1339,7 @@ __STATIC_INLINE uint32_t LL_PWR_GetBORConfig(void)
   *
   *         (1) SMPS operating mode step down or open depends on system low-power mode:
   *              - step down mode if system low power mode is run, LP run or stop0,
-  *              - open mode if system low power mode is stop1, stop2, standby or shutdown
+  *              - open mode if system low power mode is Stop1, Stop2, Standby or Shutdown
   * @retval None
   */
 __STATIC_INLINE void LL_PWR_SMPS_SetMode(uint32_t OperatingMode)
@@ -1345,7 +1361,7 @@ __STATIC_INLINE void LL_PWR_SMPS_SetMode(uint32_t OperatingMode)
   *
   *         (1) SMPS operating mode step down or open depends on system low-power mode:
   *              - step down mode if system low power mode is run, LP run or stop0,
-  *              - open mode if system low power mode is stop1, stop2, standby or shutdown
+  *              - open mode if system low power mode is Stop1, Stop2, Standby or Shutdown
   */
 __STATIC_INLINE uint32_t LL_PWR_SMPS_GetMode(void)
 {
@@ -1353,10 +1369,10 @@ __STATIC_INLINE uint32_t LL_PWR_SMPS_GetMode(void)
   /*       for all SMPS operating mode functions:                             */
   /*       "LL_PWR_SMPS_SetMode()", "LL_PWR_SMPS_GetMode()"                   */
   /*       and "LL_PWR_SMPS_GetEffectiveMode()".                              */
-  register uint32_t OperatingMode = (READ_BIT(PWR->CR5, PWR_CR5_SMPSEN) >> (PWR_CR5_SMPSEN_Pos - PWR_SR2_SMPSF_Pos));
-  
+  uint32_t OperatingMode = (READ_BIT(PWR->CR5, PWR_CR5_SMPSEN) >> (PWR_CR5_SMPSEN_Pos - PWR_SR2_SMPSF_Pos));
+
   OperatingMode = (OperatingMode | ((~OperatingMode >> 1U) & PWR_SR2_SMPSBF));
-  
+
   return OperatingMode;
 }
 
@@ -1366,7 +1382,7 @@ __STATIC_INLINE uint32_t LL_PWR_SMPS_GetMode(void)
   *         requested operating mode can differ from effective low power mode.
   *         - dependency on system low-power mode:
   *           - step down mode if system low power mode is run, LP run or stop0,
-  *           - open mode if system low power mode is stop1, stop2, standby or shutdown
+  *           - open mode if system low power mode is Stop1, Stop2, Standby or Shutdown
   *         - dependency on BOR level:
   *           - bypass mode if supply voltage drops below BOR level
   * @note   This functions check flags of SMPS operating modes step down
@@ -1380,7 +1396,7 @@ __STATIC_INLINE uint32_t LL_PWR_SMPS_GetMode(void)
   *
   *         (1) SMPS operating mode step down or open depends on system low-power mode:
   *              - step down mode if system low power mode is run, LP run or stop0,
-  *              - open mode if system low power mode is stop1, stop2, standby or shutdown
+  *              - open mode if system low power mode is Stop1, Stop2, Standby or Shutdown
   */
 __STATIC_INLINE uint32_t LL_PWR_SMPS_GetEffectiveMode(void)
 {
@@ -1486,14 +1502,14 @@ __STATIC_INLINE uint32_t LL_PWR_SMPS_GetStartupCurrent(void)
   */
 __STATIC_INLINE void LL_PWR_SMPS_SetOutputVoltageLevel(uint32_t OutputVoltageLevel)
 {
-  register __IO const uint32_t OutputVoltageLevel_calibration = (((*SMPS_VOLTAGE_CAL_ADDR) & SMPS_VOLTAGE_CAL) >> SMPS_VOLTAGE_CAL_POS);  /* SMPS output voltage level calibrated in production */
-  register int32_t TrimmingSteps;                               /* Trimming steps between theorical output voltage and calibrated output voltage */
-  register int32_t OutputVoltageLevelTrimmed;                   /* SMPS output voltage level after calibration: trimming value added to required level */
+  __IO const uint32_t OutputVoltageLevel_calibration = (((*SMPS_VOLTAGE_CAL_ADDR) & SMPS_VOLTAGE_CAL) >> SMPS_VOLTAGE_CAL_POS);  /* SMPS output voltage level calibrated in production */
+  int32_t TrimmingSteps;                               /* Trimming steps between theoretical output voltage and calibrated output voltage */
+  int32_t OutputVoltageLevelTrimmed;                   /* SMPS output voltage level after calibration: trimming value added to required level */
 
-  if(OutputVoltageLevel_calibration == 0UL)
+  if (OutputVoltageLevel_calibration == 0UL)
   {
     /* Device with SMPS output voltage not calibrated in production: Apply output voltage value directly */
-    
+
     /* Update register */
     MODIFY_REG(PWR->CR5, PWR_CR5_SMPSVOS, OutputVoltageLevel);
   }
@@ -1505,13 +1521,13 @@ __STATIC_INLINE void LL_PWR_SMPS_SetOutputVoltageLevel(uint32_t OutputVoltageLev
     OutputVoltageLevelTrimmed = ((int32_t)((uint32_t)(OutputVoltageLevel >> PWR_CR5_SMPSVOS_Pos)) + (int32_t)TrimmingSteps);
 
     /* Clamp value to voltage trimming bitfield range */
-    if(OutputVoltageLevelTrimmed < 0)
+    if (OutputVoltageLevelTrimmed < 0)
     {
       OutputVoltageLevelTrimmed = 0;
     }
     else
     {
-      if(OutputVoltageLevelTrimmed > (int32_t)PWR_CR5_SMPSVOS)
+      if (OutputVoltageLevelTrimmed > (int32_t)PWR_CR5_SMPSVOS)
       {
         OutputVoltageLevelTrimmed = (int32_t)PWR_CR5_SMPSVOS;
       }
@@ -1547,32 +1563,32 @@ __STATIC_INLINE void LL_PWR_SMPS_SetOutputVoltageLevel(uint32_t OutputVoltageLev
   */
 __STATIC_INLINE uint32_t LL_PWR_SMPS_GetOutputVoltageLevel(void)
 {
-  register __IO const uint32_t OutputVoltageLevel_calibration = (((*SMPS_VOLTAGE_CAL_ADDR) & SMPS_VOLTAGE_CAL) >> SMPS_VOLTAGE_CAL_POS);  /* SMPS output voltage level calibrated in production */
-  register int32_t TrimmingSteps;                               /* Trimming steps between theorical output voltage and calibrated output voltage */
-  register int32_t OutputVoltageLevelTrimmed;                   /* SMPS output voltage level after calibration: trimming value added to required level */
+  __IO const uint32_t OutputVoltageLevel_calibration = (((*SMPS_VOLTAGE_CAL_ADDR) & SMPS_VOLTAGE_CAL) >> SMPS_VOLTAGE_CAL_POS);  /* SMPS output voltage level calibrated in production */
+  int32_t TrimmingSteps;                               /* Trimming steps between theoretical output voltage and calibrated output voltage */
+  int32_t OutputVoltageLevelTrimmed;                   /* SMPS output voltage level after calibration: trimming value added to required level */
 
-  if(OutputVoltageLevel_calibration == 0UL)
+  if (OutputVoltageLevel_calibration == 0UL)
   {
     /* Device with SMPS output voltage not calibrated in production: Return output voltage value directly */
-    
+
     return (uint32_t)(READ_BIT(PWR->CR5, PWR_CR5_SMPSVOS));
   }
   else
   {
     /* Device with SMPS output voltage calibrated in production: Return output voltage value after correction by calibration value */
 
-    TrimmingSteps = ((int32_t)OutputVoltageLevel_calibration - (int32_t)(LL_PWR_SMPS_OUTPUT_VOLTAGE_1V50 >> PWR_CR5_SMPSVOS_Pos)); /* Trimming steps between theorical output voltage and calibrated output voltage */
+    TrimmingSteps = ((int32_t)OutputVoltageLevel_calibration - (int32_t)(LL_PWR_SMPS_OUTPUT_VOLTAGE_1V50 >> PWR_CR5_SMPSVOS_Pos)); /* Trimming steps between theoretical output voltage and calibrated output voltage */
 
     OutputVoltageLevelTrimmed = ((int32_t)((uint32_t)READ_BIT(PWR->CR5, PWR_CR5_SMPSVOS)) - TrimmingSteps);
 
     /* Clamp value to voltage range */
-    if(OutputVoltageLevelTrimmed < 0)
+    if (OutputVoltageLevelTrimmed < 0)
     {
       OutputVoltageLevelTrimmed = (int32_t)LL_PWR_SMPS_OUTPUT_VOLTAGE_1V20;
     }
     else
     {
-      if(OutputVoltageLevelTrimmed > (int32_t)PWR_CR5_SMPSVOS)
+      if (OutputVoltageLevelTrimmed > (int32_t)PWR_CR5_SMPSVOS)
       {
         OutputVoltageLevelTrimmed = (int32_t)LL_PWR_SMPS_OUTPUT_VOLTAGE_1V90;
       }
@@ -1585,7 +1601,7 @@ __STATIC_INLINE uint32_t LL_PWR_SMPS_GetOutputVoltageLevel(void)
 /**
   * @}
   */
-#endif
+#endif /* PWR_CR5_SMPSEN */
 
 /** @defgroup PWR_LL_EF_Configuration_Multicore Configuration of multicore, intended to be executed by CPU1
   * @{
@@ -1637,9 +1653,11 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledBootC2(void)
   * @param  LowPowerMode This parameter can be one of the following values:
   *         @arg @ref LL_PWR_MODE_STOP0
   *         @arg @ref LL_PWR_MODE_STOP1
-  *         @arg @ref LL_PWR_MODE_STOP2
+  *         @arg @ref LL_PWR_MODE_STOP2 (*)
   *         @arg @ref LL_PWR_MODE_STANDBY
   *         @arg @ref LL_PWR_MODE_SHUTDOWN
+  *
+  *         (*) Not available on devices STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   * @retval None
   */
 __STATIC_INLINE void LL_C2_PWR_SetPowerMode(uint32_t LowPowerMode)
@@ -1653,9 +1671,11 @@ __STATIC_INLINE void LL_C2_PWR_SetPowerMode(uint32_t LowPowerMode)
   * @retval Returned value can be one of the following values:
   *         @arg @ref LL_PWR_MODE_STOP0
   *         @arg @ref LL_PWR_MODE_STOP1
-  *         @arg @ref LL_PWR_MODE_STOP2
+  *         @arg @ref LL_PWR_MODE_STOP2 (*)
   *         @arg @ref LL_PWR_MODE_STANDBY
   *         @arg @ref LL_PWR_MODE_SHUTDOWN
+  *
+  *         (*) Not available on devices STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   */
 __STATIC_INLINE uint32_t LL_C2_PWR_GetPowerMode(void)
 {
@@ -1673,8 +1693,8 @@ __STATIC_INLINE uint32_t LL_C2_PWR_GetPowerMode(void)
 __STATIC_INLINE void LL_C2_PWR_SetFlashPowerModeLPRun(uint32_t FlashLowPowerMode)
 {
   /* Unlock bit FPDR */
-  WRITE_REG(PWR->C2CR1, 0x0000C1B0U);
-  
+  WRITE_REG(PWR->C2CR1, 0x0000C1B0UL);
+
   /* Update bit FPDR */
   MODIFY_REG(PWR->C2CR1, PWR_C2CR1_FPDR, FlashLowPowerMode);
 }
@@ -1761,7 +1781,7 @@ __STATIC_INLINE uint32_t LL_C2_PWR_IsEnabledInternWU(void)
   *         @arg @ref LL_PWR_WAKEUP_PIN4
   *         @arg @ref LL_PWR_WAKEUP_PIN5 (*)
   *
-  *         (*) Not available on devices STM32WB50xx
+  *         (*) Not available on devices STM32WB50xx, STM32WB35xx, STM32WB30xx, STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   * @retval None
   */
 __STATIC_INLINE void LL_C2_PWR_EnableWakeUpPin(uint32_t WakeUpPin)
@@ -1783,7 +1803,7 @@ __STATIC_INLINE void LL_C2_PWR_EnableWakeUpPin(uint32_t WakeUpPin)
   *         @arg @ref LL_PWR_WAKEUP_PIN4
   *         @arg @ref LL_PWR_WAKEUP_PIN5 (*)
   *
-  *         (*) Not available on devices STM32WB50xx
+  *         (*) Not available on devices STM32WB50xx, STM32WB35xx, STM32WB30xx, STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   * @retval None
   */
 __STATIC_INLINE void LL_C2_PWR_DisableWakeUpPin(uint32_t WakeUpPin)
@@ -1805,7 +1825,7 @@ __STATIC_INLINE void LL_C2_PWR_DisableWakeUpPin(uint32_t WakeUpPin)
   *         @arg @ref LL_PWR_WAKEUP_PIN4
   *         @arg @ref LL_PWR_WAKEUP_PIN5 (*)
   *
-  *         (*) Not available on devices STM32WB50xx
+  *         (*) Not available on devices STM32WB50xx, STM32WB35xx, STM32WB30xx, STM32WB15xx, STM32WB10xx, STM32WB1Mxx
   * @retval None
   */
 __STATIC_INLINE uint32_t LL_C2_PWR_IsEnabledWakeUpPin(uint32_t WakeUpPin)
@@ -1874,6 +1894,7 @@ __STATIC_INLINE uint32_t LL_C2_PWR_IsWokenUp_BLE(void)
   return ((READ_BIT(PWR->C2CR1, PWR_C2CR1_BLEEWKUP) == (PWR_C2CR1_BLEEWKUP)) ? 1UL : 0UL);
 }
 
+#if defined(PWR_CR3_E802A)
 /**
   * @brief  Wakeup 802.15.4 controller from its sleep mode
   * @note   This bit is automatically reset when 802.15.4 controller
@@ -1896,6 +1917,7 @@ __STATIC_INLINE uint32_t LL_C2_PWR_IsWokenUp_802_15_4(void)
 {
   return ((READ_BIT(PWR->C2CR1, PWR_C2CR1_802EWKUP) == (PWR_C2CR1_802EWKUP)) ? 1UL : 0UL);
 }
+#endif /* PWR_CR3_E802A */
 
 /**
   * @}
@@ -1925,7 +1947,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU5(void)
 {
   return ((READ_BIT(PWR->SR1, PWR_SR1_WUF5) == (PWR_SR1_WUF5)) ? 1UL : 0UL);
 }
-#endif
+#endif /* PWR_CR3_EWUP5 */
 
 /**
   * @brief  Get Wake-up Flag 4
@@ -1947,7 +1969,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU3(void)
 {
   return ((READ_BIT(PWR->SR1, PWR_SR1_WUF3) == (PWR_SR1_WUF3)) ? 1UL : 0UL);
 }
-#endif
+#endif /* PWR_CR3_EWUP3 */
 
 #if defined(PWR_CR3_EWUP2)
 /**
@@ -1959,7 +1981,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_WU2(void)
 {
   return ((READ_BIT(PWR->SR1, PWR_SR1_WUF2) == (PWR_SR1_WUF2)) ? 1UL : 0UL);
 }
-#endif
+#endif /* PWR_CR3_EWUP2 */
 
 /**
   * @brief  Get Wake-up Flag 1
@@ -1991,7 +2013,7 @@ __STATIC_INLINE void LL_PWR_ClearFlag_WU5(void)
 {
   WRITE_REG(PWR->SCR, PWR_SCR_CWUF5);
 }
-#endif
+#endif /* PWR_CR3_EWUP5 */
 
 /**
   * @brief  Clear Wake-up Flag 4
@@ -2013,7 +2035,7 @@ __STATIC_INLINE void LL_PWR_ClearFlag_WU3(void)
 {
   WRITE_REG(PWR->SCR, PWR_SCR_CWUF3);
 }
-#endif
+#endif /* PWR_CR3_EWUP3 */
 
 #if defined(PWR_CR3_EWUP2)
 /**
@@ -2025,7 +2047,7 @@ __STATIC_INLINE void LL_PWR_ClearFlag_WU2(void)
 {
   WRITE_REG(PWR->SCR, PWR_SCR_CWUF2);
 }
-#endif
+#endif /* PWR_CR3_EWUP2 */
 
 /**
   * @brief  Clear Wake-up Flag 1
@@ -2058,7 +2080,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_PVMO1(void)
 {
   return ((READ_BIT(PWR->SR2, PWR_SR2_PVMO1) == (PWR_SR2_PVMO1)) ? 1UL : 0UL);
 }
-#endif
+#endif /* PWR_CR2_PVME1 */
 
 /**
   * @brief  Indicate whether VDD voltage is below or above the selected PVD threshold
@@ -2080,7 +2102,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_VOS(void)
 {
   return ((READ_BIT(PWR->SR2, PWR_SR2_VOSF) == (PWR_SR2_VOSF)) ? 1UL : 0UL);
 }
-#endif
+#endif /* PWR_CR1_VOS */
 
 /**
   * @brief  Indicate whether the regulator is ready in main mode or is in low-power mode
@@ -2163,7 +2185,7 @@ __STATIC_INLINE void LL_PWR_ClearFlag_SMPSFB(void)
 /**
   * @}
   */
-#endif
+#endif /* PWR_CR5_SMPSEN */
 
 /** @defgroup PWR_LL_EF_FLAG_Management_Radio FLAG management for radio (BLE or 802.15.4)
   * @{
@@ -2179,6 +2201,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_BLEWU(void)
   return ((READ_BIT(PWR->SR1, PWR_SR1_BLEWUF) == (PWR_SR1_BLEWUF)) ? 1UL : 0UL);
 }
 
+#if defined(PWR_CR3_E802A)
 /**
   * @brief  Get 802.15.4 wakeup interrupt flag
   * @rmtoll SR1          802WUF        LL_PWR_IsActiveFlag_802WU
@@ -2188,6 +2211,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_802WU(void)
 {
   return ((READ_BIT(PWR->SR1, PWR_SR1_802WUF) == (PWR_SR1_802WUF)) ? 1UL : 0UL);
 }
+#endif /* PWR_CR3_E802A */
 
 /**
   * @brief  Get BLE end of activity interrupt flag
@@ -2199,6 +2223,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_BLEA(void)
   return ((READ_BIT(PWR->SR1, PWR_SR1_BLEAF) == (PWR_SR1_BLEAF)) ? 1UL : 0UL);
 }
 
+#if defined(PWR_CR3_E802A)
 /**
   * @brief  Get 802.15.4 end of activity interrupt flag
   * @rmtoll SR1          802AF         LL_PWR_IsActiveFlag_802A
@@ -2208,6 +2233,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsActiveFlag_802A(void)
 {
   return ((READ_BIT(PWR->SR1, PWR_SR1_802AF) == (PWR_SR1_802AF)) ? 1UL : 0UL);
 }
+#endif /* PWR_CR3_E802A */
 
 /**
   * @brief  Get critical radio phase end of activity interrupt flag
@@ -2239,6 +2265,7 @@ __STATIC_INLINE void LL_PWR_ClearFlag_BLEWU(void)
   WRITE_REG(PWR->SCR, PWR_SCR_CBLEWUF);
 }
 
+#if defined(PWR_CR3_E802A)
 /**
   * @brief  Clear 802.15.4 wakeup interrupt flag
   * @rmtoll SCR          802WU         LL_PWR_ClearFlag_802WU
@@ -2248,6 +2275,7 @@ __STATIC_INLINE void LL_PWR_ClearFlag_802WU(void)
 {
   WRITE_REG(PWR->SCR, PWR_SCR_C802WUF);
 }
+#endif /* PWR_CR3_E802A */
 
 /**
   * @brief  Clear BLE end of activity interrupt flag
@@ -2259,6 +2287,7 @@ __STATIC_INLINE void LL_PWR_ClearFlag_BLEA(void)
   WRITE_REG(PWR->SCR, PWR_SCR_CBLEAF);
 }
 
+#if defined(PWR_CR3_E802A)
 /**
   * @brief  Clear 802.15.4 end of activity interrupt flag
   * @rmtoll SCR          802AF         LL_PWR_ClearFlag_802A
@@ -2268,6 +2297,7 @@ __STATIC_INLINE void LL_PWR_ClearFlag_802A(void)
 {
   WRITE_REG(PWR->SCR, PWR_SCR_C802AF);
 }
+#endif /* PWR_CR3_E802A */
 
 /**
   * @brief  Clear critical radio phase end of activity interrupt flag
@@ -2445,7 +2475,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledIT_BORH_SMPSFB(void)
 /**
   * @}
   */
-#endif
+#endif /* PWR_CR5_SMPSEN */
 
 /** @defgroup PWR_LL_EF_IT_Management_Radio PWR IT management for radio (BLE or 802.15.4)
   * @{
@@ -2461,6 +2491,7 @@ __STATIC_INLINE void LL_PWR_EnableIT_BLEA(void)
   SET_BIT(PWR->CR3, PWR_CR3_EBLEA);
 }
 
+#if defined(PWR_CR3_E802A)
 /**
   * @brief  Enable 802.15.4 end of activity interrupt for CPU1
   * @rmtoll CR3          E802A         LL_PWR_EnableIT_802A
@@ -2470,7 +2501,7 @@ __STATIC_INLINE void LL_PWR_EnableIT_802A(void)
 {
   SET_BIT(PWR->CR3, PWR_CR3_E802A);
 }
-
+#endif /* PWR_CR3_E802A */
 
 /**
   * @brief  Disable BLE end of activity interrupt for CPU1
@@ -2482,6 +2513,7 @@ __STATIC_INLINE void LL_PWR_DisableIT_BLEA(void)
   CLEAR_BIT(PWR->CR3, PWR_CR3_EBLEA);
 }
 
+#if defined(PWR_CR3_E802A)
 /**
   * @brief  Disable 802.15.4 end of activity interrupt for CPU1
   * @rmtoll CR3          E802A         LL_PWR_DisableIT_802A
@@ -2491,6 +2523,7 @@ __STATIC_INLINE void LL_PWR_DisableIT_802A(void)
 {
   CLEAR_BIT(PWR->CR3, PWR_CR3_E802A);
 }
+#endif /* PWR_CR3_E802A */
 
 /**
   * @brief  Check if BLE end of activity interrupt is enabled for CPU1
@@ -2502,6 +2535,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledIT_BLEA(void)
   return ((READ_BIT(PWR->CR3, PWR_CR3_EBLEA) == (PWR_CR3_EBLEA)) ? 1UL : 0UL);
 }
 
+#if defined(PWR_CR3_E802A)
 /**
   * @brief  Check if 802.15.4 end of activity interrupt is enabled for CPU1
   * @rmtoll CR3          E802A         LL_PWR_IsEnabledIT_802A
@@ -2511,6 +2545,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledIT_802A(void)
 {
   return ((READ_BIT(PWR->CR3, PWR_CR3_E802A) == (PWR_CR3_E802A)) ? 1UL : 0UL);
 }
+#endif /* PWR_CR3_E802A */
 
 /**
   * @brief  Enable critical radio phase end of activity interrupt for CPU1
@@ -2598,6 +2633,7 @@ __STATIC_INLINE void LL_C2_PWR_EnableIT_BLEWU(void)
   SET_BIT(PWR->C2CR3, PWR_C2CR3_EBLEWUP);
 }
 
+#if defined(PWR_CR3_E802A)
 /**
   * @brief  Enable 802.15.4 host wakeup interrupt for CPU2
   * @rmtoll C2CR3        E802WUP       LL_C2_PWR_EnableIT_802WU
@@ -2607,6 +2643,7 @@ __STATIC_INLINE void LL_C2_PWR_EnableIT_802WU(void)
 {
   SET_BIT(PWR->C2CR3, PWR_C2CR3_E802WUP);
 }
+#endif /* PWR_CR3_E802A */
 
 /**
   * @brief  Disable BLE host wakeup interrupt for CPU2
@@ -2618,6 +2655,7 @@ __STATIC_INLINE void LL_C2_PWR_DisableIT_BLEWU(void)
   CLEAR_BIT(PWR->C2CR3, PWR_C2CR3_EBLEWUP);
 }
 
+#if defined(PWR_CR3_E802A)
 /**
   * @brief  Disable 802.15.4 host wakeup interrupt for CPU2
   * @rmtoll C2CR3        E802WUP       LL_C2_PWR_DisableIT_802WU
@@ -2627,6 +2665,7 @@ __STATIC_INLINE void LL_C2_PWR_DisableIT_802WU(void)
 {
   CLEAR_BIT(PWR->C2CR3, PWR_C2CR3_E802WUP);
 }
+#endif /* PWR_CR3_E802A */
 
 /**
   * @brief  Check if BLE host wakeup interrupt is enabled for CPU2
@@ -2638,6 +2677,7 @@ __STATIC_INLINE uint32_t LL_C2_PWR_IsEnabledIT_BLEWU(void)
   return ((READ_BIT(PWR->C2CR3, PWR_C2CR3_EBLEWUP) == (PWR_C2CR3_EBLEWUP)) ? 1UL : 0UL);
 }
 
+#if defined(PWR_CR3_E802A)
 /**
   * @brief  Check if 802.15.4 host wakeup interrupt is enabled for CPU2
   * @rmtoll C2CR3        E802WUP       LL_C2_PWR_IsEnabledIT_802WU
@@ -2647,6 +2687,7 @@ __STATIC_INLINE uint32_t LL_C2_PWR_IsEnabledIT_802WU(void)
 {
   return ((READ_BIT(PWR->C2CR3, PWR_C2CR3_E802WUP) == (PWR_C2CR3_E802WUP)) ? 1UL : 0UL);
 }
+#endif /* PWR_CR3_E802A */
 
 /**
   * @}
@@ -2670,7 +2711,7 @@ ErrorStatus LL_PWR_DeInit(void);
   * @}
   */
 
-#endif /* defined(PWR) */
+#endif /* PWR */
 
 /**
   * @}
@@ -2682,4 +2723,3 @@ ErrorStatus LL_PWR_DeInit(void);
 
 #endif /* STM32WBxx_LL_PWR_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

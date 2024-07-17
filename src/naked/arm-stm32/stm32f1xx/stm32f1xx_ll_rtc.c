@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -245,7 +244,7 @@ ErrorStatus LL_RTC_TIME_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Time
   if (LL_RTC_EnterInitMode(RTCx) != ERROR)
   {
     /* Check the input parameters format */
-    if (RTC_Format != LL_RTC_FORMAT_BIN)
+    if (RTC_Format == LL_RTC_FORMAT_BIN)
     {
       counter_time = (uint32_t)(((uint32_t)RTC_TimeStruct->Hours * 3600U) + \
                                 ((uint32_t)RTC_TimeStruct->Minutes * 60U) + \
@@ -319,7 +318,7 @@ ErrorStatus LL_RTC_ALARM_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Ala
   if (LL_RTC_EnterInitMode(RTCx) != ERROR)
   {
     /* Check the input parameters format */
-    if (RTC_Format != LL_RTC_FORMAT_BIN)
+    if (RTC_Format == LL_RTC_FORMAT_BIN)
     {
       counter_alarm = (uint32_t)(((uint32_t)RTC_AlarmStruct->AlarmTime.Hours * 3600U) + \
                                  ((uint32_t)RTC_AlarmStruct->AlarmTime.Minutes * 60U) + \
@@ -540,5 +539,3 @@ ErrorStatus LL_RTC_WaitForSynchro(RTC_TypeDef *RTCx)
   */
 
 #endif /* USE_FULL_LL_DRIVER */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -58,7 +57,7 @@ struct __ADC_HandleTypeDef;
   *          - For all parameters except 'LowPowerAutoWait' and 'DMAContinuousRequests': ADC enabled without conversion on going on regular group.
   *          - For parameters 'LowPowerAutoWait' and 'DMAContinuousRequests': ADC enabled without conversion on going on regular and injected groups.
   *         If ADC is not in the appropriate state to modify some parameters, these parameters setting is bypassed
-  *         without error reporting (as it can be the expected behaviour in case of intended action to update another parameter (which fullfills the ADC state condition) on the fly).
+  *         without error reporting (as it can be the expected behaviour in case of intended action to update another parameter (which fulfills the ADC state condition) on the fly).
   */
 typedef struct
 {
@@ -88,8 +87,9 @@ typedef struct
                                                  New conversion starts only when the previous conversion (for regular group) or previous sequence (for injected group) has been treated by user software.
                                                  This feature automatically adapts the speed of ADC to the speed of the system that reads the data. Moreover, this avoids risk of overrun for low frequency applications. 
                                                  This parameter can be set to ENABLE or DISABLE.
-                                                 Note: Do not use with interruption or DMA (HAL_ADC_Start_IT(), HAL_ADC_Start_DMA()) since they have to clear immediately the EOC flag to free the IRQ vector sequencer.
-                                                       Do use with polling: 1. Start conversion with HAL_ADC_Start(), 2. Later on, when conversion data is needed: use HAL_ADC_PollForConversion() to ensure that conversion is completed
+                                                 Note: It is not recommended to use with interruption or DMA (HAL_ADC_Start_IT(), HAL_ADC_Start_DMA()) since these modes have to clear immediately the EOC flag (by CPU to free the IRQ pending event or by DMA).
+                                                       Auto wait will work but fort a very short time, discarding its intended benefit (except specific case of high load of CPU or DMA transfers which can justify usage of auto wait).
+                                                       Do use with polling: 1. Start conversion with HAL_ADC_Start(), 2. Later on, when ADC conversion data is needed:
                                                        and use HAL_ADC_GetValue() to retrieve conversion result and trig another conversion (in case of usage of injected group, use the equivalent functions HAL_ADCExInjected_Start(), HAL_ADCEx_InjectedGetValue(), ...). */
   FunctionalState  ContinuousConvMode;      /*!< Specifies whether the conversion is performed in single mode (one conversion) or continuous mode for regular group,
                                                  after the selected trigger occurred (software start or external trigger).
@@ -690,7 +690,7 @@ typedef struct
 #if defined(STM32F302xE)
 /* ADC external triggers specific to device STM302xE: mask to differentiate   */
 /* standard triggers from specific timer 20U, needed for reallocation of       */
-/* triggers common to ADC1&2 and to avoind mixing with standard               */
+/* triggers common to ADC1&2 and to avoid mixing with standard               */
 /* triggers without remap.                                                    */
 #define ADC_EXTERNALTRIGCONV_T20_MASK       0x1000
 
@@ -765,6 +765,7 @@ typedef struct
 #define ADC_EXTERNALTRIGCONV_T1_CC1         ADC1_EXTERNALTRIG_T1_CC1
 #define ADC_EXTERNALTRIGCONV_T1_CC2         ADC1_EXTERNALTRIG_T1_CC2
 #define ADC_EXTERNALTRIGCONV_T1_CC3         ADC1_EXTERNALTRIG_T1_CC3
+#define ADC_EXTERNALTRIGCONV_T2_CC2         ADC1_EXTERNALTRIG_T2_CC2
 #define ADC_EXTERNALTRIGCONV_EXT_IT11       ADC1_EXTERNALTRIG_EXT_IT11
 #define ADC_EXTERNALTRIGCONV_T1_TRGO        ADC1_EXTERNALTRIG_T1_TRGO
 #define ADC_EXTERNALTRIGCONV_T1_TRGO2       ADC1_EXTERNALTRIG_T1_TRGO2
@@ -1633,6 +1634,7 @@ typedef struct
 #define ADC1_EXTERNALTRIG_T1_CC1           (0x00000000U)
 #define ADC1_EXTERNALTRIG_T1_CC2           ((uint32_t)ADC_CFGR_EXTSEL_0)
 #define ADC1_EXTERNALTRIG_T1_CC3           ((uint32_t)ADC_CFGR_EXTSEL_1)
+#define ADC1_EXTERNALTRIG_T2_CC2           ((uint32_t)(ADC_CFGR_EXTSEL_1 | ADC_CFGR_EXTSEL_0))
 #define ADC1_EXTERNALTRIG_EXT_IT11         ((uint32_t)(ADC_CFGR_EXTSEL_2 | ADC_CFGR_EXTSEL_1))
 #define ADC1_EXTERNALTRIG_T1_TRGO          ((uint32_t)(ADC_CFGR_EXTSEL_3 | ADC_CFGR_EXTSEL_0))
 #define ADC1_EXTERNALTRIG_T1_TRGO2         ((uint32_t)(ADC_CFGR_EXTSEL_3 | ADC_CFGR_EXTSEL_1))
@@ -3203,6 +3205,7 @@ typedef struct
 #define IS_ADC_EXTTRIG(REGTRIG) (((REGTRIG) == ADC_EXTERNALTRIGCONV_T1_CC1)   || \
                                  ((REGTRIG) == ADC_EXTERNALTRIGCONV_T1_CC2)   || \
                                  ((REGTRIG) == ADC_EXTERNALTRIGCONV_T1_CC3)   || \
+                                 ((REGTRIG) == ADC_EXTERNALTRIGCONV_T2_CC2)   || \
                                  ((REGTRIG) == ADC_EXTERNALTRIGCONV_EXT_IT11) || \
                                  ((REGTRIG) == ADC_EXTERNALTRIGCONV_T1_TRGO)  || \
                                  ((REGTRIG) == ADC_EXTERNALTRIGCONV_T1_TRGO2) || \
@@ -3960,4 +3963,3 @@ HAL_StatusTypeDef       HAL_ADCEx_MultiModeConfigChannel(struct __ADC_HandleType
 #endif /*__STM32F3xx_ADC_H */
 
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

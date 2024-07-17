@@ -49,14 +49,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright(c) 2017 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2017 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
+  * This software is licensed under terms that can be found in the LICENSE file in
+  * the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   ******************************************************************************
   */
 
@@ -160,14 +158,14 @@ static HAL_StatusTypeDef RCC_SetFlashLatencyFromMSIRange(uint32_t MSIrange);
           on AHB bus (DMA, GPIO...). APB1 (PCLK1) and APB2 (PCLK2) clocks are derived
           from AHB clock through configurable prescalers and used to clock
           the peripherals mapped on these buses. You can use
-          "@ref HAL_RCC_GetSysClockFreq()" function to retrieve the frequencies of these clocks.
+          "HAL_RCC_GetSysClockFreq()" function to retrieve the frequencies of these clocks.
 
       -@- All the peripheral clocks are derived from the System clock (SYSCLK) except:
           (+@) RTC: RTC clock can be derived either from the LSI, LSE or HSE clock
-              divided by 2 to 16. You have to use @ref __HAL_RCC_RTC_CONFIG() and @ref __HAL_RCC_RTC_ENABLE()
+              divided by 2 to 16. You have to use __HAL_RCC_RTC_CONFIG() and __HAL_RCC_RTC_ENABLE()
               macros to configure this clock.
           (+@) LCD: LCD clock can be derived either from the LSI, LSE or HSE clock
-              divided by 2 to 16. You have to use @ref __HAL_RCC_LCD_CONFIG()
+              divided by 2 to 16. You have to use __HAL_RCC_LCD_CONFIG()
               macros to configure this clock.
           (+@) USB OTG FS: USB OTG FS require a frequency equal to 48 MHz
               to work correctly. This clock is derived of the main PLL through PLL Multiplier.
@@ -458,7 +456,7 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
   if(((RCC_OscInitStruct->OscillatorType) & RCC_OSCILLATORTYPE_MSI) == RCC_OSCILLATORTYPE_MSI)
   {
     /* When the MSI is used as system clock it will not be disabled */
-    if((sysclk_source == RCC_CFGR_SWS_MSI) )
+    if(sysclk_source == RCC_CFGR_SWS_MSI)
     {
       if((__HAL_RCC_GET_FLAG(RCC_FLAG_MSIRDY) != 0U) && (RCC_OscInitStruct->MSIState == RCC_MSI_OFF))
       {
@@ -1106,12 +1104,12 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
       if (__HAL_RCC_GET_PLL_OSCSOURCE() != RCC_PLLSOURCE_HSI)
       {
         /* HSE used as PLL clock source */
-        pllvco = (HSE_VALUE * pllm) / plld;
+        pllvco = (uint32_t)(((uint64_t)HSE_VALUE * (uint64_t)pllm) / (uint64_t)plld);
       }
       else
       {
         /* HSI used as PLL clock source */
-        pllvco = (HSI_VALUE * pllm) / plld;
+        pllvco = (uint32_t)(((uint64_t)HSI_VALUE * (uint64_t)pllm) / (uint64_t)plld);
       }
       sysclockfreq = pllvco;
       break;
@@ -1391,4 +1389,3 @@ static HAL_StatusTypeDef RCC_SetFlashLatencyFromMSIRange(uint32_t MSIrange)
   * @}
   */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

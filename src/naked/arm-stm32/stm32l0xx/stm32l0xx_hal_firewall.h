@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright(c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -90,8 +89,8 @@ typedef struct
 /** @defgroup FIREWALL_VolatileData_Executable   FIREWALL volatile data segment execution status
   * @{
   */
-#define FIREWALL_VOLATILEDATA_NOT_EXECUTABLE                 ((uint32_t)0x0000U)
-#define FIREWALL_VOLATILEDATA_EXECUTABLE                     ((uint32_t)FW_CR_VDE)
+#define FIREWALL_VOLATILEDATA_NOT_EXECUTABLE                 (0x0000U)
+#define FIREWALL_VOLATILEDATA_EXECUTABLE                     FW_CR_VDE
 /**
   * @}
   */
@@ -99,8 +98,8 @@ typedef struct
 /** @defgroup FIREWALL_VolatileData_Shared  FIREWALL volatile data segment share status
   * @{
   */
-#define FIREWALL_VOLATILEDATA_NOT_SHARED                ((uint32_t)0x0000U)
-#define FIREWALL_VOLATILEDATA_SHARED                    ((uint32_t)FW_CR_VDS)
+#define FIREWALL_VOLATILEDATA_NOT_SHARED                (0x0000U)
+#define FIREWALL_VOLATILEDATA_SHARED                    FW_CR_VDS
 /**
   * @}
   */
@@ -108,8 +107,8 @@ typedef struct
 /** @defgroup FIREWALL_Pre_Arm FIREWALL pre arm status
   * @{
   */
-#define FIREWALL_PRE_ARM_RESET                 ((uint32_t)0x0000U)
-#define FIREWALL_PRE_ARM_SET                   ((uint32_t)FW_CR_FPA)
+#define FIREWALL_PRE_ARM_RESET                 (0x0000U)
+#define FIREWALL_PRE_ARM_SET                   FW_CR_FPA
 
 /**
   * @}
@@ -364,5 +363,3 @@ void HAL_FIREWALL_DisablePreArmFlag(void);
 #endif
 
 #endif /* __STM32L0xx_HAL_FIREWALL_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

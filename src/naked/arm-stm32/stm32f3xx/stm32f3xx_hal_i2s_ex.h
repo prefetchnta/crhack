@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -111,6 +110,16 @@ extern "C" {
                                                    tmpreg_udr = I2SxEXT((__HANDLE__)->Instance)->SR;\
                                                    UNUSED(tmpreg_udr);                              \
                                                   }while(0U)
+/** @brief Flush the I2S and I2SExt DR Registers.
+  * @param  __HANDLE__ specifies the I2S Handle.
+  * @retval None
+  */
+#define __HAL_I2SEXT_FLUSH_RX_DR(__HANDLE__) do{                                                    \
+                                                   __IO uint32_t tmpreg_dr = 0x00U;                 \
+                                                   tmpreg_dr = I2SxEXT((__HANDLE__)->Instance)->DR; \
+                                                   tmpreg_dr = ((__HANDLE__)->Instance->DR);        \
+                                                   UNUSED(tmpreg_dr);                               \
+                                                  }while(0U)
 /**
   * @}
   */
@@ -172,4 +181,3 @@ void HAL_I2SEx_TxRxCpltCallback(I2S_HandleTypeDef *hi2s);
 
 #endif /* STM32F3xx_HAL_I2S_EX_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

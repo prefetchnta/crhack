@@ -7,13 +7,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -140,6 +139,17 @@ typedef enum
   #endif /* __ALIGN_BEGIN */
 #endif /* __GNUC__ */
 
+/* Macro to get variable aligned on 32-bytes,needed for cache maintenance purpose */
+#if defined   (__GNUC__)        /* GNU Compiler */
+#define ALIGN_32BYTES(buf)  buf __attribute__ ((aligned (32)))
+#elif defined (__ICCARM__)    /* IAR Compiler */
+#define ALIGN_32BYTES(buf) _Pragma("data_alignment=32") buf
+#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+#define ALIGN_32BYTES(buf) __ALIGNED(32) buf
+#elif defined   (__CC_ARM)      /* ARM Compiler */
+#define ALIGN_32BYTES(buf) __align(32) buf
+#endif /* __GNUC__ */
+
 /** 
   * @brief  __RAM_FUNC definition
   */
@@ -195,5 +205,3 @@ typedef enum
 #endif
 
 #endif /* STM32MP1xx_HAL_DEF */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

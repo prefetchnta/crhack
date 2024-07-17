@@ -23,14 +23,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright(c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
+  * This software is licensed under terms that can be found in the LICENSE file in
+  * the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   ******************************************************************************
   */
 
@@ -71,7 +69,7 @@ extern "C" {
 /** @defgroup BUS_LL_EC_AHB1_GRP1_PERIPH  AHB1 GRP1 PERIPH
   * @{
   */
-#define LL_AHB1_GRP1_PERIPH_ALL            (uint32_t)0xFFFFFFFFU
+#define LL_AHB1_GRP1_PERIPH_ALL            0xFFFFFFFFU
 #define LL_AHB1_GRP1_PERIPH_DMA1           RCC_AHBENR_DMA1EN      /*!< DMA1 clock enable */
 #define LL_AHB1_GRP1_PERIPH_MIF            RCC_AHBENR_MIFEN       /*!< MIF clock enable */
 #define LL_AHB1_GRP1_PERIPH_SRAM           RCC_AHBSMENR_SRAMSMEN  /*!< Sleep Mode SRAM clock enable */
@@ -93,7 +91,7 @@ extern "C" {
 /** @defgroup BUS_LL_EC_APB1_GRP1_PERIPH  APB1 GRP1 PERIPH
   * @{
   */
-#define LL_APB1_GRP1_PERIPH_ALL            (uint32_t)0xFFFFFFFFU
+#define LL_APB1_GRP1_PERIPH_ALL            0xFFFFFFFFU
 #define LL_APB1_GRP1_PERIPH_TIM2           RCC_APB1ENR_TIM2EN     /*!< TIM2 clock enable */
 #if defined(TIM3)
 #define LL_APB1_GRP1_PERIPH_TIM3           RCC_APB1ENR_TIM3EN     /*!< TIM3 clock enable */
@@ -147,7 +145,7 @@ extern "C" {
 /** @defgroup BUS_LL_EC_APB2_GRP1_PERIPH  APB2 GRP1 PERIPH
   * @{
   */
-#define LL_APB2_GRP1_PERIPH_ALL            (uint32_t)0xFFFFFFFFU
+#define LL_APB2_GRP1_PERIPH_ALL            0xFFFFFFFFU
 #define LL_APB2_GRP1_PERIPH_SYSCFG         RCC_APB2ENR_SYSCFGEN  /*!< SYSCFG clock enable */
 #define LL_APB2_GRP1_PERIPH_TIM21          RCC_APB2ENR_TIM21EN   /*!< TIM21 clock enable */
 #if defined(TIM22)
@@ -170,7 +168,7 @@ extern "C" {
 /** @defgroup BUS_LL_EC_IOP_GRP1_PERIPH  IOP GRP1 PERIPH
   * @{
   */
-#define LL_IOP_GRP1_PERIPH_ALL             (uint32_t)0xFFFFFFFFU
+#define LL_IOP_GRP1_PERIPH_ALL             0xFFFFFFFFU
 #define LL_IOP_GRP1_PERIPH_GPIOA           RCC_IOPENR_GPIOAEN    /*!< GPIO port A control */
 #define LL_IOP_GRP1_PERIPH_GPIOB           RCC_IOPENR_GPIOBEN    /*!< GPIO port B control */
 #define LL_IOP_GRP1_PERIPH_GPIOC           RCC_IOPENR_GPIOCEN    /*!< GPIO port C control */
@@ -1168,4 +1166,3 @@ __STATIC_INLINE void LL_IOP_GRP1_DisableClockSleep(uint32_t Periphs)
 
 #endif /* __STM32L0xx_LL_BUS_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

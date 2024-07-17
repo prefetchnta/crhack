@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -160,8 +159,8 @@ typedef struct
   */
 #define LL_OPAMP_INPUT_NONINVERT_IO0      (OPAMP_CSR_VPSEL)       /*!< OPAMP non inverting input connected to GPIO pin (pin PA1 for OPAMP1, pin PA7  for OPAMP2, pin PB0  for OPAMP3, pin PB13 for OPAMP4) */
 #define LL_OPAMP_INPUT_NONINVERT_IO1      (0x00000000)            /*!< OPAMP non inverting input connected to GPIO pin (pin PA7 for OPAMP1, pin PD14 for OPAMP2, pin PB13 for OPAMP3, pin PD11 for OPAMP4) */
-#define LL_OPAMP_INPUT_NONINVERT_IO2      (OPAMP_CSR_VPSEL_1)     /*!< OPAMP non inverting input connected to GPIO pin (pin PA3 for OPAMP1, pin PB0  for OPAMP2, pin PA1  for OPAMP3, pin PB11 for OPAMP4) */
-#define LL_OPAMP_INPUT_NONINVERT_IO3      (OPAMP_CSR_VPSEL_0)     /*!< OPAMP non inverting input connected to GPIO pin (pin PA5 for OPAMP1, pin PB14 for OPAMP2, pin PA5  for OPAMP3, pin PA4  for OPAMP4) */
+#define LL_OPAMP_INPUT_NONINVERT_IO2      (OPAMP_CSR_VPSEL_1)     /*!< OPAMP non inverting input connected to GPIO pin (pin PA3 for OPAMP1, pin PB0  for OPAMP2, pin PA1  for OPAMP3, pin PA4  for OPAMP4) */
+#define LL_OPAMP_INPUT_NONINVERT_IO3      (OPAMP_CSR_VPSEL_0)     /*!< OPAMP non inverting input connected to GPIO pin (pin PA5 for OPAMP1, pin PB14 for OPAMP2, pin PA5  for OPAMP3, pin PB11 for OPAMP4) */
 #define LL_OPAMP_INPUT_NONINV_DAC1_CH1    (LL_OPAMP_INPUT_NONINVERT_IO3) /*!< OPAMP non inverting input connected to DAC1 channel1 output (specific to OPAMP instances: OPAMP4) */
 #define LL_OPAMP_INPUT_NONINV_DAC1_CH2    (LL_OPAMP_INPUT_NONINVERT_IO3) /*!< OPAMP non inverting input connected to DAC1 channel2 output (specific to OPAMP instances: OPAMP1, OPAMP3) */
 /**
@@ -173,7 +172,7 @@ typedef struct
   */
 #define LL_OPAMP_INPUT_INVERT_IO0        (0x00000000U)           /*!< OPAMP inverting input connected to GPIO pin (pin PC5 for OPAMP1, pin PC5 for OPAMP2, pin PB10  for OPAMP3, pin PB10 for OPAMP4). Note: OPAMP inverting input is used with OPAMP in mode standalone or PGA with external capacitors for filtering circuit. Otherwise (OPAMP in mode follower), OPAMP inverting input is not used (not connected to GPIO pin). */
 #define LL_OPAMP_INPUT_INVERT_IO1        (OPAMP_CSR_VMSEL_0)     /*!< OPAMP inverting input connected to GPIO pin (pin PA3 for OPAMP1, pin PA5 for OPAMP2, pin PB2   for OPAMP3, pin PD8  for OPAMP4). Note: OPAMP inverting input is used with OPAMP in mode standalone or PGA with external capacitors for filtering circuit. Otherwise (OPAMP in mode follower), OPAMP inverting input is not used (not connected to GPIO pin). */
-#define LL_OPAMP_INPUT_INVERT_CONNECT_NO (OPAMP_CSR_VMSEL_1)     /*!< OPAMP inverting input not externally connected (intended for OPAMP in mode follower or PGA without external capacitors for filtering). Note: On this STM32 serie, this literal include cases of value 0x11 for mode follower and value 0x10 for mode PGA. */
+#define LL_OPAMP_INPUT_INVERT_CONNECT_NO (OPAMP_CSR_VMSEL_1)     /*!< OPAMP inverting input not externally connected (intended for OPAMP in mode follower or PGA without external capacitors for filtering). Note: On this STM32 series, this literal include cases of value 0x11 for mode follower and value 0x10 for mode PGA. */
 /**
   * @}
   */
@@ -242,7 +241,7 @@ typedef struct
   */
 
 /** @defgroup OPAMP_LL_EC_HW_DELAYS  Definitions of OPAMP hardware constraints delays
-  * @note   Only OPAMP IP HW delays are defined in OPAMP LL driver driver,
+  * @note   Only OPAMP peripheral HW delays are defined in OPAMP LL driver driver,
   *         not timeout values.
   *         For details on delays values, refer to descriptions in source code
   *         above each literal definition.
@@ -504,7 +503,7 @@ __STATIC_INLINE void LL_OPAMP_SetInputInverting(OPAMP_TypeDef *OPAMPx, uint32_t 
   */
 __STATIC_INLINE uint32_t LL_OPAMP_GetInputInverting(OPAMP_TypeDef *OPAMPx)
 {
-  register uint32_t input_inverting = READ_BIT(OPAMPx->CSR, OPAMP_CSR_VMSEL);
+  uint32_t input_inverting = READ_BIT(OPAMPx->CSR, OPAMP_CSR_VMSEL);
 
   /* Manage cases 0x10 and 0x11 to return the same value: OPAMP inverting     */
   /* input not connected.                                                     */
@@ -689,7 +688,7 @@ __STATIC_INLINE void LL_OPAMP_SetCalibrationSelection(OPAMP_TypeDef *OPAMPx, uin
   */
 __STATIC_INLINE uint32_t LL_OPAMP_GetCalibrationSelection(OPAMP_TypeDef *OPAMPx)
 {
-  register uint32_t CalibrationSelection = (uint32_t)(READ_BIT(OPAMPx->CSR, OPAMP_CSR_CALSEL));
+  uint32_t CalibrationSelection = (uint32_t)(READ_BIT(OPAMPx->CSR, OPAMP_CSR_CALSEL));
 
   return (CalibrationSelection |
           (((CalibrationSelection & OPAMP_CSR_CALSEL) == 0UL) ? OPAMP_CSR_TRIMOFFSETN : OPAMP_CSR_TRIMOFFSETP));
@@ -784,7 +783,7 @@ __STATIC_INLINE uint32_t LL_OPAMP_GetTrimmingValue(OPAMP_TypeDef* OPAMPx, uint32
 /**
   * @brief  Enable OPAMP instance.
   * @note   After enable from off state, OPAMP requires a delay
-  *         to fullfill wake up time specification.
+  *         to fulfill wake up time specification.
   *         Refer to device datasheet, parameter "tWAKEUP".
   * @rmtoll CSR      OPAMPXEN       LL_OPAMP_Enable
   * @param  OPAMPx OPAMP instance
@@ -883,4 +882,3 @@ void        LL_OPAMP_StructInit(LL_OPAMP_InitTypeDef *OPAMP_InitStruct);
 
 #endif /* STM32F3xx_LL_OPAMP_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

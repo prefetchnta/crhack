@@ -11,14 +11,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright(c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
+  * This software is licensed under terms that can be found in the LICENSE file in
+  * the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   ******************************************************************************
   */
 
@@ -98,6 +96,7 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClk
 {
   uint32_t tickstart;
   uint32_t temp_reg;
+  FlagStatus       pwrclkchanged = RESET;
 
   /* Check the parameters */
   assert_param(IS_RCC_PERIPHCLOCK(PeriphClkInit->PeriphClockSelection));
@@ -121,8 +120,6 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClk
       assert_param(IS_RCC_RTCCLKSOURCE(PeriphClkInit->LCDClockSelection));
     }
 #endif /* LCD */
-
-    FlagStatus       pwrclkchanged = RESET;
 
     /* As soon as function is called to change RTC clock source, activation of the
        power domain is done. */
@@ -205,7 +202,17 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClk
         }
       }
     }
-    __HAL_RCC_RTC_CONFIG(PeriphClkInit->RTCClockSelection);
+#if defined(LCD)
+    if(((PeriphClkInit->PeriphClockSelection) & RCC_PERIPHCLK_LCD) == RCC_PERIPHCLK_LCD)
+    {
+      __HAL_RCC_LCD_CONFIG(PeriphClkInit->LCDClockSelection);
+    } 
+#endif /* LCD */
+
+    if(((PeriphClkInit->PeriphClockSelection) & RCC_PERIPHCLK_RTC) == RCC_PERIPHCLK_RTC)
+    {
+      __HAL_RCC_RTC_CONFIG(PeriphClkInit->RTCClockSelection);
+    }
 
     /* Require to disable power clock if necessary */
     if(pwrclkchanged == SET)
@@ -445,7 +452,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
       /* Clock not enabled for RTC */
       else
       {
-        frequency = 0U;
+        /* nothing to do: frequency already initialized to 0U */
       }
       break;
     }
@@ -495,7 +502,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
       }
       else /* RCC_USBCLKSOURCE_NONE */
       {
-          frequency = 0U;
+          /* nothing to do: frequency already initialized to 0U */
       }
       break;
     }
@@ -542,7 +549,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
       /* Clock not enabled for USART1*/
       else
       {
-        frequency = 0U;
+        /* nothing to do: frequency already initialized to 0U */
       }
       break;
     }
@@ -588,7 +595,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
       /* Clock not enabled for USART2*/
       else
       {
-        frequency = 0U;
+        /* nothing to do: frequency already initialized to 0U */
       }
       break;
     }
@@ -633,7 +640,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
       /* Clock not enabled for LPUART1*/
       else
       {
-        frequency = 0U;
+        /* nothing to do: frequency already initialized to 0U */
       }
       break;
     }
@@ -670,7 +677,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
       /* Clock not enabled for I2C1*/
       else
       {
-        frequency = 0U;
+        /* nothing to do: frequency already initialized to 0U */
       }
       break;
     }
@@ -685,7 +692,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
       }
       else
       {
-        frequency = 0U;
+        /* nothing to do: frequency already initialized to 0U */
       }
       break;
     }
@@ -725,7 +732,7 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)
       /* Clock not enabled for I2C3*/
       else
       {
-        frequency = 0U;
+        /* nothing to do: frequency already initialized to 0U */
       }
       break;
     }
@@ -848,7 +855,7 @@ void HAL_RCCEx_DisableHSI48_VREFINT(void)
                 ##### Extended Clock Recovery System Control functions  #####
  ===============================================================================
     [..]
-      For devices with Clock Recovery System feature (CRS), RCC Extention HAL driver can be used as follows:
+      For devices with Clock Recovery System feature (CRS), RCC Extension HAL driver can be used as follows:
 
       (#) In System clock config, HSI48 needs to be enabled
 
@@ -858,9 +865,9 @@ void HAL_RCCEx_DisableHSI48_VREFINT(void)
           (##) Prepare synchronization configuration necessary for HSI48 calibration
               (+++) Default values can be set for frequency Error Measurement (reload and error limit)
                         and also HSI48 oscillator smooth trimming.
-              (+++) Macro @ref __HAL_RCC_CRS_RELOADVALUE_CALCULATE can be also used to calculate
+              (+++) Macro __HAL_RCC_CRS_RELOADVALUE_CALCULATE can be also used to calculate
                         directly reload value with target and synchronization frequencies values
-          (##) Call function @ref HAL_RCCEx_CRSConfig which
+          (##) Call function HAL_RCCEx_CRSConfig which
               (+++) Reset CRS registers to their default values.
               (+++) Configure CRS registers with synchronization configuration
               (+++) Enable automatic calibration and frequency error counter feature
@@ -871,12 +878,12 @@ void HAL_RCCEx_DisableHSI48_VREFINT(void)
            should be used as SYNC signal.
 
           (##) A polling function is provided to wait for complete synchronization
-              (+++) Call function @ref HAL_RCCEx_CRSWaitSynchronization()
+              (+++) Call function HAL_RCCEx_CRSWaitSynchronization()
               (+++) According to CRS status, user can decide to adjust again the calibration or continue
                         application if synchronization is OK
 
       (#) User can retrieve information related to synchronization in calling function
-            @ref HAL_RCCEx_CRSGetSynchronizationInfo()
+            HAL_RCCEx_CRSGetSynchronizationInfo()
 
       (#) Regarding synchronization status and synchronization information, user can try a new calibration
            in changing synchronization configuration and call again HAL_RCCEx_CRSConfig.
@@ -887,18 +894,18 @@ void HAL_RCCEx_DisableHSI48_VREFINT(void)
 
       (#) In interrupt mode, user can resort to the available macros (__HAL_RCC_CRS_XXX_IT). Interrupts will go
           through CRS Handler (RCC_IRQn/RCC_IRQHandler)
-              (++) Call function @ref HAL_RCCEx_CRSConfig()
+              (++) Call function HAL_RCCEx_CRSConfig()
               (++) Enable RCC_IRQn (thanks to NVIC functions)
-              (++) Enable CRS interrupt (@ref __HAL_RCC_CRS_ENABLE_IT)
+              (++) Enable CRS interrupt (__HAL_RCC_CRS_ENABLE_IT)
               (++) Implement CRS status management in the following user callbacks called from
                    HAL_RCCEx_CRS_IRQHandler():
-                   (+++) @ref HAL_RCCEx_CRS_SyncOkCallback()
-                   (+++) @ref HAL_RCCEx_CRS_SyncWarnCallback()
-                   (+++) @ref HAL_RCCEx_CRS_ExpectedSyncCallback()
-                   (+++) @ref HAL_RCCEx_CRS_ErrorCallback()
+                   (+++) HAL_RCCEx_CRS_SyncOkCallback()
+                   (+++) HAL_RCCEx_CRS_SyncWarnCallback()
+                   (+++) HAL_RCCEx_CRS_ExpectedSyncCallback()
+                   (+++) HAL_RCCEx_CRS_ErrorCallback()
 
-      (#) To force a SYNC EVENT, user can use the function @ref HAL_RCCEx_CRSSoftwareSynchronizationGenerate().
-          This function can be called before calling @ref HAL_RCCEx_CRSConfig (for instance in Systick handler)
+      (#) To force a SYNC EVENT, user can use the function HAL_RCCEx_CRSSoftwareSynchronizationGenerate().
+          This function can be called before calling HAL_RCCEx_CRSConfig (for instance in Systick handler)
 
 @endverbatim
  * @{
@@ -1212,4 +1219,3 @@ __weak void HAL_RCCEx_CRS_ErrorCallback(uint32_t Error)
   * @}
   */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

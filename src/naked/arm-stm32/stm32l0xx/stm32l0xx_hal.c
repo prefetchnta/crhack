@@ -5,6 +5,17 @@
   * @brief   HAL module driver.
   *          This is the common part of the HAL initialization
   *
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
   @verbatim
   ==============================================================================
                      ##### How to use this driver #####
@@ -18,17 +29,6 @@
          (+) Services HAL APIs
 
   @endverbatim
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
   ******************************************************************************
   */
 
@@ -59,14 +59,14 @@
  */
 #define __STM32L0xx_HAL_VERSION_MAIN   (0x01U) /*!< [31:24] main version */
 #define __STM32L0xx_HAL_VERSION_SUB1   (0x0AU) /*!< [23:16] sub1 version */
-#define __STM32L0xx_HAL_VERSION_SUB2   (0x02U) /*!< [15:8]  sub2 version */
+#define __STM32L0xx_HAL_VERSION_SUB2   (0x06U) /*!< [15:8]  sub2 version */
 #define __STM32L0xx_HAL_VERSION_RC     (0x00U) /*!< [7:0]  release candidate */
 #define __STM32L0xx_HAL_VERSION         ((__STM32L0xx_HAL_VERSION_MAIN << 24U)\
                                         |(__STM32L0xx_HAL_VERSION_SUB1 << 16U)\
                                         |(__STM32L0xx_HAL_VERSION_SUB2 << 8U )\
                                         |(__STM32L0xx_HAL_VERSION_RC))
 
-#define IDCODE_DEVID_MASK    ((uint32_t)0x00000FFFU)
+#define IDCODE_DEVID_MASK    (0x00000FFFU)
 
 /**
   * @}
@@ -81,6 +81,8 @@
   * @{
   */
 __IO uint32_t uwTick;
+uint32_t uwTickPrio   = (1UL << __NVIC_PRIO_BITS); /* Invalid PRIO */
+HAL_TickFreqTypeDef uwTickFreq = HAL_TICK_FREQ_DEFAULT;  /* 1KHz */
 /**
   * @}
   */
@@ -219,13 +221,13 @@ __weak void HAL_MspDeInit(void)
 
 /**
   * @brief This function configures the source of the time base:
-  *        The time source is configured to have 1ms time base with a dedicated
+  *        The time source is configured  to have 1ms time base with a dedicated 
   *        Tick interrupt priority.
   * @note This function is called  automatically at the beginning of program after
   *       reset by HAL_Init() or at any time when clock is reconfigured  by HAL_RCC_ClockConfig().
-  * @note In the default implementation, SysTick timer is the source of time base.
-  *       It is used to generate interrupts at regular time intervals.
-  *       Care must be taken if HAL_Delay() is called from a peripheral ISR process,
+  * @note In the default implementation, SysTick timer is the source of time base. 
+  *       It is used to generate interrupts at regular time intervals. 
+  *       Care must be taken if HAL_Delay() is called from a peripheral ISR process, 
   *       The SysTick interrupt must have higher priority (numerically lower)
   *       than the peripheral interrupt. Otherwise the caller ISR process will be blocked.
   *       The function is declared as __weak  to be overwritten  in case of other
@@ -235,21 +237,25 @@ __weak void HAL_MspDeInit(void)
   */
 __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 {
-  HAL_StatusTypeDef  status = HAL_OK;
-
-  /*Configure the SysTick to have interrupt in 1ms time basis*/
-  if (HAL_SYSTICK_Config(SystemCoreClock/1000UL) != 0U)
+  /* Configure the SysTick to have interrupt in 1ms time basis*/
+  if (HAL_SYSTICK_Config(SystemCoreClock / (1000U / uwTickFreq)) > 0U)
   {
-    status = HAL_ERROR;
+    return HAL_ERROR;
+  }
+
+  /* Configure the SysTick IRQ priority */
+  if (TickPriority < (1UL << __NVIC_PRIO_BITS))
+  {
+    HAL_NVIC_SetPriority(SysTick_IRQn, TickPriority, 0U);
+    uwTickPrio = TickPriority;
   }
   else
   {
-    /*Configure the SysTick IRQ priority */
-    HAL_NVIC_SetPriority(SysTick_IRQn, TickPriority, 0);
+    return HAL_ERROR;
   }
 
   /* Return function status */
-  return status;
+  return HAL_OK;
 }
 
 /**
@@ -287,7 +293,7 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   */
 __weak void HAL_IncTick(void)
 {
-  uwTick++;
+  uwTick += uwTickFreq;
 }
 
 /**
@@ -299,6 +305,57 @@ __weak void HAL_IncTick(void)
 __weak uint32_t HAL_GetTick(void)
 {
   return uwTick;
+}
+
+/**
+  * @brief This function returns a tick priority.
+  * @retval tick priority
+  */
+uint32_t HAL_GetTickPrio(void)
+{
+  return uwTickPrio;
+}
+
+/**
+  * @brief Set new tick Freq.
+  * @retval Status
+  */
+HAL_StatusTypeDef HAL_SetTickFreq(HAL_TickFreqTypeDef Freq)
+{
+  HAL_StatusTypeDef status  = HAL_OK;
+  HAL_TickFreqTypeDef prevTickFreq;
+
+  assert_param(IS_TICKFREQ(Freq));
+
+  if (uwTickFreq != Freq)
+  {
+    /* Back up uwTickFreq frequency */
+    prevTickFreq = uwTickFreq;
+
+    /* Update uwTickFreq global variable used by HAL_InitTick() */
+    uwTickFreq = Freq;
+
+    /* Apply the new tick Freq  */
+    status = HAL_InitTick(uwTickPrio);
+
+    if (status != HAL_OK)
+    {
+      /* Restore previous tick frequency */
+      uwTickFreq = prevTickFreq;
+    }
+  }
+
+  return status;
+}
+
+/**
+  * @brief Return tick frequency.
+  * @retval Tick frequency.
+  *         Value of @ref HAL_TickFreqTypeDef.
+  */
+HAL_TickFreqTypeDef HAL_GetTickFreq(void)
+{
+  return uwTickFreq;
 }
 
 /**
@@ -317,10 +374,10 @@ __weak void HAL_Delay(uint32_t Delay)
   uint32_t tickstart = HAL_GetTick();
   uint32_t wait = Delay;
 
-  /* Add a period to guaranty minimum wait */
+  /* Add a freq to guarantee minimum wait */
   if (wait < HAL_MAX_DELAY)
   {
-    wait++;
+    wait += (uint32_t)(uwTickFreq);
   }
 
   while((HAL_GetTick() - tickstart) < wait)
@@ -614,5 +671,5 @@ void HAL_SYSCFG_Disable_Lock_VREFINT(void)
   * @}
   */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
 

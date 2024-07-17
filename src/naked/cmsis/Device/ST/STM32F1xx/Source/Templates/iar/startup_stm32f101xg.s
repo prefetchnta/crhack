@@ -13,17 +13,15 @@
 ;*                        calls main()).
 ;*                      After Reset the Cortex-M3 processor is in Thread mode,
 ;*                      priority is Privileged, and the Stack is set to Main.
-;*******************************************************************************
-;* @attention
+;********************************************************************************
 ;*
-;* <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
-;* All rights reserved.</center></h2>
+;* Copyright (c) 2017-2021 STMicroelectronics.
+;* All rights reserved.
 ;*
-;* This software component is licensed by ST under BSD 3-Clause license,
-;* the "License"; You may not use this file except in compliance with the
-;* License. You may obtain a copy of the License at:
-;*                        opensource.org/licenses/BSD-3-Clause
-;*
+;* This software is licensed under terms that can be found in the LICENSE file
+;* in the root directory of this software component.
+;* If no LICENSE file comes with this software, it is provided AS-IS.
+;
 ;*******************************************************************************
 ;
 ;
@@ -92,7 +90,7 @@ __vector_table
         DCD     DMA1_Channel5_IRQHandler      ; DMA1 Channel 5
         DCD     DMA1_Channel6_IRQHandler      ; DMA1 Channel 6
         DCD     DMA1_Channel7_IRQHandler      ; DMA1 Channel 7
-        DCD     ADC1_2_IRQHandler             ; ADC1 & ADC2
+        DCD     ADC1_IRQHandler               ; ADC1
         DCD     0                         ; Reserved
         DCD     0                         ; Reserved
         DCD     0                         ; Reserved
@@ -283,10 +281,10 @@ DMA1_Channel6_IRQHandler
 DMA1_Channel7_IRQHandler
         B DMA1_Channel7_IRQHandler
 
-        PUBWEAK ADC1_2_IRQHandler
+        PUBWEAK ADC1_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
-ADC1_2_IRQHandler
-        B ADC1_2_IRQHandler
+ADC1_IRQHandler
+        B ADC1_IRQHandler
 
          PUBWEAK EXTI9_5_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
@@ -456,4 +454,3 @@ DMA2_Channel4_5_IRQHandler
         
         END
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

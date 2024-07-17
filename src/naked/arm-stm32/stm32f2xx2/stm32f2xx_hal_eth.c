@@ -10,6 +10,17 @@
   *           + Peripheral Control functions
   *           + Peripheral State and Errors functions
   *
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2017 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
   @verbatim
   ==============================================================================
                     ##### How to use this driver #####
@@ -112,17 +123,6 @@
   are set to the corresponding weak functions.
 
   @endverbatim
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
   ******************************************************************************
   */
 
@@ -541,7 +541,7 @@ HAL_StatusTypeDef HAL_ETH_DMATxDescListInit(ETH_HandleTypeDef *heth, ETH_DMADesc
   /* Fill each DMATxDesc descriptor with the right values */
   for (i = 0U; i < TxBuffCount; i++)
   {
-    /* Get the pointer on the ith member of the Tx Desc list */
+    /* Get the pointer on the member (i) of the Tx Desc list */
     dmatxdesc = DMATxDescTab + i;
 
     /* Set Second Address Chained bit */
@@ -608,7 +608,7 @@ HAL_StatusTypeDef HAL_ETH_DMARxDescListInit(ETH_HandleTypeDef *heth, ETH_DMADesc
   /* Fill each DMARxDesc descriptor with the right values */
   for (i = 0U; i < RxBuffCount; i++)
   {
-    /* Get the pointer on the ith member of the Rx Desc list */
+    /* Get the pointer on the member (i) of the Rx Desc list */
     DMARxDesc = DMARxDescTab + i;
 
     /* Set Own bit of the Rx descriptor Status */
@@ -770,7 +770,7 @@ HAL_StatusTypeDef HAL_ETH_RegisterCallback(ETH_HandleTypeDef *heth, HAL_ETH_Call
 
 /**
   * @brief  Unregister an ETH Callback
-  *         ETH callabck is redirected to the weak predefined callback
+  *         ETH callback is redirected to the weak predefined callback
   * @param heth eth handle
   * @param CallbackID ID of the callback to be unregistered
   *        This parameter can be one of the following values:
@@ -2298,5 +2298,3 @@ static void ETH_InitCallbacksToDefault(ETH_HandleTypeDef *heth)
 /**
   * @}
   */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

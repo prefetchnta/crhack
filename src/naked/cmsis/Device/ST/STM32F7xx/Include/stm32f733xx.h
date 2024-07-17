@@ -7,18 +7,17 @@
   *          This file contains:
   *           - Data structures and the address mapping for all peripherals
   *           - Peripheral's registers declarations and bits definition
-  *           - Macros to access peripheral’s registers hardware
+  *           - Macros to access peripheral's registers hardware
   *
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -154,13 +153,13 @@ typedef enum
  * @brief Configuration of the Cortex-M7 Processor and Core Peripherals
  */
 #define __CM7_REV                 0x0100U  /*!< Cortex-M7 revision r1p0                       */
-#define __MPU_PRESENT             1       /*!< CM7 provides an MPU                           */
-#define __NVIC_PRIO_BITS          4       /*!< CM7 uses 4 Bits for the Priority Levels       */
-#define __Vendor_SysTickConfig    0       /*!< Set to 1 if different SysTick Config is used  */
-#define __FPU_PRESENT             1       /*!< FPU present                                   */
-#define __ICACHE_PRESENT          1       /*!< CM7 instruction cache present                 */
-#define __DCACHE_PRESENT          1       /*!< CM7 data cache present                        */
-#include "core_cm7.h"                     /*!< Cortex-M7 processor and core peripherals      */
+#define __MPU_PRESENT             1U       /*!< CM7 provides an MPU                           */
+#define __NVIC_PRIO_BITS          4U       /*!< CM7 uses 4 Bits for the Priority Levels       */
+#define __Vendor_SysTickConfig    0U       /*!< Set to 1 if different SysTick Config is used  */
+#define __FPU_PRESENT             1U       /*!< FPU present                                   */
+#define __ICACHE_PRESENT          1U       /*!< CM7 instruction cache present                 */
+#define __DCACHE_PRESENT          1U       /*!< CM7 data cache present                        */
+#include "core_cm7.h"                      /*!< Cortex-M7 processor and core peripherals      */
 
 
 #include "system_stm32f7xx.h"
@@ -1216,6 +1215,15 @@ typedef struct
 /** @addtogroup Exported_constants
   * @{
   */
+
+  /** @addtogroup Hardware_Constant_Definition
+    * @{
+    */
+#define LSI_STARTUP_TIME 40U /*!< LSI Maximum startup time in us */
+
+  /**
+    * @}
+    */
 
   /** @addtogroup Peripheral_Registers_Bits_Definition
   * @{
@@ -6810,7 +6818,7 @@ typedef struct
 #define FMC_BCR1_CBURSTRW          FMC_BCR1_CBURSTRW_Msk                       /*!<Write burst enable         */
 #define FMC_BCR1_CCLKEN_Pos        (20U)
 #define FMC_BCR1_CCLKEN_Msk        (0x1UL << FMC_BCR1_CCLKEN_Pos)               /*!< 0x00100000 */
-#define FMC_BCR1_CCLKEN            FMC_BCR1_CCLKEN_Msk                         /*!<Continous clock enable     */
+#define FMC_BCR1_CCLKEN            FMC_BCR1_CCLKEN_Msk                         /*!<Continuous clock enable     */
 #define FMC_BCR1_WFDIS_Pos         (21U)
 #define FMC_BCR1_WFDIS_Msk         (0x1UL << FMC_BCR1_WFDIS_Pos)                /*!< 0x00200000 */
 #define FMC_BCR1_WFDIS             FMC_BCR1_WFDIS_Msk                          /*!<Write FIFO Disable         */
@@ -7713,7 +7721,7 @@ typedef struct
 #define FMC_SDRTR_COUNT            FMC_SDRTR_COUNT_Msk                         /*!<COUNT[12:0] bits (Refresh timer count) */
 #define FMC_SDRTR_REIE_Pos         (14U)
 #define FMC_SDRTR_REIE_Msk         (0x1UL << FMC_SDRTR_REIE_Pos)                /*!< 0x00004000 */
-#define FMC_SDRTR_REIE             FMC_SDRTR_REIE_Msk                          /*!<RES interupt enable */
+#define FMC_SDRTR_REIE             FMC_SDRTR_REIE_Msk                          /*!<RES interrupt enable */
 
 /******************  Bit definition for FMC_SDSR register  ******************/
 #define FMC_SDSR_RE_Pos            (0U)
@@ -11650,7 +11658,7 @@ typedef struct
 #define SDMMC_DCOUNT_DATACOUNT_Msk      (0x1FFFFFFUL << SDMMC_DCOUNT_DATACOUNT_Pos) /*!< 0x01FFFFFF */
 #define SDMMC_DCOUNT_DATACOUNT          SDMMC_DCOUNT_DATACOUNT_Msk             /*!<Data count value */
 
-/******************  Bit definition for SDMMC_STA registe  ********************/
+/******************  Bit definition for SDMMC_STA register  ********************/
 #define SDMMC_STA_CCRCFAIL_Pos          (0U)
 #define SDMMC_STA_CCRCFAIL_Msk          (0x1UL << SDMMC_STA_CCRCFAIL_Pos)       /*!< 0x00000001 */
 #define SDMMC_STA_CCRCFAIL              SDMMC_STA_CCRCFAIL_Msk                 /*!<Command response received (CRC check failed)  */
@@ -12987,7 +12995,7 @@ typedef struct
 #define TIM_DMAR_DMAB_Msk         (0xFFFFUL << TIM_DMAR_DMAB_Pos)               /*!< 0x0000FFFF */
 #define TIM_DMAR_DMAB             TIM_DMAR_DMAB_Msk                            /*!<DMA register for burst accesses                    */
 
-/*******************  Bit definition for TIM_OR regiter  *********************/
+/*******************  Bit definition for TIM_OR register  *********************/
 #define TIM_OR_TI4_RMP_Pos        (6U)
 #define TIM_OR_TI4_RMP_Msk        (0x3UL << TIM_OR_TI4_RMP_Pos)                 /*!< 0x000000C0 */
 #define TIM_OR_TI4_RMP            TIM_OR_TI4_RMP_Msk                           /*!<TI4_RMP[1:0] bits (TIM5 Input 4 remap)             */
@@ -13244,7 +13252,7 @@ typedef struct
 /*                                                                            */
 /******************************************************************************/
 /*
- * @brief Specific device feature definitions (not present on all devices in the STM32F7 serie)
+ * @brief Specific device feature definitions (not present on all devices in the STM32F7 series)
  */
 /* Support of TCBGT feature : Supported from USART IP version c7amba_sci3 v1.3 */
 #define USART_TCBGT_SUPPORT
@@ -15778,4 +15786,3 @@ typedef struct
 #endif /* __STM32F733xx_H */
 
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

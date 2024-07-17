@@ -9,22 +9,20 @@
   *          This file contains:
   *           - Data structures and the address mapping for all peripherals
   *           - Peripheral's registers declarations and bits definition
-  *           - Macros to access peripheral’s registers hardware
+  *           - Macros to access peripheral's registers hardware
   *  
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
-
 /** @addtogroup CMSIS
   * @{
   */
@@ -40,7 +38,7 @@
  extern "C" {
 #endif /* __cplusplus */
 
-  /** @addtogroup Configuration_section_for_CMSIS
+/** @addtogroup Configuration_section_for_CMSIS
   * @{
   */
 /**
@@ -64,13 +62,13 @@
  *        in @ref Library_configuration_section 
  */
 
- /*!< Interrupt Number Definition */
+/*!< Interrupt Number Definition */
 typedef enum
 {
 /******  Cortex-M0 Processor Exceptions Numbers **************************************************************/
   NonMaskableInt_IRQn         = -14,    /*!< 2 Non Maskable Interrupt                                        */
   HardFault_IRQn              = -13,    /*!< 3 Cortex-M0 Hard Fault Interrupt                                */
-  SVC_IRQn                    = -5,     /*!< 11 Cortex-M0 SV Call Interrupt                                  */
+  SVCall_IRQn                 = -5,     /*!< 11 Cortex-M0 SV Call Interrupt                                  */
   PendSV_IRQn                 = -2,     /*!< 14 Cortex-M0 Pend SV Interrupt                                  */
   SysTick_IRQn                = -1,     /*!< 15 Cortex-M0 System Tick Interrupt                              */
 
@@ -570,7 +568,16 @@ typedef struct
   * @{
   */
 
-  /** @addtogroup Peripheral_Registers_Bits_Definition
+/** @addtogroup Hardware_Constant_Definition
+  * @{
+  */
+#define LSI_STARTUP_TIME 85U /*!< LSI Maximum startup time in us */
+
+/**
+  * @}
+  */
+
+/** @addtogroup Peripheral_Registers_Bits_Definition
   * @{
   */
 
@@ -585,7 +592,7 @@ typedef struct
 /******************************************************************************/
 
 /*
- * @brief Specific device feature definitions (not present on all devices in the STM32F0 serie)
+ * @brief Specific device feature definitions (not present on all devices in the STM32F0 series)
  */
 /* Note: No specific macro feature on this device */
 
@@ -673,7 +680,7 @@ typedef struct
 
 #define ADC_CFGR1_ALIGN_Pos       (5U)                                         
 #define ADC_CFGR1_ALIGN_Msk       (0x1UL << ADC_CFGR1_ALIGN_Pos)                /*!< 0x00000020 */
-#define ADC_CFGR1_ALIGN           ADC_CFGR1_ALIGN_Msk                          /*!< ADC data alignement */
+#define ADC_CFGR1_ALIGN           ADC_CFGR1_ALIGN_Msk                          /*!< ADC data alignment */
 
 #define ADC_CFGR1_EXTSEL_Pos      (6U)                                         
 #define ADC_CFGR1_EXTSEL_Msk      (0x7UL << ADC_CFGR1_EXTSEL_Pos)               /*!< 0x000001C0 */
@@ -2315,7 +2322,7 @@ typedef struct
 #define GPIO_AFRL_AFSEL7_Msk            (0xFUL << GPIO_AFRL_AFSEL7_Pos)         /*!< 0xF0000000 */
 #define GPIO_AFRL_AFSEL7                GPIO_AFRL_AFSEL7_Msk  
 
-/* Legacy aliases */                  
+/* Legacy aliases */
 #define GPIO_AFRL_AFRL0_Pos             GPIO_AFRL_AFSEL0_Pos                                  
 #define GPIO_AFRL_AFRL0_Msk             GPIO_AFRL_AFSEL0_Msk
 #define GPIO_AFRL_AFRL0                 GPIO_AFRL_AFSEL0
@@ -2775,7 +2782,7 @@ typedef struct
 /*                                                                           */
 /*****************************************************************************/
 /*
-* @brief Specific device feature definitions  (not present on all devices in the STM32F0 serie)
+* @brief Specific device feature definitions  (not present on all devices in the STM32F0 series)
 */
 #define RCC_PLLSRC_PREDIV1_SUPPORT  /*!< PREDIV support used as PLL source input  */
 
@@ -3361,7 +3368,7 @@ typedef struct
 /*                                                                           */
 /*****************************************************************************/
 /*
-* @brief Specific device feature definitions  (not present on all devices in the STM32F0 serie)
+* @brief Specific device feature definitions  (not present on all devices in the STM32F0 series)
 */
 #define RTC_TAMPER1_SUPPORT  /*!< TAMPER 1 feature support */
 #define RTC_TAMPER2_SUPPORT  /*!< TAMPER 2 feature support */
@@ -3821,7 +3828,7 @@ typedef struct
 /*****************************************************************************/
 
 /*
- * @brief Specific device feature definitions (not present on all devices in the STM32F0 serie)
+ * @brief Specific device feature definitions (not present on all devices in the STM32F0 series)
  */
 /* Note: No specific macro feature on this device */
 
@@ -4798,7 +4805,7 @@ typedef struct
 /******************************************************************************/
 
 /*
-* @brief Specific device feature definitions (not present on all devices in the STM32F0 serie)
+* @brief Specific device feature definitions (not present on all devices in the STM32F0 series)
 */
 
 /* Support of 7 bits data length feature */
@@ -5584,6 +5591,7 @@ typedef struct
 #define DMA1_Ch4_7_DMA2_Ch3_5_IRQn DMA1_Channel4_5_IRQn
 #define RCC_CRS_IRQn               RCC_IRQn
 
+#define SVC_IRQn                   SVCall_IRQn
 
 /* Aliases for __IRQHandler */
 #define ADC1_COMP_IRQHandler             ADC1_IRQHandler
@@ -5604,8 +5612,7 @@ typedef struct
   * @}
   */
 
-  /**
+/**
   * @}
   */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

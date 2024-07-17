@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */ 
@@ -48,14 +47,14 @@
   */   
 typedef enum
 {
-  HAL_MMC_STATE_RESET                  = ((uint32_t)0x00000000U),  /*!< MMC not yet initialized or disabled  */
-  HAL_MMC_STATE_READY                  = ((uint32_t)0x00000001U),  /*!< MMC initialized and ready for use    */
-  HAL_MMC_STATE_TIMEOUT                = ((uint32_t)0x00000002U),  /*!< MMC Timeout state                    */
-  HAL_MMC_STATE_BUSY                   = ((uint32_t)0x00000003U),  /*!< MMC process ongoing                  */
-  HAL_MMC_STATE_PROGRAMMING            = ((uint32_t)0x00000004U),  /*!< MMC Programming State                */
-  HAL_MMC_STATE_RECEIVING              = ((uint32_t)0x00000005U),  /*!< MMC Receinving State                 */
-  HAL_MMC_STATE_TRANSFER               = ((uint32_t)0x00000006U),  /*!< MMC Transfert State                  */
-  HAL_MMC_STATE_ERROR                  = ((uint32_t)0x0000000FU)   /*!< MMC is in error state                */
+  HAL_MMC_STATE_RESET                  = 0x00000000U,  /*!< MMC not yet initialized or disabled  */
+  HAL_MMC_STATE_READY                  = 0x00000001U,  /*!< MMC initialized and ready for use    */
+  HAL_MMC_STATE_TIMEOUT                = 0x00000002U,  /*!< MMC Timeout state                    */
+  HAL_MMC_STATE_BUSY                   = 0x00000003U,  /*!< MMC process ongoing                  */
+  HAL_MMC_STATE_PROGRAMMING            = 0x00000004U,  /*!< MMC Programming State                */
+  HAL_MMC_STATE_RECEIVING              = 0x00000005U,  /*!< MMC Receinving State                 */
+  HAL_MMC_STATE_TRANSFER               = 0x00000006U,  /*!< MMC Transfer State                  */
+  HAL_MMC_STATE_ERROR                  = 0x0000000FU   /*!< MMC is in error state                */
 }HAL_MMC_StateTypeDef;
 /** 
   * @}
@@ -145,6 +144,8 @@ typedef struct
   
   uint32_t                     CID[4U];          /*!< MMC card identification number table */
   
+  uint32_t                     Ext_CSD[128];
+
 #if defined (USE_HAL_MMC_REGISTER_CALLBACKS) && (USE_HAL_MMC_REGISTER_CALLBACKS == 1U)
   void (* TxCpltCallback)                 (struct __MMC_HandleTypeDef *hmmc);
   void (* RxCpltCallback)                 (struct __MMC_HandleTypeDef *hmmc);
@@ -264,7 +265,7 @@ typedef void (*pMMC_CallbackTypeDef)           (MMC_HandleTypeDef *hmmc);
   * @{
   */
 
-#define MMC_BLOCKSIZE   ((uint32_t)512U) /*!< Block size is 512 bytes */
+#define MMC_BLOCKSIZE              512U  /*!< Block size is 512 bytes */
 
 /** @defgroup MMC_Exported_Constansts_Group1 MMC Error status enumeration Structure definition 
   * @{
@@ -316,13 +317,13 @@ typedef void (*pMMC_CallbackTypeDef)           (MMC_HandleTypeDef *hmmc);
 /** @defgroup MMC_Exported_Constansts_Group2 MMC context enumeration
   * @{
   */ 
-#define   MMC_CONTEXT_NONE                 ((uint32_t)0x00000000U)  /*!< None                             */
-#define   MMC_CONTEXT_READ_SINGLE_BLOCK    ((uint32_t)0x00000001U)  /*!< Read single block operation      */
-#define   MMC_CONTEXT_READ_MULTIPLE_BLOCK  ((uint32_t)0x00000002U)  /*!< Read multiple blocks operation   */
-#define   MMC_CONTEXT_WRITE_SINGLE_BLOCK   ((uint32_t)0x00000010U)  /*!< Write single block operation     */
-#define   MMC_CONTEXT_WRITE_MULTIPLE_BLOCK ((uint32_t)0x00000020U)  /*!< Write multiple blocks operation  */
-#define   MMC_CONTEXT_IT                   ((uint32_t)0x00000008U)  /*!< Process in Interrupt mode        */
-#define   MMC_CONTEXT_DMA                  ((uint32_t)0x00000080U)  /*!< Process in DMA mode              */
+#define   MMC_CONTEXT_NONE                            0x00000000U   /*!< None                             */
+#define   MMC_CONTEXT_READ_SINGLE_BLOCK               0x00000001U   /*!< Read single block operation      */
+#define   MMC_CONTEXT_READ_MULTIPLE_BLOCK             0x00000002U   /*!< Read multiple blocks operation   */
+#define   MMC_CONTEXT_WRITE_SINGLE_BLOCK              0x00000010U   /*!< Write single block operation     */
+#define   MMC_CONTEXT_WRITE_MULTIPLE_BLOCK            0x00000020U   /*!< Write multiple blocks operation  */
+#define   MMC_CONTEXT_IT                              0x00000008U   /*!< Process in Interrupt mode        */
+#define   MMC_CONTEXT_DMA                             0x00000080U   /*!< Process in DMA mode              */
 
 /**
   * @}
@@ -334,10 +335,12 @@ typedef void (*pMMC_CallbackTypeDef)           (MMC_HandleTypeDef *hmmc);
 /** 
   * @brief 
   */
-#define MMC_HIGH_VOLTAGE_RANGE         0x80FF8000U  /*!< VALUE OF ARGUMENT            */
-#define MMC_DUAL_VOLTAGE_RANGE         0x80FF8080U  /*!< VALUE OF ARGUMENT            */
-#define eMMC_HIGH_VOLTAGE_RANGE        0xC0FF8000U  /*!< for eMMC > 2Gb sector mode   */
-#define eMMC_DUAL_VOLTAGE_RANGE        0xC0FF8080U  /*!< for eMMC > 2Gb sector mode   */
+#define MMC_HIGH_VOLTAGE_RANGE         0x80FF8000U  /*!< High voltage in byte mode    */
+#define MMC_DUAL_VOLTAGE_RANGE         0x80FF8080U  /*!< Dual voltage in byte mode    */
+#define MMC_LOW_VOLTAGE_RANGE          0x80000080U  /*!< Low voltage in byte mode     */
+#define EMMC_HIGH_VOLTAGE_RANGE        0xC0FF8000U  /*!< High voltage in sector mode  */
+#define EMMC_DUAL_VOLTAGE_RANGE        0xC0FF8080U  /*!< Dual voltage in sector mode  */
+#define EMMC_LOW_VOLTAGE_RANGE         0xC0000080U  /*!< Low voltage in sector mode   */
 #define MMC_INVALID_VOLTAGE_RANGE      0x0001FF01U 
 /**
   * @}
@@ -346,8 +349,8 @@ typedef void (*pMMC_CallbackTypeDef)           (MMC_HandleTypeDef *hmmc);
 /** @defgroup MMC_Exported_Constansts_Group4 MMC Memory Cards
   * @{
   */
-#define  MMC_LOW_CAPACITY_CARD     ((uint32_t)0x00000000U)   /*!< MMC Card Capacity <=2Gbytes   */
-#define  MMC_HIGH_CAPACITY_CARD    ((uint32_t)0x00000001U)   /*!< MMC Card Capacity >2Gbytes and <2Tbytes   */
+#define  MMC_LOW_CAPACITY_CARD                0x00000000U    /*!< MMC Card Capacity <=2Gbytes   */
+#define  MMC_HIGH_CAPACITY_CARD               0x00000001U    /*!< MMC Card Capacity >2Gbytes and <2Tbytes   */
 
 /**
   * @}
@@ -636,6 +639,7 @@ HAL_MMC_CardStateTypeDef HAL_MMC_GetCardState(MMC_HandleTypeDef *hmmc);
 HAL_StatusTypeDef HAL_MMC_GetCardCID(MMC_HandleTypeDef *hmmc, HAL_MMC_CardCIDTypeDef *pCID);
 HAL_StatusTypeDef HAL_MMC_GetCardCSD(MMC_HandleTypeDef *hmmc, HAL_MMC_CardCSDTypeDef *pCSD);
 HAL_StatusTypeDef HAL_MMC_GetCardInfo(MMC_HandleTypeDef *hmmc, HAL_MMC_CardInfoTypeDef *pCardInfo);
+HAL_StatusTypeDef HAL_MMC_GetCardExtCSD(MMC_HandleTypeDef *hmmc, uint32_t *pExtCSD, uint32_t Timeout);
 /**
   * @}
   */
@@ -649,7 +653,7 @@ uint32_t HAL_MMC_GetError(MMC_HandleTypeDef *hmmc);
   * @}
   */
 
-/** @defgroup MMC_Exported_Functions_Group6 Perioheral Abort management
+/** @defgroup MMC_Exported_Functions_Group6 Peripheral Abort management
   * @{
   */
 HAL_StatusTypeDef HAL_MMC_Abort(MMC_HandleTypeDef *hmmc);
@@ -741,5 +745,3 @@ HAL_StatusTypeDef HAL_MMC_Abort_IT(MMC_HandleTypeDef *hmmc);
 #endif /* SDIO */
 
 #endif /* STM32F1xx_HAL_MMC_H */ 
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

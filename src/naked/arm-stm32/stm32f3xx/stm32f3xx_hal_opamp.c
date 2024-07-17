@@ -4,16 +4,23 @@
   * @author  MCD Application Team
   * @brief   OPAMP HAL module driver.
   *          This file provides firmware functions to manage the following
-  *          functionalities of the operational amplifiers (OPAMP1,...OPAMP4)
-  *          peripheral:
-  *           + OPAMP Configuration
-  *           + OPAMP calibration
-  *          Thanks to
+  *          functionalities of the operational amplifiers peripheral:
   *           + Initialization/de-initialization functions
   *           + I/O operation functions
   *           + Peripheral Control functions
   *           + Peripheral State functions
   *
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
   @verbatim
 ================================================================================
           ##### OPAMP Peripheral Features #####
@@ -96,14 +103,14 @@
       (++) The compilation define  USE_HAL_OPAMP_REGISTER_CALLBACKS when set to 1
            allows the user to configure dynamically the driver callbacks.
 
-      (++) Use Functions @ref HAL_OPAMP_RegisterCallback() to register a user callback,
+      (++) Use Functions HAL_OPAMP_RegisterCallback() to register a user callback,
            it allows to register following callbacks:
       (+++) MspInitCallback         : OPAMP MspInit.
       (+++) MspDeInitCallback       : OPAMP MspFeInit.
            This function takes as parameters the HAL peripheral handle, the Callback ID
            and a pointer to the user callback function.
 
-      (++) Use function @ref HAL_OPAMP_UnRegisterCallback() to reset a callback to the default
+      (++) Use function HAL_OPAMP_UnRegisterCallback() to reset a callback to the default
            weak (surcharged) function. It allows to reset following callbacks:
       (+++) MspInitCallback         : OPAMP MspInit.
       (+++) MspDeInitCallback       : OPAMP MspdeInit.
@@ -141,17 +148,6 @@
       (++) As in configure case, selects first the parameters you wish to modify.
 
   @endverbatim
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
   ******************************************************************************
   */
 
@@ -273,15 +269,15 @@ HAL_StatusTypeDef HAL_OPAMP_Init(OPAMP_HandleTypeDef *hopamp)
     assert_param(IS_OPAMP_FUNCTIONAL_NORMALMODE(hopamp->Init.Mode));
     assert_param(IS_OPAMP_NONINVERTING_INPUT(hopamp->Init.NonInvertingInput));
 
+#if (USE_HAL_OPAMP_REGISTER_CALLBACKS == 1)
     if (hopamp->State == HAL_OPAMP_STATE_RESET)
     {
-#if (USE_HAL_OPAMP_REGISTER_CALLBACKS == 1)
       if (hopamp->MspInitCallback == NULL)
       {
         hopamp->MspInitCallback = HAL_OPAMP_MspInit;
       }
-#endif /* USE_HAL_OPAMP_REGISTER_CALLBACKS */
     }
+#endif /* USE_HAL_OPAMP_REGISTER_CALLBACKS */
 
     if ((hopamp->Init.Mode) == OPAMP_STANDALONE_MODE)
     {
@@ -681,7 +677,7 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
         delta >>= 1U;
       }
 
-      /* Still need to check if righ calibration is current value or un step below */
+      /* Still need to check if right calibration is current value or un step below */
       /* Indeed the first value that causes the OUTCAL bit to change from 1 to 0  */
       MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETN, trimmingvaluen << OPAMP_INPUT_INVERTING);
 
@@ -730,7 +726,7 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
         delta >>= 1U;
       }
 
-      /* Still need to check if righ calibration is current value or un step below */
+      /* Still need to check if right calibration is current value or un step below */
       /* Indeed the first value that causes the OUTCAL bit to change from 1 to 0U */
       /* Set candidate trimming */
       MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETP, trimmingvaluep << OPAMP_INPUT_NONINVERTING);
@@ -759,7 +755,7 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
       CLEAR_BIT(hopamp->Instance->CSR, OPAMP_CSR_FORCEVP);
 
       /* Self calibration is successful  */
-      /* Store calibration(user timming) results in init structure. */
+      /* Store calibration(user trimming) results in init structure. */
 
       /* Write calibration result N */
       hopamp->Init.TrimmingValueN = trimmingvaluen;
@@ -767,7 +763,7 @@ HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
       /* Write calibration result P */
       hopamp->Init.TrimmingValueP = trimmingvaluep;
 
-      /* Select user timming mode */
+      /* Select user trimming mode */
       /* And updated with calibrated settings */
       hopamp->Init.UserTrimming = OPAMP_TRIMMING_USER;
       MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_TRIMOFFSETP, trimmingvaluep << OPAMP_INPUT_NONINVERTING);
@@ -915,7 +911,7 @@ OPAMP_TrimmingValueTypeDef HAL_OPAMP_GetTrimOffset(OPAMP_HandleTypeDef *hopamp, 
       oldtrimmingvaluen = (hopamp->Instance->CSR & OPAMP_CSR_TRIMOFFSETN) >> OPAMP_INPUT_INVERTING;
     }
 
-    /* Set factory timming mode */
+    /* Set factory trimming mode */
     CLEAR_BIT(hopamp->Instance->CSR, OPAMP_CSR_USERTRIM);
 
     /* Get factory trimming  */
@@ -1101,5 +1097,3 @@ HAL_StatusTypeDef HAL_OPAMP_UnRegisterCallback(OPAMP_HandleTypeDef *hopamp, HAL_
   */
 
 
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

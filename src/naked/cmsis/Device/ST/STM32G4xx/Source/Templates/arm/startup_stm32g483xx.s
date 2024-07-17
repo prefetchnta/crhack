@@ -16,14 +16,13 @@
 ;********************************************************************************
 ;* @attention
 ;*
-;* <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-;* All rights reserved.</center></h2>
+;* Copyright (c) 2019 STMicroelectronics.
+;* All rights reserved.
 ;*
-;* This software component is licensed by ST under BSD 3-Clause license,
-;* the "License"; You may not use this file except in compliance with the
-;* License. You may obtain a copy of the License at:
-;*                        opensource.org/licenses/BSD-3-Clause
-;*
+;* This software is licensed under terms that can be found in the LICENSE file
+;* in the root directory of this software component.
+;* If no LICENSE file comes with this software, it is provided AS-IS.
+;
 ;*******************************************************************************
 ;* <<< Use Configuration Wizard in Context Menu >>>
 ;
@@ -100,8 +99,8 @@ __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     ADC1_2_IRQHandler                 ; ADC1 and ADC2
                 DCD     USB_HP_IRQHandler                 ; USB Device High Priority
                 DCD     USB_LP_IRQHandler                 ; USB Device Low Priority
-                DCD     0                                 ; Reserved
-                DCD     0                                 ; Reserved
+                DCD     FDCAN1_IT0_IRQHandler             ; FDCAN1 interrupt line 0
+                DCD     FDCAN1_IT1_IRQHandler             ; FDCAN1 interrupt line 1
                 DCD     EXTI9_5_IRQHandler                ; External Line[9:5]s
                 DCD     TIM1_BRK_TIM15_IRQHandler         ; TIM1 Break, Transition error, Index error and TIM15
                 DCD     TIM1_UP_TIM16_IRQHandler          ; TIM1 Update and TIM16
@@ -470,4 +469,3 @@ __user_initial_stackheap
 
                  END
 
-;************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE*****

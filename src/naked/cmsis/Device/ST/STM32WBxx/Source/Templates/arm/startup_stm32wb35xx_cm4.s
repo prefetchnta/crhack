@@ -14,12 +14,12 @@
 ;******************************************************************************
 ;* @attention
 ;*
-;* Copyright (c) 2019 STMicroelectronics. All rights reserved.
+;* Copyright (c) 2019-2021 STMicroelectronics.
+;* All rights reserved.
 ;*
-;* This software component is licensed by ST under BSD 3-Clause license,
-;* the "License"; You may not use this file except in compliance with the 
-;* License. You may obtain a copy of the License at:
-;*                        opensource.org/licenses/BSD-3-Clause
+;* This software is licensed under terms that can be found in the LICENSE file
+;* in the root directory of this software component.
+;* If no LICENSE file comes with this software, it is provided AS-IS.
 ;*
 ;******************************************************************************
 
@@ -84,7 +84,7 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
         DCD     EXTI0_IRQHandler                  ; EXTI Line 0 Interrupt
         DCD     EXTI1_IRQHandler                  ; EXTI Line 1 Interrupt
         DCD     EXTI2_IRQHandler                  ; EXTI Line 2 Interrupt
-        DCD     EXTI3_IRQHandler                  ; EXTI Line 3 Interrup
+        DCD     EXTI3_IRQHandler                  ; EXTI Line 3 Interrupt
         DCD     EXTI4_IRQHandler                  ; EXTI Line 4 Interrupt
         DCD     DMA1_Channel1_IRQHandler          ; DMA1 Channel 1 Interrupt
         DCD     DMA1_Channel2_IRQHandler          ; DMA1 Channel 2 Interrupt
@@ -110,11 +110,11 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
         DCD     I2C3_EV_IRQHandler                ; I2C3 Event Interrupt
         DCD     I2C3_ER_IRQHandler                ; I2C3 Error Interrupt
         DCD     SPI1_IRQHandler                   ; SPI1 Interrupt
-        DCD     SPI2_IRQHandler                   ; SPI2 Interrupt
+        DCD     0                                 ; Reserved
         DCD     USART1_IRQHandler                 ; USART1 Interrupt
         DCD     LPUART1_IRQHandler                ; LPUART1 Interrupt
         DCD     0                                 ; Reserved
-        DCD     TSC_IRQHandler                    ; TSC Interrupt
+        DCD     0                                 ; Reserved
         DCD     EXTI15_10_IRQHandler              ; EXTI Lines1[15:10 ]Interrupts
         DCD     RTC_Alarm_IRQHandler              ; RTC Alarms (A and B) Interrupt
         DCD     CRS_IRQHandler                    ; CRS interrupt
@@ -238,10 +238,8 @@ Default_Handler PROC
                 EXPORT  I2C3_EV_IRQHandler                [WEAK]
                 EXPORT  I2C3_ER_IRQHandler                [WEAK]
                 EXPORT  SPI1_IRQHandler                   [WEAK]
-                EXPORT  SPI2_IRQHandler                   [WEAK]
                 EXPORT  USART1_IRQHandler                 [WEAK]
                 EXPORT  LPUART1_IRQHandler                [WEAK]
-                EXPORT  TSC_IRQHandler                    [WEAK]
                 EXPORT  EXTI15_10_IRQHandler              [WEAK]
                 EXPORT  RTC_Alarm_IRQHandler              [WEAK]
                 EXPORT  CRS_IRQHandler                    [WEAK]
@@ -300,10 +298,8 @@ I2C1_ER_IRQHandler
 I2C3_EV_IRQHandler
 I2C3_ER_IRQHandler
 SPI1_IRQHandler
-SPI2_IRQHandler
 USART1_IRQHandler
 LPUART1_IRQHandler
-TSC_IRQHandler
 EXTI15_10_IRQHandler
 RTC_Alarm_IRQHandler
 CRS_IRQHandler
@@ -361,4 +357,3 @@ __user_initial_stackheap
 
                  END
 
-;************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE*****

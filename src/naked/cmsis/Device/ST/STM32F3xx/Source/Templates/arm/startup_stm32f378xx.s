@@ -17,12 +17,11 @@
 ;* Copyright (c) 2016 STMicroelectronics.
 ;* All rights reserved.
 ;*
-;* This software component is licensed by ST under BSD 3-Clause license,
-;* the "License"; You may not use this file except in compliance with the
-;* License. You may obtain a copy of the License at:
-;*                        opensource.org/licenses/BSD-3-Clause
+;* This software is licensed under terms that can be found in the LICENSE file
+;* in the root directory of this software component.
+;* If no LICENSE file comes with this software, it is provided AS-IS.
 ;*
-;******************************************************************************
+;*******************************************************************************
 
 ; Amount of memory (in bytes) allocated for Stack
 ; Tailor this value to your application needs
@@ -140,7 +139,7 @@ __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     SDADC1_IRQHandler                 ; SDADC1
                 DCD     SDADC2_IRQHandler                 ; SDADC2
                 DCD     SDADC3_IRQHandler                 ; SDADC3
-                DCD     COMP1_2_IRQHandler                ; COMP1 and COMP2 global Interrupt
+                DCD     COMP_IRQHandler                   ; COMP1 and COMP2 global Interrupt
                 DCD     0                                 ; Reserved
                 DCD     0                                 ; Reserved
                 DCD     0                                 ; Reserved
@@ -279,7 +278,7 @@ Default_Handler PROC
                 EXPORT  SDADC1_IRQHandler                 [WEAK]
                 EXPORT  SDADC2_IRQHandler                 [WEAK]
                 EXPORT  SDADC3_IRQHandler                 [WEAK]
-                EXPORT  COMP1_2_IRQHandler                [WEAK]
+                EXPORT  COMP_IRQHandler                   [WEAK]
                 EXPORT  TIM19_IRQHandler                  [WEAK]
                 EXPORT  FPU_IRQHandler                    [WEAK]
 
@@ -341,7 +340,7 @@ DMA2_Channel5_IRQHandler
 SDADC1_IRQHandler
 SDADC2_IRQHandler
 SDADC3_IRQHandler
-COMP1_2_IRQHandler
+COMP_IRQHandler
 TIM19_IRQHandler
 FPU_IRQHandler
 
@@ -378,5 +377,3 @@ __user_initial_stackheap
                  ENDIF
 
                  END
-
-;************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE*****

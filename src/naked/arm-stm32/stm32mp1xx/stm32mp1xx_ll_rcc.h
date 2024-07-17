@@ -8,13 +8,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -288,10 +287,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_HSIDIV  HSI oscillator divider
   * @{
   */
-#define LL_RCC_HSI_DIV_1                   RCC_HSICFGR_HSIDIV_0
-#define LL_RCC_HSI_DIV_2                   RCC_HSICFGR_HSIDIV_1
-#define LL_RCC_HSI_DIV_4                   RCC_HSICFGR_HSIDIV_2
-#define LL_RCC_HSI_DIV_8                   RCC_HSICFGR_HSIDIV_3
+#define LL_RCC_HSI_DIV_1                   0U
+#define LL_RCC_HSI_DIV_2                   RCC_HSICFGR_HSIDIV_0
+#define LL_RCC_HSI_DIV_4                   RCC_HSICFGR_HSIDIV_1
+#define LL_RCC_HSI_DIV_8                   (RCC_HSICFGR_HSIDIV_0 | RCC_HSICFGR_HSIDIV_1)
 /**
   * @}
   */
@@ -299,18 +298,18 @@ typedef struct
 /** @defgroup RCC_LL_EC_MCOxSOURCE  MCO SOURCE selection
   * @{
   */
-#define LL_RCC_MCO1SOURCE_HSI      LL_CLKSOURCE(RCC_OFFSET_MCO1CFGR, RCC_MCO1CFGR_MCO1SEL, RCC_MCO1CFGR_MCO1SEL_0)
-#define LL_RCC_MCO1SOURCE_HSE      LL_CLKSOURCE(RCC_OFFSET_MCO1CFGR, RCC_MCO1CFGR_MCO1SEL, RCC_MCO1CFGR_MCO1SEL_1)
-#define LL_RCC_MCO1SOURCE_CSI      LL_CLKSOURCE(RCC_OFFSET_MCO1CFGR, RCC_MCO1CFGR_MCO1SEL, RCC_MCO1CFGR_MCO1SEL_2)
-#define LL_RCC_MCO1SOURCE_LSI      LL_CLKSOURCE(RCC_OFFSET_MCO1CFGR, RCC_MCO1CFGR_MCO1SEL, RCC_MCO1CFGR_MCO1SEL_3)
-#define LL_RCC_MCO1SOURCE_LSE      LL_CLKSOURCE(RCC_OFFSET_MCO1CFGR, RCC_MCO1CFGR_MCO1SEL, RCC_MCO1CFGR_MCO1SEL_4)
+#define LL_RCC_MCO1SOURCE_HSI      LL_CLKSOURCE(RCC_OFFSET_MCO1CFGR, RCC_MCO1CFGR_MCO1SEL, 0)
+#define LL_RCC_MCO1SOURCE_HSE      LL_CLKSOURCE(RCC_OFFSET_MCO1CFGR, RCC_MCO1CFGR_MCO1SEL, RCC_MCO1CFGR_MCO1SEL_0)
+#define LL_RCC_MCO1SOURCE_CSI      LL_CLKSOURCE(RCC_OFFSET_MCO1CFGR, RCC_MCO1CFGR_MCO1SEL, RCC_MCO1CFGR_MCO1SEL_1)
+#define LL_RCC_MCO1SOURCE_LSI      LL_CLKSOURCE(RCC_OFFSET_MCO1CFGR, RCC_MCO1CFGR_MCO1SEL, (RCC_MCO1CFGR_MCO1SEL_0 | RCC_MCO1CFGR_MCO1SEL_1))
+#define LL_RCC_MCO1SOURCE_LSE      LL_CLKSOURCE(RCC_OFFSET_MCO1CFGR, RCC_MCO1CFGR_MCO1SEL, RCC_MCO1CFGR_MCO1SEL_2)
 
-#define LL_RCC_MCO2SOURCE_MPU      LL_CLKSOURCE(RCC_OFFSET_MCO2CFGR, RCC_MCO2CFGR_MCO2SEL, RCC_MCO2CFGR_MCO2SEL_0)
-#define LL_RCC_MCO2SOURCE_AXI      LL_CLKSOURCE(RCC_OFFSET_MCO2CFGR, RCC_MCO2CFGR_MCO2SEL, RCC_MCO2CFGR_MCO2SEL_1)
-#define LL_RCC_MCO2SOURCE_MCU      LL_CLKSOURCE(RCC_OFFSET_MCO2CFGR, RCC_MCO2CFGR_MCO2SEL, RCC_MCO2CFGR_MCO2SEL_2)
-#define LL_RCC_MCO2SOURCE_PLL4     LL_CLKSOURCE(RCC_OFFSET_MCO2CFGR, RCC_MCO2CFGR_MCO2SEL, RCC_MCO2CFGR_MCO2SEL_3)
-#define LL_RCC_MCO2SOURCE_HSE      LL_CLKSOURCE(RCC_OFFSET_MCO2CFGR, RCC_MCO2CFGR_MCO2SEL, RCC_MCO2CFGR_MCO2SEL_4)
-#define LL_RCC_MCO2SOURCE_HSI      LL_CLKSOURCE(RCC_OFFSET_MCO2CFGR, RCC_MCO2CFGR_MCO2SEL, RCC_MCO2CFGR_MCO2SEL_5)
+#define LL_RCC_MCO2SOURCE_MPU      LL_CLKSOURCE(RCC_OFFSET_MCO2CFGR, RCC_MCO2CFGR_MCO2SEL, 0)
+#define LL_RCC_MCO2SOURCE_AXI      LL_CLKSOURCE(RCC_OFFSET_MCO2CFGR, RCC_MCO2CFGR_MCO2SEL, RCC_MCO2CFGR_MCO2SEL_0)
+#define LL_RCC_MCO2SOURCE_MCU      LL_CLKSOURCE(RCC_OFFSET_MCO2CFGR, RCC_MCO2CFGR_MCO2SEL, RCC_MCO2CFGR_MCO2SEL_1)
+#define LL_RCC_MCO2SOURCE_PLL4     LL_CLKSOURCE(RCC_OFFSET_MCO2CFGR, RCC_MCO2CFGR_MCO2SEL, (RCC_MCO2CFGR_MCO2SEL_1 | RCC_MCO2CFGR_MCO2SEL_0))
+#define LL_RCC_MCO2SOURCE_HSE      LL_CLKSOURCE(RCC_OFFSET_MCO2CFGR, RCC_MCO2CFGR_MCO2SEL, RCC_MCO2CFGR_MCO2SEL_2)
+#define LL_RCC_MCO2SOURCE_HSI      LL_CLKSOURCE(RCC_OFFSET_MCO2CFGR, RCC_MCO2CFGR_MCO2SEL, (RCC_MCO2CFGR_MCO2SEL_2 | RCC_MCO2CFGR_MCO2SEL_0))
 /**
   * @}
   */
@@ -318,22 +317,22 @@ typedef struct
 /** @defgroup RCC_LL_EC_MCO1_DIV  MCO1 prescaler
   * @{
   */
-#define LL_RCC_MCO1_DIV_1                  RCC_MCO1CFGR_MCO1DIV_0   /*!< MCO not divided */
-#define LL_RCC_MCO1_DIV_2                  RCC_MCO1CFGR_MCO1DIV_1   /*!< MCO divided by 2 */
-#define LL_RCC_MCO1_DIV_3                  RCC_MCO1CFGR_MCO1DIV_2   /*!< MCO divided by 3 */
-#define LL_RCC_MCO1_DIV_4                  RCC_MCO1CFGR_MCO1DIV_3   /*!< MCO divided by 4 */
-#define LL_RCC_MCO1_DIV_5                  RCC_MCO1CFGR_MCO1DIV_4   /*!< MCO divided by 5 */
-#define LL_RCC_MCO1_DIV_6                  RCC_MCO1CFGR_MCO1DIV_5   /*!< MCO divided by 6 */
-#define LL_RCC_MCO1_DIV_7                  RCC_MCO1CFGR_MCO1DIV_6   /*!< MCO divided by 7 */
-#define LL_RCC_MCO1_DIV_8                  RCC_MCO1CFGR_MCO1DIV_7   /*!< MCO divided by 8 */
-#define LL_RCC_MCO1_DIV_9                  RCC_MCO1CFGR_MCO1DIV_8   /*!< MCO divided by 9 */
-#define LL_RCC_MCO1_DIV_10                 RCC_MCO1CFGR_MCO1DIV_9   /*!< MCO divided by 10 */
-#define LL_RCC_MCO1_DIV_11                 RCC_MCO1CFGR_MCO1DIV_10  /*!< MCO divided by 11 */
-#define LL_RCC_MCO1_DIV_12                 RCC_MCO1CFGR_MCO1DIV_11  /*!< MCO divided by 12 */
-#define LL_RCC_MCO1_DIV_13                 RCC_MCO1CFGR_MCO1DIV_12  /*!< MCO divided by 13 */
-#define LL_RCC_MCO1_DIV_14                 RCC_MCO1CFGR_MCO1DIV_13  /*!< MCO divided by 14 */
-#define LL_RCC_MCO1_DIV_15                 RCC_MCO1CFGR_MCO1DIV_14  /*!< MCO divided by 15 */
-#define LL_RCC_MCO1_DIV_16                 RCC_MCO1CFGR_MCO1DIV_15  /*!< MCO divided by 16 */
+#define LL_RCC_MCO1_DIV_1                  0U                       /*!< MCO not divided */
+#define LL_RCC_MCO1_DIV_2                  RCC_MCO1CFGR_MCO1DIV_0   /*!< MCO divided by 2 */
+#define LL_RCC_MCO1_DIV_3                  RCC_MCO1CFGR_MCO1DIV_1   /*!< MCO divided by 3 */
+#define LL_RCC_MCO1_DIV_4                  (RCC_MCO1CFGR_MCO1DIV_1 | RCC_MCO1CFGR_MCO1DIV_0)   /*!< MCO divided by 4 */
+#define LL_RCC_MCO1_DIV_5                  RCC_MCO1CFGR_MCO1DIV_2   /*!< MCO divided by 5 */
+#define LL_RCC_MCO1_DIV_6                  (RCC_MCO1CFGR_MCO1DIV_2 | RCC_MCO1CFGR_MCO1DIV_0)   /*!< MCO divided by 6 */
+#define LL_RCC_MCO1_DIV_7                  (RCC_MCO1CFGR_MCO1DIV_2 | RCC_MCO1CFGR_MCO1DIV_1)   /*!< MCO divided by 7 */
+#define LL_RCC_MCO1_DIV_8                  (RCC_MCO1CFGR_MCO1DIV_2 | RCC_MCO1CFGR_MCO1DIV_1| RCC_MCO1CFGR_MCO1DIV_0)   /*!< MCO divided by 8 */
+#define LL_RCC_MCO1_DIV_9                  RCC_MCO1CFGR_MCO1DIV_3   /*!< MCO divided by 9 */
+#define LL_RCC_MCO1_DIV_10                 (RCC_MCO1CFGR_MCO1DIV_3 | RCC_MCO1CFGR_MCO1DIV_0)   /*!< MCO divided by 10 */
+#define LL_RCC_MCO1_DIV_11                 (RCC_MCO1CFGR_MCO1DIV_3 | RCC_MCO1CFGR_MCO1DIV_1)  /*!< MCO divided by 11 */
+#define LL_RCC_MCO1_DIV_12                 (RCC_MCO1CFGR_MCO1DIV_3 | RCC_MCO1CFGR_MCO1DIV_1 | RCC_MCO1CFGR_MCO1DIV_0)  /*!< MCO divided by 12 */
+#define LL_RCC_MCO1_DIV_13                 (RCC_MCO1CFGR_MCO1DIV_3 | RCC_MCO1CFGR_MCO1DIV_2)  /*!< MCO divided by 13 */
+#define LL_RCC_MCO1_DIV_14                 (RCC_MCO1CFGR_MCO1DIV_3 | RCC_MCO1CFGR_MCO1DIV_2 | RCC_MCO1CFGR_MCO1DIV_0)  /*!< MCO divided by 14 */
+#define LL_RCC_MCO1_DIV_15                 (RCC_MCO1CFGR_MCO1DIV_3 | RCC_MCO1CFGR_MCO1DIV_2 | RCC_MCO1CFGR_MCO1DIV_1)  /*!< MCO divided by 15 */
+#define LL_RCC_MCO1_DIV_16                 (RCC_MCO1CFGR_MCO1DIV_3 | RCC_MCO1CFGR_MCO1DIV_2 | RCC_MCO1CFGR_MCO1DIV_1 | RCC_MCO1CFGR_MCO1DIV_0)  /*!< MCO divided by 16 */
 /**
   * @}
   */
@@ -341,22 +340,22 @@ typedef struct
 /** @defgroup RCC_LL_EC_MCO2_DIV  MCO2 prescaler
   * @{
   */
-#define LL_RCC_MCO2_DIV_1                  RCC_MCO2CFGR_MCO2DIV_0   /*!< MCO not divided */
-#define LL_RCC_MCO2_DIV_2                  RCC_MCO2CFGR_MCO2DIV_1   /*!< MCO divided by 2 */
-#define LL_RCC_MCO2_DIV_3                  RCC_MCO2CFGR_MCO2DIV_2   /*!< MCO divided by 3 */
-#define LL_RCC_MCO2_DIV_4                  RCC_MCO2CFGR_MCO2DIV_3   /*!< MCO divided by 4 */
-#define LL_RCC_MCO2_DIV_5                  RCC_MCO2CFGR_MCO2DIV_4   /*!< MCO divided by 5 */
-#define LL_RCC_MCO2_DIV_6                  RCC_MCO2CFGR_MCO2DIV_5   /*!< MCO divided by 6 */
-#define LL_RCC_MCO2_DIV_7                  RCC_MCO2CFGR_MCO2DIV_6   /*!< MCO divided by 7 */
-#define LL_RCC_MCO2_DIV_8                  RCC_MCO2CFGR_MCO2DIV_7   /*!< MCO divided by 8 */
-#define LL_RCC_MCO2_DIV_9                  RCC_MCO2CFGR_MCO2DIV_8   /*!< MCO divided by 9 */
-#define LL_RCC_MCO2_DIV_10                 RCC_MCO2CFGR_MCO2DIV_9   /*!< MCO divided by 10 */
-#define LL_RCC_MCO2_DIV_11                 RCC_MCO2CFGR_MCO2DIV_10  /*!< MCO divided by 11 */
-#define LL_RCC_MCO2_DIV_12                 RCC_MCO2CFGR_MCO2DIV_11  /*!< MCO divided by 12 */
-#define LL_RCC_MCO2_DIV_13                 RCC_MCO2CFGR_MCO2DIV_12  /*!< MCO divided by 13 */
-#define LL_RCC_MCO2_DIV_14                 RCC_MCO2CFGR_MCO2DIV_13  /*!< MCO divided by 14 */
-#define LL_RCC_MCO2_DIV_15                 RCC_MCO2CFGR_MCO2DIV_14  /*!< MCO divided by 15 */
-#define LL_RCC_MCO2_DIV_16                 RCC_MCO2CFGR_MCO2DIV_15  /*!< MCO divided by 16 */
+#define LL_RCC_MCO2_DIV_1                  0U                       /*!< MCO not divided */
+#define LL_RCC_MCO2_DIV_2                  RCC_MCO2CFGR_MCO2DIV_0   /*!< MCO divided by 2 */
+#define LL_RCC_MCO2_DIV_3                  RCC_MCO2CFGR_MCO2DIV_1   /*!< MCO divided by 3 */
+#define LL_RCC_MCO2_DIV_4                  (RCC_MCO2CFGR_MCO2DIV_1 | RCC_MCO2CFGR_MCO2DIV_0)   /*!< MCO divided by 4 */
+#define LL_RCC_MCO2_DIV_5                  RCC_MCO2CFGR_MCO2DIV_2   /*!< MCO divided by 5 */
+#define LL_RCC_MCO2_DIV_6                  (RCC_MCO2CFGR_MCO2DIV_2 | RCC_MCO2CFGR_MCO2DIV_0)   /*!< MCO divided by 6 */
+#define LL_RCC_MCO2_DIV_7                  (RCC_MCO2CFGR_MCO2DIV_2 | RCC_MCO2CFGR_MCO2DIV_1)   /*!< MCO divided by 7 */
+#define LL_RCC_MCO2_DIV_8                  (RCC_MCO2CFGR_MCO2DIV_2 | RCC_MCO2CFGR_MCO2DIV_1 | RCC_MCO2CFGR_MCO2DIV_0)   /*!< MCO divided by 8 */
+#define LL_RCC_MCO2_DIV_9                  RCC_MCO2CFGR_MCO2DIV_3   /*!< MCO divided by 9 */
+#define LL_RCC_MCO2_DIV_10                 (RCC_MCO2CFGR_MCO2DIV_3 | RCC_MCO2CFGR_MCO2DIV_0)   /*!< MCO divided by 10 */
+#define LL_RCC_MCO2_DIV_11                 (RCC_MCO2CFGR_MCO2DIV_3 | RCC_MCO2CFGR_MCO2DIV_1)   /*!< MCO divided by 11 */
+#define LL_RCC_MCO2_DIV_12                 (RCC_MCO2CFGR_MCO2DIV_3 | RCC_MCO2CFGR_MCO2DIV_1 | RCC_MCO2CFGR_MCO2DIV_0)   /*!< MCO divided by 12 */
+#define LL_RCC_MCO2_DIV_13                 (RCC_MCO2CFGR_MCO2DIV_3 | RCC_MCO2CFGR_MCO2DIV_2)   /*!< MCO divided by 13 */
+#define LL_RCC_MCO2_DIV_14                 (RCC_MCO2CFGR_MCO2DIV_3 | RCC_MCO2CFGR_MCO2DIV_2 | RCC_MCO2CFGR_MCO2DIV_0)  /*!< MCO divided by 14 */
+#define LL_RCC_MCO2_DIV_15                 (RCC_MCO2CFGR_MCO2DIV_3 | RCC_MCO2CFGR_MCO2DIV_2 | RCC_MCO2CFGR_MCO2DIV_1)  /*!< MCO divided by 15 */
+#define LL_RCC_MCO2_DIV_16                 (RCC_MCO2CFGR_MCO2DIV_3 | RCC_MCO2CFGR_MCO2DIV_2 | RCC_MCO2CFGR_MCO2DIV_1 | RCC_MCO2CFGR_MCO2DIV_0)  /*!< MCO divided by 16 */
 /**
   * @}
   */
@@ -364,70 +363,70 @@ typedef struct
 /** @defgroup RCC_LL_EC_RTC_HSEDIV  HSE prescaler for RTC clock
   * @{
   */
-#define LL_RCC_RTC_HSE_DIV_1                RCC_RTCDIVR_RTCDIV_1
-#define LL_RCC_RTC_HSE_DIV_2                RCC_RTCDIVR_RTCDIV_2
-#define LL_RCC_RTC_HSE_DIV_3                RCC_RTCDIVR_RTCDIV_3
-#define LL_RCC_RTC_HSE_DIV_4                RCC_RTCDIVR_RTCDIV_4
-#define LL_RCC_RTC_HSE_DIV_5                RCC_RTCDIVR_RTCDIV_5
-#define LL_RCC_RTC_HSE_DIV_6                RCC_RTCDIVR_RTCDIV_6
-#define LL_RCC_RTC_HSE_DIV_7                RCC_RTCDIVR_RTCDIV_7
-#define LL_RCC_RTC_HSE_DIV_8                RCC_RTCDIVR_RTCDIV_8
-#define LL_RCC_RTC_HSE_DIV_9                RCC_RTCDIVR_RTCDIV_9
-#define LL_RCC_RTC_HSE_DIV_10               RCC_RTCDIVR_RTCDIV_10
-#define LL_RCC_RTC_HSE_DIV_11               RCC_RTCDIVR_RTCDIV_11
-#define LL_RCC_RTC_HSE_DIV_12               RCC_RTCDIVR_RTCDIV_12
-#define LL_RCC_RTC_HSE_DIV_13               RCC_RTCDIVR_RTCDIV_13
-#define LL_RCC_RTC_HSE_DIV_14               RCC_RTCDIVR_RTCDIV_14
-#define LL_RCC_RTC_HSE_DIV_15               RCC_RTCDIVR_RTCDIV_15
-#define LL_RCC_RTC_HSE_DIV_16               RCC_RTCDIVR_RTCDIV_16
-#define LL_RCC_RTC_HSE_DIV_17               RCC_RTCDIVR_RTCDIV_17
-#define LL_RCC_RTC_HSE_DIV_18               RCC_RTCDIVR_RTCDIV_18
-#define LL_RCC_RTC_HSE_DIV_19               RCC_RTCDIVR_RTCDIV_19
-#define LL_RCC_RTC_HSE_DIV_20               RCC_RTCDIVR_RTCDIV_20
-#define LL_RCC_RTC_HSE_DIV_21               RCC_RTCDIVR_RTCDIV_21
-#define LL_RCC_RTC_HSE_DIV_22               RCC_RTCDIVR_RTCDIV_22
-#define LL_RCC_RTC_HSE_DIV_23               RCC_RTCDIVR_RTCDIV_23
-#define LL_RCC_RTC_HSE_DIV_24               RCC_RTCDIVR_RTCDIV_24
-#define LL_RCC_RTC_HSE_DIV_25               RCC_RTCDIVR_RTCDIV_25
-#define LL_RCC_RTC_HSE_DIV_26               RCC_RTCDIVR_RTCDIV_26
-#define LL_RCC_RTC_HSE_DIV_27               RCC_RTCDIVR_RTCDIV_27
-#define LL_RCC_RTC_HSE_DIV_28               RCC_RTCDIVR_RTCDIV_28
-#define LL_RCC_RTC_HSE_DIV_29               RCC_RTCDIVR_RTCDIV_29
-#define LL_RCC_RTC_HSE_DIV_30               RCC_RTCDIVR_RTCDIV_30
-#define LL_RCC_RTC_HSE_DIV_31               RCC_RTCDIVR_RTCDIV_31
-#define LL_RCC_RTC_HSE_DIV_32               RCC_RTCDIVR_RTCDIV_32
-#define LL_RCC_RTC_HSE_DIV_33               RCC_RTCDIVR_RTCDIV_33
-#define LL_RCC_RTC_HSE_DIV_34               RCC_RTCDIVR_RTCDIV_34
-#define LL_RCC_RTC_HSE_DIV_35               RCC_RTCDIVR_RTCDIV_35
-#define LL_RCC_RTC_HSE_DIV_36               RCC_RTCDIVR_RTCDIV_36
-#define LL_RCC_RTC_HSE_DIV_37               RCC_RTCDIVR_RTCDIV_37
-#define LL_RCC_RTC_HSE_DIV_38               RCC_RTCDIVR_RTCDIV_38
-#define LL_RCC_RTC_HSE_DIV_39               RCC_RTCDIVR_RTCDIV_39
-#define LL_RCC_RTC_HSE_DIV_40               RCC_RTCDIVR_RTCDIV_40
-#define LL_RCC_RTC_HSE_DIV_41               RCC_RTCDIVR_RTCDIV_41
-#define LL_RCC_RTC_HSE_DIV_42               RCC_RTCDIVR_RTCDIV_42
-#define LL_RCC_RTC_HSE_DIV_43               RCC_RTCDIVR_RTCDIV_43
-#define LL_RCC_RTC_HSE_DIV_44               RCC_RTCDIVR_RTCDIV_44
-#define LL_RCC_RTC_HSE_DIV_45               RCC_RTCDIVR_RTCDIV_45
-#define LL_RCC_RTC_HSE_DIV_46               RCC_RTCDIVR_RTCDIV_46
-#define LL_RCC_RTC_HSE_DIV_47               RCC_RTCDIVR_RTCDIV_47
-#define LL_RCC_RTC_HSE_DIV_48               RCC_RTCDIVR_RTCDIV_48
-#define LL_RCC_RTC_HSE_DIV_49               RCC_RTCDIVR_RTCDIV_49
-#define LL_RCC_RTC_HSE_DIV_50               RCC_RTCDIVR_RTCDIV_50
-#define LL_RCC_RTC_HSE_DIV_51               RCC_RTCDIVR_RTCDIV_51
-#define LL_RCC_RTC_HSE_DIV_52               RCC_RTCDIVR_RTCDIV_52
-#define LL_RCC_RTC_HSE_DIV_53               RCC_RTCDIVR_RTCDIV_53
-#define LL_RCC_RTC_HSE_DIV_54               RCC_RTCDIVR_RTCDIV_54
-#define LL_RCC_RTC_HSE_DIV_55               RCC_RTCDIVR_RTCDIV_55
-#define LL_RCC_RTC_HSE_DIV_56               RCC_RTCDIVR_RTCDIV_56
-#define LL_RCC_RTC_HSE_DIV_57               RCC_RTCDIVR_RTCDIV_57
-#define LL_RCC_RTC_HSE_DIV_58               RCC_RTCDIVR_RTCDIV_58
-#define LL_RCC_RTC_HSE_DIV_59               RCC_RTCDIVR_RTCDIV_59
-#define LL_RCC_RTC_HSE_DIV_60               RCC_RTCDIVR_RTCDIV_60
-#define LL_RCC_RTC_HSE_DIV_61               RCC_RTCDIVR_RTCDIV_61
-#define LL_RCC_RTC_HSE_DIV_62               RCC_RTCDIVR_RTCDIV_62
-#define LL_RCC_RTC_HSE_DIV_63               RCC_RTCDIVR_RTCDIV_63
-#define LL_RCC_RTC_HSE_DIV_64               RCC_RTCDIVR_RTCDIV_64
+#define LL_RCC_RTC_HSE_DIV_1                0U
+#define LL_RCC_RTC_HSE_DIV_2                RCC_RTCDIVR_RTCDIV_0
+#define LL_RCC_RTC_HSE_DIV_3                RCC_RTCDIVR_RTCDIV_1
+#define LL_RCC_RTC_HSE_DIV_4                (RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_5                RCC_RTCDIVR_RTCDIV_2
+#define LL_RCC_RTC_HSE_DIV_6                (RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_7                (RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1)
+#define LL_RCC_RTC_HSE_DIV_8                (RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_9                RCC_RTCDIVR_RTCDIV_3
+#define LL_RCC_RTC_HSE_DIV_10               (RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_11               (RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_1)
+#define LL_RCC_RTC_HSE_DIV_12               (RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_13               (RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2)
+#define LL_RCC_RTC_HSE_DIV_14               (RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_15               (RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1)
+#define LL_RCC_RTC_HSE_DIV_16               (RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_17               RCC_RTCDIVR_RTCDIV_4
+#define LL_RCC_RTC_HSE_DIV_18               (RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_19               (RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_1)
+#define LL_RCC_RTC_HSE_DIV_20               (RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_21               (RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_2)
+#define LL_RCC_RTC_HSE_DIV_22               (RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_23               (RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1)
+#define LL_RCC_RTC_HSE_DIV_24               (RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_25               (RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3)
+#define LL_RCC_RTC_HSE_DIV_26               (RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_27               (RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_1)
+#define LL_RCC_RTC_HSE_DIV_28               (RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_29               (RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2)
+#define LL_RCC_RTC_HSE_DIV_30               (RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_31               (RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1)
+#define LL_RCC_RTC_HSE_DIV_32               (RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_33               RCC_RTCDIVR_RTCDIV_5
+#define LL_RCC_RTC_HSE_DIV_34               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_35               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_1)
+#define LL_RCC_RTC_HSE_DIV_36               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_37               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_2)
+#define LL_RCC_RTC_HSE_DIV_38               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_39               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1)
+#define LL_RCC_RTC_HSE_DIV_40               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_41               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_3)
+#define LL_RCC_RTC_HSE_DIV_42               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_43               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_1)
+#define LL_RCC_RTC_HSE_DIV_44               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_45               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2)
+#define LL_RCC_RTC_HSE_DIV_46               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_47               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1)
+#define LL_RCC_RTC_HSE_DIV_48               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_49               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4)
+#define LL_RCC_RTC_HSE_DIV_50               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_51               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_1)
+#define LL_RCC_RTC_HSE_DIV_52               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_53               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_2)
+#define LL_RCC_RTC_HSE_DIV_54               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_55               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1)
+#define LL_RCC_RTC_HSE_DIV_56               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_57               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3)
+#define LL_RCC_RTC_HSE_DIV_58               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_59               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_1)
+#define LL_RCC_RTC_HSE_DIV_60               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_61               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2)
+#define LL_RCC_RTC_HSE_DIV_62               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_0)
+#define LL_RCC_RTC_HSE_DIV_63               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1)
+#define LL_RCC_RTC_HSE_DIV_64               (RCC_RTCDIVR_RTCDIV_5 | RCC_RTCDIVR_RTCDIV_4 | RCC_RTCDIVR_RTCDIV_3 | RCC_RTCDIVR_RTCDIV_2 | RCC_RTCDIVR_RTCDIV_1 | RCC_RTCDIVR_RTCDIV_0)
 /**
   * @}
   */
@@ -435,10 +434,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_MPU_CLKSOURCE  MPU clock switch
   * @{
   */
-#define LL_RCC_MPU_CLKSOURCE_HSI                RCC_MPCKSELR_MPUSRC_0 /*!< HSI selection as MPU clock */
-#define LL_RCC_MPU_CLKSOURCE_HSE                RCC_MPCKSELR_MPUSRC_1 /*!< HSE selection as MPU clock */
-#define LL_RCC_MPU_CLKSOURCE_PLL1               RCC_MPCKSELR_MPUSRC_2 /*!< PLL1 selection as MPU clock */
-#define LL_RCC_MPU_CLKSOURCE_MPUDIV             RCC_MPCKSELR_MPUSRC_3 /*!< MPUDIV selection as MPU clock */
+#define LL_RCC_MPU_CLKSOURCE_HSI                0U                    /*!< HSI selection as MPU clock */
+#define LL_RCC_MPU_CLKSOURCE_HSE                RCC_MPCKSELR_MPUSRC_0 /*!< HSE selection as MPU clock */
+#define LL_RCC_MPU_CLKSOURCE_PLL1               RCC_MPCKSELR_MPUSRC_1 /*!< PLL1 selection as MPU clock */
+#define LL_RCC_MPU_CLKSOURCE_MPUDIV             (RCC_MPCKSELR_MPUSRC_1 | RCC_MPCKSELR_MPUSRC_0) /*!< MPUDIV selection as MPU clock */
 /**
   * @}
   */
@@ -446,10 +445,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_MPU_CLKSOURCE_STATUS  MPU clock switch status
   * @{
   */
-#define LL_RCC_MPU_CLKSOURCE_STATUS_HSI         RCC_MPCKSELR_MPUSRC_0 /*!< HSI used as MPU clock */
-#define LL_RCC_MPU_CLKSOURCE_STATUS_HSE         RCC_MPCKSELR_MPUSRC_1 /*!< HSE used as MPU clock */
-#define LL_RCC_MPU_CLKSOURCE_STATUS_PLL1        RCC_MPCKSELR_MPUSRC_2 /*!< PLL1 used as MPU clock */
-#define LL_RCC_MPU_CLKSOURCE_STATUS_MPUDIV      RCC_MPCKSELR_MPUSRC_3 /*!< MPUDIV used as MPU clock */
+#define LL_RCC_MPU_CLKSOURCE_STATUS_HSI         0U                    /*!< HSI used as MPU clock */
+#define LL_RCC_MPU_CLKSOURCE_STATUS_HSE         RCC_MPCKSELR_MPUSRC_0 /*!< HSE used as MPU clock */
+#define LL_RCC_MPU_CLKSOURCE_STATUS_PLL1        RCC_MPCKSELR_MPUSRC_1 /*!< PLL1 used as MPU clock */
+#define LL_RCC_MPU_CLKSOURCE_STATUS_MPUDIV      (RCC_MPCKSELR_MPUSRC_1 | RCC_MPCKSELR_MPUSRC_0) /*!< MPUDIV used as MPU clock */
 /**
   * @}
   */
@@ -457,11 +456,11 @@ typedef struct
 /** @defgroup RCC_LL_EC_MPU_DIV  MPUDIV prescaler
   * @{
   */
-#define LL_RCC_MPU_DIV_OFF                      RCC_MPCKDIVR_MPUDIV_0  /*!< MPU div is disabled, no clock generated */
-#define LL_RCC_MPU_DIV_2                        RCC_MPCKDIVR_MPUDIV_1  /*!< MPUSS is equal to pll1_p_ck divided by 2 */
-#define LL_RCC_MPU_DIV_4                        RCC_MPCKDIVR_MPUDIV_2  /*!< MPUSS is equal to pll1_p_ck divided by 4 */
-#define LL_RCC_MPU_DIV_8                        RCC_MPCKDIVR_MPUDIV_3  /*!< MPUSS is equal to pll1_p_ck divided by 8 */
-#define LL_RCC_MPU_DIV_16                       RCC_MPCKDIVR_MPUDIV_4  /*!< MPUSS is equal to pll1_p_ck divided by 16 */
+#define LL_RCC_MPU_DIV_OFF                      0U                     /*!< MPU div is disabled, no clock generated */
+#define LL_RCC_MPU_DIV_2                        RCC_MPCKDIVR_MPUDIV_0  /*!< MPUSS is equal to pll1_p_ck divided by 2 */
+#define LL_RCC_MPU_DIV_4                        RCC_MPCKDIVR_MPUDIV_1  /*!< MPUSS is equal to pll1_p_ck divided by 4 */
+#define LL_RCC_MPU_DIV_8                        (RCC_MPCKDIVR_MPUDIV_1 | RCC_MPCKDIVR_MPUDIV_0) /*!< MPUSS is equal to pll1_p_ck divided by 8 */
+#define LL_RCC_MPU_DIV_16                       RCC_MPCKDIVR_MPUDIV_2  /*!< MPUSS is equal to pll1_p_ck divided by 16 */
 /**
   * @}
   */
@@ -469,10 +468,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_AXISS_CLKSOURCE  AXISS clock switch
   * @{
   */
-#define LL_RCC_AXISS_CLKSOURCE_HSI              RCC_ASSCKSELR_AXISSRC_0 /*!< HSI selection as AXISS clock */
-#define LL_RCC_AXISS_CLKSOURCE_HSE              RCC_ASSCKSELR_AXISSRC_1 /*!< HSE selection as AXISS clock */
-#define LL_RCC_AXISS_CLKSOURCE_PLL2             RCC_ASSCKSELR_AXISSRC_2 /*!< PLL2 selection as AXISS clock */
-#define LL_RCC_AXISS_CLKSOURCE_OFF              RCC_ASSCKSELR_AXISSRC_3 /*!< AXISS is gated */
+#define LL_RCC_AXISS_CLKSOURCE_HSI              0U                      /*!< HSI selection as AXISS clock */
+#define LL_RCC_AXISS_CLKSOURCE_HSE              RCC_ASSCKSELR_AXISSRC_0 /*!< HSE selection as AXISS clock */
+#define LL_RCC_AXISS_CLKSOURCE_PLL2             RCC_ASSCKSELR_AXISSRC_1 /*!< PLL2 selection as AXISS clock */
+#define LL_RCC_AXISS_CLKSOURCE_OFF              (RCC_ASSCKSELR_AXISSRC_1 | RCC_ASSCKSELR_AXISSRC_0) /*!< AXISS is gated */
 /**
   * @}
   */
@@ -480,10 +479,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_AXISS_CLKSOURCE_STATUS  AXISS clock switch status
   * @{
   */
-#define LL_RCC_AXISS_CLKSOURCE_STATUS_HSI       RCC_ASSCKSELR_AXISSRC_0 /*!< HSI used as AXISS clock */
-#define LL_RCC_AXISS_CLKSOURCE_STATUS_HSE       RCC_ASSCKSELR_AXISSRC_1 /*!< HSE used as AXISS clock */
-#define LL_RCC_AXISS_CLKSOURCE_STATUS_PLL2      RCC_ASSCKSELR_AXISSRC_2 /*!< PLL2 used as AXISS clock */
-#define LL_RCC_AXISS_CLKSOURCE_STATUS_OFF       RCC_ASSCKSELR_AXISSRC_3 /*!< AXISS is gated */
+#define LL_RCC_AXISS_CLKSOURCE_STATUS_HSI       0U                      /*!< HSI used as AXISS clock */
+#define LL_RCC_AXISS_CLKSOURCE_STATUS_HSE       RCC_ASSCKSELR_AXISSRC_0 /*!< HSE used as AXISS clock */
+#define LL_RCC_AXISS_CLKSOURCE_STATUS_PLL2      RCC_ASSCKSELR_AXISSRC_1 /*!< PLL2 used as AXISS clock */
+#define LL_RCC_AXISS_CLKSOURCE_STATUS_OFF       (RCC_ASSCKSELR_AXISSRC_1 | RCC_ASSCKSELR_AXISSRC_0) /*!< AXISS is gated */
 /**
   * @}
   */
@@ -491,10 +490,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_AXI_DIV  AXI, AHB5 and AHB6 prescaler
   * @{
   */
-#define LL_RCC_AXI_DIV_1                        RCC_AXIDIVR_AXIDIV_0  /*!< AXISS not divided */
-#define LL_RCC_AXI_DIV_2                        RCC_AXIDIVR_AXIDIV_1  /*!< AXISS divided by 2 */
-#define LL_RCC_AXI_DIV_3                        RCC_AXIDIVR_AXIDIV_2  /*!< AXISS divided by 3 */
-#define LL_RCC_AXI_DIV_4                        RCC_AXIDIVR_AXIDIV_3  /*!< AXISS divided by 4 */
+#define LL_RCC_AXI_DIV_1                        0U  /*!< AXISS not divided */
+#define LL_RCC_AXI_DIV_2                        RCC_AXIDIVR_AXIDIV_0  /*!< AXISS divided by 2 */
+#define LL_RCC_AXI_DIV_3                        RCC_AXIDIVR_AXIDIV_1  /*!< AXISS divided by 3 */
+#define LL_RCC_AXI_DIV_4                        RCC_AXIDIVR_AXIDIV_2  /*!< AXISS divided by 4 */
 /**
   * @}
   */
@@ -502,10 +501,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_MCUSS_CLKSOURCE  MCUSS clock switch
   * @{
   */
-#define LL_RCC_MCUSS_CLKSOURCE_HSI              RCC_MSSCKSELR_MCUSSRC_0 /*!< HSI selection as MCUSS clock */
-#define LL_RCC_MCUSS_CLKSOURCE_HSE              RCC_MSSCKSELR_MCUSSRC_1 /*!< HSE selection as MCUSS clock */
-#define LL_RCC_MCUSS_CLKSOURCE_CSI              RCC_MSSCKSELR_MCUSSRC_2 /*!< CSI selection as MCUSS clock */
-#define LL_RCC_MCUSS_CLKSOURCE_PLL3             RCC_MSSCKSELR_MCUSSRC_3 /*!< PLL3 selection as MCUSS clock */
+#define LL_RCC_MCUSS_CLKSOURCE_HSI              0U                      /*!< HSI selection as MCUSS clock */
+#define LL_RCC_MCUSS_CLKSOURCE_HSE              RCC_MSSCKSELR_MCUSSRC_0 /*!< HSE selection as MCUSS clock */
+#define LL_RCC_MCUSS_CLKSOURCE_CSI              RCC_MSSCKSELR_MCUSSRC_1 /*!< CSI selection as MCUSS clock */
+#define LL_RCC_MCUSS_CLKSOURCE_PLL3             (RCC_MSSCKSELR_MCUSSRC_1 | RCC_MSSCKSELR_MCUSSRC_0) /*!< PLL3 selection as MCUSS clock */
 /**
   * @}
   */
@@ -513,10 +512,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_MCUSS_CLKSOURCE_STATUS  MCUSS clock switch status
   * @{
   */
-#define LL_RCC_MCUSS_CLKSOURCE_STATUS_HSI       RCC_MSSCKSELR_MCUSSRC_0 /*!< HSI used as MCUSS clock */
-#define LL_RCC_MCUSS_CLKSOURCE_STATUS_HSE       RCC_MSSCKSELR_MCUSSRC_1 /*!< HSE used as MCUSS clock */
-#define LL_RCC_MCUSS_CLKSOURCE_STATUS_CSI       RCC_MSSCKSELR_MCUSSRC_2 /*!< CSI used as MCUSS clock */
-#define LL_RCC_MCUSS_CLKSOURCE_STATUS_PLL3      RCC_MSSCKSELR_MCUSSRC_3 /*!< PLL3 used as MCUSS clock */
+#define LL_RCC_MCUSS_CLKSOURCE_STATUS_HSI       0U                      /*!< HSI used as MCUSS clock */
+#define LL_RCC_MCUSS_CLKSOURCE_STATUS_HSE       RCC_MSSCKSELR_MCUSSRC_0 /*!< HSE used as MCUSS clock */
+#define LL_RCC_MCUSS_CLKSOURCE_STATUS_CSI       RCC_MSSCKSELR_MCUSSRC_1 /*!< CSI used as MCUSS clock */
+#define LL_RCC_MCUSS_CLKSOURCE_STATUS_PLL3      (RCC_MSSCKSELR_MCUSSRC_1 | RCC_MSSCKSELR_MCUSSRC_0) /*!< PLL3 used as MCUSS clock */
 /**
   * @}
   */
@@ -524,16 +523,16 @@ typedef struct
 /** @defgroup RCC_LL_EC_MCU_DIV  MCUDIV prescaler
   * @{
   */
-#define LL_RCC_MCU_DIV_1                        RCC_MCUDIVR_MCUDIV_0 /*!< MCUSS not divided */
-#define LL_RCC_MCU_DIV_2                        RCC_MCUDIVR_MCUDIV_1 /*!< MCUSS divided by 2 */
-#define LL_RCC_MCU_DIV_4                        RCC_MCUDIVR_MCUDIV_2 /*!< MCUSS divided by 4 */
-#define LL_RCC_MCU_DIV_8                        RCC_MCUDIVR_MCUDIV_3 /*!< MCUSS divided by 8 */
-#define LL_RCC_MCU_DIV_16                       RCC_MCUDIVR_MCUDIV_4 /*!< MCUSS divided by 16 */
-#define LL_RCC_MCU_DIV_32                       RCC_MCUDIVR_MCUDIV_5 /*!< MCUSS divided by 32 */
-#define LL_RCC_MCU_DIV_64                       RCC_MCUDIVR_MCUDIV_6 /*!< MCUSS divided by 64 */
-#define LL_RCC_MCU_DIV_128                      RCC_MCUDIVR_MCUDIV_7 /*!< MCUSS divided by 128 */
-#define LL_RCC_MCU_DIV_256                      RCC_MCUDIVR_MCUDIV_8 /*!< MCUSS divided by 256 */
-#define LL_RCC_MCU_DIV_512                      RCC_MCUDIVR_MCUDIV_9 /*!< MCUSS divided by 512 */
+#define LL_RCC_MCU_DIV_1                        0U                                            /*!< MCUSS not divided */
+#define LL_RCC_MCU_DIV_2                        RCC_MCUDIVR_MCUDIV_0                          /*!< MCUSS divided by 2 */
+#define LL_RCC_MCU_DIV_4                        RCC_MCUDIVR_MCUDIV_1                          /*!< MCUSS divided by 4 */
+#define LL_RCC_MCU_DIV_8                        (RCC_MCUDIVR_MCUDIV_1 | RCC_MCUDIVR_MCUDIV_0) /*!< MCUSS divided by 8 */
+#define LL_RCC_MCU_DIV_16                       RCC_MCUDIVR_MCUDIV_2                          /*!< MCUSS divided by 16 */
+#define LL_RCC_MCU_DIV_32                       (RCC_MCUDIVR_MCUDIV_2 | RCC_MCUDIVR_MCUDIV_0) /*!< MCUSS divided by 32 */
+#define LL_RCC_MCU_DIV_64                       (RCC_MCUDIVR_MCUDIV_2 | RCC_MCUDIVR_MCUDIV_1) /*!< MCUSS divided by 64 */
+#define LL_RCC_MCU_DIV_128                      (RCC_MCUDIVR_MCUDIV_2 | RCC_MCUDIVR_MCUDIV_1 | RCC_MCUDIVR_MCUDIV_0) /*!< MCUSS divided by 128 */
+#define LL_RCC_MCU_DIV_256                      RCC_MCUDIVR_MCUDIV_3                          /*!< MCUSS divided by 256 */
+#define LL_RCC_MCU_DIV_512                      (RCC_MCUDIVR_MCUDIV_3 | RCC_MCUDIVR_MCUDIV_0) /*!< MCUSS divided by 512 */
 /**
   * @}
   */
@@ -541,11 +540,11 @@ typedef struct
 /** @defgroup RCC_LL_EC_APB1_DIV  APB1 prescaler
   * @{
   */
-#define LL_RCC_APB1_DIV_1                       RCC_APB1DIVR_APB1DIV_0  /*!< mlhclk not divided (default after reset) */
-#define LL_RCC_APB1_DIV_2                       RCC_APB1DIVR_APB1DIV_1  /*!< mlhclk divided by 2 */
-#define LL_RCC_APB1_DIV_4                       RCC_APB1DIVR_APB1DIV_2  /*!< mlhclk divided by 4 */
-#define LL_RCC_APB1_DIV_8                       RCC_APB1DIVR_APB1DIV_3  /*!< mlhclk divided by 8 */
-#define LL_RCC_APB1_DIV_16                      RCC_APB1DIVR_APB1DIV_4  /*!< mlhclk divided by 16 */
+#define LL_RCC_APB1_DIV_1                       0U                                                 /*!< mlhclk not divided (default after reset) */
+#define LL_RCC_APB1_DIV_2                       RCC_APB1DIVR_APB1DIV_0                             /*!< mlhclk divided by 2 */
+#define LL_RCC_APB1_DIV_4                       RCC_APB1DIVR_APB1DIV_1                             /*!< mlhclk divided by 4 */
+#define LL_RCC_APB1_DIV_8                       (RCC_APB1DIVR_APB1DIV_1 | RCC_APB1DIVR_APB1DIV_0)  /*!< mlhclk divided by 8 */
+#define LL_RCC_APB1_DIV_16                      RCC_APB1DIVR_APB1DIV_2                             /*!< mlhclk divided by 16 */
 /**
   * @}
   */
@@ -553,11 +552,11 @@ typedef struct
 /** @defgroup RCC_LL_EC_APB2_DIV  APB2 prescaler
   * @{
   */
-#define LL_RCC_APB2_DIV_1                       RCC_APB2DIVR_APB2DIV_0  /*!< mlhclk not divided (default after reset) */
-#define LL_RCC_APB2_DIV_2                       RCC_APB2DIVR_APB2DIV_1  /*!< mlhclk divided by 2 */
-#define LL_RCC_APB2_DIV_4                       RCC_APB2DIVR_APB2DIV_2  /*!< mlhclk divided by 4 */
-#define LL_RCC_APB2_DIV_8                       RCC_APB2DIVR_APB2DIV_3  /*!< mlhclk divided by 8 */
-#define LL_RCC_APB2_DIV_16                      RCC_APB2DIVR_APB2DIV_4  /*!< mlhclk divided by 16 */
+#define LL_RCC_APB2_DIV_1                       0U                                                 /*!< mlhclk not divided (default after reset) */
+#define LL_RCC_APB2_DIV_2                       RCC_APB2DIVR_APB2DIV_0                             /*!< mlhclk divided by 2 */
+#define LL_RCC_APB2_DIV_4                       RCC_APB2DIVR_APB2DIV_1                             /*!< mlhclk divided by 4 */
+#define LL_RCC_APB2_DIV_8                       (RCC_APB2DIVR_APB2DIV_1 | RCC_APB2DIVR_APB2DIV_0)  /*!< mlhclk divided by 8 */
+#define LL_RCC_APB2_DIV_16                      RCC_APB2DIVR_APB2DIV_2                             /*!< mlhclk divided by 16 */
 /**
   * @}
   */
@@ -565,11 +564,11 @@ typedef struct
 /** @defgroup RCC_LL_EC_APB3_DIV  APB3 prescaler
   * @{
   */
-#define LL_RCC_APB3_DIV_1                       RCC_APB3DIVR_APB3DIV_0  /*!< mlhclk not divided (default after reset) */
-#define LL_RCC_APB3_DIV_2                       RCC_APB3DIVR_APB3DIV_1  /*!< mlhclk divided by 2 */
-#define LL_RCC_APB3_DIV_4                       RCC_APB3DIVR_APB3DIV_2  /*!< mlhclk divided by 4 */
-#define LL_RCC_APB3_DIV_8                       RCC_APB3DIVR_APB3DIV_3  /*!< mlhclk divided by 8 */
-#define LL_RCC_APB3_DIV_16                      RCC_APB3DIVR_APB3DIV_4  /*!< mlhclk divided by 16 */
+#define LL_RCC_APB3_DIV_1                       0U                                                /*!< mlhclk not divided (default after reset) */
+#define LL_RCC_APB3_DIV_2                       RCC_APB3DIVR_APB3DIV_0                            /*!< mlhclk divided by 2 */
+#define LL_RCC_APB3_DIV_4                       RCC_APB3DIVR_APB3DIV_1                            /*!< mlhclk divided by 4 */
+#define LL_RCC_APB3_DIV_8                       (RCC_APB3DIVR_APB3DIV_1| RCC_APB3DIVR_APB3DIV_0)  /*!< mlhclk divided by 8 */
+#define LL_RCC_APB3_DIV_16                      RCC_APB3DIVR_APB3DIV_2                            /*!< mlhclk divided by 16 */
 /**
   * @}
   */
@@ -577,11 +576,11 @@ typedef struct
 /** @defgroup RCC_LL_EC_APB4_DIV  APB4 prescaler
   * @{
   */
-#define LL_RCC_APB4_DIV_1                       RCC_APB4DIVR_APB4DIV_0  /*!< aclk not divided (default after reset) */
-#define LL_RCC_APB4_DIV_2                       RCC_APB4DIVR_APB4DIV_1  /*!< aclk divided by 2 */
-#define LL_RCC_APB4_DIV_4                       RCC_APB4DIVR_APB4DIV_2  /*!< aclk divided by 4 */
-#define LL_RCC_APB4_DIV_8                       RCC_APB4DIVR_APB4DIV_3  /*!< aclk divided by 8 */
-#define LL_RCC_APB4_DIV_16                      RCC_APB4DIVR_APB4DIV_4  /*!< aclk divided by 16 */
+#define LL_RCC_APB4_DIV_1                       0U                                                 /*!< aclk not divided (default after reset) */
+#define LL_RCC_APB4_DIV_2                       RCC_APB4DIVR_APB4DIV_0                             /*!< aclk divided by 2 */
+#define LL_RCC_APB4_DIV_4                       RCC_APB4DIVR_APB4DIV_1                             /*!< aclk divided by 4 */
+#define LL_RCC_APB4_DIV_8                       (RCC_APB4DIVR_APB4DIV_1 | RCC_APB4DIVR_APB4DIV_0)  /*!< aclk divided by 8 */
+#define LL_RCC_APB4_DIV_16                      RCC_APB4DIVR_APB4DIV_2                             /*!< aclk divided by 16 */
 /**
   * @}
   */
@@ -589,11 +588,11 @@ typedef struct
 /** @defgroup RCC_LL_EC_APB5_DIV  APB5 prescaler
   * @{
   */
-#define LL_RCC_APB5_DIV_1                       RCC_APB5DIVR_APB5DIV_0  /*!< aclk not divided (default after reset) */
-#define LL_RCC_APB5_DIV_2                       RCC_APB5DIVR_APB5DIV_1  /*!< aclk divided by 2 */
-#define LL_RCC_APB5_DIV_4                       RCC_APB5DIVR_APB5DIV_2  /*!< aclk divided by 4 */
-#define LL_RCC_APB5_DIV_8                       RCC_APB5DIVR_APB5DIV_3  /*!< aclk divided by 8 */
-#define LL_RCC_APB5_DIV_16                      RCC_APB5DIVR_APB5DIV_4  /*!< aclk divided by 16 */
+#define LL_RCC_APB5_DIV_1                       0U                                                 /*!< aclk not divided (default after reset) */
+#define LL_RCC_APB5_DIV_2                       RCC_APB5DIVR_APB5DIV_0                             /*!< aclk divided by 2 */
+#define LL_RCC_APB5_DIV_4                       RCC_APB5DIVR_APB5DIV_1                             /*!< aclk divided by 4 */
+#define LL_RCC_APB5_DIV_8                       (RCC_APB5DIVR_APB5DIV_1 | RCC_APB5DIVR_APB5DIV_0)  /*!< aclk divided by 8 */
+#define LL_RCC_APB5_DIV_16                      RCC_APB5DIVR_APB5DIV_2                             /*!< aclk divided by 16 */
 /**
   * @}
   */
@@ -601,10 +600,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_LSEDRIVE  LSE oscillator drive capability
   * @{
   */
-#define LL_RCC_LSEDRIVE_LOW                     RCC_BDCR_LSEDRV_0 /*!< Xtal mode lower driving capability */
-#define LL_RCC_LSEDRIVE_MEDIUMLOW               RCC_BDCR_LSEDRV_1 /*!< Xtal mode medium low driving capability */
-#define LL_RCC_LSEDRIVE_MEDIUMHIGH              RCC_BDCR_LSEDRV_2 /*!< Xtal mode medium high driving capability */
-#define LL_RCC_LSEDRIVE_HIGH                    RCC_BDCR_LSEDRV_3 /*!< Xtal mode higher driving capability */
+#define LL_RCC_LSEDRIVE_LOW                     0U                                        /*!< Xtal mode lower driving capability */
+#define LL_RCC_LSEDRIVE_MEDIUMLOW               RCC_BDCR_LSEDRV_0                         /*!< Xtal mode medium low driving capability */
+#define LL_RCC_LSEDRIVE_MEDIUMHIGH              RCC_BDCR_LSEDRV_1                         /*!< Xtal mode medium high driving capability */
+#define LL_RCC_LSEDRIVE_HIGH                    (RCC_BDCR_LSEDRV_1 | RCC_BDCR_LSEDRV_0)   /*!< Xtal mode higher driving capability */
 /**
   * @}
   */
@@ -624,20 +623,20 @@ typedef struct
 /** @defgroup RCC_LL_EC_I2Cx_CLKSOURCE  Peripheral I2C clock source selection
   * @{
   */
-#define LL_RCC_I2C12_CLKSOURCE_PCLK1        LL_CLKSOURCE(RCC_OFFSET_I2C12CKSELR, RCC_I2C12CKSELR_I2C12SRC, RCC_I2C12CKSELR_I2C12SRC_0)
-#define LL_RCC_I2C12_CLKSOURCE_PLL4R        LL_CLKSOURCE(RCC_OFFSET_I2C12CKSELR, RCC_I2C12CKSELR_I2C12SRC, RCC_I2C12CKSELR_I2C12SRC_1)
-#define LL_RCC_I2C12_CLKSOURCE_HSI          LL_CLKSOURCE(RCC_OFFSET_I2C12CKSELR, RCC_I2C12CKSELR_I2C12SRC, RCC_I2C12CKSELR_I2C12SRC_2)
-#define LL_RCC_I2C12_CLKSOURCE_CSI          LL_CLKSOURCE(RCC_OFFSET_I2C12CKSELR, RCC_I2C12CKSELR_I2C12SRC, RCC_I2C12CKSELR_I2C12SRC_3)
+#define LL_RCC_I2C12_CLKSOURCE_PCLK1        LL_CLKSOURCE(RCC_OFFSET_I2C12CKSELR, RCC_I2C12CKSELR_I2C12SRC, 0)
+#define LL_RCC_I2C12_CLKSOURCE_PLL4R        LL_CLKSOURCE(RCC_OFFSET_I2C12CKSELR, RCC_I2C12CKSELR_I2C12SRC, RCC_I2C12CKSELR_I2C12SRC_0)
+#define LL_RCC_I2C12_CLKSOURCE_HSI          LL_CLKSOURCE(RCC_OFFSET_I2C12CKSELR, RCC_I2C12CKSELR_I2C12SRC, RCC_I2C12CKSELR_I2C12SRC_1)
+#define LL_RCC_I2C12_CLKSOURCE_CSI          LL_CLKSOURCE(RCC_OFFSET_I2C12CKSELR, RCC_I2C12CKSELR_I2C12SRC, (RCC_I2C12CKSELR_I2C12SRC_1 | RCC_I2C12CKSELR_I2C12SRC_0))
 
-#define LL_RCC_I2C35_CLKSOURCE_PCLK1        LL_CLKSOURCE(RCC_OFFSET_I2C35CKSELR, RCC_I2C35CKSELR_I2C35SRC, RCC_I2C35CKSELR_I2C35SRC_0)
-#define LL_RCC_I2C35_CLKSOURCE_PLL4R        LL_CLKSOURCE(RCC_OFFSET_I2C35CKSELR, RCC_I2C35CKSELR_I2C35SRC, RCC_I2C35CKSELR_I2C35SRC_1)
-#define LL_RCC_I2C35_CLKSOURCE_HSI          LL_CLKSOURCE(RCC_OFFSET_I2C35CKSELR, RCC_I2C35CKSELR_I2C35SRC, RCC_I2C35CKSELR_I2C35SRC_2)
-#define LL_RCC_I2C35_CLKSOURCE_CSI          LL_CLKSOURCE(RCC_OFFSET_I2C35CKSELR, RCC_I2C35CKSELR_I2C35SRC, RCC_I2C35CKSELR_I2C35SRC_3)
+#define LL_RCC_I2C35_CLKSOURCE_PCLK1        LL_CLKSOURCE(RCC_OFFSET_I2C35CKSELR, RCC_I2C35CKSELR_I2C35SRC, 0)
+#define LL_RCC_I2C35_CLKSOURCE_PLL4R        LL_CLKSOURCE(RCC_OFFSET_I2C35CKSELR, RCC_I2C35CKSELR_I2C35SRC, RCC_I2C35CKSELR_I2C35SRC_0)
+#define LL_RCC_I2C35_CLKSOURCE_HSI          LL_CLKSOURCE(RCC_OFFSET_I2C35CKSELR, RCC_I2C35CKSELR_I2C35SRC, RCC_I2C35CKSELR_I2C35SRC_1)
+#define LL_RCC_I2C35_CLKSOURCE_CSI          LL_CLKSOURCE(RCC_OFFSET_I2C35CKSELR, RCC_I2C35CKSELR_I2C35SRC, (RCC_I2C35CKSELR_I2C35SRC_1 | RCC_I2C35CKSELR_I2C35SRC_0))
 
-#define LL_RCC_I2C46_CLKSOURCE_PCLK5        LL_CLKSOURCE(RCC_OFFSET_I2C46CKSELR, RCC_I2C46CKSELR_I2C46SRC, RCC_I2C46CKSELR_I2C46SRC_0)
-#define LL_RCC_I2C46_CLKSOURCE_PLL3Q        LL_CLKSOURCE(RCC_OFFSET_I2C46CKSELR, RCC_I2C46CKSELR_I2C46SRC, RCC_I2C46CKSELR_I2C46SRC_1)
-#define LL_RCC_I2C46_CLKSOURCE_HSI          LL_CLKSOURCE(RCC_OFFSET_I2C46CKSELR, RCC_I2C46CKSELR_I2C46SRC, RCC_I2C46CKSELR_I2C46SRC_2)
-#define LL_RCC_I2C46_CLKSOURCE_CSI          LL_CLKSOURCE(RCC_OFFSET_I2C46CKSELR, RCC_I2C46CKSELR_I2C46SRC, RCC_I2C46CKSELR_I2C46SRC_3)
+#define LL_RCC_I2C46_CLKSOURCE_PCLK5        LL_CLKSOURCE(RCC_OFFSET_I2C46CKSELR, RCC_I2C46CKSELR_I2C46SRC, 0)
+#define LL_RCC_I2C46_CLKSOURCE_PLL3Q        LL_CLKSOURCE(RCC_OFFSET_I2C46CKSELR, RCC_I2C46CKSELR_I2C46SRC, RCC_I2C46CKSELR_I2C46SRC_0)
+#define LL_RCC_I2C46_CLKSOURCE_HSI          LL_CLKSOURCE(RCC_OFFSET_I2C46CKSELR, RCC_I2C46CKSELR_I2C46SRC, RCC_I2C46CKSELR_I2C46SRC_1)
+#define LL_RCC_I2C46_CLKSOURCE_CSI          LL_CLKSOURCE(RCC_OFFSET_I2C46CKSELR, RCC_I2C46CKSELR_I2C46SRC, (RCC_I2C46CKSELR_I2C46SRC_1 | RCC_I2C46CKSELR_I2C46SRC_0))
 /**
   * @}
   */
@@ -645,30 +644,30 @@ typedef struct
 /** @defgroup RCC_LL_EC_SAIx_CLKSOURCE  Peripheral SAI clock source selection
   * @{
   */
-#define LL_RCC_SAI1_CLKSOURCE_PLL4Q         LL_CLKSOURCE(RCC_OFFSET_SAI1CKSELR, RCC_SAI1CKSELR_SAI1SRC, RCC_SAI1CKSELR_SAI1SRC_0)
-#define LL_RCC_SAI1_CLKSOURCE_PLL3Q         LL_CLKSOURCE(RCC_OFFSET_SAI1CKSELR, RCC_SAI1CKSELR_SAI1SRC, RCC_SAI1CKSELR_SAI1SRC_1)
-#define LL_RCC_SAI1_CLKSOURCE_I2SCKIN       LL_CLKSOURCE(RCC_OFFSET_SAI1CKSELR, RCC_SAI1CKSELR_SAI1SRC, RCC_SAI1CKSELR_SAI1SRC_2)
-#define LL_RCC_SAI1_CLKSOURCE_PER           LL_CLKSOURCE(RCC_OFFSET_SAI1CKSELR, RCC_SAI1CKSELR_SAI1SRC, RCC_SAI1CKSELR_SAI1SRC_3)
-#define LL_RCC_SAI1_CLKSOURCE_PLL3R         LL_CLKSOURCE(RCC_OFFSET_SAI1CKSELR, RCC_SAI1CKSELR_SAI1SRC, RCC_SAI1CKSELR_SAI1SRC_4)
+#define LL_RCC_SAI1_CLKSOURCE_PLL4Q         LL_CLKSOURCE(RCC_OFFSET_SAI1CKSELR, RCC_SAI1CKSELR_SAI1SRC, 0)
+#define LL_RCC_SAI1_CLKSOURCE_PLL3Q         LL_CLKSOURCE(RCC_OFFSET_SAI1CKSELR, RCC_SAI1CKSELR_SAI1SRC, RCC_SAI1CKSELR_SAI1SRC_0)
+#define LL_RCC_SAI1_CLKSOURCE_I2SCKIN       LL_CLKSOURCE(RCC_OFFSET_SAI1CKSELR, RCC_SAI1CKSELR_SAI1SRC, RCC_SAI1CKSELR_SAI1SRC_1)
+#define LL_RCC_SAI1_CLKSOURCE_PER           LL_CLKSOURCE(RCC_OFFSET_SAI1CKSELR, RCC_SAI1CKSELR_SAI1SRC, (RCC_SAI1CKSELR_SAI1SRC_1 | RCC_SAI1CKSELR_SAI1SRC_0))
+#define LL_RCC_SAI1_CLKSOURCE_PLL3R         LL_CLKSOURCE(RCC_OFFSET_SAI1CKSELR, RCC_SAI1CKSELR_SAI1SRC, RCC_SAI1CKSELR_SAI1SRC_2)
 
-#define LL_RCC_SAI2_CLKSOURCE_PLL4Q         LL_CLKSOURCE(RCC_OFFSET_SAI2CKSELR, RCC_SAI2CKSELR_SAI2SRC, RCC_SAI2CKSELR_SAI2SRC_0)
-#define LL_RCC_SAI2_CLKSOURCE_PLL3Q         LL_CLKSOURCE(RCC_OFFSET_SAI2CKSELR, RCC_SAI2CKSELR_SAI2SRC, RCC_SAI2CKSELR_SAI2SRC_1)
-#define LL_RCC_SAI2_CLKSOURCE_I2SCKIN       LL_CLKSOURCE(RCC_OFFSET_SAI2CKSELR, RCC_SAI2CKSELR_SAI2SRC, RCC_SAI2CKSELR_SAI2SRC_2)
-#define LL_RCC_SAI2_CLKSOURCE_PER           LL_CLKSOURCE(RCC_OFFSET_SAI2CKSELR, RCC_SAI2CKSELR_SAI2SRC, RCC_SAI2CKSELR_SAI2SRC_3)
-#define LL_RCC_SAI2_CLKSOURCE_SPDIF         LL_CLKSOURCE(RCC_OFFSET_SAI2CKSELR, RCC_SAI2CKSELR_SAI2SRC, RCC_SAI2CKSELR_SAI2SRC_4)
-#define LL_RCC_SAI2_CLKSOURCE_PLL3R         LL_CLKSOURCE(RCC_OFFSET_SAI2CKSELR, RCC_SAI2CKSELR_SAI2SRC, RCC_SAI2CKSELR_SAI2SRC_5)
+#define LL_RCC_SAI2_CLKSOURCE_PLL4Q         LL_CLKSOURCE(RCC_OFFSET_SAI2CKSELR, RCC_SAI2CKSELR_SAI2SRC, 0)
+#define LL_RCC_SAI2_CLKSOURCE_PLL3Q         LL_CLKSOURCE(RCC_OFFSET_SAI2CKSELR, RCC_SAI2CKSELR_SAI2SRC, RCC_SAI2CKSELR_SAI2SRC_0)
+#define LL_RCC_SAI2_CLKSOURCE_I2SCKIN       LL_CLKSOURCE(RCC_OFFSET_SAI2CKSELR, RCC_SAI2CKSELR_SAI2SRC, RCC_SAI2CKSELR_SAI2SRC_1)
+#define LL_RCC_SAI2_CLKSOURCE_PER           LL_CLKSOURCE(RCC_OFFSET_SAI2CKSELR, RCC_SAI2CKSELR_SAI2SRC, (RCC_SAI2CKSELR_SAI2SRC_1 | RCC_SAI2CKSELR_SAI2SRC_0))
+#define LL_RCC_SAI2_CLKSOURCE_SPDIF         LL_CLKSOURCE(RCC_OFFSET_SAI2CKSELR, RCC_SAI2CKSELR_SAI2SRC, RCC_SAI2CKSELR_SAI2SRC_2)
+#define LL_RCC_SAI2_CLKSOURCE_PLL3R         LL_CLKSOURCE(RCC_OFFSET_SAI2CKSELR, RCC_SAI2CKSELR_SAI2SRC, (RCC_SAI2CKSELR_SAI2SRC_2 | RCC_SAI2CKSELR_SAI2SRC_0))
 
-#define LL_RCC_SAI3_CLKSOURCE_PLL4Q         LL_CLKSOURCE(RCC_OFFSET_SAI3CKSELR, RCC_SAI3CKSELR_SAI3SRC, RCC_SAI3CKSELR_SAI3SRC_0)
-#define LL_RCC_SAI3_CLKSOURCE_PLL3Q         LL_CLKSOURCE(RCC_OFFSET_SAI3CKSELR, RCC_SAI3CKSELR_SAI3SRC, RCC_SAI3CKSELR_SAI3SRC_1)
-#define LL_RCC_SAI3_CLKSOURCE_I2SCKIN       LL_CLKSOURCE(RCC_OFFSET_SAI3CKSELR, RCC_SAI3CKSELR_SAI3SRC, RCC_SAI3CKSELR_SAI3SRC_2)
-#define LL_RCC_SAI3_CLKSOURCE_PER           LL_CLKSOURCE(RCC_OFFSET_SAI3CKSELR, RCC_SAI3CKSELR_SAI3SRC, RCC_SAI3CKSELR_SAI3SRC_3)
-#define LL_RCC_SAI3_CLKSOURCE_PLL3R         LL_CLKSOURCE(RCC_OFFSET_SAI3CKSELR, RCC_SAI3CKSELR_SAI3SRC, RCC_SAI3CKSELR_SAI3SRC_4)
+#define LL_RCC_SAI3_CLKSOURCE_PLL4Q         LL_CLKSOURCE(RCC_OFFSET_SAI3CKSELR, RCC_SAI3CKSELR_SAI3SRC, 0)
+#define LL_RCC_SAI3_CLKSOURCE_PLL3Q         LL_CLKSOURCE(RCC_OFFSET_SAI3CKSELR, RCC_SAI3CKSELR_SAI3SRC, RCC_SAI3CKSELR_SAI3SRC_0)
+#define LL_RCC_SAI3_CLKSOURCE_I2SCKIN       LL_CLKSOURCE(RCC_OFFSET_SAI3CKSELR, RCC_SAI3CKSELR_SAI3SRC, RCC_SAI3CKSELR_SAI3SRC_1)
+#define LL_RCC_SAI3_CLKSOURCE_PER           LL_CLKSOURCE(RCC_OFFSET_SAI3CKSELR, RCC_SAI3CKSELR_SAI3SRC, (RCC_SAI3CKSELR_SAI3SRC_1 | RCC_SAI3CKSELR_SAI3SRC_0))
+#define LL_RCC_SAI3_CLKSOURCE_PLL3R         LL_CLKSOURCE(RCC_OFFSET_SAI3CKSELR, RCC_SAI3CKSELR_SAI3SRC, RCC_SAI3CKSELR_SAI3SRC_2)
 
-#define LL_RCC_SAI4_CLKSOURCE_PLL4Q         LL_CLKSOURCE(RCC_OFFSET_SAI4CKSELR, RCC_SAI4CKSELR_SAI4SRC, RCC_SAI4CKSELR_SAI4SRC_0)
-#define LL_RCC_SAI4_CLKSOURCE_PLL3Q         LL_CLKSOURCE(RCC_OFFSET_SAI4CKSELR, RCC_SAI4CKSELR_SAI4SRC, RCC_SAI4CKSELR_SAI4SRC_1)
-#define LL_RCC_SAI4_CLKSOURCE_I2SCKIN       LL_CLKSOURCE(RCC_OFFSET_SAI4CKSELR, RCC_SAI4CKSELR_SAI4SRC, RCC_SAI4CKSELR_SAI4SRC_2)
-#define LL_RCC_SAI4_CLKSOURCE_PER           LL_CLKSOURCE(RCC_OFFSET_SAI4CKSELR, RCC_SAI4CKSELR_SAI4SRC, RCC_SAI4CKSELR_SAI4SRC_3)
-#define LL_RCC_SAI4_CLKSOURCE_PLL3R         LL_CLKSOURCE(RCC_OFFSET_SAI4CKSELR, RCC_SAI4CKSELR_SAI4SRC, RCC_SAI4CKSELR_SAI4SRC_4)
+#define LL_RCC_SAI4_CLKSOURCE_PLL4Q         LL_CLKSOURCE(RCC_OFFSET_SAI4CKSELR, RCC_SAI4CKSELR_SAI4SRC, 0)
+#define LL_RCC_SAI4_CLKSOURCE_PLL3Q         LL_CLKSOURCE(RCC_OFFSET_SAI4CKSELR, RCC_SAI4CKSELR_SAI4SRC, RCC_SAI4CKSELR_SAI4SRC_0)
+#define LL_RCC_SAI4_CLKSOURCE_I2SCKIN       LL_CLKSOURCE(RCC_OFFSET_SAI4CKSELR, RCC_SAI4CKSELR_SAI4SRC, RCC_SAI4CKSELR_SAI4SRC_1)
+#define LL_RCC_SAI4_CLKSOURCE_PER           LL_CLKSOURCE(RCC_OFFSET_SAI4CKSELR, RCC_SAI4CKSELR_SAI4SRC, (RCC_SAI4CKSELR_SAI4SRC_1 | RCC_SAI4CKSELR_SAI4SRC_0))
+#define LL_RCC_SAI4_CLKSOURCE_PLL3R         LL_CLKSOURCE(RCC_OFFSET_SAI4CKSELR, RCC_SAI4CKSELR_SAI4SRC, RCC_SAI4CKSELR_SAI4SRC_2)
 /**
   * @}
   */
@@ -676,30 +675,30 @@ typedef struct
 /** @defgroup RCC_LL_EC_SPIx_CLKSOURCE  Peripheral SPI/I2S clock source selection
   * @{
   */
-#define LL_RCC_SPI1_CLKSOURCE_PLL4P         LL_CLKSOURCE(RCC_OFFSET_SPI2S1CKSELR, RCC_SPI2S1CKSELR_SPI1SRC, RCC_SPI2S1CKSELR_SPI1SRC_0)
-#define LL_RCC_SPI1_CLKSOURCE_PLL3Q         LL_CLKSOURCE(RCC_OFFSET_SPI2S1CKSELR, RCC_SPI2S1CKSELR_SPI1SRC, RCC_SPI2S1CKSELR_SPI1SRC_1)
-#define LL_RCC_SPI1_CLKSOURCE_I2SCKIN       LL_CLKSOURCE(RCC_OFFSET_SPI2S1CKSELR, RCC_SPI2S1CKSELR_SPI1SRC, RCC_SPI2S1CKSELR_SPI1SRC_2)
-#define LL_RCC_SPI1_CLKSOURCE_PER           LL_CLKSOURCE(RCC_OFFSET_SPI2S1CKSELR, RCC_SPI2S1CKSELR_SPI1SRC, RCC_SPI2S1CKSELR_SPI1SRC_3)
-#define LL_RCC_SPI1_CLKSOURCE_PLL3R         LL_CLKSOURCE(RCC_OFFSET_SPI2S1CKSELR, RCC_SPI2S1CKSELR_SPI1SRC, RCC_SPI2S1CKSELR_SPI1SRC_4)
+#define LL_RCC_SPI1_CLKSOURCE_PLL4P         LL_CLKSOURCE(RCC_OFFSET_SPI2S1CKSELR, RCC_SPI2S1CKSELR_SPI1SRC, 0)
+#define LL_RCC_SPI1_CLKSOURCE_PLL3Q         LL_CLKSOURCE(RCC_OFFSET_SPI2S1CKSELR, RCC_SPI2S1CKSELR_SPI1SRC, RCC_SPI2S1CKSELR_SPI1SRC_0)
+#define LL_RCC_SPI1_CLKSOURCE_I2SCKIN       LL_CLKSOURCE(RCC_OFFSET_SPI2S1CKSELR, RCC_SPI2S1CKSELR_SPI1SRC, RCC_SPI2S1CKSELR_SPI1SRC_1)
+#define LL_RCC_SPI1_CLKSOURCE_PER           LL_CLKSOURCE(RCC_OFFSET_SPI2S1CKSELR, RCC_SPI2S1CKSELR_SPI1SRC, (RCC_SPI2S1CKSELR_SPI1SRC_1 | RCC_SPI2S1CKSELR_SPI1SRC_0))
+#define LL_RCC_SPI1_CLKSOURCE_PLL3R         LL_CLKSOURCE(RCC_OFFSET_SPI2S1CKSELR, RCC_SPI2S1CKSELR_SPI1SRC, RCC_SPI2S1CKSELR_SPI1SRC_2)
 
-#define LL_RCC_SPI23_CLKSOURCE_PLL4P        LL_CLKSOURCE(RCC_OFFSET_SPI2S23CKSELR, RCC_SPI2S23CKSELR_SPI23SRC, RCC_SPI2S23CKSELR_SPI23SRC_0)
-#define LL_RCC_SPI23_CLKSOURCE_PLL3Q        LL_CLKSOURCE(RCC_OFFSET_SPI2S23CKSELR, RCC_SPI2S23CKSELR_SPI23SRC, RCC_SPI2S23CKSELR_SPI23SRC_1)
-#define LL_RCC_SPI23_CLKSOURCE_I2SCKIN      LL_CLKSOURCE(RCC_OFFSET_SPI2S23CKSELR, RCC_SPI2S23CKSELR_SPI23SRC, RCC_SPI2S23CKSELR_SPI23SRC_2)
-#define LL_RCC_SPI23_CLKSOURCE_PER          LL_CLKSOURCE(RCC_OFFSET_SPI2S23CKSELR, RCC_SPI2S23CKSELR_SPI23SRC, RCC_SPI2S23CKSELR_SPI23SRC_3)
-#define LL_RCC_SPI23_CLKSOURCE_PLL3R        LL_CLKSOURCE(RCC_OFFSET_SPI2S23CKSELR, RCC_SPI2S23CKSELR_SPI23SRC, RCC_SPI2S23CKSELR_SPI23SRC_4)
+#define LL_RCC_SPI23_CLKSOURCE_PLL4P        LL_CLKSOURCE(RCC_OFFSET_SPI2S23CKSELR, RCC_SPI2S23CKSELR_SPI23SRC, 0)
+#define LL_RCC_SPI23_CLKSOURCE_PLL3Q        LL_CLKSOURCE(RCC_OFFSET_SPI2S23CKSELR, RCC_SPI2S23CKSELR_SPI23SRC, RCC_SPI2S23CKSELR_SPI23SRC_0)
+#define LL_RCC_SPI23_CLKSOURCE_I2SCKIN      LL_CLKSOURCE(RCC_OFFSET_SPI2S23CKSELR, RCC_SPI2S23CKSELR_SPI23SRC, RCC_SPI2S23CKSELR_SPI23SRC_1)
+#define LL_RCC_SPI23_CLKSOURCE_PER          LL_CLKSOURCE(RCC_OFFSET_SPI2S23CKSELR, RCC_SPI2S23CKSELR_SPI23SRC, (RCC_SPI2S23CKSELR_SPI23SRC_1 | RCC_SPI2S23CKSELR_SPI23SRC_0))
+#define LL_RCC_SPI23_CLKSOURCE_PLL3R        LL_CLKSOURCE(RCC_OFFSET_SPI2S23CKSELR, RCC_SPI2S23CKSELR_SPI23SRC, RCC_SPI2S23CKSELR_SPI23SRC_2)
 
-#define LL_RCC_SPI45_CLKSOURCE_PCLK2        LL_CLKSOURCE(RCC_OFFSET_SPI45CKSELR, RCC_SPI45CKSELR_SPI45SRC, RCC_SPI45CKSELR_SPI45SRC_0)
-#define LL_RCC_SPI45_CLKSOURCE_PLL4Q        LL_CLKSOURCE(RCC_OFFSET_SPI45CKSELR, RCC_SPI45CKSELR_SPI45SRC, RCC_SPI45CKSELR_SPI45SRC_1)
-#define LL_RCC_SPI45_CLKSOURCE_HSI          LL_CLKSOURCE(RCC_OFFSET_SPI45CKSELR, RCC_SPI45CKSELR_SPI45SRC, RCC_SPI45CKSELR_SPI45SRC_2)
-#define LL_RCC_SPI45_CLKSOURCE_CSI          LL_CLKSOURCE(RCC_OFFSET_SPI45CKSELR, RCC_SPI45CKSELR_SPI45SRC, RCC_SPI45CKSELR_SPI45SRC_3)
-#define LL_RCC_SPI45_CLKSOURCE_HSE          LL_CLKSOURCE(RCC_OFFSET_SPI45CKSELR, RCC_SPI45CKSELR_SPI45SRC, RCC_SPI45CKSELR_SPI45SRC_4)
+#define LL_RCC_SPI45_CLKSOURCE_PCLK2        LL_CLKSOURCE(RCC_OFFSET_SPI45CKSELR, RCC_SPI45CKSELR_SPI45SRC, 0)
+#define LL_RCC_SPI45_CLKSOURCE_PLL4Q        LL_CLKSOURCE(RCC_OFFSET_SPI45CKSELR, RCC_SPI45CKSELR_SPI45SRC, RCC_SPI45CKSELR_SPI45SRC_0)
+#define LL_RCC_SPI45_CLKSOURCE_HSI          LL_CLKSOURCE(RCC_OFFSET_SPI45CKSELR, RCC_SPI45CKSELR_SPI45SRC, RCC_SPI45CKSELR_SPI45SRC_1)
+#define LL_RCC_SPI45_CLKSOURCE_CSI          LL_CLKSOURCE(RCC_OFFSET_SPI45CKSELR, RCC_SPI45CKSELR_SPI45SRC, (RCC_SPI45CKSELR_SPI45SRC_1 | RCC_SPI45CKSELR_SPI45SRC_0))
+#define LL_RCC_SPI45_CLKSOURCE_HSE          LL_CLKSOURCE(RCC_OFFSET_SPI45CKSELR, RCC_SPI45CKSELR_SPI45SRC, RCC_SPI45CKSELR_SPI45SRC_2)
 
-#define LL_RCC_SPI6_CLKSOURCE_PCLK5         LL_CLKSOURCE(RCC_OFFSET_SPI6CKSELR, RCC_SPI6CKSELR_SPI6SRC, RCC_SPI6CKSELR_SPI6SRC_0)
-#define LL_RCC_SPI6_CLKSOURCE_PLL4Q         LL_CLKSOURCE(RCC_OFFSET_SPI6CKSELR, RCC_SPI6CKSELR_SPI6SRC, RCC_SPI6CKSELR_SPI6SRC_1)
-#define LL_RCC_SPI6_CLKSOURCE_HSI           LL_CLKSOURCE(RCC_OFFSET_SPI6CKSELR, RCC_SPI6CKSELR_SPI6SRC, RCC_SPI6CKSELR_SPI6SRC_2)
-#define LL_RCC_SPI6_CLKSOURCE_CSI           LL_CLKSOURCE(RCC_OFFSET_SPI6CKSELR, RCC_SPI6CKSELR_SPI6SRC, RCC_SPI6CKSELR_SPI6SRC_3)
-#define LL_RCC_SPI6_CLKSOURCE_HSE           LL_CLKSOURCE(RCC_OFFSET_SPI6CKSELR, RCC_SPI6CKSELR_SPI6SRC, RCC_SPI6CKSELR_SPI6SRC_4)
-#define LL_RCC_SPI6_CLKSOURCE_PLL3Q         LL_CLKSOURCE(RCC_OFFSET_SPI6CKSELR, RCC_SPI6CKSELR_SPI6SRC, RCC_SPI6CKSELR_SPI6SRC_5)
+#define LL_RCC_SPI6_CLKSOURCE_PCLK5         LL_CLKSOURCE(RCC_OFFSET_SPI6CKSELR, RCC_SPI6CKSELR_SPI6SRC, 0)
+#define LL_RCC_SPI6_CLKSOURCE_PLL4Q         LL_CLKSOURCE(RCC_OFFSET_SPI6CKSELR, RCC_SPI6CKSELR_SPI6SRC, RCC_SPI6CKSELR_SPI6SRC_0)
+#define LL_RCC_SPI6_CLKSOURCE_HSI           LL_CLKSOURCE(RCC_OFFSET_SPI6CKSELR, RCC_SPI6CKSELR_SPI6SRC, RCC_SPI6CKSELR_SPI6SRC_1)
+#define LL_RCC_SPI6_CLKSOURCE_CSI           LL_CLKSOURCE(RCC_OFFSET_SPI6CKSELR, RCC_SPI6CKSELR_SPI6SRC, (RCC_SPI6CKSELR_SPI6SRC_1 | RCC_SPI6CKSELR_SPI6SRC_0))
+#define LL_RCC_SPI6_CLKSOURCE_HSE           LL_CLKSOURCE(RCC_OFFSET_SPI6CKSELR, RCC_SPI6CKSELR_SPI6SRC, RCC_SPI6CKSELR_SPI6SRC_2)
+#define LL_RCC_SPI6_CLKSOURCE_PLL3Q         LL_CLKSOURCE(RCC_OFFSET_SPI6CKSELR, RCC_SPI6CKSELR_SPI6SRC, (RCC_SPI6CKSELR_SPI6SRC_2 | RCC_SPI6CKSELR_SPI6SRC_0))
 /**
   * @}
   */
@@ -707,36 +706,36 @@ typedef struct
 /** @defgroup RCC_LL_EC_USARTx_CLKSOURCE  Peripheral USART clock source selection
   * @{
   */
-#define LL_RCC_USART1_CLKSOURCE_PCLK5       LL_CLKSOURCE(RCC_OFFSET_UART1CKSELR, RCC_UART1CKSELR_UART1SRC, RCC_UART1CKSELR_UART1SRC_0)
-#define LL_RCC_USART1_CLKSOURCE_PLL3Q       LL_CLKSOURCE(RCC_OFFSET_UART1CKSELR, RCC_UART1CKSELR_UART1SRC, RCC_UART1CKSELR_UART1SRC_1)
-#define LL_RCC_USART1_CLKSOURCE_HSI         LL_CLKSOURCE(RCC_OFFSET_UART1CKSELR, RCC_UART1CKSELR_UART1SRC, RCC_UART1CKSELR_UART1SRC_2)
-#define LL_RCC_USART1_CLKSOURCE_CSI         LL_CLKSOURCE(RCC_OFFSET_UART1CKSELR, RCC_UART1CKSELR_UART1SRC, RCC_UART1CKSELR_UART1SRC_3)
-#define LL_RCC_USART1_CLKSOURCE_PLL4Q       LL_CLKSOURCE(RCC_OFFSET_UART1CKSELR, RCC_UART1CKSELR_UART1SRC, RCC_UART1CKSELR_UART1SRC_4)
-#define LL_RCC_USART1_CLKSOURCE_HSE         LL_CLKSOURCE(RCC_OFFSET_UART1CKSELR, RCC_UART1CKSELR_UART1SRC, RCC_UART1CKSELR_UART1SRC_5)
+#define LL_RCC_USART1_CLKSOURCE_PCLK5       LL_CLKSOURCE(RCC_OFFSET_UART1CKSELR, RCC_UART1CKSELR_UART1SRC, 0)
+#define LL_RCC_USART1_CLKSOURCE_PLL3Q       LL_CLKSOURCE(RCC_OFFSET_UART1CKSELR, RCC_UART1CKSELR_UART1SRC, RCC_UART1CKSELR_UART1SRC_0)
+#define LL_RCC_USART1_CLKSOURCE_HSI         LL_CLKSOURCE(RCC_OFFSET_UART1CKSELR, RCC_UART1CKSELR_UART1SRC, RCC_UART1CKSELR_UART1SRC_1)
+#define LL_RCC_USART1_CLKSOURCE_CSI         LL_CLKSOURCE(RCC_OFFSET_UART1CKSELR, RCC_UART1CKSELR_UART1SRC, (RCC_UART1CKSELR_UART1SRC_1 | RCC_UART1CKSELR_UART1SRC_0))
+#define LL_RCC_USART1_CLKSOURCE_PLL4Q       LL_CLKSOURCE(RCC_OFFSET_UART1CKSELR, RCC_UART1CKSELR_UART1SRC, RCC_UART1CKSELR_UART1SRC_2)
+#define LL_RCC_USART1_CLKSOURCE_HSE         LL_CLKSOURCE(RCC_OFFSET_UART1CKSELR, RCC_UART1CKSELR_UART1SRC, (RCC_UART1CKSELR_UART1SRC_2 | RCC_UART1CKSELR_UART1SRC_0))
 
-#define LL_RCC_UART24_CLKSOURCE_PCLK1       LL_CLKSOURCE(RCC_OFFSET_UART24CKSELR, RCC_UART24CKSELR_UART24SRC, RCC_UART24CKSELR_UART24SRC_0)
-#define LL_RCC_UART24_CLKSOURCE_PLL4Q       LL_CLKSOURCE(RCC_OFFSET_UART24CKSELR, RCC_UART24CKSELR_UART24SRC, RCC_UART24CKSELR_UART24SRC_1)
-#define LL_RCC_UART24_CLKSOURCE_HSI         LL_CLKSOURCE(RCC_OFFSET_UART24CKSELR, RCC_UART24CKSELR_UART24SRC, RCC_UART24CKSELR_UART24SRC_2)
-#define LL_RCC_UART24_CLKSOURCE_CSI         LL_CLKSOURCE(RCC_OFFSET_UART24CKSELR, RCC_UART24CKSELR_UART24SRC, RCC_UART24CKSELR_UART24SRC_3)
-#define LL_RCC_UART24_CLKSOURCE_HSE         LL_CLKSOURCE(RCC_OFFSET_UART24CKSELR, RCC_UART24CKSELR_UART24SRC, RCC_UART24CKSELR_UART24SRC_4)
+#define LL_RCC_UART24_CLKSOURCE_PCLK1       LL_CLKSOURCE(RCC_OFFSET_UART24CKSELR, RCC_UART24CKSELR_UART24SRC, 0)
+#define LL_RCC_UART24_CLKSOURCE_PLL4Q       LL_CLKSOURCE(RCC_OFFSET_UART24CKSELR, RCC_UART24CKSELR_UART24SRC, RCC_UART24CKSELR_UART24SRC_0)
+#define LL_RCC_UART24_CLKSOURCE_HSI         LL_CLKSOURCE(RCC_OFFSET_UART24CKSELR, RCC_UART24CKSELR_UART24SRC, RCC_UART24CKSELR_UART24SRC_1)
+#define LL_RCC_UART24_CLKSOURCE_CSI         LL_CLKSOURCE(RCC_OFFSET_UART24CKSELR, RCC_UART24CKSELR_UART24SRC, (RCC_UART24CKSELR_UART24SRC_1 | RCC_UART24CKSELR_UART24SRC_0))
+#define LL_RCC_UART24_CLKSOURCE_HSE         LL_CLKSOURCE(RCC_OFFSET_UART24CKSELR, RCC_UART24CKSELR_UART24SRC, RCC_UART24CKSELR_UART24SRC_2)
 
-#define LL_RCC_UART35_CLKSOURCE_PCLK1       LL_CLKSOURCE(RCC_OFFSET_UART35CKSELR, RCC_UART35CKSELR_UART35SRC, RCC_UART35CKSELR_UART35SRC_0)
-#define LL_RCC_UART35_CLKSOURCE_PLL4Q       LL_CLKSOURCE(RCC_OFFSET_UART35CKSELR, RCC_UART35CKSELR_UART35SRC, RCC_UART35CKSELR_UART35SRC_1)
-#define LL_RCC_UART35_CLKSOURCE_HSI         LL_CLKSOURCE(RCC_OFFSET_UART35CKSELR, RCC_UART35CKSELR_UART35SRC, RCC_UART35CKSELR_UART35SRC_2)
-#define LL_RCC_UART35_CLKSOURCE_CSI         LL_CLKSOURCE(RCC_OFFSET_UART35CKSELR, RCC_UART35CKSELR_UART35SRC, RCC_UART35CKSELR_UART35SRC_3)
-#define LL_RCC_UART35_CLKSOURCE_HSE         LL_CLKSOURCE(RCC_OFFSET_UART35CKSELR, RCC_UART35CKSELR_UART35SRC, RCC_UART35CKSELR_UART35SRC_4)
+#define LL_RCC_UART35_CLKSOURCE_PCLK1       LL_CLKSOURCE(RCC_OFFSET_UART35CKSELR, RCC_UART35CKSELR_UART35SRC, 0)
+#define LL_RCC_UART35_CLKSOURCE_PLL4Q       LL_CLKSOURCE(RCC_OFFSET_UART35CKSELR, RCC_UART35CKSELR_UART35SRC, RCC_UART35CKSELR_UART35SRC_0)
+#define LL_RCC_UART35_CLKSOURCE_HSI         LL_CLKSOURCE(RCC_OFFSET_UART35CKSELR, RCC_UART35CKSELR_UART35SRC, RCC_UART35CKSELR_UART35SRC_1)
+#define LL_RCC_UART35_CLKSOURCE_CSI         LL_CLKSOURCE(RCC_OFFSET_UART35CKSELR, RCC_UART35CKSELR_UART35SRC, (RCC_UART35CKSELR_UART35SRC_1 | RCC_UART35CKSELR_UART35SRC_0))
+#define LL_RCC_UART35_CLKSOURCE_HSE         LL_CLKSOURCE(RCC_OFFSET_UART35CKSELR, RCC_UART35CKSELR_UART35SRC, RCC_UART35CKSELR_UART35SRC_2)
 
-#define LL_RCC_USART6_CLKSOURCE_PCLK2       LL_CLKSOURCE(RCC_OFFSET_UART6CKSELR, RCC_UART6CKSELR_UART6SRC, RCC_UART6CKSELR_UART6SRC_0)
-#define LL_RCC_USART6_CLKSOURCE_PLL4Q       LL_CLKSOURCE(RCC_OFFSET_UART6CKSELR, RCC_UART6CKSELR_UART6SRC, RCC_UART6CKSELR_UART6SRC_1)
-#define LL_RCC_USART6_CLKSOURCE_HSI         LL_CLKSOURCE(RCC_OFFSET_UART6CKSELR, RCC_UART6CKSELR_UART6SRC, RCC_UART6CKSELR_UART6SRC_2)
-#define LL_RCC_USART6_CLKSOURCE_CSI         LL_CLKSOURCE(RCC_OFFSET_UART6CKSELR, RCC_UART6CKSELR_UART6SRC, RCC_UART6CKSELR_UART6SRC_3)
-#define LL_RCC_USART6_CLKSOURCE_HSE         LL_CLKSOURCE(RCC_OFFSET_UART6CKSELR, RCC_UART6CKSELR_UART6SRC, RCC_UART6CKSELR_UART6SRC_4)
+#define LL_RCC_USART6_CLKSOURCE_PCLK2       LL_CLKSOURCE(RCC_OFFSET_UART6CKSELR, RCC_UART6CKSELR_UART6SRC, 0)
+#define LL_RCC_USART6_CLKSOURCE_PLL4Q       LL_CLKSOURCE(RCC_OFFSET_UART6CKSELR, RCC_UART6CKSELR_UART6SRC, RCC_UART6CKSELR_UART6SRC_0)
+#define LL_RCC_USART6_CLKSOURCE_HSI         LL_CLKSOURCE(RCC_OFFSET_UART6CKSELR, RCC_UART6CKSELR_UART6SRC, RCC_UART6CKSELR_UART6SRC_1)
+#define LL_RCC_USART6_CLKSOURCE_CSI         LL_CLKSOURCE(RCC_OFFSET_UART6CKSELR, RCC_UART6CKSELR_UART6SRC, (RCC_UART6CKSELR_UART6SRC_1 | RCC_UART6CKSELR_UART6SRC_0))
+#define LL_RCC_USART6_CLKSOURCE_HSE         LL_CLKSOURCE(RCC_OFFSET_UART6CKSELR, RCC_UART6CKSELR_UART6SRC, RCC_UART6CKSELR_UART6SRC_2)
 
-#define LL_RCC_UART78_CLKSOURCE_PCLK1       LL_CLKSOURCE(RCC_OFFSET_UART78CKSELR, RCC_UART78CKSELR_UART78SRC, RCC_UART78CKSELR_UART78SRC_0)
-#define LL_RCC_UART78_CLKSOURCE_PLL4Q       LL_CLKSOURCE(RCC_OFFSET_UART78CKSELR, RCC_UART78CKSELR_UART78SRC, RCC_UART78CKSELR_UART78SRC_1)
-#define LL_RCC_UART78_CLKSOURCE_HSI         LL_CLKSOURCE(RCC_OFFSET_UART78CKSELR, RCC_UART78CKSELR_UART78SRC, RCC_UART78CKSELR_UART78SRC_2)
-#define LL_RCC_UART78_CLKSOURCE_CSI         LL_CLKSOURCE(RCC_OFFSET_UART78CKSELR, RCC_UART78CKSELR_UART78SRC, RCC_UART78CKSELR_UART78SRC_3)
-#define LL_RCC_UART78_CLKSOURCE_HSE         LL_CLKSOURCE(RCC_OFFSET_UART78CKSELR, RCC_UART78CKSELR_UART78SRC, RCC_UART78CKSELR_UART78SRC_4)
+#define LL_RCC_UART78_CLKSOURCE_PCLK1       LL_CLKSOURCE(RCC_OFFSET_UART78CKSELR, RCC_UART78CKSELR_UART78SRC, 0)
+#define LL_RCC_UART78_CLKSOURCE_PLL4Q       LL_CLKSOURCE(RCC_OFFSET_UART78CKSELR, RCC_UART78CKSELR_UART78SRC, RCC_UART78CKSELR_UART78SRC_0)
+#define LL_RCC_UART78_CLKSOURCE_HSI         LL_CLKSOURCE(RCC_OFFSET_UART78CKSELR, RCC_UART78CKSELR_UART78SRC, RCC_UART78CKSELR_UART78SRC_1)
+#define LL_RCC_UART78_CLKSOURCE_CSI         LL_CLKSOURCE(RCC_OFFSET_UART78CKSELR, RCC_UART78CKSELR_UART78SRC, (RCC_UART78CKSELR_UART78SRC_1 | RCC_UART78CKSELR_UART78SRC_0))
+#define LL_RCC_UART78_CLKSOURCE_HSE         LL_CLKSOURCE(RCC_OFFSET_UART78CKSELR, RCC_UART78CKSELR_UART78SRC, RCC_UART78CKSELR_UART78SRC_2)
 /**
   * @}
   */
@@ -744,15 +743,15 @@ typedef struct
 /** @defgroup RCC_LL_EC_SDMMCx_CLKSOURCE  Peripheral SDMMC clock source selection
   * @{
   */
-#define LL_RCC_SDMMC12_CLKSOURCE_HCLK6      LL_CLKSOURCE(RCC_OFFSET_SDMMC12CKSELR, RCC_SDMMC12CKSELR_SDMMC12SRC, RCC_SDMMC12CKSELR_SDMMC12SRC_0)
-#define LL_RCC_SDMMC12_CLKSOURCE_PLL3R      LL_CLKSOURCE(RCC_OFFSET_SDMMC12CKSELR, RCC_SDMMC12CKSELR_SDMMC12SRC, RCC_SDMMC12CKSELR_SDMMC12SRC_1)
-#define LL_RCC_SDMMC12_CLKSOURCE_PLL4P      LL_CLKSOURCE(RCC_OFFSET_SDMMC12CKSELR, RCC_SDMMC12CKSELR_SDMMC12SRC, RCC_SDMMC12CKSELR_SDMMC12SRC_2)
-#define LL_RCC_SDMMC12_CLKSOURCE_HSI        LL_CLKSOURCE(RCC_OFFSET_SDMMC12CKSELR, RCC_SDMMC12CKSELR_SDMMC12SRC, RCC_SDMMC12CKSELR_SDMMC12SRC_3)
+#define LL_RCC_SDMMC12_CLKSOURCE_HCLK6      LL_CLKSOURCE(RCC_OFFSET_SDMMC12CKSELR, RCC_SDMMC12CKSELR_SDMMC12SRC, 0)
+#define LL_RCC_SDMMC12_CLKSOURCE_PLL3R      LL_CLKSOURCE(RCC_OFFSET_SDMMC12CKSELR, RCC_SDMMC12CKSELR_SDMMC12SRC, RCC_SDMMC12CKSELR_SDMMC12SRC_0)
+#define LL_RCC_SDMMC12_CLKSOURCE_PLL4P      LL_CLKSOURCE(RCC_OFFSET_SDMMC12CKSELR, RCC_SDMMC12CKSELR_SDMMC12SRC, RCC_SDMMC12CKSELR_SDMMC12SRC_1)
+#define LL_RCC_SDMMC12_CLKSOURCE_HSI        LL_CLKSOURCE(RCC_OFFSET_SDMMC12CKSELR, RCC_SDMMC12CKSELR_SDMMC12SRC, (RCC_SDMMC12CKSELR_SDMMC12SRC_1 | RCC_SDMMC12CKSELR_SDMMC12SRC_0))
 
-#define LL_RCC_SDMMC3_CLKSOURCE_HCLK2       LL_CLKSOURCE(RCC_OFFSET_SDMMC3CKSELR, RCC_SDMMC3CKSELR_SDMMC3SRC, RCC_SDMMC3CKSELR_SDMMC3SRC_0)
-#define LL_RCC_SDMMC3_CLKSOURCE_PLL3R       LL_CLKSOURCE(RCC_OFFSET_SDMMC3CKSELR, RCC_SDMMC3CKSELR_SDMMC3SRC, RCC_SDMMC3CKSELR_SDMMC3SRC_1)
-#define LL_RCC_SDMMC3_CLKSOURCE_PLL4P       LL_CLKSOURCE(RCC_OFFSET_SDMMC3CKSELR, RCC_SDMMC3CKSELR_SDMMC3SRC, RCC_SDMMC3CKSELR_SDMMC3SRC_2)
-#define LL_RCC_SDMMC3_CLKSOURCE_HSI         LL_CLKSOURCE(RCC_OFFSET_SDMMC3CKSELR, RCC_SDMMC3CKSELR_SDMMC3SRC, RCC_SDMMC3CKSELR_SDMMC3SRC_3)
+#define LL_RCC_SDMMC3_CLKSOURCE_HCLK2       LL_CLKSOURCE(RCC_OFFSET_SDMMC3CKSELR, RCC_SDMMC3CKSELR_SDMMC3SRC, 0)
+#define LL_RCC_SDMMC3_CLKSOURCE_PLL3R       LL_CLKSOURCE(RCC_OFFSET_SDMMC3CKSELR, RCC_SDMMC3CKSELR_SDMMC3SRC, RCC_SDMMC3CKSELR_SDMMC3SRC_0)
+#define LL_RCC_SDMMC3_CLKSOURCE_PLL4P       LL_CLKSOURCE(RCC_OFFSET_SDMMC3CKSELR, RCC_SDMMC3CKSELR_SDMMC3SRC, RCC_SDMMC3CKSELR_SDMMC3SRC_1)
+#define LL_RCC_SDMMC3_CLKSOURCE_HSI         LL_CLKSOURCE(RCC_OFFSET_SDMMC3CKSELR, RCC_SDMMC3CKSELR_SDMMC3SRC, (RCC_SDMMC3CKSELR_SDMMC3SRC_1 | RCC_SDMMC3CKSELR_SDMMC3SRC_0))
 /**
   * @}
   */
@@ -760,9 +759,9 @@ typedef struct
 /** @defgroup RCC_LL_EC_ETH_CLKSOURCE  Peripheral ETH clock source selection
   * @{
   */
-#define LL_RCC_ETH_CLKSOURCE_PLL4P          RCC_ETHCKSELR_ETHSRC_0
-#define LL_RCC_ETH_CLKSOURCE_PLL3Q          RCC_ETHCKSELR_ETHSRC_1
-#define LL_RCC_ETH_CLKSOURCE_OFF            RCC_ETHCKSELR_ETHSRC_2
+#define LL_RCC_ETH_CLKSOURCE_PLL4P          0U
+#define LL_RCC_ETH_CLKSOURCE_PLL3Q          RCC_ETHCKSELR_ETHSRC_0
+#define LL_RCC_ETH_CLKSOURCE_OFF            RCC_ETHCKSELR_ETHSRC_1
 /**
   * @}
   */
@@ -770,10 +769,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_QSPI_CLKSOURCE  Peripheral QSPI clock source selection
   * @{
   */
-#define LL_RCC_QSPI_CLKSOURCE_ACLK          RCC_QSPICKSELR_QSPISRC_0
-#define LL_RCC_QSPI_CLKSOURCE_PLL3R         RCC_QSPICKSELR_QSPISRC_1
-#define LL_RCC_QSPI_CLKSOURCE_PLL4P         RCC_QSPICKSELR_QSPISRC_2
-#define LL_RCC_QSPI_CLKSOURCE_PER           RCC_QSPICKSELR_QSPISRC_3
+#define LL_RCC_QSPI_CLKSOURCE_ACLK          0U
+#define LL_RCC_QSPI_CLKSOURCE_PLL3R         RCC_QSPICKSELR_QSPISRC_0
+#define LL_RCC_QSPI_CLKSOURCE_PLL4P         RCC_QSPICKSELR_QSPISRC_1
+#define LL_RCC_QSPI_CLKSOURCE_PER           (RCC_QSPICKSELR_QSPISRC_1 | RCC_QSPICKSELR_QSPISRC_0)
 /**
   * @}
   */
@@ -781,10 +780,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_FMC_CLKSOURCE  Peripheral FMC clock source selection
   * @{
   */
-#define LL_RCC_FMC_CLKSOURCE_ACLK           RCC_FMCCKSELR_FMCSRC_0
-#define LL_RCC_FMC_CLKSOURCE_PLL3R          RCC_FMCCKSELR_FMCSRC_1
-#define LL_RCC_FMC_CLKSOURCE_PLL4P          RCC_FMCCKSELR_FMCSRC_2
-#define LL_RCC_FMC_CLKSOURCE_PER            RCC_FMCCKSELR_FMCSRC_3
+#define LL_RCC_FMC_CLKSOURCE_ACLK           0U
+#define LL_RCC_FMC_CLKSOURCE_PLL3R          RCC_FMCCKSELR_FMCSRC_0
+#define LL_RCC_FMC_CLKSOURCE_PLL4P          RCC_FMCCKSELR_FMCSRC_1
+#define LL_RCC_FMC_CLKSOURCE_PER            (RCC_FMCCKSELR_FMCSRC_1 | RCC_FMCCKSELR_FMCSRC_0)
 /**
   * @}
   */
@@ -793,21 +792,21 @@ typedef struct
 /** @defgroup RCC_LL_EC_FDCAN_CLKSOURCE  Peripheral FDCAN clock source selection
   * @{
   */
-#define LL_RCC_FDCAN_CLKSOURCE_HSE          RCC_FDCANCKSELR_FDCANSRC_0
-#define LL_RCC_FDCAN_CLKSOURCE_PLL3Q        RCC_FDCANCKSELR_FDCANSRC_1
-#define LL_RCC_FDCAN_CLKSOURCE_PLL4Q        RCC_FDCANCKSELR_FDCANSRC_2
-#define LL_RCC_FDCAN_CLKSOURCE_PLL4R        RCC_FDCANCKSELR_FDCANSRC_3
+#define LL_RCC_FDCAN_CLKSOURCE_HSE          0U
+#define LL_RCC_FDCAN_CLKSOURCE_PLL3Q        RCC_FDCANCKSELR_FDCANSRC_0
+#define LL_RCC_FDCAN_CLKSOURCE_PLL4Q        RCC_FDCANCKSELR_FDCANSRC_1
+#define LL_RCC_FDCAN_CLKSOURCE_PLL4R        (RCC_FDCANCKSELR_FDCANSRC_1 | RCC_FDCANCKSELR_FDCANSRC_0)
 /**
   * @}
   */
 #endif /*FDCAN1*/
-  
+
 /** @defgroup RCC_LL_EC_SPDIFRX_CLKSOURCE  Peripheral SPDIFRX clock source selection
   * @{
   */
-#define LL_RCC_SPDIFRX_CLKSOURCE_PLL4P      RCC_SPDIFCKSELR_SPDIFSRC_0
-#define LL_RCC_SPDIFRX_CLKSOURCE_PLL3Q      RCC_SPDIFCKSELR_SPDIFSRC_1
-#define LL_RCC_SPDIFRX_CLKSOURCE_HSI        RCC_SPDIFCKSELR_SPDIFSRC_2
+#define LL_RCC_SPDIFRX_CLKSOURCE_PLL4P      0U
+#define LL_RCC_SPDIFRX_CLKSOURCE_PLL3Q      RCC_SPDIFCKSELR_SPDIFSRC_0
+#define LL_RCC_SPDIFRX_CLKSOURCE_HSI        RCC_SPDIFCKSELR_SPDIFSRC_1
 /**
   * @}
   */
@@ -815,9 +814,9 @@ typedef struct
 /** @defgroup RCC_LL_EC_CEC_CLKSOURCE  Peripheral CEC clock source selection
   * @{
   */
-#define LL_RCC_CEC_CLKSOURCE_LSE            RCC_CECCKSELR_CECSRC_0
-#define LL_RCC_CEC_CLKSOURCE_LSI            RCC_CECCKSELR_CECSRC_1
-#define LL_RCC_CEC_CLKSOURCE_CSI122         RCC_CECCKSELR_CECSRC_2
+#define LL_RCC_CEC_CLKSOURCE_LSE            0U
+#define LL_RCC_CEC_CLKSOURCE_LSI            RCC_CECCKSELR_CECSRC_0
+#define LL_RCC_CEC_CLKSOURCE_CSI122         RCC_CECCKSELR_CECSRC_1
 /**
   * @}
   */
@@ -825,9 +824,9 @@ typedef struct
 /** @defgroup RCC_LL_EC_USBPHY_CLKSOURCE  Peripheral USBPHY clock source selection
   * @{
   */
-#define LL_RCC_USBPHY_CLKSOURCE_HSE         RCC_USBCKSELR_USBPHYSRC_0
-#define LL_RCC_USBPHY_CLKSOURCE_PLL4R       RCC_USBCKSELR_USBPHYSRC_1
-#define LL_RCC_USBPHY_CLKSOURCE_HSE2        RCC_USBCKSELR_USBPHYSRC_2
+#define LL_RCC_USBPHY_CLKSOURCE_HSE         0U
+#define LL_RCC_USBPHY_CLKSOURCE_PLL4R       RCC_USBCKSELR_USBPHYSRC_0
+#define LL_RCC_USBPHY_CLKSOURCE_HSE2        RCC_USBCKSELR_USBPHYSRC_1
 /**
   * @}
   */
@@ -835,8 +834,8 @@ typedef struct
 /** @defgroup RCC_LL_EC_USBO_CLKSOURCE  Peripheral USBO clock source selection
   * @{
   */
-#define LL_RCC_USBO_CLKSOURCE_PLL4R         RCC_USBCKSELR_USBOSRC_0
-#define LL_RCC_USBO_CLKSOURCE_PHY           RCC_USBCKSELR_USBOSRC_1
+#define LL_RCC_USBO_CLKSOURCE_PLL4R         0U
+#define LL_RCC_USBO_CLKSOURCE_PHY           RCC_USBCKSELR_USBOSRC
 /**
   * @}
   */
@@ -844,15 +843,15 @@ typedef struct
 /** @defgroup RCC_LL_EC_RNGx_CLKSOURCE  Peripheral RNG clock source selection
   * @{
   */
-#define LL_RCC_RNG1_CLKSOURCE_CSI           LL_CLKSOURCE(RCC_OFFSET_RNG1CKSELR, RCC_RNG1CKSELR_RNG1SRC, RCC_RNG1CKSELR_RNG1SRC_0)
-#define LL_RCC_RNG1_CLKSOURCE_PLL4R         LL_CLKSOURCE(RCC_OFFSET_RNG1CKSELR, RCC_RNG1CKSELR_RNG1SRC, RCC_RNG1CKSELR_RNG1SRC_1)
-#define LL_RCC_RNG1_CLKSOURCE_LSE           LL_CLKSOURCE(RCC_OFFSET_RNG1CKSELR, RCC_RNG1CKSELR_RNG1SRC, RCC_RNG1CKSELR_RNG1SRC_2)
-#define LL_RCC_RNG1_CLKSOURCE_LSI           LL_CLKSOURCE(RCC_OFFSET_RNG1CKSELR, RCC_RNG1CKSELR_RNG1SRC, RCC_RNG1CKSELR_RNG1SRC_3)
+#define LL_RCC_RNG1_CLKSOURCE_CSI           LL_CLKSOURCE(RCC_OFFSET_RNG1CKSELR, RCC_RNG1CKSELR_RNG1SRC, 0)
+#define LL_RCC_RNG1_CLKSOURCE_PLL4R         LL_CLKSOURCE(RCC_OFFSET_RNG1CKSELR, RCC_RNG1CKSELR_RNG1SRC, RCC_RNG1CKSELR_RNG1SRC_0)
+#define LL_RCC_RNG1_CLKSOURCE_LSE           LL_CLKSOURCE(RCC_OFFSET_RNG1CKSELR, RCC_RNG1CKSELR_RNG1SRC, RCC_RNG1CKSELR_RNG1SRC_1)
+#define LL_RCC_RNG1_CLKSOURCE_LSI           LL_CLKSOURCE(RCC_OFFSET_RNG1CKSELR, RCC_RNG1CKSELR_RNG1SRC, (RCC_RNG1CKSELR_RNG1SRC_1 | RCC_RNG1CKSELR_RNG1SRC_0))
 
-#define LL_RCC_RNG2_CLKSOURCE_CSI           LL_CLKSOURCE(RCC_OFFSET_RNG2CKSELR, RCC_RNG2CKSELR_RNG2SRC, RCC_RNG2CKSELR_RNG2SRC_0)
-#define LL_RCC_RNG2_CLKSOURCE_PLL4R         LL_CLKSOURCE(RCC_OFFSET_RNG2CKSELR, RCC_RNG2CKSELR_RNG2SRC, RCC_RNG2CKSELR_RNG2SRC_1)
-#define LL_RCC_RNG2_CLKSOURCE_LSE           LL_CLKSOURCE(RCC_OFFSET_RNG2CKSELR, RCC_RNG2CKSELR_RNG2SRC, RCC_RNG2CKSELR_RNG2SRC_2)
-#define LL_RCC_RNG2_CLKSOURCE_LSI           LL_CLKSOURCE(RCC_OFFSET_RNG2CKSELR, RCC_RNG2CKSELR_RNG2SRC, RCC_RNG2CKSELR_RNG2SRC_3)
+#define LL_RCC_RNG2_CLKSOURCE_CSI           LL_CLKSOURCE(RCC_OFFSET_RNG2CKSELR, RCC_RNG2CKSELR_RNG2SRC, 0)
+#define LL_RCC_RNG2_CLKSOURCE_PLL4R         LL_CLKSOURCE(RCC_OFFSET_RNG2CKSELR, RCC_RNG2CKSELR_RNG2SRC, RCC_RNG2CKSELR_RNG2SRC_0)
+#define LL_RCC_RNG2_CLKSOURCE_LSE           LL_CLKSOURCE(RCC_OFFSET_RNG2CKSELR, RCC_RNG2CKSELR_RNG2SRC, RCC_RNG2CKSELR_RNG2SRC_1)
+#define LL_RCC_RNG2_CLKSOURCE_LSI           LL_CLKSOURCE(RCC_OFFSET_RNG2CKSELR, RCC_RNG2CKSELR_RNG2SRC, (RCC_RNG2CKSELR_RNG2SRC_1 | RCC_RNG2CKSELR_RNG2SRC_0))
 /**
   * @}
   */
@@ -860,10 +859,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_CKPER_CLKSOURCE  Peripheral CKPER clock source selection
   * @{
   */
-#define LL_RCC_CKPER_CLKSOURCE_HSI          RCC_CPERCKSELR_CKPERSRC_0
-#define LL_RCC_CKPER_CLKSOURCE_CSI          RCC_CPERCKSELR_CKPERSRC_1
-#define LL_RCC_CKPER_CLKSOURCE_HSE          RCC_CPERCKSELR_CKPERSRC_2
-#define LL_RCC_CKPER_CLKSOURCE_OFF          RCC_CPERCKSELR_CKPERSRC_3 /*Clock disabled*/
+#define LL_RCC_CKPER_CLKSOURCE_HSI          0U
+#define LL_RCC_CKPER_CLKSOURCE_CSI          RCC_CPERCKSELR_CKPERSRC_0
+#define LL_RCC_CKPER_CLKSOURCE_HSE          RCC_CPERCKSELR_CKPERSRC_1
+#define LL_RCC_CKPER_CLKSOURCE_OFF          (RCC_CPERCKSELR_CKPERSRC_1 | RCC_CPERCKSELR_CKPERSRC_0) /*Clock disabled*/
 /**
   * @}
   */
@@ -871,9 +870,9 @@ typedef struct
 /** @defgroup RCC_LL_EC_STGEN_CLKSOURCE  Peripheral STGEN clock source selection
   * @{
   */
-#define LL_RCC_STGEN_CLKSOURCE_HSI          RCC_STGENCKSELR_STGENSRC_0
-#define LL_RCC_STGEN_CLKSOURCE_HSE          RCC_STGENCKSELR_STGENSRC_1
-#define LL_RCC_STGEN_CLKSOURCE_OFF          RCC_STGENCKSELR_STGENSRC_2
+#define LL_RCC_STGEN_CLKSOURCE_HSI          0U
+#define LL_RCC_STGEN_CLKSOURCE_HSE          RCC_STGENCKSELR_STGENSRC_0
+#define LL_RCC_STGEN_CLKSOURCE_OFF          RCC_STGENCKSELR_STGENSRC_1
 /**
   * @}
   */
@@ -882,8 +881,8 @@ typedef struct
 /** @defgroup RCC_LL_EC_DSI_CLKSOURCE  Peripheral  DSI clock source selection
   * @{
   */
-#define LL_RCC_DSI_CLKSOURCE_PHY            RCC_DSICKSELR_DSISRC_0
-#define LL_RCC_DSI_CLKSOURCE_PLL4P          RCC_DSICKSELR_DSISRC_1
+#define LL_RCC_DSI_CLKSOURCE_PHY            0U
+#define LL_RCC_DSI_CLKSOURCE_PLL4P          RCC_DSICKSELR_DSISRC
 /**
   * @}
   */
@@ -892,9 +891,9 @@ typedef struct
 /** @defgroup RCC_LL_EC_ADC_CLKSOURCE  Peripheral ADC clock source selection
   * @{
   */
-#define LL_RCC_ADC_CLKSOURCE_PLL4R          RCC_ADCCKSELR_ADCSRC_0
-#define LL_RCC_ADC_CLKSOURCE_PER            RCC_ADCCKSELR_ADCSRC_1
-#define LL_RCC_ADC_CLKSOURCE_PLL3Q          RCC_ADCCKSELR_ADCSRC_2
+#define LL_RCC_ADC_CLKSOURCE_PLL4R          0U
+#define LL_RCC_ADC_CLKSOURCE_PER            RCC_ADCCKSELR_ADCSRC_0
+#define LL_RCC_ADC_CLKSOURCE_PLL3Q          RCC_ADCCKSELR_ADCSRC_1
 /**
   * @}
   */
@@ -902,28 +901,28 @@ typedef struct
 /** @defgroup RCC_LL_EC_LPTIMx_CLKSOURCE  Peripheral LPTIM clock source selection
   * @{
   */
-#define LL_RCC_LPTIM1_CLKSOURCE_PCLK1       LL_CLKSOURCE(RCC_OFFSET_LPTIM1CKSELR, RCC_LPTIM1CKSELR_LPTIM1SRC, RCC_LPTIM1CKSELR_LPTIM1SRC_0)
-#define LL_RCC_LPTIM1_CLKSOURCE_PLL4P       LL_CLKSOURCE(RCC_OFFSET_LPTIM1CKSELR, RCC_LPTIM1CKSELR_LPTIM1SRC, RCC_LPTIM1CKSELR_LPTIM1SRC_1)
-#define LL_RCC_LPTIM1_CLKSOURCE_PLL3Q       LL_CLKSOURCE(RCC_OFFSET_LPTIM1CKSELR, RCC_LPTIM1CKSELR_LPTIM1SRC, RCC_LPTIM1CKSELR_LPTIM1SRC_2)
-#define LL_RCC_LPTIM1_CLKSOURCE_LSE         LL_CLKSOURCE(RCC_OFFSET_LPTIM1CKSELR, RCC_LPTIM1CKSELR_LPTIM1SRC, RCC_LPTIM1CKSELR_LPTIM1SRC_3)
-#define LL_RCC_LPTIM1_CLKSOURCE_LSI         LL_CLKSOURCE(RCC_OFFSET_LPTIM1CKSELR, RCC_LPTIM1CKSELR_LPTIM1SRC, RCC_LPTIM1CKSELR_LPTIM1SRC_4)
-#define LL_RCC_LPTIM1_CLKSOURCE_PER         LL_CLKSOURCE(RCC_OFFSET_LPTIM1CKSELR, RCC_LPTIM1CKSELR_LPTIM1SRC, RCC_LPTIM1CKSELR_LPTIM1SRC_5)
-#define LL_RCC_LPTIM1_CLKSOURCE_OFF         LL_CLKSOURCE(RCC_OFFSET_LPTIM1CKSELR, RCC_LPTIM1CKSELR_LPTIM1SRC, RCC_LPTIM1CKSELR_LPTIM1SRC_6)
+#define LL_RCC_LPTIM1_CLKSOURCE_PCLK1       LL_CLKSOURCE(RCC_OFFSET_LPTIM1CKSELR, RCC_LPTIM1CKSELR_LPTIM1SRC, 0)
+#define LL_RCC_LPTIM1_CLKSOURCE_PLL4P       LL_CLKSOURCE(RCC_OFFSET_LPTIM1CKSELR, RCC_LPTIM1CKSELR_LPTIM1SRC, RCC_LPTIM1CKSELR_LPTIM1SRC_0)
+#define LL_RCC_LPTIM1_CLKSOURCE_PLL3Q       LL_CLKSOURCE(RCC_OFFSET_LPTIM1CKSELR, RCC_LPTIM1CKSELR_LPTIM1SRC, RCC_LPTIM1CKSELR_LPTIM1SRC_1)
+#define LL_RCC_LPTIM1_CLKSOURCE_LSE         LL_CLKSOURCE(RCC_OFFSET_LPTIM1CKSELR, RCC_LPTIM1CKSELR_LPTIM1SRC, (RCC_LPTIM1CKSELR_LPTIM1SRC_1 | RCC_LPTIM1CKSELR_LPTIM1SRC_0))
+#define LL_RCC_LPTIM1_CLKSOURCE_LSI         LL_CLKSOURCE(RCC_OFFSET_LPTIM1CKSELR, RCC_LPTIM1CKSELR_LPTIM1SRC, RCC_LPTIM1CKSELR_LPTIM1SRC_2)
+#define LL_RCC_LPTIM1_CLKSOURCE_PER         LL_CLKSOURCE(RCC_OFFSET_LPTIM1CKSELR, RCC_LPTIM1CKSELR_LPTIM1SRC, (RCC_LPTIM1CKSELR_LPTIM1SRC_2 | RCC_LPTIM1CKSELR_LPTIM1SRC_0))
+#define LL_RCC_LPTIM1_CLKSOURCE_OFF         LL_CLKSOURCE(RCC_OFFSET_LPTIM1CKSELR, RCC_LPTIM1CKSELR_LPTIM1SRC, (RCC_LPTIM1CKSELR_LPTIM1SRC_2 | RCC_LPTIM1CKSELR_LPTIM1SRC_1))
 
-#define LL_RCC_LPTIM23_CLKSOURCE_PCLK3      LL_CLKSOURCE(RCC_OFFSET_LPTIM23CKSELR, RCC_LPTIM23CKSELR_LPTIM23SRC, RCC_LPTIM23CKSELR_LPTIM23SRC_0)
-#define LL_RCC_LPTIM23_CLKSOURCE_PLL4Q      LL_CLKSOURCE(RCC_OFFSET_LPTIM23CKSELR, RCC_LPTIM23CKSELR_LPTIM23SRC, RCC_LPTIM23CKSELR_LPTIM23SRC_1)
-#define LL_RCC_LPTIM23_CLKSOURCE_PER        LL_CLKSOURCE(RCC_OFFSET_LPTIM23CKSELR, RCC_LPTIM23CKSELR_LPTIM23SRC, RCC_LPTIM23CKSELR_LPTIM23SRC_2)
-#define LL_RCC_LPTIM23_CLKSOURCE_LSE        LL_CLKSOURCE(RCC_OFFSET_LPTIM23CKSELR, RCC_LPTIM23CKSELR_LPTIM23SRC, RCC_LPTIM23CKSELR_LPTIM23SRC_3)
-#define LL_RCC_LPTIM23_CLKSOURCE_LSI        LL_CLKSOURCE(RCC_OFFSET_LPTIM23CKSELR, RCC_LPTIM23CKSELR_LPTIM23SRC, RCC_LPTIM23CKSELR_LPTIM23SRC_4)
-#define LL_RCC_LPTIM23_CLKSOURCE_OFF        LL_CLKSOURCE(RCC_OFFSET_LPTIM23CKSELR, RCC_LPTIM23CKSELR_LPTIM23SRC, RCC_LPTIM23CKSELR_LPTIM23SRC_5)
+#define LL_RCC_LPTIM23_CLKSOURCE_PCLK3      LL_CLKSOURCE(RCC_OFFSET_LPTIM23CKSELR, RCC_LPTIM23CKSELR_LPTIM23SRC, 0)
+#define LL_RCC_LPTIM23_CLKSOURCE_PLL4Q      LL_CLKSOURCE(RCC_OFFSET_LPTIM23CKSELR, RCC_LPTIM23CKSELR_LPTIM23SRC, RCC_LPTIM23CKSELR_LPTIM23SRC_0)
+#define LL_RCC_LPTIM23_CLKSOURCE_PER        LL_CLKSOURCE(RCC_OFFSET_LPTIM23CKSELR, RCC_LPTIM23CKSELR_LPTIM23SRC, RCC_LPTIM23CKSELR_LPTIM23SRC_1)
+#define LL_RCC_LPTIM23_CLKSOURCE_LSE        LL_CLKSOURCE(RCC_OFFSET_LPTIM23CKSELR, RCC_LPTIM23CKSELR_LPTIM23SRC, (RCC_LPTIM23CKSELR_LPTIM23SRC_1 | RCC_LPTIM23CKSELR_LPTIM23SRC_0))
+#define LL_RCC_LPTIM23_CLKSOURCE_LSI        LL_CLKSOURCE(RCC_OFFSET_LPTIM23CKSELR, RCC_LPTIM23CKSELR_LPTIM23SRC, RCC_LPTIM23CKSELR_LPTIM23SRC_2)
+#define LL_RCC_LPTIM23_CLKSOURCE_OFF        LL_CLKSOURCE(RCC_OFFSET_LPTIM23CKSELR, RCC_LPTIM23CKSELR_LPTIM23SRC, (RCC_LPTIM23CKSELR_LPTIM23SRC_2 | RCC_LPTIM23CKSELR_LPTIM23SRC_0))
 
-#define LL_RCC_LPTIM45_CLKSOURCE_PCLK3      LL_CLKSOURCE(RCC_OFFSET_LPTIM45CKSELR, RCC_LPTIM45CKSELR_LPTIM45SRC, RCC_LPTIM45CKSELR_LPTIM45SRC_0)
-#define LL_RCC_LPTIM45_CLKSOURCE_PLL4P      LL_CLKSOURCE(RCC_OFFSET_LPTIM45CKSELR, RCC_LPTIM45CKSELR_LPTIM45SRC, RCC_LPTIM45CKSELR_LPTIM45SRC_1)
-#define LL_RCC_LPTIM45_CLKSOURCE_PLL3Q      LL_CLKSOURCE(RCC_OFFSET_LPTIM45CKSELR, RCC_LPTIM45CKSELR_LPTIM45SRC, RCC_LPTIM45CKSELR_LPTIM45SRC_2)
-#define LL_RCC_LPTIM45_CLKSOURCE_LSE        LL_CLKSOURCE(RCC_OFFSET_LPTIM45CKSELR, RCC_LPTIM45CKSELR_LPTIM45SRC, RCC_LPTIM45CKSELR_LPTIM45SRC_3)
-#define LL_RCC_LPTIM45_CLKSOURCE_LSI        LL_CLKSOURCE(RCC_OFFSET_LPTIM45CKSELR, RCC_LPTIM45CKSELR_LPTIM45SRC, RCC_LPTIM45CKSELR_LPTIM45SRC_4)
-#define LL_RCC_LPTIM45_CLKSOURCE_PER        LL_CLKSOURCE(RCC_OFFSET_LPTIM45CKSELR, RCC_LPTIM45CKSELR_LPTIM45SRC, RCC_LPTIM45CKSELR_LPTIM45SRC_5)
-#define LL_RCC_LPTIM45_CLKSOURCE_OFF        LL_CLKSOURCE(RCC_OFFSET_LPTIM45CKSELR, RCC_LPTIM45CKSELR_LPTIM45SRC, RCC_LPTIM45CKSELR_LPTIM45SRC_6)
+#define LL_RCC_LPTIM45_CLKSOURCE_PCLK3      LL_CLKSOURCE(RCC_OFFSET_LPTIM45CKSELR, RCC_LPTIM45CKSELR_LPTIM45SRC, 0)
+#define LL_RCC_LPTIM45_CLKSOURCE_PLL4P      LL_CLKSOURCE(RCC_OFFSET_LPTIM45CKSELR, RCC_LPTIM45CKSELR_LPTIM45SRC, RCC_LPTIM45CKSELR_LPTIM45SRC_0)
+#define LL_RCC_LPTIM45_CLKSOURCE_PLL3Q      LL_CLKSOURCE(RCC_OFFSET_LPTIM45CKSELR, RCC_LPTIM45CKSELR_LPTIM45SRC, RCC_LPTIM45CKSELR_LPTIM45SRC_1)
+#define LL_RCC_LPTIM45_CLKSOURCE_LSE        LL_CLKSOURCE(RCC_OFFSET_LPTIM45CKSELR, RCC_LPTIM45CKSELR_LPTIM45SRC, (RCC_LPTIM45CKSELR_LPTIM45SRC_1 | RCC_LPTIM45CKSELR_LPTIM45SRC_0))
+#define LL_RCC_LPTIM45_CLKSOURCE_LSI        LL_CLKSOURCE(RCC_OFFSET_LPTIM45CKSELR, RCC_LPTIM45CKSELR_LPTIM45SRC, RCC_LPTIM45CKSELR_LPTIM45SRC_2)
+#define LL_RCC_LPTIM45_CLKSOURCE_PER        LL_CLKSOURCE(RCC_OFFSET_LPTIM45CKSELR, RCC_LPTIM45CKSELR_LPTIM45SRC, (RCC_LPTIM45CKSELR_LPTIM45SRC_2 | RCC_LPTIM45CKSELR_LPTIM45SRC_0))
+#define LL_RCC_LPTIM45_CLKSOURCE_OFF        LL_CLKSOURCE(RCC_OFFSET_LPTIM45CKSELR, RCC_LPTIM45CKSELR_LPTIM45SRC, (RCC_LPTIM45CKSELR_LPTIM45SRC_2 | RCC_LPTIM45CKSELR_LPTIM45SRC_1))
 /**
   * @}
   */
@@ -931,11 +930,11 @@ typedef struct
 /** @defgroup RCC_LL_EC_TIMGx_Prescaler_Selection TIMG Prescaler selection
   * @{
   */
-#define LL_RCC_TIMG1PRES_DEACTIVATED        LL_CLKSOURCE(RCC_OFFSET_TIMG1PRER, RCC_TIMG1PRER_TIMG1PRE, RCC_TIMG1PRER_TIMG1PRE_0)
-#define LL_RCC_TIMG1PRES_ACTIVATED          LL_CLKSOURCE(RCC_OFFSET_TIMG1PRER, RCC_TIMG1PRER_TIMG1PRE, RCC_TIMG1PRER_TIMG1PRE_1)
+#define LL_RCC_TIMG1PRES_DEACTIVATED        LL_CLKSOURCE(RCC_OFFSET_TIMG1PRER, RCC_TIMG1PRER_TIMG1PRE, 0)
+#define LL_RCC_TIMG1PRES_ACTIVATED          LL_CLKSOURCE(RCC_OFFSET_TIMG1PRER, RCC_TIMG1PRER_TIMG1PRE, RCC_TIMG1PRER_TIMG1PRE)
 
-#define LL_RCC_TIMG2PRES_DEACTIVATED        LL_CLKSOURCE(RCC_OFFSET_TIMG2PRER, RCC_TIMG2PRER_TIMG2PRE, RCC_TIMG2PRER_TIMG2PRE_0)
-#define LL_RCC_TIMG2PRES_ACTIVATED          LL_CLKSOURCE(RCC_OFFSET_TIMG2PRER, RCC_TIMG2PRER_TIMG2PRE, RCC_TIMG2PRER_TIMG2PRE_1)
+#define LL_RCC_TIMG2PRES_DEACTIVATED        LL_CLKSOURCE(RCC_OFFSET_TIMG2PRER, RCC_TIMG2PRER_TIMG2PRE, 0)
+#define LL_RCC_TIMG2PRES_ACTIVATED          LL_CLKSOURCE(RCC_OFFSET_TIMG2PRER, RCC_TIMG2PRER_TIMG2PRE, RCC_TIMG2PRER_TIMG2PRE)
 /**
   * @}
   */
@@ -943,10 +942,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_RTC_CLKSOURCE  RTC clock source selection
   * @{
   */
-#define LL_RCC_RTC_CLKSOURCE_NONE           RCC_BDCR_RTCSRC_0  /*!< No clock used as RTC clock */
-#define LL_RCC_RTC_CLKSOURCE_LSE            RCC_BDCR_RTCSRC_1  /*!< LSE oscillator clock used as RTC clock */
-#define LL_RCC_RTC_CLKSOURCE_LSI            RCC_BDCR_RTCSRC_2  /*!< LSI oscillator clock used as RTC clock */
-#define LL_RCC_RTC_CLKSOURCE_HSE_DIV        RCC_BDCR_RTCSRC_3  /*!< HSE oscillator clock divided by RTCDIV used as RTC clock */
+#define LL_RCC_RTC_CLKSOURCE_NONE           0U                                       /*!< No clock used as RTC clock */
+#define LL_RCC_RTC_CLKSOURCE_LSE            RCC_BDCR_RTCSRC_0                        /*!< LSE oscillator clock used as RTC clock */
+#define LL_RCC_RTC_CLKSOURCE_LSI            RCC_BDCR_RTCSRC_1                        /*!< LSI oscillator clock used as RTC clock */
+#define LL_RCC_RTC_CLKSOURCE_HSE_DIV        (RCC_BDCR_RTCSRC_1 | RCC_BDCR_RTCSRC_0)  /*!< HSE oscillator clock divided by RTCDIV used as RTC clock */
 /**
   * @}
   */
@@ -1144,9 +1143,9 @@ typedef struct
 /** @defgroup RCC_LL_EC_PLL12SOURCE  PLL1 and PLL2 entry clock source
   * @{
   */
-#define LL_RCC_PLL12SOURCE_HSI        RCC_RCK12SELR_PLL12SRC_0  /*!< HSI clock selected as PLL12 entry clock source */
-#define LL_RCC_PLL12SOURCE_HSE        RCC_RCK12SELR_PLL12SRC_1  /*!< HSE clock selected as PLL12 entry clock source */
-#define LL_RCC_PLL12SOURCE_NONE       RCC_RCK12SELR_PLL12SRC_2  /*!< No clock */
+#define LL_RCC_PLL12SOURCE_HSI        0U                        /*!< HSI clock selected as PLL12 entry clock source */
+#define LL_RCC_PLL12SOURCE_HSE        RCC_RCK12SELR_PLL12SRC_0  /*!< HSE clock selected as PLL12 entry clock source */
+#define LL_RCC_PLL12SOURCE_NONE       RCC_RCK12SELR_PLL12SRC_1  /*!< No clock */
 /**
   * @}
   */
@@ -1154,10 +1153,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_PLL3SOURCE  PLL3 entry clock source
   * @{
   */
-#define LL_RCC_PLL3SOURCE_HSI         RCC_RCK3SELR_PLL3SRC_0  /*!< HSI clock selected as PLL3 entry clock source */
-#define LL_RCC_PLL3SOURCE_HSE         RCC_RCK3SELR_PLL3SRC_1  /*!< HSE clock selected as PLL3 entry clock source */
-#define LL_RCC_PLL3SOURCE_CSI         RCC_RCK3SELR_PLL3SRC_2  /*!< CSI clock selected as PLL3 entry clock source */
-#define LL_RCC_PLL3SOURCE_NONE        RCC_RCK3SELR_PLL3SRC_3  /*!< No clock */
+#define LL_RCC_PLL3SOURCE_HSI         0U                                                 /*!< HSI clock selected as PLL3 entry clock source */
+#define LL_RCC_PLL3SOURCE_HSE         RCC_RCK3SELR_PLL3SRC_0                             /*!< HSE clock selected as PLL3 entry clock source */
+#define LL_RCC_PLL3SOURCE_CSI         RCC_RCK3SELR_PLL3SRC_1                             /*!< CSI clock selected as PLL3 entry clock source */
+#define LL_RCC_PLL3SOURCE_NONE        (RCC_RCK3SELR_PLL3SRC_1 | RCC_RCK3SELR_PLL3SRC_0)  /*!< No clock */
 /**
   * @}
   */
@@ -1165,10 +1164,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_PLL4SOURCE  PLL4 entry clock source
   * @{
   */
-#define LL_RCC_PLL4SOURCE_HSI         RCC_RCK4SELR_PLL4SRC_0  /*!< HSI clock selected as PLL4 entry clock source */
-#define LL_RCC_PLL4SOURCE_HSE         RCC_RCK4SELR_PLL4SRC_1  /*!< HSE clock selected as PLL4 entry clock source */
-#define LL_RCC_PLL4SOURCE_CSI         RCC_RCK4SELR_PLL4SRC_2  /*!< CSI clock selected as PLL4 entry clock source */
-#define LL_RCC_PLL4SOURCE_I2SCKIN     RCC_RCK4SELR_PLL4SRC_3  /*!< Signal I2S_CKIN selected as PLL4 entry clock source */
+#define LL_RCC_PLL4SOURCE_HSI         0U                                                 /*!< HSI clock selected as PLL4 entry clock source */
+#define LL_RCC_PLL4SOURCE_HSE         RCC_RCK4SELR_PLL4SRC_0                             /*!< HSE clock selected as PLL4 entry clock source */
+#define LL_RCC_PLL4SOURCE_CSI         RCC_RCK4SELR_PLL4SRC_1                             /*!< CSI clock selected as PLL4 entry clock source */
+#define LL_RCC_PLL4SOURCE_I2SCKIN     (RCC_RCK4SELR_PLL4SRC_1 | RCC_RCK4SELR_PLL4SRC_0)  /*!< Signal I2S_CKIN selected as PLL4 entry clock source */
 /**
   * @}
   */
@@ -1360,7 +1359,7 @@ typedef struct
   *         @arg @ref LL_RCC_AXI_DIV_4
   * @retval ACLK clock frequency (in Hz)
   */
-#define LL_RCC_CALC_ACLK_FREQ(__ACLKINPUTCLKFREQ__, __AXIPRESCALER__) ((__ACLKINPUTCLKFREQ__) / (__AXIPRESCALER__ + 1U))
+#define LL_RCC_CALC_ACLK_FREQ(__ACLKINPUTCLKFREQ__, __AXIPRESCALER__) ((__ACLKINPUTCLKFREQ__) / ((__AXIPRESCALER__) + 1U))
 
 /**
   * @brief  Helper macro to calculate the PCLK4 frequency (APB4)
@@ -6019,5 +6018,3 @@ uint32_t    LL_RCC_GetTIMGClockFreq(uint32_t TIMGxPrescaler);
 #endif
 
 #endif /* STM32MP1xx_LL_RCC_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

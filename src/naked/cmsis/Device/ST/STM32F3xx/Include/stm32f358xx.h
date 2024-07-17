@@ -12,13 +12,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -648,6 +647,10 @@ typedef struct
   __IO uint32_t SR;   /*!< WWDG Status register,        Address offset: 0x08 */
 } WWDG_TypeDef;
 
+/**
+  * @}
+  */
+
 /** @addtogroup Peripheral_memory_map
   * @{
   */
@@ -854,6 +857,15 @@ typedef struct
   * @{
   */
 
+  /** @addtogroup Hardware_Constant_Definition
+    * @{
+    */
+#define LSI_STARTUP_TIME 85U /*!< LSI Maximum startup time in us */
+
+  /**
+    * @}
+    */
+
   /** @addtogroup Peripheral_Registers_Bits_Definition
   * @{
   */
@@ -871,7 +883,7 @@ typedef struct
 #define ADC5_V1_1                                      /*!< ADC IP version */
 
 /*
- * @brief Specific device feature definitions (not present on all devices in the STM32F3 serie)
+ * @brief Specific device feature definitions (not present on all devices in the STM32F3 series)
  */
 #define ADC_MULTIMODE_SUPPORT                          /*!< ADC feature available only on specific devices: multimode available on devices with several ADC instances */
 
@@ -1008,7 +1020,7 @@ typedef struct
 
 #define ADC_CFGR_ALIGN_Pos             (5U)                                    
 #define ADC_CFGR_ALIGN_Msk             (0x1UL << ADC_CFGR_ALIGN_Pos)            /*!< 0x00000020 */
-#define ADC_CFGR_ALIGN                 ADC_CFGR_ALIGN_Msk                      /*!< ADC data alignement */
+#define ADC_CFGR_ALIGN                 ADC_CFGR_ALIGN_Msk                      /*!< ADC data alignment */
 
 #define ADC_CFGR_EXTSEL_Pos            (6U)                                    
 #define ADC_CFGR_EXTSEL_Msk            (0xFUL << ADC_CFGR_EXTSEL_Pos)           /*!< 0x000003C0 */
@@ -1942,9 +1954,9 @@ typedef struct
 #define ADC34_CSR_ADRDY_EOS_SLV_Pos      (19U)                                 
 #define ADC34_CSR_ADRDY_EOS_SLV_Msk      (0x1UL << ADC34_CSR_ADRDY_EOS_SLV_Pos) /*!< 0x00080000 */
 #define ADC34_CSR_ADRDY_EOS_SLV          ADC34_CSR_ADRDY_EOS_SLV_Msk           /*!< End of regular sequence flag of the slave ADC */
-#define ADC12_CSR_ADRDY_OVR_SLV_Pos      (20U)                                 
-#define ADC12_CSR_ADRDY_OVR_SLV_Msk      (0x1UL << ADC12_CSR_ADRDY_OVR_SLV_Pos) /*!< 0x00100000 */
-#define ADC12_CSR_ADRDY_OVR_SLV          ADC12_CSR_ADRDY_OVR_SLV_Msk           /*!< Overrun flag of the slave ADC */
+#define ADC34_CSR_ADRDY_OVR_SLV_Pos      (20U)                                 
+#define ADC34_CSR_ADRDY_OVR_SLV_Msk      (0x1UL << ADC34_CSR_ADRDY_OVR_SLV_Pos) /*!< 0x00100000 */
+#define ADC34_CSR_ADRDY_OVR_SLV          ADC34_CSR_ADRDY_OVR_SLV_Msk           /*!< Overrun flag of the slave ADC */
 #define ADC34_CSR_ADRDY_JEOC_SLV_Pos     (21U)                                 
 #define ADC34_CSR_ADRDY_JEOC_SLV_Msk     (0x1UL << ADC34_CSR_ADRDY_JEOC_SLV_Pos) /*!< 0x00200000 */
 #define ADC34_CSR_ADRDY_JEOC_SLV         ADC34_CSR_ADRDY_JEOC_SLV_Msk          /*!< End of injected conversion of the slave ADC */
@@ -2760,7 +2772,7 @@ typedef struct
 #define OPAMP1_CSR_TSTREF             OPAMP1_CSR_TSTREF_Msk                    /*!< It enables the switch to put out the internal reference */
 #define OPAMP1_CSR_OUTCAL_Pos         (30U)                                    
 #define OPAMP1_CSR_OUTCAL_Msk         (0x1UL << OPAMP1_CSR_OUTCAL_Pos)          /*!< 0x40000000 */
-#define OPAMP1_CSR_OUTCAL             OPAMP1_CSR_OUTCAL_Msk                    /*!< OPAMP ouput status flag */
+#define OPAMP1_CSR_OUTCAL             OPAMP1_CSR_OUTCAL_Msk                    /*!< OPAMP output status flag */
 #define OPAMP1_CSR_LOCK_Pos           (31U)                                    
 #define OPAMP1_CSR_LOCK_Msk           (0x1UL << OPAMP1_CSR_LOCK_Pos)            /*!< 0x80000000 */
 #define OPAMP1_CSR_LOCK               OPAMP1_CSR_LOCK_Msk                      /*!< OPAMP lock */
@@ -2822,7 +2834,7 @@ typedef struct
 #define OPAMP2_CSR_TSTREF             OPAMP2_CSR_TSTREF_Msk                    /*!< It enables the switch to put out the internal reference */
 #define OPAMP2_CSR_OUTCAL_Pos         (30U)                                    
 #define OPAMP2_CSR_OUTCAL_Msk         (0x1UL << OPAMP2_CSR_OUTCAL_Pos)          /*!< 0x40000000 */
-#define OPAMP2_CSR_OUTCAL             OPAMP2_CSR_OUTCAL_Msk                    /*!< OPAMP ouput status flag */
+#define OPAMP2_CSR_OUTCAL             OPAMP2_CSR_OUTCAL_Msk                    /*!< OPAMP output status flag */
 #define OPAMP2_CSR_LOCK_Pos           (31U)                                    
 #define OPAMP2_CSR_LOCK_Msk           (0x1UL << OPAMP2_CSR_LOCK_Pos)            /*!< 0x80000000 */
 #define OPAMP2_CSR_LOCK               OPAMP2_CSR_LOCK_Msk                      /*!< OPAMP lock */
@@ -2884,7 +2896,7 @@ typedef struct
 #define OPAMP3_CSR_TSTREF             OPAMP3_CSR_TSTREF_Msk                    /*!< It enables the switch to put out the internal reference */
 #define OPAMP3_CSR_OUTCAL_Pos         (30U)                                    
 #define OPAMP3_CSR_OUTCAL_Msk         (0x1UL << OPAMP3_CSR_OUTCAL_Pos)          /*!< 0x40000000 */
-#define OPAMP3_CSR_OUTCAL             OPAMP3_CSR_OUTCAL_Msk                    /*!< OPAMP ouput status flag */
+#define OPAMP3_CSR_OUTCAL             OPAMP3_CSR_OUTCAL_Msk                    /*!< OPAMP output status flag */
 #define OPAMP3_CSR_LOCK_Pos           (31U)                                    
 #define OPAMP3_CSR_LOCK_Msk           (0x1UL << OPAMP3_CSR_LOCK_Pos)            /*!< 0x80000000 */
 #define OPAMP3_CSR_LOCK               OPAMP3_CSR_LOCK_Msk                      /*!< OPAMP lock */
@@ -2946,7 +2958,7 @@ typedef struct
 #define OPAMP4_CSR_TSTREF             OPAMP4_CSR_TSTREF_Msk                    /*!< It enables the switch to put out the internal reference */
 #define OPAMP4_CSR_OUTCAL_Pos         (30U)                                    
 #define OPAMP4_CSR_OUTCAL_Msk         (0x1UL << OPAMP4_CSR_OUTCAL_Pos)          /*!< 0x40000000 */
-#define OPAMP4_CSR_OUTCAL             OPAMP4_CSR_OUTCAL_Msk                    /*!< OPAMP ouput status flag */
+#define OPAMP4_CSR_OUTCAL             OPAMP4_CSR_OUTCAL_Msk                    /*!< OPAMP output status flag */
 #define OPAMP4_CSR_LOCK_Pos           (31U)                                    
 #define OPAMP4_CSR_LOCK_Msk           (0x1UL << OPAMP4_CSR_LOCK_Pos)            /*!< 0x80000000 */
 #define OPAMP4_CSR_LOCK               OPAMP4_CSR_LOCK_Msk                      /*!< OPAMP lock */
@@ -3008,7 +3020,7 @@ typedef struct
 #define OPAMP_CSR_TSTREF             OPAMP_CSR_TSTREF_Msk                      /*!< It enables the switch to put out the internal reference */
 #define OPAMP_CSR_OUTCAL_Pos         (30U)                                     
 #define OPAMP_CSR_OUTCAL_Msk         (0x1UL << OPAMP_CSR_OUTCAL_Pos)            /*!< 0x40000000 */
-#define OPAMP_CSR_OUTCAL             OPAMP_CSR_OUTCAL_Msk                      /*!< OPAMP ouput status flag */
+#define OPAMP_CSR_OUTCAL             OPAMP_CSR_OUTCAL_Msk                      /*!< OPAMP output status flag */
 #define OPAMP_CSR_LOCK_Pos           (31U)                                     
 #define OPAMP_CSR_LOCK_Msk           (0x1UL << OPAMP_CSR_LOCK_Pos)              /*!< 0x80000000 */
 #define OPAMP_CSR_LOCK               OPAMP_CSR_LOCK_Msk                        /*!< OPAMP lock */
@@ -6539,7 +6551,7 @@ typedef struct
 /******************************************************************************/
 
 /*
- * @brief Specific device feature definitions (not present on all devices in the STM32F3 serie)
+ * @brief Specific device feature definitions (not present on all devices in the STM32F3 series)
  */
 #define DAC_CHANNEL2_SUPPORT                           /*!< DAC feature available only on specific devices: DAC channel 2 available (may not be available on all DAC instances DACx) */
 
@@ -9779,7 +9791,7 @@ typedef struct
 /*                                                                            */
 /******************************************************************************/
 /*
-* @brief Specific device feature definitions  (not present on all devices in the STM32F3 serie)
+* @brief Specific device feature definitions  (not present on all devices in the STM32F3 series)
 */
 #define RTC_TAMPER1_SUPPORT  /*!< TAMPER 1 feature support */
 #define RTC_TAMPER2_SUPPORT  /*!< TAMPER 2 feature support */
@@ -10451,7 +10463,7 @@ typedef struct
 /******************************************************************************/
 
 /*
- * @brief Specific device feature definitions (not present on all devices in the STM32F3 serie)
+ * @brief Specific device feature definitions (not present on all devices in the STM32F3 series)
  */
 #define SPI_I2S_SUPPORT                       /*!< I2S support */
 #define SPI_I2S_FULLDUPLEX_SUPPORT            /*!< I2S Full-Duplex support */
@@ -10967,7 +10979,7 @@ typedef struct
 #define SYSCFG_CFGR2_SRAM_PARITY_LOCK            SYSCFG_CFGR2_SRAM_PARITY_LOCK_Msk /*!< Enables and locks the SRAM_PARITY error signal with Break Input of TIMx */
 #define SYSCFG_CFGR2_BYP_ADDR_PAR_Pos            (4U)                          
 #define SYSCFG_CFGR2_BYP_ADDR_PAR_Msk            (0x1UL << SYSCFG_CFGR2_BYP_ADDR_PAR_Pos) /*!< 0x00000010 */
-#define SYSCFG_CFGR2_BYP_ADDR_PAR                SYSCFG_CFGR2_BYP_ADDR_PAR_Msk /*!< Disables the adddress parity check on RAM */
+#define SYSCFG_CFGR2_BYP_ADDR_PAR                SYSCFG_CFGR2_BYP_ADDR_PAR_Msk /*!< Disables the address parity check on RAM */
 #define SYSCFG_CFGR2_SRAM_PE_Pos                 (8U)                          
 #define SYSCFG_CFGR2_SRAM_PE_Msk                 (0x1UL << SYSCFG_CFGR2_SRAM_PE_Pos) /*!< 0x00000100 */
 #define SYSCFG_CFGR2_SRAM_PE                     SYSCFG_CFGR2_SRAM_PE_Msk      /*!< SRAM Parity error flag */
@@ -11600,11 +11612,11 @@ typedef struct
 #define TIM_DMAR_DMAB             TIM_DMAR_DMAB_Msk                            /*!<DMA register for burst accesses */
 
 /*******************  Bit definition for TIM16_OR register  *********************/
-#define TIM16_OR_TI1_RMP_Pos      (6U)                                         
-#define TIM16_OR_TI1_RMP_Msk      (0x3UL << TIM16_OR_TI1_RMP_Pos)               /*!< 0x000000C0 */
+#define TIM16_OR_TI1_RMP_Pos      (0U)                                         
+#define TIM16_OR_TI1_RMP_Msk      (0x3UL << TIM16_OR_TI1_RMP_Pos)               /*!< 0x00000003 */
 #define TIM16_OR_TI1_RMP          TIM16_OR_TI1_RMP_Msk                         /*!<TI1_RMP[1:0] bits (TIM16 Input 1 remap) */
-#define TIM16_OR_TI1_RMP_0        (0x1UL << TIM16_OR_TI1_RMP_Pos)               /*!< 0x00000040 */
-#define TIM16_OR_TI1_RMP_1        (0x2UL << TIM16_OR_TI1_RMP_Pos)               /*!< 0x00000080 */
+#define TIM16_OR_TI1_RMP_0        (0x1UL << TIM16_OR_TI1_RMP_Pos)               /*!< 0x00000001 */
+#define TIM16_OR_TI1_RMP_1        (0x2UL << TIM16_OR_TI1_RMP_Pos)               /*!< 0x00000002 */
 
 /*******************  Bit definition for TIM1_OR register  *********************/
 #define TIM1_OR_ETR_RMP_Pos      (0U)                                          
@@ -13191,8 +13203,8 @@ typedef struct
 #define USB_LP_CAN_RX0_IRQn CAN_RX0_IRQn
 #define USB_HP_CAN_TX_IRQn  CAN_TX_IRQn
 #define COMP1_2_IRQn        COMP1_2_3_IRQn
-#define COMP_IRQn           COMP1_2_3_IRQn
 #define COMP2_IRQn          COMP1_2_3_IRQn
+#define COMP_IRQn           COMP1_2_3_IRQn
 #define COMP4_6_IRQn        COMP4_5_6_IRQn
 #define TIM15_IRQn          TIM1_BRK_TIM15_IRQn
 #define TIM18_DAC2_IRQn     TIM1_CC_IRQn
@@ -13211,8 +13223,8 @@ typedef struct
 #define USB_LP_CAN_RX0_IRQHandler CAN_RX0_IRQHandler
 #define USB_HP_CAN_TX_IRQHandler  CAN_TX_IRQHandler
 #define COMP1_2_IRQHandler        COMP1_2_3_IRQHandler
-#define COMP_IRQHandler           COMP1_2_3_IRQHandler
 #define COMP2_IRQHandler          COMP1_2_3_IRQHandler
+#define COMP_IRQHandler           COMP1_2_3_IRQHandler
 #define COMP4_6_IRQHandler        COMP4_5_6_IRQHandler
 #define TIM15_IRQHandler          TIM1_BRK_TIM15_IRQHandler
 #define TIM18_DAC2_IRQHandler     TIM1_CC_IRQHandler
@@ -13235,8 +13247,6 @@ typedef struct
   * @}
   */
 
-  /**
+/**
   * @}
   */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -702,8 +701,6 @@ typedef  void (*pRTC_CallbackTypeDef)(RTC_HandleTypeDef *hrtc);  /*!< pointer to
 
 #elif defined(CORE_CA7)
 
-#else /* !CORE_CA7 */
-
 #define __HAL_RTC_ALARM_EXTI_ENABLE_IT()            (EXTI_C1->IMR1 |= RTC_EXTI_LINE_ALARM_EVENT)
 
 /**
@@ -723,6 +720,8 @@ typedef  void (*pRTC_CallbackTypeDef)(RTC_HandleTypeDef *hrtc);  /*!< pointer to
   * @retval None
   */
 #define __HAL_RTC_ALARM_EXTI_DISABLE_EVENT()         (EXTI_C1->EMR1 &= ~(RTC_EXTI_LINE_ALARM_EVENT))
+
+#else /* !CORE_CA7 */
 
 #error Please #define CORE_CM4 or CORE_CA7
 
@@ -954,6 +953,3 @@ uint8_t            RTC_Bcd2ToByte(uint8_t Value);
 #endif
 
 #endif /* STM32MP1xx_HAL_RTC_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-

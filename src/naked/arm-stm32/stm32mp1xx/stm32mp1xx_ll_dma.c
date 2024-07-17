@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -70,6 +69,7 @@
 
 #define IS_LL_DMA_REQUEST(REQUEST)              (((REQUEST)   <= LL_DMAMUX1_REQ_I2C5_TX))
 
+
 #define IS_LL_DMA_PRIORITY(__VALUE__)           (((__VALUE__) == LL_DMA_PRIORITY_LOW)    || \
                                                  ((__VALUE__) == LL_DMA_PRIORITY_MEDIUM) || \
                                                  ((__VALUE__) == LL_DMA_PRIORITY_HIGH)   || \
@@ -95,7 +95,6 @@
                                                            ((STREAM) == LL_DMA_STREAM_6) || \
                                                            ((STREAM) == LL_DMA_STREAM_7) || \
                                                            ((STREAM) == LL_DMA_STREAM_ALL))))
-
 #define IS_LL_DMA_FIFO_MODE_STATE(STATE) (((STATE) == LL_DMA_FIFOMODE_DISABLE ) || \
                                           ((STATE) == LL_DMA_FIFOMODE_ENABLE))
 
@@ -288,7 +287,10 @@ uint32_t LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Stream, LL_DMA_InitTypeDef *DMA
   assert_param(IS_LL_DMA_PERIPHDATASIZE(DMA_InitStruct->PeriphOrM2MSrcDataSize));
   assert_param(IS_LL_DMA_MEMORYDATASIZE(DMA_InitStruct->MemoryOrM2MDstDataSize));
   assert_param(IS_LL_DMA_NBDATA(DMA_InitStruct->NbData));
-  assert_param(IS_LL_DMA_REQUEST(DMA_InitStruct->PeriphRequest));
+  if ((DMAx == DMA1) || (DMAx == DMA2))
+  {
+    assert_param(IS_LL_DMA_REQUEST(DMA_InitStruct->PeriphRequest));
+  }
   assert_param(IS_LL_DMA_PRIORITY(DMA_InitStruct->Priority));
   assert_param(IS_LL_DMA_FIFO_MODE_STATE(DMA_InitStruct->FIFOMode));
   /* Check the memory burst, peripheral burst and FIFO threshold parameters only
@@ -300,72 +302,75 @@ uint32_t LL_DMA_Init(DMA_TypeDef *DMAx, uint32_t Stream, LL_DMA_InitTypeDef *DMA
     assert_param(IS_LL_DMA_PERIPHERAL_BURST(DMA_InitStruct->PeriphBurst));
   }
 
-  /*---------------------------- DMAx SxCR Configuration ------------------------
-   * Configure DMAx_Streamy: data transfer direction, data transfer mode,
-   *                          peripheral and memory increment mode,
-   *                          data size alignment and  priority level with parameters :
-   * - Direction:      DMA_SxCR_DIR[1:0] bits
-   * - Mode:           DMA_SxCR_CIRC bit
-   * - PeriphOrM2MSrcIncMode:  DMA_SxCR_PINC bit
-   * - MemoryOrM2MDstIncMode:  DMA_SxCR_MINC bit
-   * - PeriphOrM2MSrcDataSize: DMA_SxCR_PSIZE[1:0] bits
-   * - MemoryOrM2MDstDataSize: DMA_SxCR_MSIZE[1:0] bits
-   * - Priority:               DMA_SxCR_PL[1:0] bits
-   */
-  LL_DMA_ConfigTransfer(DMAx, Stream, DMA_InitStruct->Direction | \
-                        DMA_InitStruct->Mode                    | \
-                        DMA_InitStruct->PeriphOrM2MSrcIncMode   | \
-                        DMA_InitStruct->MemoryOrM2MDstIncMode   | \
-                        DMA_InitStruct->PeriphOrM2MSrcDataSize  | \
-                        DMA_InitStruct->MemoryOrM2MDstDataSize  | \
-                        DMA_InitStruct->Priority
-                       );
-
-  if (DMA_InitStruct->FIFOMode != LL_DMA_FIFOMODE_DISABLE)
+  if (IS_LL_DMA_ALL_STREAM_INSTANCE(DMAx, Stream))
   {
-    /*---------------------------- DMAx SxFCR Configuration ------------------------
-     * Configure DMAx_Streamy:  fifo mode and fifo threshold with parameters :
-     * - FIFOMode:                DMA_SxFCR_DMDIS bit
-     * - FIFOThreshold:           DMA_SxFCR_FTH[1:0] bits
+    /*---------------------------- DMAx SxCR Configuration ------------------------
+     * Configure DMAx_Streamy: data transfer direction, data transfer mode,
+     *                          peripheral and memory increment mode,
+     *                          data size alignment and  priority level with parameters :
+     * - Direction:      DMA_SxCR_DIR[1:0] bits
+     * - Mode:           DMA_SxCR_CIRC bit
+     * - PeriphOrM2MSrcIncMode:  DMA_SxCR_PINC bit
+     * - MemoryOrM2MDstIncMode:  DMA_SxCR_MINC bit
+     * - PeriphOrM2MSrcDataSize: DMA_SxCR_PSIZE[1:0] bits
+     * - MemoryOrM2MDstDataSize: DMA_SxCR_MSIZE[1:0] bits
+     * - Priority:               DMA_SxCR_PL[1:0] bits
      */
-    LL_DMA_ConfigFifo(DMAx, Stream, DMA_InitStruct->FIFOMode, DMA_InitStruct->FIFOThreshold);
+    LL_DMA_ConfigTransfer(DMAx, Stream, DMA_InitStruct->Direction | \
+                                        DMA_InitStruct->Mode                    | \
+                                        DMA_InitStruct->PeriphOrM2MSrcIncMode   | \
+                                        DMA_InitStruct->MemoryOrM2MDstIncMode   | \
+                                        DMA_InitStruct->PeriphOrM2MSrcDataSize  | \
+                                        DMA_InitStruct->MemoryOrM2MDstDataSize  | \
+                                        DMA_InitStruct->Priority
+    );
 
-    /*---------------------------- DMAx SxCR Configuration --------------------------
-     * Configure DMAx_Streamy:  memory burst transfer with parameters :
-     * - MemBurst:                DMA_SxCR_MBURST[1:0] bits
-     */
-    LL_DMA_SetMemoryBurstxfer(DMAx, Stream, DMA_InitStruct->MemBurst);
+    if (DMA_InitStruct->FIFOMode != LL_DMA_FIFOMODE_DISABLE)
+    {
+      /*---------------------------- DMAx SxFCR Configuration ------------------------
+       * Configure DMAx_Streamy:  fifo mode and fifo threshold with parameters :
+       * - FIFOMode:                DMA_SxFCR_DMDIS bit
+       * - FIFOThreshold:           DMA_SxFCR_FTH[1:0] bits
+       */
+      LL_DMA_ConfigFifo(DMAx, Stream, DMA_InitStruct->FIFOMode, DMA_InitStruct->FIFOThreshold);
 
-    /*---------------------------- DMAx SxCR Configuration --------------------------
-     * Configure DMAx_Streamy:  peripheral burst transfer with parameters :
-     * - PeriphBurst:             DMA_SxCR_PBURST[1:0] bits
+      /*---------------------------- DMAx SxCR Configuration --------------------------
+       * Configure DMAx_Streamy:  memory burst transfer with parameters :
+       * - MemBurst:                DMA_SxCR_MBURST[1:0] bits
+       */
+      LL_DMA_SetMemoryBurstxfer(DMAx, Stream, DMA_InitStruct->MemBurst);
+
+      /*---------------------------- DMAx SxCR Configuration --------------------------
+       * Configure DMAx_Streamy:  peripheral burst transfer with parameters :
+       * - PeriphBurst:             DMA_SxCR_PBURST[1:0] bits
+       */
+      LL_DMA_SetPeriphBurstxfer(DMAx, Stream, DMA_InitStruct->PeriphBurst);
+    }
+
+    /*-------------------------- DMAx SxM0AR Configuration --------------------------
+     * Configure the memory or destination base address with parameter :
+     * - MemoryOrM2MDstAddress:     DMA_SxM0AR_M0A[31:0] bits
      */
-    LL_DMA_SetPeriphBurstxfer(DMAx, Stream, DMA_InitStruct->PeriphBurst);
+    LL_DMA_SetMemoryAddress(DMAx, Stream, DMA_InitStruct->MemoryOrM2MDstAddress);
+
+    /*-------------------------- DMAx SxPAR Configuration ---------------------------
+     * Configure the peripheral or source base address with parameter :
+     * - PeriphOrM2MSrcAddress:     DMA_SxPAR_PA[31:0] bits
+     */
+    LL_DMA_SetPeriphAddress(DMAx, Stream, DMA_InitStruct->PeriphOrM2MSrcAddress);
+
+    /*--------------------------- DMAx SxNDTR Configuration -------------------------
+     * Configure the peripheral base address with parameter :
+     * - NbData:                    DMA_SxNDT[15:0] bits
+     */
+    LL_DMA_SetDataLength(DMAx, Stream, DMA_InitStruct->NbData);
+
+    /*--------------------------- DMA SxCR_CHSEL Configuration ----------------------
+     * Configure the peripheral base address with parameter :
+     * - PeriphRequest:             DMA_SxCR_CHSEL[3:0] bits
+     */
+    LL_DMA_SetPeriphRequest(DMAx, Stream, DMA_InitStruct->PeriphRequest);
   }
-
-  /*-------------------------- DMAx SxM0AR Configuration --------------------------
-   * Configure the memory or destination base address with parameter :
-   * - MemoryOrM2MDstAddress:     DMA_SxM0AR_M0A[31:0] bits
-   */
-  LL_DMA_SetMemoryAddress(DMAx, Stream, DMA_InitStruct->MemoryOrM2MDstAddress);
-
-  /*-------------------------- DMAx SxPAR Configuration ---------------------------
-   * Configure the peripheral or source base address with parameter :
-   * - PeriphOrM2MSrcAddress:     DMA_SxPAR_PA[31:0] bits
-   */
-  LL_DMA_SetPeriphAddress(DMAx, Stream, DMA_InitStruct->PeriphOrM2MSrcAddress);
-
-  /*--------------------------- DMAx SxNDTR Configuration -------------------------
-   * Configure the peripheral base address with parameter :
-   * - NbData:                    DMA_SxNDT[15:0] bits
-   */
-  LL_DMA_SetDataLength(DMAx, Stream, DMA_InitStruct->NbData);
-
-  /*--------------------------- DMA SxCR_CHSEL Configuration ----------------------
-   * Configure the peripheral base address with parameter :
-   * - PeriphRequest:             DMA_SxCR_CHSEL[3:0] bits
-   */
-  LL_DMA_SetPeriphRequest(DMAx, Stream, DMA_InitStruct->PeriphRequest);
 
   return (uint32_t)SUCCESS;
 }
@@ -414,5 +419,3 @@ void LL_DMA_StructInit(LL_DMA_InitTypeDef *DMA_InitStruct)
   */
 
 #endif /* USE_FULL_LL_DRIVER */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

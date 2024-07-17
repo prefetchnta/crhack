@@ -6,7 +6,17 @@
   *          This file provides firmware functions to manage the following
   *          functionalities of the FLASH extended peripheral:
   *           + Extended programming operations functions
+  ******************************************************************************
+  * @attention
   *
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
  @verbatim
  ==============================================================================
                    ##### Flash Extended features #####
@@ -63,17 +73,6 @@
 
  @endverbatim
   ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
   */
 
 /* Includes ------------------------------------------------------------------*/
@@ -96,22 +95,25 @@
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 /** @defgroup FLASHEx_Private_Functions FLASHEx Private Functions
- * @{
- */
+  * @{
+  */
 static void              FLASH_AcknowledgePageErase(void);
 static void              FLASH_FlushCaches(void);
 static void              FLASH_OB_WRPConfig(uint32_t WRPArea, uint32_t WRPStartOffset, uint32_t WRDPEndOffset);
 static void              FLASH_OB_OptrConfig(uint32_t UserType, uint32_t UserConfig, uint32_t RDPLevel);
-static void              FLASH_OB_PCROP1AConfig(uint32_t PCROPConfig, uint32_t PCROP1AStartAddr, uint32_t PCROP1AEndAddr);
+static void              FLASH_OB_PCROP1AConfig(uint32_t PCROPConfig, uint32_t PCROP1AStartAddr,
+                                                uint32_t PCROP1AEndAddr);
 static void              FLASH_OB_PCROP1BConfig(uint32_t PCROP1BStartAddr, uint32_t PCROP1BEndAddr);
 static void              FLASH_OB_IPCCBufferAddrConfig(uint32_t IPCCDataBufAddr);
 static void              FLASH_OB_SecureConfig(FLASH_OBProgramInitTypeDef *pOBParam);
 static void              FLASH_OB_GetWRP(uint32_t WRPArea, uint32_t *WRPStartOffset, uint32_t *WRDPEndOffset);
 static uint32_t          FLASH_OB_GetRDP(void);
 static uint32_t          FLASH_OB_GetUser(void);
-static void              FLASH_OB_GetPCROP(uint32_t *PCROPConfig, uint32_t *PCROP1AStartAddr, uint32_t *PCROP1AEndAddr, uint32_t *PCROP1BStartAddr, uint32_t *PCROP1BEndAddr);
+static void              FLASH_OB_GetPCROP(uint32_t *PCROPConfig, uint32_t *PCROP1AStartAddr, uint32_t *PCROP1AEndAddr,
+                                           uint32_t *PCROP1BStartAddr, uint32_t *PCROP1BEndAddr);
 static uint32_t          FLASH_OB_GetIPCCBufferAddr(void);
-static void              FLASH_OB_GetSecureMemoryConfig(uint32_t *SecureFlashStartAddr, uint32_t *SecureRAM2aStartAddr, uint32_t *SecureRAM2bStartAddr, uint32_t *SecureMode);
+static void              FLASH_OB_GetSecureMemoryConfig(uint32_t *SecureFlashStartAddr, uint32_t *SecureRAM2aStartAddr,
+                                                        uint32_t *SecureRAM2bStartAddr, uint32_t *SecureMode);
 static void              FLASH_OB_GetC2BootResetConfig(uint32_t *C2BootResetVectAddr, uint32_t *C2BootResetRegion);
 static HAL_StatusTypeDef FLASH_OB_ProceedWriteOperation(void);
 /**
@@ -124,8 +126,8 @@ static HAL_StatusTypeDef FLASH_OB_ProceedWriteOperation(void);
   */
 
 /** @defgroup FLASHEx_Exported_Functions_Group1 Extended IO operation functions
- *  @brief   Extended IO operation functions
- *
+  *  @brief   Extended IO operation functions
+  *
 @verbatim
  ===============================================================================
                 ##### Extended programming operation functions #####
@@ -289,7 +291,7 @@ HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit)
   /* Option register */
   if ((pOBInit->OptionType & (OPTIONBYTE_RDP | OPTIONBYTE_USER)) == (OPTIONBYTE_RDP | OPTIONBYTE_USER))
   {
-    /* Fully modify OPTR register with RDP & user datas */
+    /* Fully modify OPTR register with RDP & user data */
     FLASH_OB_OptrConfig(pOBInit->UserType, pOBInit->UserConfig, pOBInit->RDPLevel);
   }
   else if ((pOBInit->OptionType & OPTIONBYTE_RDP) != 0U)
@@ -385,14 +387,16 @@ void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit)
   pOBInit->UserType = OB_USER_ALL;
 
   /* Get the Zone 1A and 1B Proprietary code readout protection */
-  FLASH_OB_GetPCROP(&(pOBInit->PCROPConfig), &(pOBInit->PCROP1AStartAddr), &(pOBInit->PCROP1AEndAddr), &(pOBInit->PCROP1BStartAddr), &(pOBInit->PCROP1BEndAddr));
+  FLASH_OB_GetPCROP(&(pOBInit->PCROPConfig), &(pOBInit->PCROP1AStartAddr), &(pOBInit->PCROP1AEndAddr),
+                    &(pOBInit->PCROP1BStartAddr), &(pOBInit->PCROP1BEndAddr));
   pOBInit->PCROPConfig |= (OB_PCROP_ZONE_A | OB_PCROP_ZONE_B);
 
   /* Get the IPCC start Address */
   pOBInit->IPCCdataBufAddr = FLASH_OB_GetIPCCBufferAddr();
 
   /* Get the Secure Flash start address, Secure Backup RAM2a start address, Secure non-Backup RAM2b start address and the Security Mode, */
-  FLASH_OB_GetSecureMemoryConfig(&(pOBInit->SecureFlashStartAddr), &(pOBInit->SecureRAM2aStartAddr), &(pOBInit->SecureRAM2bStartAddr), &(pOBInit->SecureMode));
+  FLASH_OB_GetSecureMemoryConfig(&(pOBInit->SecureFlashStartAddr), &(pOBInit->SecureRAM2aStartAddr),
+                                 &(pOBInit->SecureRAM2bStartAddr), &(pOBInit->SecureMode));
 
   /* Get the M0+ Secure Boot reset vector and Secure Boot memory selection */
   FLASH_OB_GetC2BootResetConfig(&(pOBInit->C2SecureBootVectAddr), &(pOBInit->C2BootRegion));
@@ -607,6 +611,7 @@ static void FLASH_OB_WRPConfig(uint32_t WRPArea, uint32_t WRPStartOffset, uint32
   *         @arg @ref OB_STOP_RST or @ref OB_STOP_NORST
   *         @arg @ref OB_STANDBY_RST or @ref OB_STANDBY_NORST
   *         @arg @ref OB_SHUTDOWN_RST or @ref OB_SHUTDOWN_NORST
+  *         @arg @ref OB_IRH_ENABLE or @ref OB_IRH_DISABLE (*)
   *         @arg @ref OB_IWDG_SW or @ref OB_IWDG_HW
   *         @arg @ref OB_IWDG_STOP_FREEZE or @ref OB_IWDG_STOP_RUN
   *         @arg @ref OB_IWDG_STDBY_FREEZE or @ref OB_IWDG_STDBY_RUN
@@ -616,6 +621,7 @@ static void FLASH_OB_WRPConfig(uint32_t WRPArea, uint32_t WRPStartOffset, uint32
   *         @arg @ref OB_SRAM2_RST_ERASE or @ref OB_SRAM2_RST_NOT_ERASE
   *         @arg @ref OB_BOOT0_FROM_OB or @ref OB_BOOT0_FROM_PIN
   *         @arg @ref OB_BOOT0_RESET or @ref OB_BOOT0_SET
+  *         @arg @ref OB_RESET_MODE_INPUT_ONLY or @ref OB_RESET_MODE_GPIO or @ref OB_RESET_MODE_INPUT_OUTPUT (*)
   *         @arg @ref OB_AGC_TRIM_0 or @ref OB_AGC_TRIM_1 or ... or @ref OB_AGC_TRIM_7
   * @param  RDPLevel: specifies the read protection level.
   *         This parameter can be one of the following values:
@@ -768,21 +774,35 @@ static void FLASH_OB_SecureConfig(FLASH_OBProgramInitTypeDef *pOBParam)
     MODIFY_REG(sfr_reg_val, FLASH_SFR_SFSA, (((pOBParam->SecureFlashStartAddr - FLASH_BASE) / FLASH_PAGE_SIZE) << FLASH_SFR_SFSA_Pos));
 
     /* Configure SRRVR register */
+#if defined(FLASH_SRRVR_SBRSA_A)
+    MODIFY_REG(srrvr_reg_val, (FLASH_SRRVR_SBRSA_A | FLASH_SRRVR_SBRSA_B), \
+               (((((pOBParam->SecureRAM2aStartAddr - SRAM2A_BASE) >> SRAM_SECURE_PAGE_GRANULARITY_OFFSET) << FLASH_SRRVR_SBRSA_A_Pos)) | \
+                ((((pOBParam->SecureRAM2bStartAddr - SRAM2B_BASE) >> SRAM_SECURE_PAGE_GRANULARITY_OFFSET) << FLASH_SRRVR_SBRSA_B_Pos))));
+#else
     MODIFY_REG(srrvr_reg_val, (FLASH_SRRVR_SBRSA | FLASH_SRRVR_SNBRSA), \
                (((((pOBParam->SecureRAM2aStartAddr - SRAM2A_BASE) >> SRAM_SECURE_PAGE_GRANULARITY_OFFSET) << FLASH_SRRVR_SBRSA_Pos)) | \
                 ((((pOBParam->SecureRAM2bStartAddr - SRAM2B_BASE) >> SRAM_SECURE_PAGE_GRANULARITY_OFFSET) << FLASH_SRRVR_SNBRSA_Pos))));
+#endif /* FLASH_SRRVR_SBRSA_A */
 
     /* If Full System Secure mode is requested, clear all the corresponding bit */
     /* Else set the corresponding bit */
     if (pOBParam->SecureMode == SYSTEM_IN_SECURE_MODE)
     {
       CLEAR_BIT(sfr_reg_val, FLASH_SFR_FSD);
+#if defined(FLASH_SRRVR_BRSD_A)
+      CLEAR_BIT(srrvr_reg_val, (FLASH_SRRVR_BRSD_A | FLASH_SRRVR_BRSD_B));
+#else
       CLEAR_BIT(srrvr_reg_val, (FLASH_SRRVR_BRSD | FLASH_SRRVR_NBRSD));
+#endif /* FLASH_SRRVR_BRSD_A */
     }
     else
     {
       SET_BIT(sfr_reg_val, FLASH_SFR_FSD);
+#if defined(FLASH_SRRVR_BRSD_A)
+      SET_BIT(srrvr_reg_val, (FLASH_SRRVR_BRSD_A | FLASH_SRRVR_BRSD_B));
+#else
       SET_BIT(srrvr_reg_val, (FLASH_SRRVR_BRSD | FLASH_SRRVR_NBRSD));
+#endif /* FLASH_SRRVR_BRSD_A */
     }
 
     /* Update Flash registers */
@@ -799,11 +819,13 @@ static void FLASH_OB_SecureConfig(FLASH_OBProgramInitTypeDef *pOBParam)
     /* Set the boot vector */
     if (pOBParam->C2BootRegion == OB_C2_BOOT_FROM_FLASH)
     {
-      MODIFY_REG(srrvr_reg_val, (FLASH_SRRVR_SBRV | FLASH_SRRVR_C2OPT), (((pOBParam->C2SecureBootVectAddr - FLASH_BASE) >> 2) | pOBParam->C2BootRegion));
+      MODIFY_REG(srrvr_reg_val, (FLASH_SRRVR_SBRV | FLASH_SRRVR_C2OPT),
+                 (((pOBParam->C2SecureBootVectAddr - FLASH_BASE) >> 2) | pOBParam->C2BootRegion));
     }
     else
     {
-      MODIFY_REG(srrvr_reg_val, (FLASH_SRRVR_SBRV | FLASH_SRRVR_C2OPT), (((pOBParam->C2SecureBootVectAddr - SRAM1_BASE) >> 2) | pOBParam->C2BootRegion));
+      MODIFY_REG(srrvr_reg_val, (FLASH_SRRVR_SBRV | FLASH_SRRVR_C2OPT),
+                 (((pOBParam->C2SecureBootVectAddr - SRAM1_BASE) >> 2) | pOBParam->C2BootRegion));
     }
   }
 
@@ -870,6 +892,7 @@ static uint32_t FLASH_OB_GetRDP(void)
   *         @arg @ref OB_STOP_RST or @ref OB_STOP_RST
   *         @arg @ref OB_STANDBY_RST or @ref OB_STANDBY_NORST
   *         @arg @ref OB_SHUTDOWN_RST or @ref OB_SHUTDOWN_NORST
+  *         @arg @ref OB_IRH_ENABLE or @ref OB_IRH_DISABLE (*)
   *         @arg @ref OB_IWDG_SW or @ref OB_IWDG_HW
   *         @arg @ref OB_IWDG_STOP_FREEZE or @ref OB_IWDG_STOP_RUN
   *         @arg @ref OB_IWDG_STDBY_FREEZE or @ref OB_IWDG_STDBY_RUN
@@ -879,6 +902,7 @@ static uint32_t FLASH_OB_GetRDP(void)
   *         @arg @ref OB_SRAM2_RST_ERASE or @ref OB_SRAM2_RST_NOT_ERASE
   *         @arg @ref OB_BOOT0_FROM_OB or @ref OB_BOOT0_FROM_PIN
   *         @arg @ref OB_BOOT0_RESET or @ref OB_BOOT0_SET
+  *         @arg @ref OB_RESET_MODE_INPUT_ONLY or @ref OB_RESET_MODE_GPIO or @ref OB_RESET_MODE_INPUT_OUTPUT (*)
   *         @arg @ref OB_AGC_TRIM_0 or @ref OB_AGC_TRIM_1 or ... or @ref OB_AGC_TRIM_7
   */
 static uint32_t FLASH_OB_GetUser(void)
@@ -902,7 +926,8 @@ static uint32_t FLASH_OB_GetUser(void)
   *                       the Zone 1B Proprietary code readout protection
   * @retval None
   */
-static void FLASH_OB_GetPCROP(uint32_t *PCROPConfig, uint32_t *PCROP1AStartAddr, uint32_t *PCROP1AEndAddr, uint32_t *PCROP1BStartAddr, uint32_t *PCROP1BEndAddr)
+static void FLASH_OB_GetPCROP(uint32_t *PCROPConfig, uint32_t *PCROP1AStartAddr, uint32_t *PCROP1AEndAddr,
+                              uint32_t *PCROP1BStartAddr, uint32_t *PCROP1BEndAddr)
 {
   uint32_t pcrop;
 
@@ -941,7 +966,8 @@ static uint32_t FLASH_OB_GetIPCCBufferAddr(void)
   *                              @arg @ref SYSTEM_NOT_IN_SECURE_MODE : Security disabled
   * @retval None
   */
-static void FLASH_OB_GetSecureMemoryConfig(uint32_t *SecureFlashStartAddr, uint32_t *SecureRAM2aStartAddr, uint32_t *SecureRAM2bStartAddr, uint32_t *SecureMode)
+static void FLASH_OB_GetSecureMemoryConfig(uint32_t *SecureFlashStartAddr, uint32_t *SecureRAM2aStartAddr,
+                                           uint32_t *SecureRAM2bStartAddr, uint32_t *SecureMode)
 {
   uint32_t sfr_reg_val = READ_REG(FLASH->SFR);
   uint32_t srrvr_reg_val = READ_REG(FLASH->SRRVR);
@@ -952,12 +978,20 @@ static void FLASH_OB_GetSecureMemoryConfig(uint32_t *SecureFlashStartAddr, uint3
   *SecureFlashStartAddr = ((user_config * FLASH_PAGE_SIZE) + FLASH_BASE);
 
   /* Get Secure SRAM2a start address */
+#if defined(FLASH_SRRVR_SBRSA_A)
+  user_config = (READ_BIT(srrvr_reg_val, FLASH_SRRVR_SBRSA_A) >> FLASH_SRRVR_SBRSA_A_Pos);
+#else
   user_config = (READ_BIT(srrvr_reg_val, FLASH_SRRVR_SBRSA) >> FLASH_SRRVR_SBRSA_Pos);
+#endif /* FLASH_SRRVR_SBRSA_A */
 
   *SecureRAM2aStartAddr = ((user_config << SRAM_SECURE_PAGE_GRANULARITY_OFFSET) + SRAM2A_BASE);
 
   /* Get Secure SRAM2b start address */
+#if defined(FLASH_SRRVR_SBRSA_B)
+  user_config = (READ_BIT(srrvr_reg_val, FLASH_SRRVR_SBRSA_B) >> FLASH_SRRVR_SBRSA_B_Pos);
+#else
   user_config = (READ_BIT(srrvr_reg_val, FLASH_SRRVR_SNBRSA) >> FLASH_SRRVR_SNBRSA_Pos);
+#endif /* FLASH_SRRVR_SBRSA_B */
 
   *SecureRAM2bStartAddr = ((user_config << SRAM_SECURE_PAGE_GRANULARITY_OFFSET) + SRAM2B_BASE);
 
@@ -1025,5 +1059,3 @@ static HAL_StatusTypeDef FLASH_OB_ProceedWriteOperation(void)
 /**
   * @}
   */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

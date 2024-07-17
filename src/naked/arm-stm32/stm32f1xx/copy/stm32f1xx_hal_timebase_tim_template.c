@@ -6,19 +6,18 @@
   *
   *          This file overrides the native HAL time base functions (defined as weak)
   *          the TIM time base:
-  *           + Intializes the TIM peripheral generate a Period elapsed Event each 1ms
+  *           + Initializes the TIM peripheral generate a Period elapsed Event each 1ms
   *           + HAL_IncTick is called inside HAL_TIM_PeriodElapsedCallback ie each 1ms
   *
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2017 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -58,12 +57,8 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   uint32_t              uwTimclock, uwAPB1Prescaler = 0U;
   uint32_t              uwPrescalerValue = 0U;
   uint32_t              pFLatency;
+  HAL_StatusTypeDef     status = HAL_OK;
 
-  /*Configure the TIM2 IRQ priority */
-  HAL_NVIC_SetPriority(TIM2_IRQn, TickPriority, 0U);
-
-  /* Enable the TIM2 global Interrupt */
-  HAL_NVIC_EnableIRQ(TIM2_IRQn);
 
   /* Enable TIM2 clock */
   __HAL_RCC_TIM2_CLK_ENABLE();
@@ -101,14 +96,31 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   TimHandle.Init.ClockDivision = 0U;
   TimHandle.Init.CounterMode = TIM_COUNTERMODE_UP;
   TimHandle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&TimHandle) == HAL_OK)
+  status = HAL_TIM_Base_Init(&TimHandle);
+  if (status == HAL_OK)
   {
     /* Start the TIM time Base generation in interrupt mode */
-    return HAL_TIM_Base_Start_IT(&TimHandle);
+    status = HAL_TIM_Base_Start_IT(&TimHandle);
+    if (status == HAL_OK)
+    {
+      /* Enable the TIM2 global Interrupt */
+      HAL_NVIC_EnableIRQ(TIM2_IRQn);
+
+      if (TickPriority < (1UL << __NVIC_PRIO_BITS))
+      {
+        /*Configure the TIM2 IRQ priority */
+        HAL_NVIC_SetPriority(TIM2_IRQn, TickPriority ,0); 
+        uwTickPrio = TickPriority;
+      }
+      else
+      {
+        status = HAL_ERROR;
+      }
+    }
   }
 
   /* Return function status */
-  return HAL_ERROR;
+  return status;
 }
 
 /**
@@ -163,4 +175,4 @@ void TIM2_IRQHandler(void)
   * @}
   */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

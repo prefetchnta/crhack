@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright(c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -94,7 +93,7 @@ extern "C" {
 /** @defgroup CRS_LL_EC_SYNC_DIV Synchronization Signal Divider
   * @{
   */
-#define LL_CRS_SYNC_DIV_1                  ((uint32_t)0x00U)                         /*!< Synchro Signal not divided (default) */
+#define LL_CRS_SYNC_DIV_1                  (0x00U)                         /*!< Synchro Signal not divided (default) */
 #define LL_CRS_SYNC_DIV_2                  CRS_CFGR_SYNCDIV_0                        /*!< Synchro Signal divided by 2 */
 #define LL_CRS_SYNC_DIV_4                  CRS_CFGR_SYNCDIV_1                        /*!< Synchro Signal divided by 4 */
 #define LL_CRS_SYNC_DIV_8                  (CRS_CFGR_SYNCDIV_1 | CRS_CFGR_SYNCDIV_0) /*!< Synchro Signal divided by 8 */
@@ -109,7 +108,7 @@ extern "C" {
 /** @defgroup CRS_LL_EC_SYNC_SOURCE Synchronization Signal Source
   * @{
   */
-#define LL_CRS_SYNC_SOURCE_GPIO            ((uint32_t)0x00U)       /*!< Synchro Signal soucre GPIO */
+#define LL_CRS_SYNC_SOURCE_GPIO            (0x00U)       /*!< Synchro Signal source GPIO */
 #define LL_CRS_SYNC_SOURCE_LSE             CRS_CFGR_SYNCSRC_0      /*!< Synchro Signal source LSE */
 #define LL_CRS_SYNC_SOURCE_USB             CRS_CFGR_SYNCSRC_1      /*!< Synchro Signal source USB SOF (default)*/
 /**
@@ -119,7 +118,7 @@ extern "C" {
 /** @defgroup CRS_LL_EC_SYNC_POLARITY Synchronization Signal Polarity
   * @{
   */
-#define LL_CRS_SYNC_POLARITY_RISING        ((uint32_t)0x00U)     /*!< Synchro Active on rising edge (default) */
+#define LL_CRS_SYNC_POLARITY_RISING        (0x00U)     /*!< Synchro Active on rising edge (default) */
 #define LL_CRS_SYNC_POLARITY_FALLING       CRS_CFGR_SYNCPOL      /*!< Synchro Active on falling edge */
 /**
   * @}
@@ -128,8 +127,8 @@ extern "C" {
 /** @defgroup CRS_LL_EC_FREQERRORDIR Frequency Error Direction
   * @{
   */
-#define LL_CRS_FREQ_ERROR_DIR_UP             ((uint32_t)0x00U)         /*!< Upcounting direction, the actual frequency is above the target */
-#define LL_CRS_FREQ_ERROR_DIR_DOWN           ((uint32_t)CRS_ISR_FEDIR) /*!< Downcounting direction, the actual frequency is below the target */
+#define LL_CRS_FREQ_ERROR_DIR_UP             (0x00U)         /*!< Upcounting direction, the actual frequency is above the target */
+#define LL_CRS_FREQ_ERROR_DIR_DOWN           CRS_ISR_FEDIR /*!< Downcounting direction, the actual frequency is below the target */
 /**
   * @}
   */
@@ -142,12 +141,12 @@ extern "C" {
   * @note The reset value of the RELOAD field corresponds to a target frequency of 48 MHz
   *       and a synchronization signal frequency of 1 kHz (SOF signal from USB)
   */
-#define LL_CRS_RELOADVALUE_DEFAULT         ((uint32_t)0xBB7FU)      
+#define LL_CRS_RELOADVALUE_DEFAULT         (0xBB7FU)      
 
 /**
   * @brief Reset value of Frequency error limit.
   */
-#define LL_CRS_ERRORLIMIT_DEFAULT          ((uint32_t)0x22U)      
+#define LL_CRS_ERRORLIMIT_DEFAULT          (0x22U)      
 
 /**
   * @brief Reset value of the HSI48 Calibration field
@@ -155,7 +154,7 @@ extern "C" {
   *       The trimming step is around 67 kHz between two consecutive TRIM steps. 
   *       A higher TRIM value corresponds to a higher output frequency
   */
-#define LL_CRS_HSI48CALIBRATION_DEFAULT    ((uint32_t)0x20U)      
+#define LL_CRS_HSI48CALIBRATION_DEFAULT    (0x20U)      
 /**
   * @}
   */ 
@@ -794,5 +793,3 @@ ErrorStatus LL_CRS_DeInit(void);
 #endif
 
 #endif /* __STM32L0xx_LL_CRS_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

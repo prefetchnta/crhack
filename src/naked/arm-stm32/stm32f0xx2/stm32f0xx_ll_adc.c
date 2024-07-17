@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -209,11 +208,6 @@ ErrorStatus LL_ADC_DeInit(ADC_TypeDef *ADCx)
   /* Disable ADC instance if not already disabled.                            */
   if(LL_ADC_IsEnabled(ADCx) == 1U)
   {
-    /* Set ADC group regular trigger source to SW start to ensure to not      */
-    /* have an external trigger event occurring during the conversion stop    */
-    /* ADC disable process.                                                   */
-    LL_ADC_REG_SetTriggerSource(ADCx, LL_ADC_REG_TRIG_SOFTWARE);
-    
     /* Stop potential ADC conversion on going on ADC group regular.           */
     if(LL_ADC_REG_IsConversionOngoing(ADCx) != 0U)
     {
@@ -225,27 +219,29 @@ ErrorStatus LL_ADC_DeInit(ADC_TypeDef *ADCx)
     
     /* Wait for ADC conversions are effectively stopped                       */
     timeout_cpu_cycles = ADC_TIMEOUT_STOP_CONVERSION_CPU_CYCLES;
-    while (LL_ADC_REG_IsStopConversionOngoing(ADCx) == 1U)
+    while (LL_ADC_REG_IsStopConversionOngoing(ADCx) == 1UL)
     {
-      if(timeout_cpu_cycles-- == 0U)
+      timeout_cpu_cycles--;
+      if (timeout_cpu_cycles == 0UL)
       {
         /* Time-out error */
         status = ERROR;
+        break;
       }
     }
+  }
     
-    /* Disable the ADC instance */
-    LL_ADC_Disable(ADCx);
-    
-    /* Wait for ADC instance is effectively disabled */
-    timeout_cpu_cycles = ADC_TIMEOUT_DISABLE_CPU_CYCLES;
-    while (LL_ADC_IsDisableOngoing(ADCx) == 1U)
+  /* Disable the ADC instance */
+  LL_ADC_Disable(ADCx);
+  
+  /* Wait for ADC instance is effectively disabled */
+  timeout_cpu_cycles = ADC_TIMEOUT_DISABLE_CPU_CYCLES;
+  while (LL_ADC_IsDisableOngoing(ADCx) == 1U)
+  {
+    if(timeout_cpu_cycles-- == 0U)
     {
-      if(timeout_cpu_cycles-- == 0U)
-      {
-        /* Time-out error */
-        status = ERROR;
-      }
+      /* Time-out error */
+      status = ERROR;
     }
   }
   
@@ -329,7 +325,7 @@ ErrorStatus LL_ADC_DeInit(ADC_TypeDef *ADCx)
     /* ADC instance is in an unknown state */
     /* Need to performing a hard reset of ADC instance, using high level      */
     /* clock source RCC ADC reset.                                            */
-    /* Caution: On this STM32 serie, if several ADC instances are available   */
+    /* Caution: On this STM32 series, if several ADC instances are available   */
     /*          on the selected device, RCC ADC reset will reset              */
     /*          all ADC instances belonging to the common ADC instance.       */
     status = ERROR;
@@ -476,6 +472,11 @@ ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *ADCx, LL_ADC_REG_InitTypeDef *ADC_REG_I
   assert_param(IS_LL_ADC_REG_DMA_TRANSFER(ADC_REG_InitStruct->DMATransfer));
   assert_param(IS_LL_ADC_REG_OVR_DATA_BEHAVIOR(ADC_REG_InitStruct->Overrun));
   
+  /* ADC group regular continuous mode and discontinuous mode                 */
+  /* can not be enabled simultenaeously                                       */
+  assert_param((ADC_REG_InitStruct->ContinuousMode == LL_ADC_REG_CONV_SINGLE)
+               || (ADC_REG_InitStruct->SequencerDiscont == LL_ADC_REG_SEQ_DISCONT_DISABLE));
+
   /* Note: Hardware constraint (refer to description of this function):       */
   /*       ADC instance must be disabled.                                     */
   if(LL_ADC_IsEnabled(ADCx) == 0U)
@@ -488,7 +489,7 @@ ErrorStatus LL_ADC_REG_Init(ADC_TypeDef *ADCx, LL_ADC_REG_InitTypeDef *ADC_REG_I
     /*    - Set ADC group regular conversion data transfer: no transfer or    */
     /*      transfer by DMA, and DMA requests mode                            */
     /*    - Set ADC group regular overrun behavior                            */
-    /* Note: On this STM32 serie, ADC trigger edge is set to value 0x0 by     */
+    /* Note: On this STM32 series, ADC trigger edge is set to value 0x0 by     */
     /*       setting of trigger source to SW start.                           */
     MODIFY_REG(ADCx->CFGR1,
                  ADC_CFGR1_EXTSEL
@@ -525,7 +526,7 @@ void LL_ADC_REG_StructInit(LL_ADC_REG_InitTypeDef *ADC_REG_InitStruct)
 {
   /* Set ADC_REG_InitStruct fields to default values */
   /* Set fields of ADC group regular */
-  /* Note: On this STM32 serie, ADC trigger edge is set to value 0x0 by       */
+  /* Note: On this STM32 series, ADC trigger edge is set to value 0x0 by       */
   /*       setting of trigger source to SW start.                             */
   ADC_REG_InitStruct->TriggerSource    = LL_ADC_REG_TRIG_SOFTWARE;
   ADC_REG_InitStruct->SequencerDiscont = LL_ADC_REG_SEQ_DISCONT_DISABLE;
@@ -554,4 +555,3 @@ void LL_ADC_REG_StructInit(LL_ADC_REG_InitTypeDef *ADC_REG_InitStruct)
 
 #endif /* USE_FULL_LL_DRIVER */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

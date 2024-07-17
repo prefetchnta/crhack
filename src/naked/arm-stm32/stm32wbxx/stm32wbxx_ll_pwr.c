@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the 
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -98,35 +97,37 @@ ErrorStatus LL_PWR_DeInit(void)
 #if defined(GPIOD)
   LL_PWR_WriteReg(PUCRD, PWR_PUCRD_RESET_VALUE);
   LL_PWR_WriteReg(PDCRD, PWR_PDCRD_RESET_VALUE);
-#endif
+#endif /* GPIOD */
   LL_PWR_WriteReg(PUCRE, PWR_PUCRE_RESET_VALUE);
   LL_PWR_WriteReg(PDCRE, PWR_PDCRE_RESET_VALUE);
   LL_PWR_WriteReg(PUCRH, PWR_PUCRH_RESET_VALUE);
   LL_PWR_WriteReg(PDCRH, PWR_PDCRH_RESET_VALUE);
   LL_PWR_WriteReg(C2CR1, PWR_C2CR1_RESET_VALUE);
   LL_PWR_WriteReg(C2CR3, PWR_C2CR3_RESET_VALUE);
-  
+
   /* Clear all flags */
   LL_PWR_WriteReg(SCR,
-                    LL_PWR_SCR_CC2HF
-                  | LL_PWR_SCR_C802AF
+                  LL_PWR_SCR_CC2HF
                   | LL_PWR_SCR_CBLEAF
                   | LL_PWR_SCR_CCRPEF
+#if defined(PWR_CR3_E802A)
+                  | LL_PWR_SCR_C802AF
                   | LL_PWR_SCR_C802WUF
+#endif /* PWR_CR3_E802A */
                   | LL_PWR_SCR_CBLEWUF
 #if defined(PWR_CR5_SMPSEN)
                   | LL_PWR_SCR_CBORHF
                   | LL_PWR_SCR_CSMPSFBF
-#endif
+#endif /* PWR_CR5_SMPSEN */
                   | LL_PWR_SCR_CWUF
                  );
-  
+
   LL_PWR_WriteReg(EXTSCR,
-                    LL_PWR_EXTSCR_CCRPF
+                  LL_PWR_EXTSCR_CCRPF
                   | LL_PWR_EXTSCR_C2CSSF
                   | LL_PWR_EXTSCR_C1CSSF
                  );
-  
+
   return SUCCESS;
 }
 
@@ -141,11 +142,10 @@ ErrorStatus LL_PWR_DeInit(void)
 /**
   * @}
   */
-#endif /* defined(PWR) */
+#endif /* PWR */
 /**
   * @}
   */
 
 #endif /* USE_FULL_LL_DRIVER */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

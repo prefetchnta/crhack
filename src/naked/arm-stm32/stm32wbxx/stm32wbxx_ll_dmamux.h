@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the 
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -78,7 +77,7 @@ extern "C" {
 #define LL_DMAMUX_CFR_CSOF11              DMAMUX_CFR_CSOF11      /*!< Synchronization Event Overrun Flag Channel 11 */
 #define LL_DMAMUX_CFR_CSOF12              DMAMUX_CFR_CSOF12      /*!< Synchronization Event Overrun Flag Channel 12 */
 #define LL_DMAMUX_CFR_CSOF13              DMAMUX_CFR_CSOF13      /*!< Synchronization Event Overrun Flag Channel 13 */
-#endif
+#endif /* DMA2 */
 #define LL_DMAMUX_RGCFR_RGCOF0            DMAMUX_RGCFR_COF0      /*!< Request Generator 0 Trigger Event Overrun Flag */
 #define LL_DMAMUX_RGCFR_RGCOF1            DMAMUX_RGCFR_COF1      /*!< Request Generator 1 Trigger Event Overrun Flag */
 #define LL_DMAMUX_RGCFR_RGCOF2            DMAMUX_RGCFR_COF2      /*!< Request Generator 2 Trigger Event Overrun Flag */
@@ -106,7 +105,7 @@ extern "C" {
 #define LL_DMAMUX_CSR_SOF11               DMAMUX_CSR_SOF11      /*!< Synchronization Event Overrun Flag Channel 11 */
 #define LL_DMAMUX_CSR_SOF12               DMAMUX_CSR_SOF12      /*!< Synchronization Event Overrun Flag Channel 12 */
 #define LL_DMAMUX_CSR_SOF13               DMAMUX_CSR_SOF13      /*!< Synchronization Event Overrun Flag Channel 13 */
-#endif
+#endif /* DMA2 */
 #define LL_DMAMUX_RGSR_RGOF0              DMAMUX_RGSR_OF0       /*!< Request Generator 0 Trigger Event Overrun Flag */
 #define LL_DMAMUX_RGSR_RGOF1              DMAMUX_RGSR_OF1       /*!< Request Generator 1 Trigger Event Overrun Flag */
 #define LL_DMAMUX_RGSR_RGOF2              DMAMUX_RGSR_OF2       /*!< Request Generator 2 Trigger Event Overrun Flag */
@@ -139,26 +138,26 @@ extern "C" {
 #if defined(SPI2)
 #define LL_DMAMUX_REQ_SPI2_RX             0x00000008U  /*!< DMAMUX SPI2 RX request     */
 #define LL_DMAMUX_REQ_SPI2_TX             0x00000009U  /*!< DMAMUX SPI2 TX request     */
-#endif
+#endif /* SPI2 */
 #define LL_DMAMUX_REQ_I2C1_RX             0x0000000AU  /*!< DMAMUX I2C1 RX request     */
 #define LL_DMAMUX_REQ_I2C1_TX             0x0000000BU  /*!< DMAMUX I2C1 TX request     */
 #if defined(I2C3)
 #define LL_DMAMUX_REQ_I2C3_RX             0x0000000CU  /*!< DMAMUX I2C3 RX request     */
 #define LL_DMAMUX_REQ_I2C3_TX             0x0000000DU  /*!< DMAMUX I2C3 TX request     */
-#endif
+#endif /* I2C3 */
 #define LL_DMAMUX_REQ_USART1_RX           0x0000000EU  /*!< DMAMUX USART1 RX request   */
 #define LL_DMAMUX_REQ_USART1_TX           0x0000000FU  /*!< DMAMUX USART1 TX request   */
 #if defined(LPUART1)
 #define LL_DMAMUX_REQ_LPUART1_RX          0x00000010U  /*!< DMAMUX LPUART1 RX request  */
 #define LL_DMAMUX_REQ_LPUART1_TX          0x00000011U  /*!< DMAMUX LPUART1 TX request  */
-#endif
+#endif /* LPUART1 */
 #if defined(SAI1)
 #define LL_DMAMUX_REQ_SAI1_A              0x00000012U  /*!< DMAMUX SAI1 A request      */
 #define LL_DMAMUX_REQ_SAI1_B              0x00000013U  /*!< DMAMUX SAI1 B request      */
-#endif
+#endif /* SAI1 */
 #if defined(QUADSPI)
 #define LL_DMAMUX_REQ_QUADSPI             0x00000014U  /*!< DMAMUX QUADSPI request     */
-#endif
+#endif /* QUADSPI */
 #define LL_DMAMUX_REQ_TIM1_CH1            0x00000015U  /*!< DMAMUX TIM1 CH1 request    */
 #define LL_DMAMUX_REQ_TIM1_CH2            0x00000016U  /*!< DMAMUX TIM1 CH2 request    */
 #define LL_DMAMUX_REQ_TIM1_CH3            0x00000017U  /*!< DMAMUX TIM1 CH3 request    */
@@ -178,7 +177,7 @@ extern "C" {
 #if defined(AES1)
 #define LL_DMAMUX_REQ_AES1_IN             0x00000025U  /*!< DMAMUX AES1_IN request     */
 #define LL_DMAMUX_REQ_AES1_OUT            0x00000026U  /*!< DMAMUX AES1_OUT request    */
-#endif
+#endif /* AES1 */
 #define LL_DMAMUX_REQ_AES2_IN             0x00000027U  /*!< DMAMUX AES2_IN request     */
 #define LL_DMAMUX_REQ_AES2_OUT            0x00000028U  /*!< DMAMUX AES2_OUT request    */
 /**
@@ -203,7 +202,7 @@ extern "C" {
 #define LL_DMAMUX_CHANNEL_11              0x0000000BU               /*!< DMAMUX Channel 11 connected to DMA2 Channel 5 */
 #define LL_DMAMUX_CHANNEL_12              0x0000000CU               /*!< DMAMUX Channel 12 connected to DMA2 Channel 6 */
 #define LL_DMAMUX_CHANNEL_13              0x0000000DU               /*!< DMAMUX Channel 13 connected to DMA2 Channel 7 */
-#endif
+#endif /* DMA2 */
 /**
   * @}
   */
@@ -240,8 +239,8 @@ extern "C" {
 #define LL_DMAMUX_SYNC_EXTI_LINE15        (DMAMUX_CxCR_SYNC_ID_3 | DMAMUX_CxCR_SYNC_ID_2 | DMAMUX_CxCR_SYNC_ID_1 | DMAMUX_CxCR_SYNC_ID_0) /*!< Synchronization signal from EXTI Line15 */
 #define LL_DMAMUX_SYNC_DMAMUX_CH0         DMAMUX_CxCR_SYNC_ID_4                                                                           /*!< Synchronization signal from DMAMUX channel0 Event */
 #define LL_DMAMUX_SYNC_DMAMUX_CH1         (DMAMUX_CxCR_SYNC_ID_4 | DMAMUX_CxCR_SYNC_ID_0)                                                 /*!< Synchronization signal from DMAMUX channel1 Event */
-#define LL_DMAMUX_SYNC_LPTIM1_OUT         (DMAMUX_CxCR_SYNC_ID_4 | DMAMUX_CxCR_SYNC_ID_1)                                                 /*!< Synchronization signal from LPTIM1 Ouput */
-#define LL_DMAMUX_SYNC_LPTIM2_OUT         (DMAMUX_CxCR_SYNC_ID_4 | DMAMUX_CxCR_SYNC_ID_1 | DMAMUX_CxCR_SYNC_ID_0)                         /*!< Synchronization signal from LPTIM2 Ouput */
+#define LL_DMAMUX_SYNC_LPTIM1_OUT         (DMAMUX_CxCR_SYNC_ID_4 | DMAMUX_CxCR_SYNC_ID_1)                                                 /*!< Synchronization signal from LPTIM1 Output */
+#define LL_DMAMUX_SYNC_LPTIM2_OUT         (DMAMUX_CxCR_SYNC_ID_4 | DMAMUX_CxCR_SYNC_ID_1 | DMAMUX_CxCR_SYNC_ID_0)                         /*!< Synchronization signal from LPTIM2 Output */
 /**
   * @}
   */
@@ -289,8 +288,8 @@ extern "C" {
 #define LL_DMAMUX_REQ_GEN_EXTI_LINE15     (DMAMUX_RGxCR_SIG_ID_3 | DMAMUX_RGxCR_SIG_ID_2 | DMAMUX_RGxCR_SIG_ID_1 | DMAMUX_RGxCR_SIG_ID_0) /*!< Request signal generation from EXTI Line15 */
 #define LL_DMAMUX_REQ_GEN_DMAMUX_CH0      DMAMUX_RGxCR_SIG_ID_4                                                                           /*!< Request signal generation from DMAMUX channel0 Event */
 #define LL_DMAMUX_REQ_GEN_DMAMUX_CH1      (DMAMUX_RGxCR_SIG_ID_4 | DMAMUX_RGxCR_SIG_ID_0)                                                 /*!< Request signal generation from DMAMUX channel1 Event */
-#define LL_DMAMUX_REQ_GEN_LPTIM1_OUT      (DMAMUX_RGxCR_SIG_ID_4 | DMAMUX_RGxCR_SIG_ID_1)                                                 /*!< Request signal generation from LPTIM1 Ouput */
-#define LL_DMAMUX_REQ_GEN_LPTIM2_OUT      (DMAMUX_RGxCR_SIG_ID_4 | DMAMUX_RGxCR_SIG_ID_1 | DMAMUX_RGxCR_SIG_ID_0)                         /*!< Request signal generation from LPTIM2 Ouput */
+#define LL_DMAMUX_REQ_GEN_LPTIM1_OUT      (DMAMUX_RGxCR_SIG_ID_4 | DMAMUX_RGxCR_SIG_ID_1)                                                 /*!< Request signal generation from LPTIM1 Output */
+#define LL_DMAMUX_REQ_GEN_LPTIM2_OUT      (DMAMUX_RGxCR_SIG_ID_4 | DMAMUX_RGxCR_SIG_ID_1 | DMAMUX_RGxCR_SIG_ID_0)                         /*!< Request signal generation from LPTIM2 Output */
 /**
   * @}
   */
@@ -333,8 +332,8 @@ extern "C" {
 
 /* Exported functions --------------------------------------------------------*/
 /** @defgroup DMAMUX_LL_Exported_Functions DMAMUX Exported Functions
- * @{
- */
+  * @{
+  */
 
 /** @defgroup DMAMUX_LL_EF_Configuration Configuration
   * @{
@@ -342,9 +341,7 @@ extern "C" {
 /**
   * @brief  Set DMAMUX request ID for DMAMUX Channel x.
   * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
-#if defined(DMA2)
-  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7.
-#endif
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         DMAREQ_ID     LL_DMAMUX_SetRequestID
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -355,7 +352,8 @@ extern "C" {
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
-#if defined(DMA2)
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -363,7 +361,6 @@ extern "C" {
   *         @arg @ref LL_DMAMUX_CHANNEL_11
   *         @arg @ref LL_DMAMUX_CHANNEL_12
   *         @arg @ref LL_DMAMUX_CHANNEL_13
-#endif
   * @param  Request This parameter can be one of the following values:
   *         @arg @ref LL_DMAMUX_REQ_MEM2MEM
   *         @arg @ref LL_DMAMUX_REQ_GENERATOR0
@@ -408,7 +405,7 @@ extern "C" {
   *         @arg @ref LL_DMAMUX_REQ_AES2_OUT
   * @retval None
   */
-__STATIC_INLINE void LL_DMAMUX_SetRequestID(DMAMUX_Channel_TypeDef* DMAMUXx, uint32_t Channel, uint32_t Request)
+__STATIC_INLINE void LL_DMAMUX_SetRequestID(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t Channel, uint32_t Request)
 {
   (void)(DMAMUXx);
   MODIFY_REG((DMAMUX1_Channel0 + Channel)->CCR, DMAMUX_CxCR_DMAREQ_ID, Request);
@@ -417,9 +414,7 @@ __STATIC_INLINE void LL_DMAMUX_SetRequestID(DMAMUX_Channel_TypeDef* DMAMUXx, uin
 /**
   * @brief  Get DMAMUX request ID for DMAMUX Channel x.
   * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
-#if defined(DMA2)
-  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7.
-#endif
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         DMAREQ_ID     LL_DMAMUX_GetRequestID
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -430,6 +425,8 @@ __STATIC_INLINE void LL_DMAMUX_SetRequestID(DMAMUX_Channel_TypeDef* DMAMUXx, uin
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -488,6 +485,8 @@ __STATIC_INLINE uint32_t LL_DMAMUX_GetRequestID(DMAMUX_Channel_TypeDef *DMAMUXx,
 
 /**
   * @brief  Set the number of DMA request that will be autorized after a synchronization event and/or the number of DMA request needed to generate an event.
+  * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         NBREQ         LL_DMAMUX_SetSyncRequestNb
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -498,6 +497,8 @@ __STATIC_INLINE uint32_t LL_DMAMUX_GetRequestID(DMAMUX_Channel_TypeDef *DMAMUXx,
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -516,6 +517,8 @@ __STATIC_INLINE void LL_DMAMUX_SetSyncRequestNb(DMAMUX_Channel_TypeDef *DMAMUXx,
 
 /**
   * @brief  Get the number of DMA request that will be autorized after a synchronization event and/or the number of DMA request needed to generate an event.
+  * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         NBREQ         LL_DMAMUX_GetSyncRequestNb
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -526,6 +529,8 @@ __STATIC_INLINE void LL_DMAMUX_SetSyncRequestNb(DMAMUX_Channel_TypeDef *DMAMUXx,
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -543,6 +548,8 @@ __STATIC_INLINE uint32_t LL_DMAMUX_GetSyncRequestNb(DMAMUX_Channel_TypeDef *DMAM
 
 /**
   * @brief  Set the polarity of the signal on which the DMA request is synchronized.
+  * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         SPOL          LL_DMAMUX_SetSyncPolarity
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -553,6 +560,8 @@ __STATIC_INLINE uint32_t LL_DMAMUX_GetSyncRequestNb(DMAMUX_Channel_TypeDef *DMAM
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -575,6 +584,8 @@ __STATIC_INLINE void LL_DMAMUX_SetSyncPolarity(DMAMUX_Channel_TypeDef *DMAMUXx, 
 
 /**
   * @brief  Get the polarity of the signal on which the DMA request is synchronized.
+  * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         SPOL          LL_DMAMUX_GetSyncPolarity
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -585,7 +596,8 @@ __STATIC_INLINE void LL_DMAMUX_SetSyncPolarity(DMAMUX_Channel_TypeDef *DMAMUXx, 
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
-#if defined(DMA2)
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -593,7 +605,6 @@ __STATIC_INLINE void LL_DMAMUX_SetSyncPolarity(DMAMUX_Channel_TypeDef *DMAMUXx, 
   *         @arg @ref LL_DMAMUX_CHANNEL_11
   *         @arg @ref LL_DMAMUX_CHANNEL_12
   *         @arg @ref LL_DMAMUX_CHANNEL_13
-#endif
   * @retval Returned value can be one of the following values:
   *         @arg @ref LL_DMAMUX_SYNC_NO_EVENT
   *         @arg @ref LL_DMAMUX_SYNC_POL_RISING
@@ -608,6 +619,8 @@ __STATIC_INLINE uint32_t LL_DMAMUX_GetSyncPolarity(DMAMUX_Channel_TypeDef *DMAMU
 
 /**
   * @brief  Enable the Event Generation on DMAMUX channel x.
+  * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         EGE           LL_DMAMUX_EnableEventGeneration
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -618,7 +631,8 @@ __STATIC_INLINE uint32_t LL_DMAMUX_GetSyncPolarity(DMAMUX_Channel_TypeDef *DMAMU
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
-#if defined(DMA2)
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -626,7 +640,6 @@ __STATIC_INLINE uint32_t LL_DMAMUX_GetSyncPolarity(DMAMUX_Channel_TypeDef *DMAMU
   *         @arg @ref LL_DMAMUX_CHANNEL_11
   *         @arg @ref LL_DMAMUX_CHANNEL_12
   *         @arg @ref LL_DMAMUX_CHANNEL_13
-#endif
   * @retval None
   */
 __STATIC_INLINE void LL_DMAMUX_EnableEventGeneration(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t Channel)
@@ -637,6 +650,8 @@ __STATIC_INLINE void LL_DMAMUX_EnableEventGeneration(DMAMUX_Channel_TypeDef *DMA
 
 /**
   * @brief  Disable the Event Generation on DMAMUX channel x.
+  * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         EGE           LL_DMAMUX_DisableEventGeneration
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -647,7 +662,8 @@ __STATIC_INLINE void LL_DMAMUX_EnableEventGeneration(DMAMUX_Channel_TypeDef *DMA
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
-#if defined(DMA2)
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -655,7 +671,6 @@ __STATIC_INLINE void LL_DMAMUX_EnableEventGeneration(DMAMUX_Channel_TypeDef *DMA
   *         @arg @ref LL_DMAMUX_CHANNEL_11
   *         @arg @ref LL_DMAMUX_CHANNEL_12
   *         @arg @ref LL_DMAMUX_CHANNEL_13
-#endif
   * @retval None
   */
 __STATIC_INLINE void LL_DMAMUX_DisableEventGeneration(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t Channel)
@@ -666,6 +681,8 @@ __STATIC_INLINE void LL_DMAMUX_DisableEventGeneration(DMAMUX_Channel_TypeDef *DM
 
 /**
   * @brief  Check if the Event Generation on DMAMUX channel x is enabled or disabled.
+  * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         EGE           LL_DMAMUX_IsEnabledEventGeneration
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -676,7 +693,8 @@ __STATIC_INLINE void LL_DMAMUX_DisableEventGeneration(DMAMUX_Channel_TypeDef *DM
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
-#if defined(DMA2)
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -684,17 +702,18 @@ __STATIC_INLINE void LL_DMAMUX_DisableEventGeneration(DMAMUX_Channel_TypeDef *DM
   *         @arg @ref LL_DMAMUX_CHANNEL_11
   *         @arg @ref LL_DMAMUX_CHANNEL_12
   *         @arg @ref LL_DMAMUX_CHANNEL_13
-#endif
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_DMAMUX_IsEnabledEventGeneration(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t Channel)
 {
   (void)(DMAMUXx);
-  return ((READ_BIT((DMAMUX1_Channel0 + Channel)->CCR, DMAMUX_CxCR_EGE) == (DMAMUX_CxCR_EGE))? 1UL : 0UL);
+  return ((READ_BIT((DMAMUX1_Channel0 + Channel)->CCR, DMAMUX_CxCR_EGE) == (DMAMUX_CxCR_EGE)) ? 1UL : 0UL);
 }
 
 /**
   * @brief  Enable the synchronization mode.
+  * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         SE            LL_DMAMUX_EnableSync
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -705,7 +724,8 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsEnabledEventGeneration(DMAMUX_Channel_TypeD
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
-#if defined(DMA2)
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -713,7 +733,6 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsEnabledEventGeneration(DMAMUX_Channel_TypeD
   *         @arg @ref LL_DMAMUX_CHANNEL_11
   *         @arg @ref LL_DMAMUX_CHANNEL_12
   *         @arg @ref LL_DMAMUX_CHANNEL_13
-#endif
   * @retval None
   */
 __STATIC_INLINE void LL_DMAMUX_EnableSync(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t Channel)
@@ -724,6 +743,8 @@ __STATIC_INLINE void LL_DMAMUX_EnableSync(DMAMUX_Channel_TypeDef *DMAMUXx, uint3
 
 /**
   * @brief  Disable the synchronization mode.
+  * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         SE            LL_DMAMUX_DisableSync
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -734,7 +755,8 @@ __STATIC_INLINE void LL_DMAMUX_EnableSync(DMAMUX_Channel_TypeDef *DMAMUXx, uint3
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
-#if defined(DMA2)
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -742,7 +764,6 @@ __STATIC_INLINE void LL_DMAMUX_EnableSync(DMAMUX_Channel_TypeDef *DMAMUXx, uint3
   *         @arg @ref LL_DMAMUX_CHANNEL_11
   *         @arg @ref LL_DMAMUX_CHANNEL_12
   *         @arg @ref LL_DMAMUX_CHANNEL_13
-#endif
   * @retval None
   */
 __STATIC_INLINE void LL_DMAMUX_DisableSync(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t Channel)
@@ -753,6 +774,8 @@ __STATIC_INLINE void LL_DMAMUX_DisableSync(DMAMUX_Channel_TypeDef *DMAMUXx, uint
 
 /**
   * @brief  Check if the synchronization mode is enabled or disabled.
+  * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         SE            LL_DMAMUX_IsEnabledSync
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -763,7 +786,8 @@ __STATIC_INLINE void LL_DMAMUX_DisableSync(DMAMUX_Channel_TypeDef *DMAMUXx, uint
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
-#if defined(DMA2)
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -771,17 +795,18 @@ __STATIC_INLINE void LL_DMAMUX_DisableSync(DMAMUX_Channel_TypeDef *DMAMUXx, uint
   *         @arg @ref LL_DMAMUX_CHANNEL_11
   *         @arg @ref LL_DMAMUX_CHANNEL_12
   *         @arg @ref LL_DMAMUX_CHANNEL_13
-#endif
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_DMAMUX_IsEnabledSync(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t Channel)
 {
   (void)(DMAMUXx);
-  return ((READ_BIT((DMAMUX1_Channel0 + Channel)->CCR, DMAMUX_CxCR_SE) == (DMAMUX_CxCR_SE))? 1UL : 0UL);
+  return ((READ_BIT((DMAMUX1_Channel0 + Channel)->CCR, DMAMUX_CxCR_SE) == (DMAMUX_CxCR_SE)) ? 1UL : 0UL);
 }
 
 /**
   * @brief  Set DMAMUX synchronization ID  on DMAMUX Channel x.
+  * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         SYNC_ID       LL_DMAMUX_SetSyncID
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -792,7 +817,8 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsEnabledSync(DMAMUX_Channel_TypeDef *DMAMUXx
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
-#if defined(DMA2)
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -800,7 +826,6 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsEnabledSync(DMAMUX_Channel_TypeDef *DMAMUXx
   *         @arg @ref LL_DMAMUX_CHANNEL_11
   *         @arg @ref LL_DMAMUX_CHANNEL_12
   *         @arg @ref LL_DMAMUX_CHANNEL_13
-#endif
   * @param  SyncID This parameter can be one of the following values:
   *         @arg @ref LL_DMAMUX_SYNC_EXTI_LINE0
   *         @arg @ref LL_DMAMUX_SYNC_EXTI_LINE1
@@ -832,6 +857,8 @@ __STATIC_INLINE void LL_DMAMUX_SetSyncID(DMAMUX_Channel_TypeDef *DMAMUXx, uint32
 
 /**
   * @brief  Get DMAMUX synchronization ID  on DMAMUX Channel x.
+  * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         SYNC_ID       LL_DMAMUX_GetSyncID
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -842,7 +869,8 @@ __STATIC_INLINE void LL_DMAMUX_SetSyncID(DMAMUX_Channel_TypeDef *DMAMUXx, uint32
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
-#if defined(DMA2)
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -850,7 +878,6 @@ __STATIC_INLINE void LL_DMAMUX_SetSyncID(DMAMUX_Channel_TypeDef *DMAMUXx, uint32
   *         @arg @ref LL_DMAMUX_CHANNEL_11
   *         @arg @ref LL_DMAMUX_CHANNEL_12
   *         @arg @ref LL_DMAMUX_CHANNEL_13
-#endif
   * @retval Returned value can be one of the following values:
   *         @arg @ref LL_DMAMUX_SYNC_EXTI_LINE0
   *         @arg @ref LL_DMAMUX_SYNC_EXTI_LINE1
@@ -893,7 +920,8 @@ __STATIC_INLINE uint32_t LL_DMAMUX_GetSyncID(DMAMUX_Channel_TypeDef *DMAMUXx, ui
 __STATIC_INLINE void LL_DMAMUX_EnableRequestGen(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
   (void)(DMAMUXx);
-  SET_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GE);
+  SET_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE *
+                                                    (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GE);
 }
 
 /**
@@ -910,7 +938,8 @@ __STATIC_INLINE void LL_DMAMUX_EnableRequestGen(DMAMUX_Channel_TypeDef *DMAMUXx,
 __STATIC_INLINE void LL_DMAMUX_DisableRequestGen(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
   (void)(DMAMUXx);
-  CLEAR_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GE);
+  CLEAR_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE *
+                                                      (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GE);
 }
 
 /**
@@ -927,7 +956,8 @@ __STATIC_INLINE void LL_DMAMUX_DisableRequestGen(DMAMUX_Channel_TypeDef *DMAMUXx
 __STATIC_INLINE uint32_t LL_DMAMUX_IsEnabledRequestGen(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
   (void)(DMAMUXx);
-  return ((READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GE) == (DMAMUX_RGxCR_GE))? 1UL : 0UL);
+  return ((READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE *
+                                                              (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GE) == (DMAMUX_RGxCR_GE)) ? 1UL : 0UL);
 }
 
 /**
@@ -946,10 +976,12 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsEnabledRequestGen(DMAMUX_Channel_TypeDef *D
   *         @arg @ref LL_DMAMUX_REQ_GEN_POL_RISING_FALLING
   * @retval None
   */
-__STATIC_INLINE void LL_DMAMUX_SetRequestGenPolarity(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel, uint32_t Polarity)
+__STATIC_INLINE void LL_DMAMUX_SetRequestGenPolarity(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel,
+                                                     uint32_t Polarity)
 {
   (void)(DMAMUXx);
-  MODIFY_REG(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GPOL, Polarity);
+  MODIFY_REG(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE *
+                                                       (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GPOL, Polarity);
 }
 
 /**
@@ -970,7 +1002,8 @@ __STATIC_INLINE void LL_DMAMUX_SetRequestGenPolarity(DMAMUX_Channel_TypeDef *DMA
 __STATIC_INLINE uint32_t LL_DMAMUX_GetRequestGenPolarity(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
   (void)(DMAMUXx);
-  return (uint32_t)(READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GPOL));
+  return (uint32_t)(READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 +
+                                                                       (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GPOL));
 }
 
 /**
@@ -986,10 +1019,12 @@ __STATIC_INLINE uint32_t LL_DMAMUX_GetRequestGenPolarity(DMAMUX_Channel_TypeDef 
   * @param  RequestNb This parameter must be a value between Min_Data = 1 and Max_Data = 32.
   * @retval None
   */
-__STATIC_INLINE void LL_DMAMUX_SetGenRequestNb(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel, uint32_t RequestNb)
+__STATIC_INLINE void LL_DMAMUX_SetGenRequestNb(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel,
+                                               uint32_t RequestNb)
 {
   (void)(DMAMUXx);
-  MODIFY_REG(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GNBREQ, (RequestNb - 1U) << DMAMUX_RGxCR_GNBREQ_Pos);
+  MODIFY_REG(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE *
+                                                       (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GNBREQ, (RequestNb - 1U) << DMAMUX_RGxCR_GNBREQ_Pos);
 }
 
 /**
@@ -1006,7 +1041,8 @@ __STATIC_INLINE void LL_DMAMUX_SetGenRequestNb(DMAMUX_Channel_TypeDef *DMAMUXx, 
 __STATIC_INLINE uint32_t LL_DMAMUX_GetGenRequestNb(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
   (void)(DMAMUXx);
-  return (uint32_t)((READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GNBREQ) >> DMAMUX_RGxCR_GNBREQ_Pos) + 1U);
+  return (uint32_t)((READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 +
+                                                                        (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_GNBREQ) >> DMAMUX_RGxCR_GNBREQ_Pos) + 1U);
 }
 
 /**
@@ -1041,10 +1077,12 @@ __STATIC_INLINE uint32_t LL_DMAMUX_GetGenRequestNb(DMAMUX_Channel_TypeDef *DMAMU
   *         @arg @ref LL_DMAMUX_REQ_GEN_LPTIM2_OUT
   * @retval None
   */
-__STATIC_INLINE void LL_DMAMUX_SetRequestSignalID(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel, uint32_t RequestSignalID)
+__STATIC_INLINE void LL_DMAMUX_SetRequestSignalID(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel,
+                                                  uint32_t RequestSignalID)
 {
   (void)(DMAMUXx);
-  MODIFY_REG(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_SIG_ID, RequestSignalID);
+  MODIFY_REG(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE *
+                                                       (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_SIG_ID, RequestSignalID);
 }
 
 /**
@@ -1081,7 +1119,8 @@ __STATIC_INLINE void LL_DMAMUX_SetRequestSignalID(DMAMUX_Channel_TypeDef *DMAMUX
 __STATIC_INLINE uint32_t LL_DMAMUX_GetRequestSignalID(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
   (void)(DMAMUXx);
-  return (uint32_t)(READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 + (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_SIG_ID));
+  return (uint32_t)(READ_BIT(((DMAMUX_RequestGen_TypeDef *)((uint32_t)((uint32_t)DMAMUX1_RequestGenerator0 +
+                                                                       (DMAMUX_RGCR_SIZE * (RequestGenChannel)))))->RGCR, DMAMUX_RGxCR_SIG_ID));
 }
 
 /**
@@ -1176,6 +1215,7 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsActiveFlag_SO6(DMAMUX_Channel_TypeDef *DMAM
   return ((READ_BIT(DMAMUX1_ChannelStatus->CSR, DMAMUX_CSR_SOF6) == (DMAMUX_CSR_SOF6)) ? 1UL : 0UL);
 }
 
+#if defined(DMAMUX1_Channel7)
 /**
   * @brief  Get Synchronization Event Overrun Flag Channel 7.
   * @rmtoll CSR          SOF7          LL_DMAMUX_IsActiveFlag_SO7
@@ -1188,6 +1228,8 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsActiveFlag_SO7(DMAMUX_Channel_TypeDef *DMAM
   return ((READ_BIT(DMAMUX1_ChannelStatus->CSR, DMAMUX_CSR_SOF7) == (DMAMUX_CSR_SOF7)) ? 1UL : 0UL);
 }
 
+#endif /* DMAMUX1_Channel7 */
+#if defined(DMAMUX1_Channel8)
 /**
   * @brief  Get Synchronization Event Overrun Flag Channel 8.
   * @rmtoll CSR          SOF8          LL_DMAMUX_IsActiveFlag_SO8
@@ -1200,6 +1242,8 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsActiveFlag_SO8(DMAMUX_Channel_TypeDef *DMAM
   return ((READ_BIT(DMAMUX1_ChannelStatus->CSR, DMAMUX_CSR_SOF8) == (DMAMUX_CSR_SOF8)) ? 1UL : 0UL);
 }
 
+#endif /* DMAMUX1_Channel8 */
+#if defined(DMAMUX1_Channel9)
 /**
   * @brief  Get Synchronization Event Overrun Flag Channel 9.
   * @rmtoll CSR          SOF9          LL_DMAMUX_IsActiveFlag_SO9
@@ -1212,6 +1256,8 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsActiveFlag_SO9(DMAMUX_Channel_TypeDef *DMAM
   return ((READ_BIT(DMAMUX1_ChannelStatus->CSR, DMAMUX_CSR_SOF9) == (DMAMUX_CSR_SOF9)) ? 1UL : 0UL);
 }
 
+#endif /* DMAMUX1_Channel9 */
+#if defined(DMAMUX1_Channel10)
 /**
   * @brief  Get Synchronization Event Overrun Flag Channel 10.
   * @rmtoll CSR          SOF10         LL_DMAMUX_IsActiveFlag_SO10
@@ -1224,6 +1270,8 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsActiveFlag_SO10(DMAMUX_Channel_TypeDef *DMA
   return ((READ_BIT(DMAMUX1_ChannelStatus->CSR, DMAMUX_CSR_SOF10) == (DMAMUX_CSR_SOF10)) ? 1UL : 0UL);
 }
 
+#endif /* DMAMUX1_Channel10 */
+#if defined(DMAMUX1_Channel11)
 /**
   * @brief  Get Synchronization Event Overrun Flag Channel 11.
   * @rmtoll CSR          SOF11         LL_DMAMUX_IsActiveFlag_SO11
@@ -1236,6 +1284,8 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsActiveFlag_SO11(DMAMUX_Channel_TypeDef *DMA
   return ((READ_BIT(DMAMUX1_ChannelStatus->CSR, DMAMUX_CSR_SOF11) == (DMAMUX_CSR_SOF11)) ? 1UL : 0UL);
 }
 
+#endif /* DMAMUX1_Channel11 */
+#if defined(DMAMUX1_Channel12)
 /**
   * @brief  Get Synchronization Event Overrun Flag Channel 12.
   * @rmtoll CSR          SOF12         LL_DMAMUX_IsActiveFlag_SO12
@@ -1248,6 +1298,8 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsActiveFlag_SO12(DMAMUX_Channel_TypeDef *DMA
   return ((READ_BIT(DMAMUX1_ChannelStatus->CSR, DMAMUX_CSR_SOF12) == (DMAMUX_CSR_SOF12)) ? 1UL : 0UL);
 }
 
+#endif /* DMAMUX1_Channel12 */
+#if defined(DMAMUX1_Channel13)
 /**
   * @brief  Get Synchronization Event Overrun Flag Channel 13.
   * @rmtoll CSR          SOF13         LL_DMAMUX_IsActiveFlag_SO13
@@ -1260,6 +1312,7 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsActiveFlag_SO13(DMAMUX_Channel_TypeDef *DMA
   return ((READ_BIT(DMAMUX1_ChannelStatus->CSR, DMAMUX_CSR_SOF13) == (DMAMUX_CSR_SOF13)) ? 1UL : 0UL);
 }
 
+#endif /* DMAMUX1_Channel13 */
 /**
   * @brief  Get Request Generator 0 Trigger Event Overrun Flag.
   * @rmtoll RGSR         OF0           LL_DMAMUX_IsActiveFlag_RGO0
@@ -1392,6 +1445,7 @@ __STATIC_INLINE void LL_DMAMUX_ClearFlag_SO6(DMAMUX_Channel_TypeDef *DMAMUXx)
   SET_BIT(DMAMUX1_ChannelStatus->CFR, DMAMUX_CFR_CSOF6);
 }
 
+#if defined(DMAMUX1_Channel7)
 /**
   * @brief  Clear Synchronization Event Overrun Flag Channel 7.
   * @rmtoll CFR          CSOF7         LL_DMAMUX_ClearFlag_SO7
@@ -1404,6 +1458,8 @@ __STATIC_INLINE void LL_DMAMUX_ClearFlag_SO7(DMAMUX_Channel_TypeDef *DMAMUXx)
   SET_BIT(DMAMUX1_ChannelStatus->CFR, DMAMUX_CFR_CSOF7);
 }
 
+#endif /* DMAMUX1_Channel7 */
+#if defined(DMAMUX1_Channel8)
 /**
   * @brief  Clear Synchronization Event Overrun Flag Channel 8.
   * @rmtoll CFR          CSOF8         LL_DMAMUX_ClearFlag_SO8
@@ -1416,6 +1472,8 @@ __STATIC_INLINE void LL_DMAMUX_ClearFlag_SO8(DMAMUX_Channel_TypeDef *DMAMUXx)
   SET_BIT(DMAMUX1_ChannelStatus->CFR, DMAMUX_CFR_CSOF8);
 }
 
+#endif /* DMAMUX1_Channel8 */
+#if defined(DMAMUX1_Channel9)
 /**
   * @brief  Clear Synchronization Event Overrun Flag Channel 9.
   * @rmtoll CFR          CSOF9         LL_DMAMUX_ClearFlag_SO9
@@ -1428,6 +1486,8 @@ __STATIC_INLINE void LL_DMAMUX_ClearFlag_SO9(DMAMUX_Channel_TypeDef *DMAMUXx)
   SET_BIT(DMAMUX1_ChannelStatus->CFR, DMAMUX_CFR_CSOF9);
 }
 
+#endif /* DMAMUX1_Channel9 */
+#if defined(DMAMUX1_Channel10)
 /**
   * @brief  Clear Synchronization Event Overrun Flag Channel 10.
   * @rmtoll CFR          CSOF10        LL_DMAMUX_ClearFlag_SO10
@@ -1440,6 +1500,8 @@ __STATIC_INLINE void LL_DMAMUX_ClearFlag_SO10(DMAMUX_Channel_TypeDef *DMAMUXx)
   SET_BIT(DMAMUX1_ChannelStatus->CFR, DMAMUX_CFR_CSOF10);
 }
 
+#endif /* DMAMUX1_Channel10 */
+#if defined(DMAMUX1_Channel11)
 /**
   * @brief  Clear Synchronization Event Overrun Flag Channel 11.
   * @rmtoll CFR          CSOF11        LL_DMAMUX_ClearFlag_SO11
@@ -1452,6 +1514,8 @@ __STATIC_INLINE void LL_DMAMUX_ClearFlag_SO11(DMAMUX_Channel_TypeDef *DMAMUXx)
   SET_BIT(DMAMUX1_ChannelStatus->CFR, DMAMUX_CFR_CSOF11);
 }
 
+#endif /* DMAMUX1_Channel11 */
+#if defined(DMAMUX1_Channel12)
 /**
   * @brief  Clear Synchronization Event Overrun Flag Channel 12.
   * @rmtoll CFR          CSOF12        LL_DMAMUX_ClearFlag_SO12
@@ -1464,6 +1528,8 @@ __STATIC_INLINE void LL_DMAMUX_ClearFlag_SO12(DMAMUX_Channel_TypeDef *DMAMUXx)
   SET_BIT(DMAMUX1_ChannelStatus->CFR, DMAMUX_CFR_CSOF12);
 }
 
+#endif /* DMAMUX1_Channel12 */
+#if defined(DMAMUX1_Channel13)
 /**
   * @brief  Clear Synchronization Event Overrun Flag Channel 13.
   * @rmtoll CFR          CSOF13        LL_DMAMUX_ClearFlag_SO13
@@ -1476,6 +1542,7 @@ __STATIC_INLINE void LL_DMAMUX_ClearFlag_SO13(DMAMUX_Channel_TypeDef *DMAMUXx)
   SET_BIT(DMAMUX1_ChannelStatus->CFR, DMAMUX_CFR_CSOF13);
 }
 
+#endif /* DMAMUX1_Channel13 */
 /**
   * @brief  Clear Request Generator 0 Trigger Event Overrun Flag.
   * @rmtoll RGCFR        COF0          LL_DMAMUX_ClearFlag_RGO0
@@ -1534,6 +1601,8 @@ __STATIC_INLINE void LL_DMAMUX_ClearFlag_RGO3(DMAMUX_Channel_TypeDef *DMAMUXx)
 
 /**
   * @brief  Enable the Synchronization Event Overrun Interrupt on DMAMUX channel x.
+  * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         SOIE          LL_DMAMUX_EnableIT_SO
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -1544,7 +1613,8 @@ __STATIC_INLINE void LL_DMAMUX_ClearFlag_RGO3(DMAMUX_Channel_TypeDef *DMAMUXx)
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
-#if defined(DMA2)
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -1552,7 +1622,6 @@ __STATIC_INLINE void LL_DMAMUX_ClearFlag_RGO3(DMAMUX_Channel_TypeDef *DMAMUXx)
   *         @arg @ref LL_DMAMUX_CHANNEL_11
   *         @arg @ref LL_DMAMUX_CHANNEL_12
   *         @arg @ref LL_DMAMUX_CHANNEL_13
-#endif
   * @retval None
   */
 __STATIC_INLINE void LL_DMAMUX_EnableIT_SO(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t Channel)
@@ -1563,6 +1632,8 @@ __STATIC_INLINE void LL_DMAMUX_EnableIT_SO(DMAMUX_Channel_TypeDef *DMAMUXx, uint
 
 /**
   * @brief  Disable the Synchronization Event Overrun Interrupt on DMAMUX channel x.
+  * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         SOIE          LL_DMAMUX_DisableIT_SO
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -1573,7 +1644,8 @@ __STATIC_INLINE void LL_DMAMUX_EnableIT_SO(DMAMUX_Channel_TypeDef *DMAMUXx, uint
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
-#if defined(DMA2)
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -1581,7 +1653,6 @@ __STATIC_INLINE void LL_DMAMUX_EnableIT_SO(DMAMUX_Channel_TypeDef *DMAMUXx, uint
   *         @arg @ref LL_DMAMUX_CHANNEL_11
   *         @arg @ref LL_DMAMUX_CHANNEL_12
   *         @arg @ref LL_DMAMUX_CHANNEL_13
-#endif
   * @retval None
   */
 __STATIC_INLINE void LL_DMAMUX_DisableIT_SO(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t Channel)
@@ -1592,6 +1663,8 @@ __STATIC_INLINE void LL_DMAMUX_DisableIT_SO(DMAMUX_Channel_TypeDef *DMAMUXx, uin
 
 /**
   * @brief  Check if the Synchronization Event Overrun Interrupt on DMAMUX channel x is enabled or disabled.
+  * @note   DMAMUX channel 0 to 6 are mapped to DMA1 channel 1 to 7.
+  *         DMAMUX channel 7 to 13 are mapped to DMA2 channel 1 to 7 (**** only available on chip which support DMA2 ****).
   * @rmtoll CxCR         SOIE          LL_DMAMUX_IsEnabledIT_SO
   * @param  DMAMUXx DMAMUXx Instance
   * @param  Channel This parameter can be one of the following values:
@@ -1602,7 +1675,8 @@ __STATIC_INLINE void LL_DMAMUX_DisableIT_SO(DMAMUX_Channel_TypeDef *DMAMUXx, uin
   *         @arg @ref LL_DMAMUX_CHANNEL_4
   *         @arg @ref LL_DMAMUX_CHANNEL_5
   *         @arg @ref LL_DMAMUX_CHANNEL_6
-#if defined(DMA2)
+  *
+  *         @arg All the next values are only available on chip which support DMA2:
   *         @arg @ref LL_DMAMUX_CHANNEL_7
   *         @arg @ref LL_DMAMUX_CHANNEL_8
   *         @arg @ref LL_DMAMUX_CHANNEL_9
@@ -1610,13 +1684,12 @@ __STATIC_INLINE void LL_DMAMUX_DisableIT_SO(DMAMUX_Channel_TypeDef *DMAMUXx, uin
   *         @arg @ref LL_DMAMUX_CHANNEL_11
   *         @arg @ref LL_DMAMUX_CHANNEL_12
   *         @arg @ref LL_DMAMUX_CHANNEL_13
-#endif
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_DMAMUX_IsEnabledIT_SO(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t Channel)
 {
   (void)(DMAMUXx);
-  return (((READ_BIT((DMAMUX1_Channel0 + Channel)->CCR, DMAMUX_CxCR_SOIE)) == (DMAMUX_CxCR_SOIE))? 1UL : 0UL);
+  return (((READ_BIT((DMAMUX1_Channel0 + Channel)->CCR, DMAMUX_CxCR_SOIE)) == (DMAMUX_CxCR_SOIE)) ? 1UL : 0UL);
 }
 
 /**
@@ -1667,7 +1740,7 @@ __STATIC_INLINE void LL_DMAMUX_DisableIT_RGO(DMAMUX_Channel_TypeDef *DMAMUXx, ui
 __STATIC_INLINE uint32_t LL_DMAMUX_IsEnabledIT_RGO(DMAMUX_Channel_TypeDef *DMAMUXx, uint32_t RequestGenChannel)
 {
   (void)(DMAMUXx);
-  return ((READ_BIT((DMAMUX1_RequestGenerator0 + RequestGenChannel)->RGCR, DMAMUX_RGxCR_OIE) == (DMAMUX_RGxCR_OIE))? 1UL : 0UL);
+  return ((READ_BIT((DMAMUX1_RequestGenerator0 + RequestGenChannel)->RGCR, DMAMUX_RGxCR_OIE) == (DMAMUX_RGxCR_OIE)) ? 1UL : 0UL);
 }
 
 /**
@@ -1693,5 +1766,3 @@ __STATIC_INLINE uint32_t LL_DMAMUX_IsEnabledIT_RGO(DMAMUX_Channel_TypeDef *DMAMU
 #endif
 
 #endif /* STM32WBxx_LL_DMAMUX_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

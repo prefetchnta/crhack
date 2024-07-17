@@ -6,20 +6,19 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32L0xx_HAL_UART_EX_H
-#define __STM32L0xx_HAL_UART_EX_H
+#ifndef STM32L0xx_HAL_UART_EX_H
+#define STM32L0xx_HAL_UART_EX_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -69,9 +68,9 @@ typedef struct
 /** @defgroup UARTEx_Word_Length UARTEx Word Length
   * @{
   */
-#define UART_WORDLENGTH_7B                  USART_CR1_M1   /*!< 7-bit long UART frame */
-#define UART_WORDLENGTH_8B                  0x00000000U    /*!< 8-bit long UART frame */
-#define UART_WORDLENGTH_9B                  USART_CR1_M0   /*!< 9-bit long UART frame */
+#define UART_WORDLENGTH_7B          USART_CR1_M1   /*!< 7-bit long UART frame */
+#define UART_WORDLENGTH_8B          0x00000000U    /*!< 8-bit long UART frame */
+#define UART_WORDLENGTH_9B          USART_CR1_M0   /*!< 9-bit long UART frame */
 /**
   * @}
   */
@@ -79,12 +78,11 @@ typedef struct
 /** @defgroup UARTEx_WakeUp_Address_Length UARTEx WakeUp Address Length
   * @{
   */
-#define UART_ADDRESS_DETECT_4B              0x00000000U      /*!< 4-bit long wake-up address */
-#define UART_ADDRESS_DETECT_7B              USART_CR2_ADDM7  /*!< 7-bit long wake-up address */
+#define UART_ADDRESS_DETECT_4B      0x00000000U      /*!< 4-bit long wake-up address */
+#define UART_ADDRESS_DETECT_7B      USART_CR2_ADDM7  /*!< 7-bit long wake-up address */
 /**
   * @}
   */
-
 
 /**
   * @}
@@ -101,7 +99,8 @@ typedef struct
   */
 
 /* Initialization and de-initialization functions  ****************************/
-HAL_StatusTypeDef HAL_RS485Ex_Init(UART_HandleTypeDef *huart, uint32_t Polarity, uint32_t AssertionTime, uint32_t DeassertionTime);
+HAL_StatusTypeDef HAL_RS485Ex_Init(UART_HandleTypeDef *huart, uint32_t Polarity, uint32_t AssertionTime,
+                                   uint32_t DeassertionTime);
 
 /**
   * @}
@@ -112,7 +111,6 @@ HAL_StatusTypeDef HAL_RS485Ex_Init(UART_HandleTypeDef *huart, uint32_t Polarity,
   */
 
 void HAL_UARTEx_WakeupCallback(UART_HandleTypeDef *huart);
-
 
 /**
   * @}
@@ -126,9 +124,20 @@ void HAL_UARTEx_WakeupCallback(UART_HandleTypeDef *huart);
 HAL_StatusTypeDef HAL_UARTEx_StopModeWakeUpSourceConfig(UART_HandleTypeDef *huart, UART_WakeUpTypeDef WakeUpSelection);
 HAL_StatusTypeDef HAL_UARTEx_EnableStopMode(UART_HandleTypeDef *huart);
 HAL_StatusTypeDef HAL_UARTEx_DisableStopMode(UART_HandleTypeDef *huart);
+
 HAL_StatusTypeDef HAL_UARTEx_EnableClockStopMode(UART_HandleTypeDef *huart);
 HAL_StatusTypeDef HAL_UARTEx_DisableClockStopMode(UART_HandleTypeDef *huart);
+
 HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *huart, uint32_t AddressLength);
+
+
+HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint16_t *RxLen,
+                                           uint32_t Timeout);
+HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size);
+HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle_DMA(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size);
+
+HAL_UART_RxEventTypeTypeDef HAL_UARTEx_GetRxEventType(UART_HandleTypeDef *huart);
+
 
 /**
   * @}
@@ -148,13 +157,14 @@ HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *hua
   * @param  __CLOCKSOURCE__ output variable.
   * @retval UART clocking source, written in __CLOCKSOURCE__.
   */
-#if defined (STM32L031xx) || defined (STM32L041xx) || defined (STM32L011xx) || defined (STM32L021xx) || defined (STM32L010xB) || defined (STM32L010x8) || defined (STM32L010x6) || defined (STM32L010x4)
+#if defined (STM32L031xx) || defined (STM32L041xx) || defined (STM32L011xx) || defined (STM32L021xx) \
+ || defined (STM32L010xB) || defined (STM32L010x8) || defined (STM32L010x6) || defined (STM32L010x4)
 #define UART_GETCLOCKSOURCE(__HANDLE__,__CLOCKSOURCE__)       \
   do {                                                        \
     if((__HANDLE__)->Instance == USART2)                      \
     {                                                         \
-       switch(__HAL_RCC_GET_USART2_SOURCE())                  \
-       {                                                      \
+      switch(__HAL_RCC_GET_USART2_SOURCE())                   \
+      {                                                       \
         case RCC_USART2CLKSOURCE_PCLK1:                       \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_PCLK1;         \
           break;                                              \
@@ -170,12 +180,12 @@ HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *hua
         default:                                              \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_UNDEFINED;     \
           break;                                              \
-       }                                                      \
+      }                                                       \
     }                                                         \
     else if((__HANDLE__)->Instance == LPUART1)                \
     {                                                         \
-       switch(__HAL_RCC_GET_LPUART1_SOURCE())                 \
-       {                                                      \
+      switch(__HAL_RCC_GET_LPUART1_SOURCE())                  \
+      {                                                       \
         case RCC_LPUART1CLKSOURCE_PCLK1:                      \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_PCLK1;         \
           break;                                              \
@@ -191,7 +201,7 @@ HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *hua
         default:                                              \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_UNDEFINED;     \
           break;                                              \
-       }                                                      \
+      }                                                       \
     }                                                         \
     else                                                      \
     {                                                         \
@@ -199,14 +209,15 @@ HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *hua
     }                                                         \
   } while(0)
 
-#elif defined (STM32L051xx) || defined (STM32L052xx) || defined (STM32L053xx) || defined (STM32L061xx)  || defined (STM32L062xx) || defined (STM32L063xx)
+#elif defined (STM32L051xx) || defined (STM32L052xx) || defined (STM32L053xx) || defined (STM32L062xx) \
+   || defined (STM32L063xx)
 
 #define UART_GETCLOCKSOURCE(__HANDLE__,__CLOCKSOURCE__)       \
   do {                                                        \
     if((__HANDLE__)->Instance == USART1)                      \
     {                                                         \
-       switch(__HAL_RCC_GET_USART1_SOURCE())                  \
-       {                                                      \
+      switch(__HAL_RCC_GET_USART1_SOURCE())                   \
+      {                                                       \
         case RCC_USART1CLKSOURCE_PCLK2:                       \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_PCLK2;         \
           break;                                              \
@@ -222,12 +233,12 @@ HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *hua
         default:                                              \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_UNDEFINED;     \
           break;                                              \
-       }                                                      \
+      }                                                       \
     }                                                         \
     else if((__HANDLE__)->Instance == USART2)                 \
     {                                                         \
-       switch(__HAL_RCC_GET_USART2_SOURCE())                  \
-       {                                                      \
+      switch(__HAL_RCC_GET_USART2_SOURCE())                   \
+      {                                                       \
         case RCC_USART2CLKSOURCE_PCLK1:                       \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_PCLK1;         \
           break;                                              \
@@ -243,12 +254,12 @@ HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *hua
         default:                                              \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_UNDEFINED;     \
           break;                                              \
-       }                                                      \
+      }                                                       \
     }                                                         \
     else if((__HANDLE__)->Instance == LPUART1)                \
     {                                                         \
-       switch(__HAL_RCC_GET_LPUART1_SOURCE())                 \
-       {                                                      \
+      switch(__HAL_RCC_GET_LPUART1_SOURCE())                  \
+      {                                                       \
         case RCC_LPUART1CLKSOURCE_PCLK1:                      \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_PCLK1;         \
           break;                                              \
@@ -264,7 +275,7 @@ HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *hua
         default:                                              \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_UNDEFINED;     \
           break;                                              \
-       }                                                      \
+      }                                                       \
     }                                                         \
     else                                                      \
     {                                                         \
@@ -278,8 +289,8 @@ HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *hua
   do {                                                        \
     if((__HANDLE__)->Instance == USART1)                      \
     {                                                         \
-       switch(__HAL_RCC_GET_USART1_SOURCE())                  \
-       {                                                      \
+      switch(__HAL_RCC_GET_USART1_SOURCE())                   \
+      {                                                       \
         case RCC_USART1CLKSOURCE_PCLK2:                       \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_PCLK2;         \
           break;                                              \
@@ -295,12 +306,12 @@ HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *hua
         default:                                              \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_UNDEFINED;     \
           break;                                              \
-       }                                                      \
+      }                                                       \
     }                                                         \
     else if((__HANDLE__)->Instance == USART2)                 \
     {                                                         \
-       switch(__HAL_RCC_GET_USART2_SOURCE())                  \
-       {                                                      \
+      switch(__HAL_RCC_GET_USART2_SOURCE())                   \
+      {                                                       \
         case RCC_USART2CLKSOURCE_PCLK1:                       \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_PCLK1;         \
           break;                                              \
@@ -316,7 +327,7 @@ HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *hua
         default:                                              \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_UNDEFINED;     \
           break;                                              \
-       }                                                      \
+      }                                                       \
     }                                                         \
     else if((__HANDLE__)->Instance == USART4)                 \
     {                                                         \
@@ -328,8 +339,8 @@ HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *hua
     }                                                         \
     else if((__HANDLE__)->Instance == LPUART1)                \
     {                                                         \
-       switch(__HAL_RCC_GET_LPUART1_SOURCE())                 \
-       {                                                      \
+      switch(__HAL_RCC_GET_LPUART1_SOURCE())                  \
+      {                                                       \
         case RCC_LPUART1CLKSOURCE_PCLK1:                      \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_PCLK1;         \
           break;                                              \
@@ -345,14 +356,15 @@ HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *hua
         default:                                              \
           (__CLOCKSOURCE__) = UART_CLOCKSOURCE_UNDEFINED;     \
           break;                                              \
-       }                                                      \
+      }                                                       \
     }                                                         \
     else                                                      \
     {                                                         \
       (__CLOCKSOURCE__) = UART_CLOCKSOURCE_UNDEFINED;         \
     }                                                         \
   } while(0)
-#endif /* (STM32L031xx) || (STM32L041xx) || (STM32L011xx) || (STM32L021xx) || (STM32L010xB) || (STM32L010x8) || (STM32L010x6) || (STM32L010x4)*/
+#endif /* (STM32L031xx) || (STM32L041xx) || (STM32L011xx) || (STM32L021xx) || (STM32L010xB) || 
+          (STM32L010x8) || (STM32L010x6) || (STM32L010x4)*/
 
 
 /** @brief  Report the UART mask to apply to retrieve the received data
@@ -366,44 +378,44 @@ HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *hua
   */
 #define UART_MASK_COMPUTATION(__HANDLE__)                             \
   do {                                                                \
-  if ((__HANDLE__)->Init.WordLength == UART_WORDLENGTH_9B)            \
-  {                                                                   \
-     if ((__HANDLE__)->Init.Parity == UART_PARITY_NONE)               \
-     {                                                                \
+    if ((__HANDLE__)->Init.WordLength == UART_WORDLENGTH_9B)          \
+    {                                                                 \
+      if ((__HANDLE__)->Init.Parity == UART_PARITY_NONE)              \
+      {                                                               \
         (__HANDLE__)->Mask = 0x01FFU ;                                \
-     }                                                                \
-     else                                                             \
-     {                                                                \
+      }                                                               \
+      else                                                            \
+      {                                                               \
         (__HANDLE__)->Mask = 0x00FFU ;                                \
-     }                                                                \
-  }                                                                   \
-  else if ((__HANDLE__)->Init.WordLength == UART_WORDLENGTH_8B)       \
-  {                                                                   \
-     if ((__HANDLE__)->Init.Parity == UART_PARITY_NONE)               \
-     {                                                                \
+      }                                                               \
+    }                                                                 \
+    else if ((__HANDLE__)->Init.WordLength == UART_WORDLENGTH_8B)     \
+    {                                                                 \
+      if ((__HANDLE__)->Init.Parity == UART_PARITY_NONE)              \
+      {                                                               \
         (__HANDLE__)->Mask = 0x00FFU ;                                \
-     }                                                                \
-     else                                                             \
-     {                                                                \
+      }                                                               \
+      else                                                            \
+      {                                                               \
         (__HANDLE__)->Mask = 0x007FU ;                                \
-     }                                                                \
-  }                                                                   \
-  else if ((__HANDLE__)->Init.WordLength == UART_WORDLENGTH_7B)       \
-  {                                                                   \
-     if ((__HANDLE__)->Init.Parity == UART_PARITY_NONE)               \
-     {                                                                \
+      }                                                               \
+    }                                                                 \
+    else if ((__HANDLE__)->Init.WordLength == UART_WORDLENGTH_7B)     \
+    {                                                                 \
+      if ((__HANDLE__)->Init.Parity == UART_PARITY_NONE)              \
+      {                                                               \
         (__HANDLE__)->Mask = 0x007FU ;                                \
-     }                                                                \
-     else                                                             \
-     {                                                                \
+      }                                                               \
+      else                                                            \
+      {                                                               \
         (__HANDLE__)->Mask = 0x003FU ;                                \
-     }                                                                \
-  }                                                                   \
-  else                                                                \
-  {                                                                   \
-    (__HANDLE__)->Mask = 0x0000U;                                     \
-  }                                                                   \
-} while(0U)
+      }                                                               \
+    }                                                                 \
+    else                                                              \
+    {                                                                 \
+      (__HANDLE__)->Mask = 0x0000U;                                   \
+    }                                                                 \
+  } while(0U)
 
 /**
   * @brief Ensure that UART frame length is valid.
@@ -421,7 +433,6 @@ HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *hua
   */
 #define IS_UART_ADDRESSLENGTH_DETECT(__ADDRESS__) (((__ADDRESS__) == UART_ADDRESS_DETECT_4B) || \
                                                    ((__ADDRESS__) == UART_ADDRESS_DETECT_7B))
-
 
 /**
   * @}
@@ -441,6 +452,5 @@ HAL_StatusTypeDef HAL_MultiProcessorEx_AddressLength_Set(UART_HandleTypeDef *hua
 }
 #endif
 
-#endif /* __STM32L0xx_HAL_UART_EX_H */
+#endif /* STM32L0xx_HAL_UART_EX_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

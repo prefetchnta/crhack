@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -65,7 +64,7 @@ typedef enum
 /**
   * @brief  FSMC_PCCARD handle Structure definition
   */
-#if (USE_HAL_PCCARD_REGISTER_CALLBACKS == 1)  
+#if (USE_HAL_PCCARD_REGISTER_CALLBACKS == 1)
 typedef struct __PCCARD_HandleTypeDef
 #else
 typedef struct
@@ -80,9 +79,9 @@ typedef struct
   HAL_LockTypeDef              Lock;                   /*!< PCCARD Lock                                      */
 
 #if (USE_HAL_PCCARD_REGISTER_CALLBACKS == 1)
-  void  (* MspInitCallback)        ( struct __PCCARD_HandleTypeDef * hpccard);    /*!< PCCARD Msp Init callback              */
-  void  (* MspDeInitCallback)      ( struct __PCCARD_HandleTypeDef * hpccard);    /*!< PCCARD Msp DeInit callback            */
-  void  (* ItCallback)             ( struct __PCCARD_HandleTypeDef * hpccard);    /*!< PCCARD IT callback                    */
+  void (* MspInitCallback)(struct __PCCARD_HandleTypeDef *hpccard);               /*!< PCCARD Msp Init callback              */
+  void (* MspDeInitCallback)(struct __PCCARD_HandleTypeDef *hpccard);             /*!< PCCARD Msp DeInit callback            */
+  void (* ItCallback)(struct __PCCARD_HandleTypeDef *hpccard);                    /*!< PCCARD IT callback                    */
 #endif
 } PCCARD_HandleTypeDef;
 
@@ -95,7 +94,7 @@ typedef enum
   HAL_PCCARD_MSP_INIT_CB_ID       = 0x00U,  /*!< PCCARD MspInit Callback ID          */
   HAL_PCCARD_MSP_DEINIT_CB_ID     = 0x01U,  /*!< PCCARD MspDeInit Callback ID        */
   HAL_PCCARD_IT_CB_ID             = 0x02U   /*!< PCCARD IT Callback ID               */
-}HAL_PCCARD_CallbackIDTypeDef;
+} HAL_PCCARD_CallbackIDTypeDef;
 
 /**
   * @brief  HAL PCCARD Callback pointer definition
@@ -137,7 +136,8 @@ typedef void (*pPCCARD_CallbackTypeDef)(PCCARD_HandleTypeDef *hpccard);
   * @{
   */
 /* Initialization/de-initialization functions  **********************************/
-HAL_StatusTypeDef  HAL_PCCARD_Init(PCCARD_HandleTypeDef *hpccard, FSMC_NAND_PCC_TimingTypeDef *ComSpaceTiming, FSMC_NAND_PCC_TimingTypeDef *AttSpaceTiming, FSMC_NAND_PCC_TimingTypeDef *IOSpaceTiming);
+HAL_StatusTypeDef  HAL_PCCARD_Init(PCCARD_HandleTypeDef *hpccard, FSMC_NAND_PCC_TimingTypeDef *ComSpaceTiming,
+                                   FSMC_NAND_PCC_TimingTypeDef *AttSpaceTiming, FSMC_NAND_PCC_TimingTypeDef *IOSpaceTiming);
 HAL_StatusTypeDef  HAL_PCCARD_DeInit(PCCARD_HandleTypeDef *hpccard);
 void HAL_PCCARD_MspInit(PCCARD_HandleTypeDef *hpccard);
 void HAL_PCCARD_MspDeInit(PCCARD_HandleTypeDef *hpccard);
@@ -150,8 +150,10 @@ void HAL_PCCARD_MspDeInit(PCCARD_HandleTypeDef *hpccard);
   */
 /* IO operation functions  *****************************************************/
 HAL_StatusTypeDef  HAL_PCCARD_Read_ID(PCCARD_HandleTypeDef *hpccard, uint8_t CompactFlash_ID[], uint8_t *pStatus);
-HAL_StatusTypeDef  HAL_PCCARD_Write_Sector(PCCARD_HandleTypeDef *hpccard, uint16_t *pBuffer, uint16_t SectorAddress,  uint8_t *pStatus);
-HAL_StatusTypeDef  HAL_PCCARD_Read_Sector(PCCARD_HandleTypeDef *hpccard, uint16_t *pBuffer, uint16_t SectorAddress, uint8_t *pStatus);
+HAL_StatusTypeDef  HAL_PCCARD_Write_Sector(PCCARD_HandleTypeDef *hpccard, uint16_t *pBuffer, uint16_t SectorAddress,
+                                           uint8_t *pStatus);
+HAL_StatusTypeDef  HAL_PCCARD_Read_Sector(PCCARD_HandleTypeDef *hpccard, uint16_t *pBuffer, uint16_t SectorAddress,
+                                          uint8_t *pStatus);
 HAL_StatusTypeDef  HAL_PCCARD_Erase_Sector(PCCARD_HandleTypeDef *hpccard, uint16_t SectorAddress, uint8_t *pStatus);
 HAL_StatusTypeDef  HAL_PCCARD_Reset(PCCARD_HandleTypeDef *hpccard);
 void               HAL_PCCARD_IRQHandler(PCCARD_HandleTypeDef *hpccard);
@@ -159,8 +161,10 @@ void               HAL_PCCARD_ITCallback(PCCARD_HandleTypeDef *hpccard);
 
 #if (USE_HAL_PCCARD_REGISTER_CALLBACKS == 1)
 /* PCCARD callback registering/unregistering */
-HAL_StatusTypeDef  HAL_PCCARD_RegisterCallback(PCCARD_HandleTypeDef *hpccard, HAL_PCCARD_CallbackIDTypeDef CallbackId, pPCCARD_CallbackTypeDef pCallback);
-HAL_StatusTypeDef  HAL_PCCARD_UnRegisterCallback(PCCARD_HandleTypeDef *hpccard, HAL_PCCARD_CallbackIDTypeDef CallbackId);
+HAL_StatusTypeDef  HAL_PCCARD_RegisterCallback(PCCARD_HandleTypeDef *hpccard, HAL_PCCARD_CallbackIDTypeDef CallbackId,
+                                               pPCCARD_CallbackTypeDef pCallback);
+HAL_StatusTypeDef  HAL_PCCARD_UnRegisterCallback(PCCARD_HandleTypeDef *hpccard,
+                                                 HAL_PCCARD_CallbackIDTypeDef CallbackId);
 #endif
 /**
   * @}
@@ -275,5 +279,3 @@ HAL_PCCARD_StatusTypeDef HAL_PCCARD_ReadStatus(PCCARD_HandleTypeDef *hpccard);
 #endif
 
 #endif /* STM32F1xx_HAL_PCCARD_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

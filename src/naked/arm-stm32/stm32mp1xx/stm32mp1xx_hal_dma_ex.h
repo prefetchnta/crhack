@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -107,14 +106,14 @@ typedef struct
   * @brief    DMAEx MUX SyncSignalID selection
   * @{
   */
-#define HAL_DMAMUX1_SYNC_DMAMUX1_CH0_EVT   0U   /*!< Domain synchronization Signal is DMAMUX1 Channel0 Event */
-#define HAL_DMAMUX1_SYNC_DMAMUX1_CH1_EVT   1U   /*!< Domain synchronization Signal is DMAMUX1 Channel1 Event */
-#define HAL_DMAMUX1_SYNC_DMAMUX1_CH2_EVT   2U   /*!< Domain synchronization Signal is DMAMUX1 Channel2 Event */
-#define HAL_DMAMUX1_SYNC_LPTIM1_OUT        3U   /*!< Domain synchronization Signal is LPTIM1 OUT             */
-#define HAL_DMAMUX1_SYNC_LPTIM2_OUT        4U   /*!< Domain synchronization Signal is LPTIM2 OUT             */
-#define HAL_DMAMUX1_SYNC_LPTIM3_OUT        5U   /*!< Domain synchronization Signal is LPTIM3 OUT             */
-#define HAL_DMAMUX1_SYNC_EXTI0             6U   /*!< Domain synchronization Signal is EXTI0 IT               */
-#define HAL_DMAMUX1_SYNC_TIM12_TRGO        7U   /*!< Domain synchronization Signal is TIM12 TRGO             */
+#define HAL_DMAMUX1_SYNC_DMAMUX1_CH0_EVT   0U   /*!< DMAMUX1 synchronization Signal is DMAMUX1 Channel0 Event */
+#define HAL_DMAMUX1_SYNC_DMAMUX1_CH1_EVT   1U   /*!< DMAMUX1 synchronization Signal is DMAMUX1 Channel1 Event */
+#define HAL_DMAMUX1_SYNC_DMAMUX1_CH2_EVT   2U   /*!< DMAMUX1 synchronization Signal is DMAMUX1 Channel2 Event */
+#define HAL_DMAMUX1_SYNC_LPTIM1_OUT        3U   /*!< DMAMUX1 synchronization Signal is LPTIM1 OUT             */
+#define HAL_DMAMUX1_SYNC_LPTIM2_OUT        4U   /*!< DMAMUX1 synchronization Signal is LPTIM2 OUT             */
+#define HAL_DMAMUX1_SYNC_LPTIM3_OUT        5U   /*!< DMAMUX1 synchronization Signal is LPTIM3 OUT             */
+#define HAL_DMAMUX1_SYNC_EXTI0             6U   /*!< DMAMUX1 synchronization Signal is EXTI0 IT               */
+#define HAL_DMAMUX1_SYNC_TIM12_TRGO        7U   /*!< DMAMUX1 synchronization Signal is TIM12 TRGO             */
 
 /**
   * @}
@@ -138,14 +137,14 @@ typedef struct
   * @brief    DMAEx MUX SignalGeneratorID selection
   * @{
   */
-#define HAL_DMAMUX1_REQ_GEN_DMAMUX1_CH0_EVT   0U   /*!< Domain Request generator Signal is DMAMUX1 Channel0 Event */
-#define HAL_DMAMUX1_REQ_GEN_DMAMUX1_CH1_EVT   1U   /*!< Domain Request generator Signal is DMAMUX1 Channel1 Event */
-#define HAL_DMAMUX1_REQ_GEN_DMAMUX1_CH2_EVT   2U   /*!< Domain Request generator Signal is DMAMUX1 Channel2 Event */
-#define HAL_DMAMUX1_REQ_GEN_LPTIM1_OUT        3U   /*!< Domain Request generator Signal is LPTIM1 OUT             */
-#define HAL_DMAMUX1_REQ_GEN_LPTIM2_OUT        4U   /*!< Domain Request generator Signal is LPTIM2 OUT             */
-#define HAL_DMAMUX1_REQ_GEN_LPTIM3_OUT        5U   /*!< Domain Request generator Signal is LPTIM3 OUT             */
-#define HAL_DMAMUX1_REQ_GEN_EXTI0             6U   /*!< Domain Request generator Signal is EXTI0 IT               */
-#define HAL_DMAMUX1_REQ_GEN_TIM12_TRGO        7U   /*!< Domain Request generator Signal is TIM12 TRGO             */
+#define HAL_DMAMUX1_REQ_GEN_DMAMUX1_CH0_EVT   0U   /*!< DMAMUX1 Request generator Signal is DMAMUX1 Channel0 Event */
+#define HAL_DMAMUX1_REQ_GEN_DMAMUX1_CH1_EVT   1U   /*!< DMAMUX1 Request generator Signal is DMAMUX1 Channel1 Event */
+#define HAL_DMAMUX1_REQ_GEN_DMAMUX1_CH2_EVT   2U   /*!< DMAMUX1 Request generator Signal is DMAMUX1 Channel2 Event */
+#define HAL_DMAMUX1_REQ_GEN_LPTIM1_OUT        3U   /*!< DMAMUX1 Request generator Signal is LPTIM1 OUT             */
+#define HAL_DMAMUX1_REQ_GEN_LPTIM2_OUT        4U   /*!< DMAMUX1 Request generator Signal is LPTIM2 OUT             */
+#define HAL_DMAMUX1_REQ_GEN_LPTIM3_OUT        5U   /*!< DMAMUX1 Request generator Signal is LPTIM3 OUT             */
+#define HAL_DMAMUX1_REQ_GEN_EXTI0             6U   /*!< DMAMUX1 Request generator Signal is EXTI0 IT               */
+#define HAL_DMAMUX1_REQ_GEN_TIM12_TRGO        7U   /*!< DMAMUX1 Request generator Signal is TIM12 TRGO             */
 
 
 /**
@@ -204,8 +203,7 @@ void HAL_DMAEx_MUX_IRQHandler(DMA_HandleTypeDef *hdma);
   */
 
 #define IS_DMAMUX_SYNC_SIGNAL_ID(SIGNAL_ID) ((SIGNAL_ID) <= HAL_DMAMUX1_SYNC_TIM12_TRGO)
-
-#define IS_DMAMUX_SYNC_REQUEST_NUMBER(REQUEST_NUMBER) (((REQUEST_NUMBER) > 0) && ((REQUEST_NUMBER) <= 32))
+#define IS_DMAMUX_SYNC_REQUEST_NUMBER(REQUEST_NUMBER) (((REQUEST_NUMBER) > 0U) && ((REQUEST_NUMBER) <= 32U))
 
 #define IS_DMAMUX_SYNC_POLARITY(POLARITY) (((POLARITY) == HAL_DMAMUX_SYNC_NO_EVENT)    || \
                                            ((POLARITY) == HAL_DMAMUX_SYNC_RISING)   || \
@@ -219,7 +217,7 @@ void HAL_DMAEx_MUX_IRQHandler(DMA_HandleTypeDef *hdma);
 
 #define IS_DMAMUX_REQUEST_GEN_SIGNAL_ID(SIGNAL_ID) ((SIGNAL_ID) <= HAL_DMAMUX1_REQ_GEN_TIM12_TRGO)
 
-#define IS_DMAMUX_REQUEST_GEN_REQUEST_NUMBER(REQUEST_NUMBER) (((REQUEST_NUMBER) > 0) && ((REQUEST_NUMBER) <= 32))
+#define IS_DMAMUX_REQUEST_GEN_REQUEST_NUMBER(REQUEST_NUMBER) (((REQUEST_NUMBER) > 0U) && ((REQUEST_NUMBER) <= 32U))
 
 #define IS_DMAMUX_REQUEST_GEN_POLARITY(POLARITY) (((POLARITY) == HAL_DMAMUX_REQ_GEN_NO_EVENT) || \
                                                   ((POLARITY) == HAL_DMAMUX_REQ_GEN_RISING)   || \
@@ -251,6 +249,4 @@ void HAL_DMAEx_MUX_IRQHandler(DMA_HandleTypeDef *hdma);
 }
 #endif
 
-#endif /* STM32H7xx_HAL_DMA_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+#endif /* STM32MP1xx_HAL_DMA_EX_H */

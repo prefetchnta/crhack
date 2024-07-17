@@ -5,11 +5,7 @@
   * @brief   This file provides firmware functions to manage the following 
   *          functionalities of the Analog to Digital Convertor (ADC)
   *          peripheral:
-  *           + Operation functions
-  *             ++ Start, stop, get result of conversions of injected
-  *                group, using 2 possible modes: polling, interruption.
-  *           + Control functions
-  *             ++ Channels configuration on injected group
+  *           + Peripheral Control functions
   *          Other functions (generic functions) are available in file 
   *          "stm32l1xx_hal_adc.c".
   *
@@ -22,13 +18,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2017 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -283,13 +278,17 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedPollForConversion(ADC_HandleTypeDef* hadc, u
       {
         if((Timeout == 0) || ((HAL_GetTick() - tickstart ) > Timeout))
         {
-          /* Update ADC state machine to timeout */
-          SET_BIT(hadc->State, HAL_ADC_STATE_TIMEOUT);
-          
-          /* Process unlocked */
-          __HAL_UNLOCK(hadc);
-          
-          return HAL_TIMEOUT;
+          /* New check to avoid false timeout detection in case of preemption */
+          if(HAL_IS_BIT_CLR(hadc->Instance->SR, ADC_FLAG_JEOC))
+          {
+            /* Update ADC state machine to timeout */
+            SET_BIT(hadc->State, HAL_ADC_STATE_TIMEOUT);
+
+            /* Process unlocked */
+            __HAL_UNLOCK(hadc);
+
+            return HAL_TIMEOUT;
+          }
         }
       }
     }
@@ -310,13 +309,17 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedPollForConversion(ADC_HandleTypeDef* hadc, u
       {
         if((Timeout == 0) || ((HAL_GetTick() - tickstart ) > Timeout))
         {
-          /* Update ADC state machine to timeout */
-          SET_BIT(hadc->State, HAL_ADC_STATE_TIMEOUT);
+          /* New check to avoid false timeout detection in case of preemption */
+          if(conversion_timeout_cpu_cycles < conversion_timeout_cpu_cycles_max)
+          {
+            /* Update ADC state machine to timeout */
+            SET_BIT(hadc->State, HAL_ADC_STATE_TIMEOUT);
 
-          /* Process unlocked */
-          __HAL_UNLOCK(hadc);
-          
-          return HAL_TIMEOUT;
+            /* Process unlocked */
+            __HAL_UNLOCK(hadc);
+
+            return HAL_TIMEOUT;
+          }
         }
       }
       conversion_timeout_cpu_cycles ++;
@@ -590,7 +593,7 @@ __weak void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc)
   * @note   Possibility to update parameters on the fly:
   *         This function initializes injected group, following calls to this 
   *         function can be used to reconfigure some parameters of structure
-  *         "ADC_InjectionConfTypeDef" on the fly, without reseting the ADC.
+  *         "ADC_InjectionConfTypeDef" on the fly, without resetting the ADC.
   *         The setting of these parameters is conditioned to ADC state: 
   *         this function must be called when ADC is not under conversion.
   * @param  hadc ADC handle
@@ -863,5 +866,3 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef* hadc, ADC_I
 /**
   * @}
   */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

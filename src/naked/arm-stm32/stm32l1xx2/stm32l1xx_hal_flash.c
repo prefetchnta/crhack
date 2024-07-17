@@ -138,14 +138,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2017 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
+  * This software is licensed under terms that can be found in the LICENSE file in
+  * the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   ******************************************************************************
   */
 
@@ -650,6 +648,7 @@ HAL_StatusTypeDef FLASH_WaitForLastOperation(uint32_t Timeout)
 #if defined(FLASH_SR_OPTVERRUSR)
       __HAL_FLASH_GET_FLAG(FLASH_FLAG_OPTVERRUSR) || 
 #endif /* FLASH_SR_OPTVERRUSR */
+     __HAL_FLASH_GET_FLAG(FLASH_FLAG_SIZERR) || 
      __HAL_FLASH_GET_FLAG(FLASH_FLAG_PGAERR))
   {
     /*Save the error code*/
@@ -700,10 +699,14 @@ static void FLASH_SetErrorCode(void)
     flags |= FLASH_FLAG_OPTVERRUSR;
   }
 #endif /* FLASH_SR_OPTVERRUSR */
-
+  if(__HAL_FLASH_GET_FLAG(FLASH_FLAG_SIZERR))
+  {
+    pFlash.ErrorCode |= HAL_FLASH_ERROR_SIZE;
+    flags |= FLASH_FLAG_SIZERR;
+  }
   /* Clear FLASH error pending bits */
   __HAL_FLASH_CLEAR_FLAG(flags);
-}  
+}
 /**
   * @}
   */
@@ -718,4 +721,3 @@ static void FLASH_SetErrorCode(void)
   * @}
   */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

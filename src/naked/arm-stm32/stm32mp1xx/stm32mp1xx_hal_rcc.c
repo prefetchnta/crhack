@@ -8,6 +8,17 @@
   *           + Initialization and de-initialization functions
   *           + Peripheral Control functions
   *
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
   @verbatim
   ==============================================================================
                       ##### RCC specific features #####
@@ -29,17 +40,7 @@
       (+) Configure the clock kernel source(s) for peripherals which clocks are not
           derived from Bus clocks
 
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
+  @endverbatim
   ******************************************************************************
   */
 
@@ -203,37 +204,37 @@ HAL_StatusTypeDef HAL_RCC_DeInit(void)
   CLEAR_REG(RCC->MCO2CFGR);
 
   /* Reset MPU Clock Selection Register */
-  MODIFY_REG(RCC->MPCKSELR, (RCC_MPCKSELR_MPUSRC), RCC_MPCKSELR_MPUSRC_0);
+  MODIFY_REG(RCC->MPCKSELR, (RCC_MPCKSELR_MPUSRC), 0U);
 
   /* Reset AXI Sub-System Clock Selection Register */
-  MODIFY_REG(RCC->ASSCKSELR, (RCC_ASSCKSELR_AXISSRC), RCC_ASSCKSELR_AXISSRC_0);
+  MODIFY_REG(RCC->ASSCKSELR, (RCC_ASSCKSELR_AXISSRC), 0U);
 
   /* Reset MCU Sub-System Clock Selection Register */
-  MODIFY_REG(RCC->MSSCKSELR, (RCC_MSSCKSELR_MCUSSRC), RCC_MSSCKSELR_MCUSSRC_0);
+  MODIFY_REG(RCC->MSSCKSELR, (RCC_MSSCKSELR_MCUSSRC), 0U);
 
   /* Reset RCC MPU Clock Divider Register */
-  MODIFY_REG(RCC->MPCKDIVR, (RCC_MPCKDIVR_MPUDIV), RCC_MPCKDIVR_MPUDIV_1);
+  MODIFY_REG(RCC->MPCKDIVR, (RCC_MPCKDIVR_MPUDIV), RCC_MPCKDIVR_MPUDIV_0);
 
   /* Reset RCC AXI Clock Divider Register */
-  MODIFY_REG(RCC->AXIDIVR, (RCC_AXIDIVR_AXIDIV), RCC_AXIDIVR_AXIDIV_0);
+  MODIFY_REG(RCC->AXIDIVR, (RCC_AXIDIVR_AXIDIV), 0U);
 
   /* Reset RCC APB4 Clock Divider Register */
-  MODIFY_REG(RCC->APB4DIVR, (RCC_APB4DIVR_APB4DIV), RCC_APB4DIVR_APB4DIV_0);
+  MODIFY_REG(RCC->APB4DIVR, (RCC_APB4DIVR_APB4DIV), 0U);
 
   /* Reset RCC APB5 Clock Divider Register */
-  MODIFY_REG(RCC->APB5DIVR, (RCC_APB5DIVR_APB5DIV), RCC_APB5DIVR_APB5DIV_0);
+  MODIFY_REG(RCC->APB5DIVR, (RCC_APB5DIVR_APB5DIV), 0U);
 
   /* Reset RCC MCU Clock Divider Register */
-  MODIFY_REG(RCC->MCUDIVR, (RCC_MCUDIVR_MCUDIV), RCC_MCUDIVR_MCUDIV_0);
+  MODIFY_REG(RCC->MCUDIVR, (RCC_MCUDIVR_MCUDIV), 0U);
 
   /* Reset RCC APB1 Clock Divider Register */
-  MODIFY_REG(RCC->APB1DIVR, (RCC_APB1DIVR_APB1DIV), RCC_APB1DIVR_APB1DIV_0);
+  MODIFY_REG(RCC->APB1DIVR, (RCC_APB1DIVR_APB1DIV), 0U);
 
   /* Reset RCC APB2 Clock Divider Register */
-  MODIFY_REG(RCC->APB2DIVR, (RCC_APB2DIVR_APB2DIV), RCC_APB2DIVR_APB2DIV_0);
+  MODIFY_REG(RCC->APB2DIVR, (RCC_APB2DIVR_APB2DIV), 0U);
 
   /* Reset RCC APB3 Clock Divider Register */
-  MODIFY_REG(RCC->APB3DIVR, (RCC_APB3DIVR_APB3DIV), RCC_APB3DIVR_APB3DIV_0);
+  MODIFY_REG(RCC->APB3DIVR, (RCC_APB3DIVR_APB3DIV), 0U);
 
   /* Disable PLL1 outputs */
   CLEAR_BIT(RCC->PLL1CR, RCC_PLL1CR_DIVPEN | RCC_PLL1CR_DIVQEN |
@@ -324,13 +325,13 @@ HAL_StatusTypeDef HAL_RCC_DeInit(void)
   CLEAR_BIT(RCC->PLL4CR, RCC_PLL4CR_SSCG_CTRL);
 
   /* Reset PLL 1 and 2 Ref. Clock Selection Register */
-  MODIFY_REG(RCC->RCK12SELR, (RCC_RCK12SELR_PLL12SRC), RCC_RCK12SELR_PLL12SRC_0);
+  MODIFY_REG(RCC->RCK12SELR, (RCC_RCK12SELR_PLL12SRC), 0U);
 
   /* Reset RCC PLL 3 Ref. Clock Selection Register */
-  MODIFY_REG(RCC->RCK3SELR, (RCC_RCK3SELR_PLL3SRC), RCC_RCK3SELR_PLL3SRC_0);
+  MODIFY_REG(RCC->RCK3SELR, (RCC_RCK3SELR_PLL3SRC), 0U);
 
   /* Reset PLL4 Ref. Clock Selection Register */
-  MODIFY_REG(RCC->RCK4SELR, (RCC_RCK4SELR_PLL4SRC), RCC_RCK4SELR_PLL4SRC_0);
+  MODIFY_REG(RCC->RCK4SELR, (RCC_RCK4SELR_PLL4SRC), 0U);
 
   /* Reset RCC PLL1 Configuration Register 1 */
   WRITE_REG(RCC->PLL1CFGR1, 0x00010031U);
@@ -1354,7 +1355,7 @@ HAL_StatusTypeDef RCC_MPUConfig(RCC_MPUInitTypeDef *RCC_MPUInitStruct)
     default:
       /* This case is impossible */
       return HAL_ERROR;
-
+      break;
   }
 
   /* Set MPU clock source */
@@ -1991,7 +1992,7 @@ __weak void HAL_RCC_GetPLL1ClockFreq(PLL1_ClocksTypeDef *PLL1_Clocks)
   pll1m = ((RCC->PLL1CFGR1 & RCC_PLL1CFGR1_DIVM1) >> RCC_PLL1CFGR1_DIVM1_Pos) + 1U;
   pll1fracen = (RCC->PLL1FRACR & RCC_PLL1FRACR_FRACLE) >> RCC_PLL1FRACR_FRACLE_Pos;
   fracn1 = (float)(pll1fracen * ((RCC->PLL1FRACR & RCC_PLL1FRACR_FRACV) >> RCC_PLL1FRACR_FRACV_Pos));
-  pll1vco = (float)((float)((RCC->PLL1CFGR1 & RCC_PLL1CFGR1_DIVN) + 1U) + (fracn1 / (float)0x1FFF));  //Intermediary value
+  pll1vco = (float)((float)((RCC->PLL1CFGR1 & RCC_PLL1CFGR1_DIVN) + 1U) + (fracn1 / (float)0x2000));  //Intermediary value
   switch (pllsource)
   {
     case RCC_PLL12SOURCE_HSI:  /* HSI used as PLL clock source */
@@ -2049,7 +2050,7 @@ __weak void HAL_RCC_GetPLL2ClockFreq(PLL2_ClocksTypeDef *PLL2_Clocks)
   pll2m = ((RCC->PLL2CFGR1 & RCC_PLL2CFGR1_DIVM2) >> RCC_PLL2CFGR1_DIVM2_Pos) + 1U;
   pll2fracen = (RCC->PLL2FRACR & RCC_PLL2FRACR_FRACLE) >> RCC_PLL2FRACR_FRACLE_Pos;
   fracn1 = (float)(pll2fracen * ((RCC->PLL2FRACR & RCC_PLL2FRACR_FRACV) >> RCC_PLL2FRACR_FRACV_Pos));
-  pll2vco = (float)((float)((RCC->PLL2CFGR1 & RCC_PLL2CFGR1_DIVN) + 1U) + (fracn1 / (float)0x1FFF));  //Intermediary value
+  pll2vco = (float)((float)((RCC->PLL2CFGR1 & RCC_PLL2CFGR1_DIVN) + 1U) + (fracn1 / (float)0x2000));  //Intermediary value
   switch (pllsource)
   {
     case RCC_PLL12SOURCE_HSI:  /* HSI used as PLL clock source */
@@ -2106,7 +2107,7 @@ __weak void HAL_RCC_GetPLL3ClockFreq(PLL3_ClocksTypeDef *PLL3_Clocks)
   pll3m = ((RCC->PLL3CFGR1 & RCC_PLL3CFGR1_DIVM3) >> RCC_PLL3CFGR1_DIVM3_Pos) + 1U;
   pll3fracen = (RCC->PLL3FRACR & RCC_PLL3FRACR_FRACLE) >> RCC_PLL3FRACR_FRACLE_Pos;
   fracn1 = (float)(pll3fracen * ((RCC->PLL3FRACR & RCC_PLL3FRACR_FRACV) >> RCC_PLL3FRACR_FRACV_Pos));
-  pll3vco = (float)((float)((RCC->PLL3CFGR1 & RCC_PLL3CFGR1_DIVN) + 1U) + (fracn1 / (float) 0x1FFF));  //Intermediary value
+  pll3vco = (float)((float)((RCC->PLL3CFGR1 & RCC_PLL3CFGR1_DIVN) + 1U) + (fracn1 / (float) 0x2000));  //Intermediary value
   switch (pllsource)
   {
     case RCC_PLL3SOURCE_HSI:  /* HSI used as PLL clock source */
@@ -2165,7 +2166,7 @@ __weak void HAL_RCC_GetPLL4ClockFreq(PLL4_ClocksTypeDef *PLL4_Clocks)
   pll4m = ((RCC->PLL4CFGR1 & RCC_PLL4CFGR1_DIVM4) >> RCC_PLL4CFGR1_DIVM4_Pos) + 1U;
   pll4fracen = (RCC->PLL4FRACR & RCC_PLL4FRACR_FRACLE) >> RCC_PLL4FRACR_FRACLE_Pos;
   fracn1 = (float)(pll4fracen * ((RCC->PLL4FRACR & RCC_PLL4FRACR_FRACV) >> RCC_PLL4FRACR_FRACV_Pos));
-  pll4vco = (float)((float)((RCC->PLL4CFGR1 & RCC_PLL4CFGR1_DIVN) + 1U) + (fracn1 / (float) 0x1FFF));  //Intermediary value
+  pll4vco = (float)((float)((RCC->PLL4CFGR1 & RCC_PLL4CFGR1_DIVN) + 1U) + (fracn1 / (float) 0x2000));  //Intermediary value
   switch (pllsource)
   {
     case RCC_PLL4SOURCE_HSI:  /* HSI used as PLL clock source */
@@ -2697,5 +2698,3 @@ __weak void HAL_RCC_WAKEUP_Callback(void)
 /**
   * @}
   */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

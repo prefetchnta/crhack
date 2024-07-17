@@ -15,13 +15,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -61,6 +60,9 @@ defined in linker script */
 	.type	Reset_Handler, %function
 Reset_Handler:
   ldr   sp, =_estack    /* Atollic update: set stack pointer */
+  
+/* Call the clock system initialization function.*/
+    bl  SystemInit
 
 /* Copy the data segment initializers from flash to SRAM */
   movs	r1, #0
@@ -90,8 +92,7 @@ LoopFillZerobss:
 	cmp	r2, r3
 	bcc	FillZerobss
 
-/* Call the clock system intitialization function.*/
-    bl  SystemInit
+
 /* Call static constructors */
     bl __libc_init_array
 /* Call the application's entry point.*/
@@ -124,7 +125,6 @@ Infinite_Loop:
 ******************************************************************************/
  	.section	.isr_vector,"a",%progbits
 	.type	g_pfnVectors, %object
-	.size	g_pfnVectors, .-g_pfnVectors
 
 
 g_pfnVectors:
@@ -246,6 +246,8 @@ g_pfnVectors:
 	.word	0
 	.word	CORDIC_IRQHandler
 	.word	FMAC_IRQHandler
+
+	.size	g_pfnVectors, .-g_pfnVectors
 
 /*******************************************************************************
 *
@@ -489,4 +491,3 @@ g_pfnVectors:
 	.weak	FMAC_IRQHandler
 	.thumb_set FMAC_IRQHandler,Default_Handler
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -6,14 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright(c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
+  * This software is licensed under terms that can be found in the LICENSE file in
+  * the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   ******************************************************************************
   */
 #if defined(USE_FULL_LL_DRIVER)
@@ -75,11 +73,11 @@
 /** @defgroup RCC_LL_Private_Functions RCC Private functions
   * @{
   */
-uint32_t RCC_GetSystemClockFreq(void);
-uint32_t RCC_GetHCLKClockFreq(uint32_t SYSCLK_Frequency);
-uint32_t RCC_GetPCLK1ClockFreq(uint32_t HCLK_Frequency);
-uint32_t RCC_GetPCLK2ClockFreq(uint32_t HCLK_Frequency);
-uint32_t RCC_PLL_GetFreqDomain_SYS(void);
+static uint32_t RCC_GetSystemClockFreq(void);
+static uint32_t RCC_GetHCLKClockFreq(uint32_t SYSCLK_Frequency);
+static uint32_t RCC_GetPCLK1ClockFreq(uint32_t HCLK_Frequency);
+static uint32_t RCC_GetPCLK2ClockFreq(uint32_t HCLK_Frequency);
+static uint32_t RCC_PLL_GetFreqDomain_SYS(void);
 /**
   * @}
   */
@@ -111,7 +109,7 @@ uint32_t RCC_PLL_GetFreqDomain_SYS(void);
   */
 ErrorStatus LL_RCC_DeInit(void)
 {
-  uint32_t vl_mask;
+  __IO uint32_t vl_mask;
 
   /* Set MSION bit */
   LL_RCC_MSI_Enable();
@@ -576,7 +574,7 @@ uint32_t LL_RCC_GetUSBClockFreq(uint32_t USBxSource)
   * @brief  Return SYSTEM clock frequency
   * @retval SYSTEM clock frequency (in Hz)
   */
-uint32_t RCC_GetSystemClockFreq(void)
+static uint32_t RCC_GetSystemClockFreq(void)
 {
   uint32_t frequency;
 
@@ -619,7 +617,7 @@ uint32_t RCC_GetSystemClockFreq(void)
   * @param  SYSCLK_Frequency SYSCLK clock frequency
   * @retval HCLK clock frequency (in Hz)
   */
-uint32_t RCC_GetHCLKClockFreq(uint32_t SYSCLK_Frequency)
+static uint32_t RCC_GetHCLKClockFreq(uint32_t SYSCLK_Frequency)
 {
   /* HCLK clock frequency */
   return __LL_RCC_CALC_HCLK_FREQ(SYSCLK_Frequency, LL_RCC_GetAHBPrescaler());
@@ -630,7 +628,7 @@ uint32_t RCC_GetHCLKClockFreq(uint32_t SYSCLK_Frequency)
   * @param  HCLK_Frequency HCLK clock frequency
   * @retval PCLK1 clock frequency (in Hz)
   */
-uint32_t RCC_GetPCLK1ClockFreq(uint32_t HCLK_Frequency)
+static uint32_t RCC_GetPCLK1ClockFreq(uint32_t HCLK_Frequency)
 {
   /* PCLK1 clock frequency */
   return __LL_RCC_CALC_PCLK1_FREQ(HCLK_Frequency, LL_RCC_GetAPB1Prescaler());
@@ -641,7 +639,7 @@ uint32_t RCC_GetPCLK1ClockFreq(uint32_t HCLK_Frequency)
   * @param  HCLK_Frequency HCLK clock frequency
   * @retval PCLK2 clock frequency (in Hz)
   */
-uint32_t RCC_GetPCLK2ClockFreq(uint32_t HCLK_Frequency)
+static uint32_t RCC_GetPCLK2ClockFreq(uint32_t HCLK_Frequency)
 {
   /* PCLK2 clock frequency */
   return __LL_RCC_CALC_PCLK2_FREQ(HCLK_Frequency, LL_RCC_GetAPB2Prescaler());
@@ -651,7 +649,7 @@ uint32_t RCC_GetPCLK2ClockFreq(uint32_t HCLK_Frequency)
   * @brief  Return PLL clock frequency used for system domain
   * @retval PLL clock frequency (in Hz)
   */
-uint32_t RCC_PLL_GetFreqDomain_SYS(void)
+static uint32_t RCC_PLL_GetFreqDomain_SYS(void)
 {
   uint32_t pllinputfreq, pllsource;
 
@@ -695,4 +693,3 @@ uint32_t RCC_PLL_GetFreqDomain_SYS(void)
 
 #endif /* USE_FULL_LL_DRIVER */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

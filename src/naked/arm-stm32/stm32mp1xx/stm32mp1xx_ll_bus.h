@@ -5,7 +5,17 @@
   * @version $VERSION$
   * @date    $DATE$
   * @brief   Header file of BUS LL module.
-
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
   @verbatim
                       ##### RCC Limitations #####
   ==============================================================================
@@ -22,17 +32,6 @@
           inserted in each LL_{BUS}_GRP{x}_EnableClock() function.
 
   @endverbatim
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
   ******************************************************************************
   */
 
@@ -139,7 +138,6 @@ extern "C" {
 #define LL_AHB5_GRP1_PERIPH_HASH1          RCC_MC_AHB5ENSETR_HASH1EN
 #define LL_AHB5_GRP1_PERIPH_RNG1           RCC_MC_AHB5ENSETR_RNG1EN
 #define LL_AHB5_GRP1_PERIPH_BKPSRAM        RCC_MC_AHB5ENSETR_BKPSRAMEN
-#define LL_AHB5_GRP1_PERIPH_AXIMC          RCC_MC_AHB5ENSETR_AXIMC
 /**
   * @}
   */
@@ -258,7 +256,6 @@ extern "C" {
 #define LL_APB3_GRP1_PERIPH_SYSCFG         RCC_MC_APB3ENSETR_SYSCFGEN
 #define LL_APB3_GRP1_PERIPH_VREF           RCC_MC_APB3ENSETR_VREFEN
 #define LL_APB3_GRP1_PERIPH_TMPSENS        RCC_MC_APB3ENSETR_DTSEN
-#define LL_APB3_GRP1_PERIPH_PMBCTRL        RCC_MC_APB3ENSETR_PMBCTRLEN
 #define LL_APB3_GRP1_PERIPH_HDP            RCC_MC_APB3ENSETR_HDPEN
 /**
   * @}
@@ -1017,7 +1014,6 @@ __STATIC_INLINE void LL_AHB5_GRP1_DisableClock(uint32_t Periphs)
   *         @arg @ref LL_AHB5_GRP1_PERIPH_CRYP1 (*)
   *         @arg @ref LL_AHB5_GRP1_PERIPH_HASH1
   *         @arg @ref LL_AHB5_GRP1_PERIPH_RNG1
-  *         @arg @ref LL_AHB5_GRP1_PERIPH_AXIMC
   *
   *         (*) value not defined in all devices.
   * @retval None
@@ -1040,7 +1036,6 @@ __STATIC_INLINE void LL_AHB5_GRP1_ForceReset(uint32_t Periphs)
   *         @arg @ref LL_AHB5_GRP1_PERIPH_CRYP1 (*)
   *         @arg @ref LL_AHB5_GRP1_PERIPH_HASH1
   *         @arg @ref LL_AHB5_GRP1_PERIPH_RNG1
-  *         @arg @ref LL_AHB5_GRP1_PERIPH_AXIMC
   *
   *         (*) value not defined in all devices.
   * @retval None
@@ -2295,7 +2290,6 @@ __STATIC_INLINE void LL_APB2_GRP1_DisableClockSleep(uint32_t Periphs)
   *         @arg @ref LL_APB3_GRP1_PERIPH_SYSCFG
   *         @arg @ref LL_APB3_GRP1_PERIPH_VREF
   *         @arg @ref LL_APB3_GRP1_PERIPH_TMPSENS
-  *         @arg @ref LL_APB3_GRP1_PERIPH_PMBCTRL
   *         @arg @ref LL_APB3_GRP1_PERIPH_HDP
   * @retval None
   */
@@ -2329,7 +2323,6 @@ __STATIC_INLINE void LL_APB3_GRP1_EnableClock(uint32_t Periphs)
   *         @arg @ref LL_APB3_GRP1_PERIPH_SYSCFG
   *         @arg @ref LL_APB3_GRP1_PERIPH_VREF
   *         @arg @ref LL_APB3_GRP1_PERIPH_TMPSENS
-  *         @arg @ref LL_APB3_GRP1_PERIPH_PMBCTRL
   *         @arg @ref LL_APB3_GRP1_PERIPH_HDP
   * @retval State of Periphs (1 or 0).
   */
@@ -2359,7 +2352,6 @@ __STATIC_INLINE uint32_t LL_APB3_GRP1_IsEnabledClock(uint32_t Periphs)
   *         @arg @ref LL_APB3_GRP1_PERIPH_SYSCFG
   *         @arg @ref LL_APB3_GRP1_PERIPH_VREF
   *         @arg @ref LL_APB3_GRP1_PERIPH_TMPSENS
-  *         @arg @ref LL_APB3_GRP1_PERIPH_PMBCTRL
   *         @arg @ref LL_APB3_GRP1_PERIPH_HDP
   * @retval None
   */
@@ -2389,7 +2381,6 @@ __STATIC_INLINE void LL_APB3_GRP1_DisableClock(uint32_t Periphs)
   *         @arg @ref LL_APB3_GRP1_PERIPH_SYSCFG
   *         @arg @ref LL_APB3_GRP1_PERIPH_VREF
   *         @arg @ref LL_APB3_GRP1_PERIPH_TMPSENS
-  *         @arg @ref LL_APB3_GRP1_PERIPH_PMBCTRL
   * @retval None
   */
 __STATIC_INLINE void LL_APB3_GRP1_ForceReset(uint32_t Periphs)
@@ -2418,7 +2409,6 @@ __STATIC_INLINE void LL_APB3_GRP1_ForceReset(uint32_t Periphs)
   *         @arg @ref LL_APB3_GRP1_PERIPH_SYSCFG
   *         @arg @ref LL_APB3_GRP1_PERIPH_VREF
   *         @arg @ref LL_APB3_GRP1_PERIPH_TMPSENS
-  *         @arg @ref LL_APB3_GRP1_PERIPH_PMBCTRL
   * @retval None
   */
 __STATIC_INLINE void LL_APB3_GRP1_ReleaseReset(uint32_t Periphs)
@@ -2447,7 +2437,6 @@ __STATIC_INLINE void LL_APB3_GRP1_ReleaseReset(uint32_t Periphs)
   *         @arg @ref LL_APB3_GRP1_PERIPH_SYSCFG
   *         @arg @ref LL_APB3_GRP1_PERIPH_VREF
   *         @arg @ref LL_APB3_GRP1_PERIPH_TMPSENS
-  *         @arg @ref LL_APB3_GRP1_PERIPH_PMBCTRL
   * @retval None
   */
 __STATIC_INLINE void LL_APB3_GRP1_EnableClockSleep(uint32_t Periphs)
@@ -2479,7 +2468,6 @@ __STATIC_INLINE void LL_APB3_GRP1_EnableClockSleep(uint32_t Periphs)
   *         @arg @ref LL_APB3_GRP1_PERIPH_SYSCFG
   *         @arg @ref LL_APB3_GRP1_PERIPH_VREF
   *         @arg @ref LL_APB3_GRP1_PERIPH_TMPSENS
-  *         @arg @ref LL_APB3_GRP1_PERIPH_PMBCTRL
   * @retval None
   */
 __STATIC_INLINE void LL_APB3_GRP1_DisableClockSleep(uint32_t Periphs)
@@ -2928,5 +2916,3 @@ __STATIC_INLINE void LL_APB5_GRP1_DisableClockStop(uint32_t Periphs)
 #endif
 
 #endif /* STM32MP1xx_LL_BUS_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

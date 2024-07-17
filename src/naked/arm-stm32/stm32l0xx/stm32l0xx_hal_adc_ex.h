@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright(c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -22,7 +21,7 @@
 #define __STM32L0xx_HAL_ADC_EX_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -34,7 +33,7 @@
 
 /** @addtogroup ADCEx
   * @{
-  */ 
+  */
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -46,7 +45,7 @@
 /** @defgroup ADCEx_Channel_Mode ADC Single Ended
   * @{
   */
-#define ADC_SINGLE_ENDED                        (uint32_t)0x00000000U   /* dummy value */
+#define ADC_SINGLE_ENDED                        0x00000000U   /* dummy value */
 /**
   * @}
   */
@@ -54,20 +53,20 @@
 /** @defgroup ADC_regular_external_trigger_source ADC External Trigger Source
   * @{
   */
-#define ADC_EXTERNALTRIGCONV_T6_TRGO            ((uint32_t)0x00000000U)
+#define ADC_EXTERNALTRIGCONV_T6_TRGO            (0x00000000U)
 #define ADC_EXTERNALTRIGCONV_T21_CC2            (ADC_CFGR1_EXTSEL_0)
 #define ADC_EXTERNALTRIGCONV_T2_TRGO            (ADC_CFGR1_EXTSEL_1)
 #define ADC_EXTERNALTRIGCONV_T2_CC4             (ADC_CFGR1_EXTSEL_1 | ADC_CFGR1_EXTSEL_0)
 #define ADC_EXTERNALTRIGCONV_T22_TRGO           (ADC_CFGR1_EXTSEL_2)
 #define ADC_EXTERNALTRIGCONV_T3_TRGO            (ADC_CFGR1_EXTSEL_2 | ADC_CFGR1_EXTSEL_1)
 #define ADC_EXTERNALTRIGCONV_EXT_IT11           (ADC_CFGR1_EXTSEL_2 | ADC_CFGR1_EXTSEL_1 | ADC_CFGR1_EXTSEL_0)
-#define ADC_SOFTWARE_START                      (ADC_CFGR1_EXTSEL + (uint32_t)1)
+#define ADC_SOFTWARE_START                      (ADC_CFGR1_EXTSEL + 1U)
 
 /* ADC group regular external trigger TIM21_TRGO available only on            */
 /* STM32L0 devices categories: Cat.2, Cat.3, Cat.5                            */
 #if defined (STM32L031xx) || defined (STM32L041xx) || \
     defined (STM32L051xx) || defined (STM32L052xx) || defined (STM32L053xx) || \
-    defined (STM32L061xx) || defined (STM32L062xx) || defined (STM32L063xx) || \
+    defined (STM32L062xx) || defined (STM32L063xx) || \
     defined (STM32L071xx) || defined (STM32L072xx) || defined (STM32L073xx) || \
     defined (STM32L081xx) || defined (STM32L082xx) || defined (STM32L083xx) || \
     defined (STM32L010x6) || defined (STM32L010x8) || defined (STM32L010xB)
@@ -96,7 +95,7 @@
 /**
   * @}
   */
-   
+
 /**
   * @}
   */
@@ -111,16 +110,16 @@
 
 /** @defgroup ADCEx_calibration_factor_length_verification ADC Calibration Factor Length Verification
   * @{
-  */ 
+  */
 /**
   * @brief Calibration factor length verification (7 bits maximum)
   * @param _Calibration_Factor_: Calibration factor value
   * @retval None
   */
-#define IS_ADC_CALFACT(_Calibration_Factor_) ((_Calibration_Factor_) <= ((uint32_t)0x7FU))
+#define IS_ADC_CALFACT(_Calibration_Factor_) ((_Calibration_Factor_) <= (0x7FU))
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup ADC_External_trigger_Source ADC External Trigger Source
   * @{
@@ -150,7 +149,7 @@
                               ((CONV) == ADC_EXTERNALTRIGCONV_EXT_IT11 ) || \
                               ((CONV) == ADC_SOFTWARE_START))
 #elif defined (STM32L051xx) || defined (STM32L052xx) || defined (STM32L053xx) || \
-      defined (STM32L061xx) || defined (STM32L062xx) || defined (STM32L063xx)
+      defined (STM32L062xx) || defined (STM32L063xx)
 #define IS_ADC_EXTTRIG(CONV) (((CONV) == ADC_EXTERNALTRIGCONV_T6_TRGO  ) || \
                               ((CONV) == ADC_EXTERNALTRIGCONV_T21_CC2  ) || \
                               ((CONV) == ADC_EXTERNALTRIGCONV_T2_TRGO  ) || \
@@ -180,11 +179,11 @@
 /* IO operation functions *****************************************************/
 
 /* ADC calibration */
-HAL_StatusTypeDef   HAL_ADCEx_Calibration_Start(ADC_HandleTypeDef* hadc, uint32_t SingleDiff);
-uint32_t            HAL_ADCEx_Calibration_GetValue(ADC_HandleTypeDef* hadc, uint32_t SingleDiff);
-HAL_StatusTypeDef   HAL_ADCEx_Calibration_SetValue(ADC_HandleTypeDef* hadc, uint32_t SingleDiff, uint32_t CalibrationFactor);
+HAL_StatusTypeDef   HAL_ADCEx_Calibration_Start(ADC_HandleTypeDef *hadc, uint32_t SingleDiff);
+uint32_t            HAL_ADCEx_Calibration_GetValue(ADC_HandleTypeDef *hadc, uint32_t SingleDiff);
+HAL_StatusTypeDef   HAL_ADCEx_Calibration_SetValue(ADC_HandleTypeDef *hadc, uint32_t SingleDiff, uint32_t CalibrationFactor);
 
-/* ADC VrefInt and Temperature sensor functions specific to this STM32 serie */
+/* ADC VrefInt and Temperature sensor functions specific to this STM32 series */
 HAL_StatusTypeDef   HAL_ADCEx_EnableVREFINT(void);
 void                HAL_ADCEx_DisableVREFINT(void);
 HAL_StatusTypeDef   HAL_ADCEx_EnableVREFINTTempSensor(void);
@@ -212,5 +211,3 @@ void                HAL_ADCEx_DisableVREFINTTempSensor(void);
 
 #endif /*__STM32L0xx_HAL_ADC_EX_H */
 
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

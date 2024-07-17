@@ -14,13 +14,12 @@
 ;******************************************************************************
 ;* @attention
 ;*
-;* Copyright (c) 2017 STMicroelectronics.
+;* Copyright (c) 2017-2021 STMicroelectronics.
 ;* All rights reserved.
 ;*
-;* This software component is licensed by ST under BSD 3-Clause license,
-;* the "License"; You may not use this file except in compliance with the
-;* License. You may obtain a copy of the License at:
-;*                        opensource.org/licenses/BSD-3-Clause
+;* This software is licensed under terms that can be found in the LICENSE file
+;* in the root directory of this software component.
+;* If no LICENSE file comes with this software, it is provided AS-IS.
 ;*
 ;******************************************************************************
 
@@ -93,7 +92,7 @@ __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     DMA1_Channel5_IRQHandler      ; DMA1 Channel 5
                 DCD     DMA1_Channel6_IRQHandler      ; DMA1 Channel 6
                 DCD     DMA1_Channel7_IRQHandler      ; DMA1 Channel 7
-                DCD     ADC1_2_IRQHandler             ; ADC1_2
+                DCD     ADC1_IRQHandler               ; ADC1
                 DCD     0                          ; Reserved
                 DCD     0                          ; Reserved
                 DCD     0                          ; Reserved
@@ -216,7 +215,7 @@ Default_Handler PROC
                 EXPORT  DMA1_Channel5_IRQHandler      [WEAK]
                 EXPORT  DMA1_Channel6_IRQHandler      [WEAK]
                 EXPORT  DMA1_Channel7_IRQHandler      [WEAK]
-                EXPORT  ADC1_2_IRQHandler             [WEAK]
+                EXPORT  ADC1_IRQHandler               [WEAK]
                 EXPORT  EXTI9_5_IRQHandler            [WEAK]
                 EXPORT  TIM9_IRQHandler               [WEAK]
                 EXPORT  TIM10_IRQHandler              [WEAK]
@@ -268,7 +267,7 @@ DMA1_Channel4_IRQHandler
 DMA1_Channel5_IRQHandler
 DMA1_Channel6_IRQHandler
 DMA1_Channel7_IRQHandler
-ADC1_2_IRQHandler
+ADC1_IRQHandler
 EXTI9_5_IRQHandler
 TIM9_IRQHandler
 TIM10_IRQHandler
@@ -335,4 +334,3 @@ __user_initial_stackheap
 
                  END
 
-;************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE*****

@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright(c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */ 
@@ -25,7 +24,7 @@
  extern "C" {
 #endif
    
-#if defined (STM32L021xx) || defined (STM32L041xx) || defined (STM32L061xx) || defined (STM32L062xx) || defined (STM32L063xx) || defined (STM32L081xx) || defined (STM32L082xx) || defined (STM32L083xx)
+#if defined (STM32L021xx) || defined (STM32L041xx) || defined (STM32L062xx) || defined (STM32L063xx) || defined (STM32L081xx) || defined (STM32L082xx) || defined (STM32L083xx)
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l0xx_hal_def.h"
@@ -94,9 +93,9 @@ typedef struct
 
   uint8_t                     *pCrypOutBuffPtr; /*!< Pointer to CRYP processing (encryption, decryption,...) buffer */
 
-  __IO uint16_t               CrypInCount;      /*!< Counter of inputed data */
+  __IO uint16_t               CrypInCount;      /*!< Counter of inputted data */
 
-  __IO uint16_t               CrypOutCount;     /*!< Counter of outputed data */
+  __IO uint16_t               CrypOutCount;     /*!< Counter of outputted data */
 
   HAL_StatusTypeDef           Status;           /*!< CRYP peripheral status */
 
@@ -125,7 +124,7 @@ typedef struct
 /** @defgroup CRYP_Data_Type CRYP Data Type
   * @{
   */
-#define CRYP_DATATYPE_32B         ((uint32_t)0x00000000U)
+#define CRYP_DATATYPE_32B         (0x00000000U)
 #define CRYP_DATATYPE_16B         AES_CR_DATATYPE_0
 #define CRYP_DATATYPE_8B          AES_CR_DATATYPE_1
 #define CRYP_DATATYPE_1B          AES_CR_DATATYPE
@@ -143,7 +142,7 @@ typedef struct
   */ 
 #define CRYP_CR_ALGOMODE_DIRECTION              (uint32_t)(AES_CR_MODE|AES_CR_CHMOD)
 
-#define CRYP_CR_ALGOMODE_AES_ECB_ENCRYPT        ((uint32_t)0x00000000U)
+#define CRYP_CR_ALGOMODE_AES_ECB_ENCRYPT        (0x00000000U)
 #define CRYP_CR_ALGOMODE_AES_ECB_KEYDERDECRYPT  (AES_CR_MODE)
 #define CRYP_CR_ALGOMODE_AES_CBC_ENCRYPT        (AES_CR_CHMOD_0)
 #define CRYP_CR_ALGOMODE_AES_CBC_KEYDERDECRYPT  ((uint32_t)(AES_CR_CHMOD_0|AES_CR_MODE))
@@ -400,12 +399,9 @@ HAL_CRYP_STATETypeDef HAL_CRYP_GetState(CRYP_HandleTypeDef *hcryp);
   * @}
   */ 
   
-#endif /* STM32L021xx || STM32L041xx || STM32L061xx || STM32L062xx || STM32L063xx || STM32L081xx || STM32L082xx || STM32L083xx */
+#endif /* STM32L021xx || STM32L041xx || STM32L062xx || STM32L063xx || STM32L081xx || STM32L082xx || STM32L083xx */
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* __STM32L0xx_HAL_CRYP_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-

@@ -6,14 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright(c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2016 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
+  * This software is licensed under terms that can be found in the LICENSE file in
+  * the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   ******************************************************************************
   */
 
@@ -108,24 +106,24 @@ typedef struct
   * @{
   */
 #if !defined  (HSE_VALUE)
-#define HSE_VALUE    ((uint32_t)8000000U)  /*!< Value of the HSE oscillator in Hz */
+#define HSE_VALUE    (8000000U)  /*!< Value of the HSE oscillator in Hz */
 #endif /* HSE_VALUE */
 
 #if !defined  (HSI_VALUE)
-#define HSI_VALUE    ((uint32_t)16000000U) /*!< Value of the HSI oscillator in Hz */
+#define HSI_VALUE    (16000000U) /*!< Value of the HSI oscillator in Hz */
 #endif /* HSI_VALUE */
 
 #if !defined  (LSE_VALUE)
-#define LSE_VALUE    ((uint32_t)32768U)    /*!< Value of the LSE oscillator in Hz */
+#define LSE_VALUE    (32768U)    /*!< Value of the LSE oscillator in Hz */
 #endif /* LSE_VALUE */
 
 #if !defined  (LSI_VALUE)
-#define LSI_VALUE    ((uint32_t)37000U)    /*!< Value of the LSI oscillator in Hz */
+#define LSI_VALUE    (37000U)    /*!< Value of the LSI oscillator in Hz */
 #endif /* LSI_VALUE */
 #if defined(RCC_HSI48_SUPPORT)
 
 #if !defined  (HSI48_VALUE)
-#define HSI48_VALUE  ((uint32_t)48000000U) /*!< Value of the HSI48 oscillator in Hz */
+#define HSI48_VALUE  (48000000U) /*!< Value of the HSI48 oscillator in Hz */
 #endif /* HSI48_VALUE */
 #endif /* RCC_HSI48_SUPPORT */
 /**
@@ -199,7 +197,7 @@ typedef struct
 /** @defgroup RCC_LL_EC_LSEDRIVE  LSE oscillator drive capability
   * @{
   */
-#define LL_RCC_LSEDRIVE_LOW                ((uint32_t)0x00000000U) /*!< Xtal mode lower driving capability */
+#define LL_RCC_LSEDRIVE_LOW                (0x00000000U) /*!< Xtal mode lower driving capability */
 #define LL_RCC_LSEDRIVE_MEDIUMLOW          RCC_CSR_LSEDRV_0 /*!< Xtal mode medium low driving capability */
 #define LL_RCC_LSEDRIVE_MEDIUMHIGH         RCC_CSR_LSEDRV_1 /*!< Xtal mode medium high driving capability */
 #define LL_RCC_LSEDRIVE_HIGH               RCC_CSR_LSEDRV   /*!< Xtal mode higher driving capability */
@@ -210,7 +208,7 @@ typedef struct
 /** @defgroup RCC_LL_EC_RTC_HSE_DIV RTC HSE Prescaler
   * @{
   */
-#define LL_RCC_RTC_HSE_DIV_2               (uint32_t)0x00000000U/*!< HSE is divided by 2 for RTC clock  */
+#define LL_RCC_RTC_HSE_DIV_2               0x00000000U          /*!< HSE is divided by 2 for RTC clock  */
 #define LL_RCC_RTC_HSE_DIV_4               RCC_CR_RTCPRE_0      /*!< HSE is divided by 4 for RTC clock  */
 #define LL_RCC_RTC_HSE_DIV_8               RCC_CR_RTCPRE_1      /*!< HSE is divided by 8 for RTC clock  */
 #define LL_RCC_RTC_HSE_DIV_16              RCC_CR_RTCPRE        /*!< HSE is divided by 16 for RTC clock */
@@ -297,7 +295,7 @@ typedef struct
 /** @defgroup RCC_LL_EC_STOP_WAKEUPCLOCK  Wakeup from Stop and CSS backup clock selection
   * @{
   */
-#define LL_RCC_STOP_WAKEUPCLOCK_MSI        ((uint32_t)0x00000000U) /*!< MSI selection after wake-up from STOP */
+#define LL_RCC_STOP_WAKEUPCLOCK_MSI        (0x00000000U) /*!< MSI selection after wake-up from STOP */
 #define LL_RCC_STOP_WAKEUPCLOCK_HSI        RCC_CFGR_STOPWUCK       /*!< HSI selection after wake-up from STOP */
 /**
   * @}
@@ -336,8 +334,8 @@ typedef struct
 /** @defgroup RCC_LL_EC_PERIPH_FREQUENCY Peripheral clock frequency
   * @{
   */
-#define LL_RCC_PERIPH_FREQUENCY_NO         (uint32_t)0x00000000U      /*!< No clock enabled for the peripheral            */
-#define LL_RCC_PERIPH_FREQUENCY_NA         (uint32_t)0xFFFFFFFFU      /*!< Frequency cannot be provided as external clock */
+#define LL_RCC_PERIPH_FREQUENCY_NO         0x00000000U      /*!< No clock enabled for the peripheral            */
+#define LL_RCC_PERIPH_FREQUENCY_NA         0xFFFFFFFFU      /*!< Frequency cannot be provided as external clock */
 /**
   * @}
   */
@@ -365,7 +363,7 @@ typedef struct
 /** @defgroup RCC_LL_EC_LPUART1_CLKSOURCE  Peripheral LPUART clock source selection
   * @{
   */
-#define LL_RCC_LPUART1_CLKSOURCE_PCLK1     (uint32_t)0x00000000U   /*!< PCLK1 selected as LPUART1 clock */
+#define LL_RCC_LPUART1_CLKSOURCE_PCLK1     0x00000000U   /*!< PCLK1 selected as LPUART1 clock */
 #define LL_RCC_LPUART1_CLKSOURCE_SYSCLK    RCC_CCIPR_LPUART1SEL_0  /*!< SYSCLK selected as LPUART1 clock */
 #define LL_RCC_LPUART1_CLKSOURCE_HSI       RCC_CCIPR_LPUART1SEL_1  /*!< HSI selected as LPUART1 clock */
 #define LL_RCC_LPUART1_CLKSOURCE_LSE       RCC_CCIPR_LPUART1SEL    /*!< LSE selected as LPUART1 clock*/
@@ -391,10 +389,10 @@ typedef struct
 /** @defgroup RCC_LL_EC_LPTIM1_CLKSOURCE  Peripheral LPTIM clock source selection
   * @{
   */
-#define LL_RCC_LPTIM1_CLKSOURCE_PCLK1      (uint32_t)(0x00000000U)          /*!< PCLK1 selected as LPTIM1 clock */
-#define LL_RCC_LPTIM1_CLKSOURCE_LSI        (uint32_t)RCC_CCIPR_LPTIM1SEL_0  /*!< LSI selected as LPTIM1 clock */
-#define LL_RCC_LPTIM1_CLKSOURCE_HSI        (uint32_t)RCC_CCIPR_LPTIM1SEL_1  /*!< HSI selected as LPTIM1 clock */
-#define LL_RCC_LPTIM1_CLKSOURCE_LSE        (uint32_t)RCC_CCIPR_LPTIM1SEL    /*!< LSE selected as LPTIM1 clock*/
+#define LL_RCC_LPTIM1_CLKSOURCE_PCLK1      (0x00000000U)          /*!< PCLK1 selected as LPTIM1 clock */
+#define LL_RCC_LPTIM1_CLKSOURCE_LSI        RCC_CCIPR_LPTIM1SEL_0  /*!< LSI selected as LPTIM1 clock */
+#define LL_RCC_LPTIM1_CLKSOURCE_HSI        RCC_CCIPR_LPTIM1SEL_1  /*!< HSI selected as LPTIM1 clock */
+#define LL_RCC_LPTIM1_CLKSOURCE_LSE        RCC_CCIPR_LPTIM1SEL    /*!< LSE selected as LPTIM1 clock*/
 /**
   * @}
   */
@@ -405,8 +403,8 @@ typedef struct
 /** @defgroup RCC_LL_EC_RNG_CLKSOURCE  Peripheral RNG clock source selection
   * @{
   */
-#define LL_RCC_RNG_CLKSOURCE_PLL           (uint32_t)(0x00000000U)          /*!< PLL selected as RNG clock */
-#define LL_RCC_RNG_CLKSOURCE_HSI48         (uint32_t)(RCC_CCIPR_HSI48SEL)   /*!< HSI48 selected as RNG clock*/
+#define LL_RCC_RNG_CLKSOURCE_PLL           (0x00000000U)          /*!< PLL selected as RNG clock */
+#define LL_RCC_RNG_CLKSOURCE_HSI48         RCC_CCIPR_HSI48SEL   /*!< HSI48 selected as RNG clock*/
 /**
   * @}
   */
@@ -415,8 +413,8 @@ typedef struct
 /** @defgroup RCC_LL_EC_USB_CLKSOURCE  Peripheral USB clock source selection
   * @{
   */
-#define LL_RCC_USB_CLKSOURCE_PLL           (uint32_t)(0x00000000U)          /*!< PLL selected as USB clock */
-#define LL_RCC_USB_CLKSOURCE_HSI48         (uint32_t)(RCC_CCIPR_HSI48SEL)   /*!< HSI48 selected as USB clock*/
+#define LL_RCC_USB_CLKSOURCE_PLL           (0x00000000U)          /*!< PLL selected as USB clock */
+#define LL_RCC_USB_CLKSOURCE_HSI48         RCC_CCIPR_HSI48SEL   /*!< HSI48 selected as USB clock*/
 /**
   * @}
   */
@@ -490,7 +488,7 @@ typedef struct
 /** @defgroup RCC_LL_EC_RTC_CLKSOURCE  RTC clock source selection
   * @{
   */
-#define LL_RCC_RTC_CLKSOURCE_NONE          (uint32_t)0x00000000U         /*!< No clock used as RTC clock */
+#define LL_RCC_RTC_CLKSOURCE_NONE          0x00000000U         /*!< No clock used as RTC clock */
 #define LL_RCC_RTC_CLKSOURCE_LSE           RCC_CSR_RTCSEL_LSE            /*!< LSE oscillator clock used as RTC clock */
 #define LL_RCC_RTC_CLKSOURCE_LSI           RCC_CSR_RTCSEL_LSI            /*!< LSI oscillator clock used as RTC clock */
 #define LL_RCC_RTC_CLKSOURCE_HSE           RCC_CSR_RTCSEL_HSE            /*!< HSE oscillator clock divided by a programmable prescaler
@@ -2494,4 +2492,3 @@ uint32_t    LL_RCC_GetUSBClockFreq(uint32_t USBxSource);
 
 #endif /* __STM32L0xx_LL_RCC_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
