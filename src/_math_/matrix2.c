@@ -158,6 +158,29 @@ matrix2_trn (
 
 /*
 =======================================
+    矩阵的迹
+=======================================
+*/
+CR_API sMATRIX2*
+matrix2_tra (
+  __CR_IN__ const sMATRIX2* m,
+  __CR_OT__ fpxx_t*         tr
+    )
+{
+    fpxx_t  sum;
+    uint_t  idx;
+
+    if (m->cols != m->rows)
+        return (NULL);
+    sum = 0;
+    for (idx = 0; idx < m->cols; idx++)
+        sum += m->vals[idx * m->cols + idx];
+    *tr = sum;
+    return ((sMATRIX2*)m);
+}
+
+/*
+=======================================
     矩阵数加
 =======================================
 */
@@ -582,6 +605,68 @@ matrix2_inv (
     }
     matrix2_del(&bb);
     return (dm);
+}
+
+/*
+=======================================
+    矩阵求 L1 范数
+=======================================
+*/
+CR_API fpxx_t
+matrix2_norm_l1 (
+  __CR_IN__ const sMATRIX2* m
+    )
+{
+    uint_t  xx, yy;
+    fpxx_t  sum, big = 0;
+
+    for (xx = 0; xx < m->cols; xx++) {
+        sum = 0;
+        for (yy = 0; yy < m->rows; yy++)
+            sum += XABS(m->vals[yy * m->cols + xx]);
+        if (big < sum) big = sum;
+    }
+    return (big);
+}
+
+/*
+=======================================
+    矩阵求 Frobenius 范数
+=======================================
+*/
+CR_API fpxx_t
+matrix2_norm_lf (
+  __CR_IN__ const sMATRIX2* m
+    )
+{
+    fpxx_t  sum = 0;
+    uint_t  idx, size = m->cols * m->rows;
+
+    for (idx = 0; idx < size; idx++)
+        sum += m->vals[idx] * m->vals[idx];
+    return (XSQRT(sum));
+}
+
+/*
+=======================================
+    矩阵求最大范数
+=======================================
+*/
+CR_API fpxx_t
+matrix2_norm_lm (
+  __CR_IN__ const sMATRIX2* m
+    )
+{
+    uint_t  xx, yy;
+    fpxx_t  sum, big = 0;
+
+    for (yy = 0; yy < m->rows; yy++) {
+        sum = 0;
+        for (xx = 0; xx < m->cols; xx++)
+            sum += XABS(m->vals[yy * m->cols + xx]);
+        if (big < sum) big = sum;
+    }
+    return (big);
 }
 
 /*****************************************************************************/

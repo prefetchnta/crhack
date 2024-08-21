@@ -60,7 +60,7 @@ gauss_rnd_get (
             grnd->V2 = 2 * U2 - 1;
             grnd->S = grnd->V1 * grnd->V1 + grnd->V2 * grnd->V2;
         }
-        while (grnd->S >= 1 || grnd->S == 0);
+        while (grnd->S >= 1 || XABS(grnd->S) <= CR_ABITX);
 
         X = grnd->V1 * XSQRT(-2 * XLOGE(grnd->S) / grnd->S);
     }

@@ -17,6 +17,7 @@
 /*  =======================================================================  */
 /*****************************************************************************/
 
+#include "msclib.h"
 #include "phylib.h"
 
 #ifndef _CR_NO_STDC_
@@ -81,7 +82,7 @@ covariance (
     fpxx_t  num, exy = 0;
     fpxx_t  ex, ey, sdx, sdy;
 
-    /* 计算均值和标准差 */
+    /* 计算均值和方差 */
     if (pxy != NULL) {
         ex = statistics(x, count, &sdx, NULL);
         ey = statistics(y, count, &sdy, NULL);
@@ -130,7 +131,7 @@ sim_pearson (
 
 /*
 =======================================
-    欧式相似度
+    欧几里得相似度
 =======================================
 */
 CR_API fpxx_t
@@ -182,6 +183,35 @@ sim_cosine (
 
 /*
 =======================================
+    杰卡德相似度
+=======================================
+*/
+CR_API fpxx_t
+sim_jaccard (
+  __CR_IN__ const fpxx_t*   x,
+  __CR_IN__ uint_t          nx,
+  __CR_IN__ const fpxx_t*   y,
+  __CR_IN__ uint_t          ny
+    )
+{
+    uint_t  ii, jj;
+    sint_t  uu = 0, nn = nx + ny;
+
+    /* 传入的必须为集合
+       即数组内的元素不能重复 */
+    for (ii = 0; ii < nx; ii++)
+    for (jj = 0; jj < ny; jj++) {
+        if (XABS(x[ii] - y[jj]) <= CR_ABITX) {
+            uu++;
+            nn--;
+            break;
+        }
+    }
+    return ((fpxx_t)uu / nn);
+}
+
+/*
+=======================================
     曼哈顿距离
 =======================================
 */
@@ -204,7 +234,7 @@ distance_manhattan (
 
 /*
 =======================================
-    欧式距离
+    欧几里得距离
 =======================================
 */
 CR_API fpxx_t
@@ -233,6 +263,28 @@ CR_API fpxx_t
 distance_chebyshev (
   __CR_IN__ const fpxx_t*   x,
   __CR_IN__ const fpxx_t*   y,
+  __CR_IN__ uint_t          count
+    )
+{
+    uint_t  idx;
+    fpxx_t  dlt, big = 0;
+
+    for (idx = 0; idx < count; idx++) {
+        dlt = XABS(x[idx] - y[idx]);
+        if (big < dlt) big = dlt;
+    }
+    return (big);
+}
+
+/*
+=======================================
+    闵可夫斯基距离
+=======================================
+*/
+CR_API fpxx_t
+distance_minkowski (
+  __CR_IN__ const fpxx_t*   x,
+  __CR_IN__ const fpxx_t*   y,
   __CR_IN__ uint_t          count,
   __CR_IN__ fpxx_t          p
     )
@@ -241,7 +293,7 @@ distance_chebyshev (
     fpxx_t  dlt, sum = 0;
 
     for (idx = 0; idx < count; idx++) {
-        dlt = x[idx] - y[idx];
+        dlt = XABS(x[idx] - y[idx]);
         sum += XPOW(dlt, p);
     }
     return (XPOW(sum, 1 / p));
@@ -260,6 +312,133 @@ distance_cosine (
     )
 {
     return (1 - sim_cosine(x, y, count));
+}
+
+/*
+=======================================
+    汉明距离 (字符)
+=======================================
+*/
+CR_API uint_t
+distance_hamming_cha (
+  __CR_IN__ const ansi_t*   x,
+  __CR_IN__ const ansi_t*   y,
+  __CR_IN__ uint_t          count
+    )
+{
+    uint_t  idx, chg = 0;
+
+    for (idx = 0; idx < count; idx++) {
+        if (x[idx] != y[idx])
+            chg++;
+    }
+    return (chg);
+}
+
+/*
+=======================================
+    汉明距离 (二进制位)
+=======================================
+*/
+CR_API uint_t
+distance_hamming_bit (
+  __CR_IN__ const byte_t*   x,
+  __CR_IN__ const byte_t*   y,
+  __CR_IN__ uint_t          count
+    )
+{
+    uint_t  idx, aa = 0, bb = 0;
+
+    for (idx = 0; idx < count; idx++) {
+        aa += count_bits08(x[idx]);
+        bb += count_bits08(y[idx]);
+    }
+    return (aa >= bb ? aa - bb : bb - aa);
+}
+
+/*
+=======================================
+    杰卡德距离
+=======================================
+*/
+CR_API fpxx_t
+distance_jaccard (
+  __CR_IN__ const fpxx_t*   x,
+  __CR_IN__ uint_t          nx,
+  __CR_IN__ const fpxx_t*   y,
+  __CR_IN__ uint_t          ny
+    )
+{
+    return (1 - sim_jaccard(x, nx, y, ny));
+}
+
+/*
+=======================================
+    马哈拉诺比斯距离 (单点)
+=======================================
+*/
+CR_API fpxx_t
+distance_mahalanobis_arr (
+  __CR_IN__ const fpxx_t*   x,
+  __CR_IN__ uint_t          nx,
+  __CR_IN__ fpxx_t          ey,
+  __CR_IN__ fpxx_t          sdy
+    )
+{
+    uint_t  idx;
+    fpxx_t  sum;
+
+    if (sdy <= CR_ABITX)
+        return (CR_PHY_INV);
+    sum = 0;
+    for (idx = 0; idx < nx; idx++)
+        sum += XABS(x[idx] - ey);
+    return (sum / sdy);
+}
+
+/*
+=======================================
+    马哈拉诺比斯距离 (单点)
+=======================================
+*/
+CR_API fpxx_t
+distance_mahalanobis_lst (
+  __CR_IN__ const fpxx_t*   x,
+  __CR_IN__ uint_t          nx,
+  __CR_IN__ const fpxx_t*   y,
+  __CR_IN__ uint_t          ny
+    )
+{
+    fpxx_t  ey, sdy;
+
+    ey = statistics(y, ny, NULL, &sdy);
+    return (distance_mahalanobis_arr(x, nx, ey, sdy));
+}
+
+/*
+=======================================
+    马哈拉诺比斯距离的平方
+=======================================
+*/
+CR_API fpxx_t
+distance_mahalanobis_xy2 (
+  __CR_IN__ const fpxx_t*   x,
+  __CR_IN__ const fpxx_t*   y,
+  __CR_IN__ uint_t          count
+    )
+{
+    uint_t  idx;
+    fpxx_t  exy, dlt, sum;
+
+    exy = covariance(x, y, count, NULL);
+    if (XABS(exy) <= CR_ABITX)
+        return (CR_PHY_INV);
+    sum = 0;
+    for (idx = 0; idx < count; idx++) {
+        dlt = x[idx] - y[idx];
+        sum += dlt * dlt;
+    }
+    return (sum / exy);
 }
 
 /*

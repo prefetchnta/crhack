@@ -160,6 +160,25 @@ socket_set_addr (
 
 /*
 ---------------------------------------
+    SOCKET 文件句柄创建
+---------------------------------------
+*/
+cr_inline sint_t
+socket_create (
+  __CR_IN__ sint_t  domain,
+  __CR_IN__ sint_t  type,
+  __CR_IN__ sint_t  protocol
+    )
+{
+#if defined(SOCK_CLOEXEC)
+    return (socket(domain, type | SOCK_CLOEXEC, protocol);
+#else
+    return (socket(domain, type, protocol);
+#endif
+}
+
+/*
+---------------------------------------
     SOCKET 公用参数设置
 ---------------------------------------
 */
@@ -350,8 +369,13 @@ server_tcp_accept (
     if (real->timeout_rd == NULL)
     {
         /* 阻塞模式 */
-        temp.socket = accept(real->socket,
-            (SOCKADDR*)(&temp.remote_addr), &size);
+        temp.socket =
+#if defined(SOCK_CLOEXEC)
+        accept4(real->socket, (SOCKADDR*)(&temp.remote_addr), &size,
+                SOCK_CLOEXEC);
+#else
+        accept(real->socket, (SOCKADDR*)(&temp.remote_addr), &size);
+#endif
         if (temp.socket < 0)
             return (NULL);
     }
@@ -371,8 +395,13 @@ server_tcp_accept (
 
         /* 套接字有状态 */
         if (FD_ISSET(real->socket, &rset)) {
-            temp.socket = accept(real->socket,
-                (SOCKADDR*)(&temp.remote_addr), &size);
+            temp.socket =
+#if defined(SOCK_CLOEXEC)
+            accept4(real->socket, (SOCKADDR*)(&temp.remote_addr), &size,
+                    SOCK_CLOEXEC);
+#else
+            accept(real->socket, (SOCKADDR*)(&temp.remote_addr), &size);
+#endif
             if (temp.socket < 0)
                 return (NULL);
         }
@@ -409,7 +438,7 @@ server_tcp_open (
         return (NULL);
 
     /* 生成 TCP 套接字 */
-    temp.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    temp.socket = socket_create(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (temp.socket < 0)
         return (NULL);
     if (!socket_setup(&temp, TRUE, FALSE))
@@ -460,7 +489,7 @@ client_tcp_open (
         return (NULL);
 
     /* 生成 TCP 套接字 */
-    temp.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    temp.socket = socket_create(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (temp.socket < 0)
         return (NULL);
 
@@ -554,7 +583,7 @@ client_tcp_open2 (
         return (NULL);
 
     /* 生成 TCP 套接字 */
-    temp.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    temp.socket = socket_create(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (temp.socket < 0)
         return (NULL);
     if (!socket_setup(&temp, TRUE, FALSE))
@@ -646,7 +675,7 @@ server_udp_open (
         return (NULL);
 
     /* 生成 UDP 套接字 */
-    temp.socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    temp.socket = socket_create(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (temp.socket < 0)
         return (NULL);
     if (!socket_setup(&temp, TRUE, TRUE))
@@ -689,7 +718,7 @@ client_udp_open (
         return (NULL);
 
     /* 生成 UDP 套接字 */
-    temp.socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    temp.socket = socket_create(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (temp.socket < 0)
         return (NULL);
     if (!socket_setup(&temp, FALSE, TRUE)) {
@@ -729,7 +758,7 @@ client_udp_open2 (
         return (NULL);
 
     /* 生成 UDP 套接字 */
-    temp.socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    temp.socket = socket_create(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (temp.socket < 0)
         return (NULL);
     if (!socket_setup(&temp, TRUE, TRUE))
@@ -1421,7 +1450,7 @@ netcard_get_info (
     SOCKADDR_IN sain;
 
     /* 准备好结构体 */
-    sock = socket(AF_INET, SOCK_DGRAM, 0);
+    sock = socket_create(AF_INET, SOCK_DGRAM, 0);
     if (sock < 0)
         return (FALSE);
 

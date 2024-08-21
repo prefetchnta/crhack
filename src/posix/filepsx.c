@@ -66,7 +66,11 @@ file_raw_openA (
     mode &= (~CR_FO_SEQ);
     if (mode > CR_FO_AW)
         return (NULL);
+#if defined(O_CLOEXEC)
+    fd = open(name, s_open_mode[mode] | O_CLOEXEC, 0777);
+#else
     fd = open(name, s_open_mode[mode], 0777);
+#endif
     if (fd < 0)
         return (NULL);
     if (fd == 0) fd = -1;
@@ -93,7 +97,11 @@ file_raw_openW (
     ansi = utf16_to_local(CR_LOCAL, name);
     if (ansi == NULL)
         return (NULL);
+#if defined(O_CLOEXEC)
+    fd = open(ansi, s_open_mode[mode] | O_CLOEXEC, 0777);
+#else
     fd = open(ansi, s_open_mode[mode], 0777);
+#endif
     mem_free(ansi);
     if (fd < 0)
         return (NULL);

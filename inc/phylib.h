@@ -766,6 +766,8 @@ CR_API bool_t   xfiltfilt (fpxx_t *y, const fpxx_t *x, uint_t nxy,
 CR_API uint_t   factorial (uint_t n);
 CR_API uint_t   permutation (uint_t m, uint_t n);
 CR_API uint_t   combination (uint_t m, uint_t n);
+CR_API uint_t   make_setI (sint_t *array, uint_t count);
+CR_API uint_t   make_setF (fpxx_t *array, uint_t count);
 
 /* 概率统计 */
 CR_API fpxx_t   statistics (const fpxx_t *data, uint_t count,
@@ -776,16 +778,31 @@ CR_API fpxx_t   covariance (const fpxx_t *x, const fpxx_t *y,
 CR_API fpxx_t   sim_pearson (const fpxx_t *x, const fpxx_t *y, uint_t num);
 CR_API fpxx_t   sim_euclidean (const fpxx_t *x, const fpxx_t *y, uint_t num);
 CR_API fpxx_t   sim_cosine (const fpxx_t *x, const fpxx_t *y, uint_t num);
-
+CR_API fpxx_t   sim_jaccard (const fpxx_t *x, uint_t nx,
+                             const fpxx_t *y, uint_t ny);
 /* 距离计算 */
 CR_API fpxx_t   distance_manhattan (const fpxx_t *x, const fpxx_t *y,
                                     uint_t count);
 CR_API fpxx_t   distance_euclidean (const fpxx_t *x, const fpxx_t *y,
                                     uint_t count);
 CR_API fpxx_t   distance_chebyshev (const fpxx_t *x, const fpxx_t *y,
+                                    uint_t count);
+CR_API fpxx_t   distance_minkowski (const fpxx_t *x, const fpxx_t *y,
                                     uint_t count, fpxx_t p);
 CR_API fpxx_t   distance_cosine (const fpxx_t *x, const fpxx_t *y,
                                  uint_t count);
+CR_API uint_t   distance_hamming_cha (const ansi_t *x, const ansi_t *y,
+                                      uint_t count);
+CR_API uint_t   distance_hamming_bit (const byte_t *x, const byte_t *y,
+                                      uint_t count);
+CR_API fpxx_t   distance_jaccard (const fpxx_t *x, uint_t nx,
+                                  const fpxx_t *y, uint_t ny);
+CR_API fpxx_t   distance_mahalanobis_arr (const fpxx_t *x, uint_t nx,
+                                          fpxx_t ey, fpxx_t sdy);
+CR_API fpxx_t   distance_mahalanobis_lst (const fpxx_t *x, uint_t nx,
+                                          const fpxx_t *y, uint_t ny);
+CR_API fpxx_t   distance_mahalanobis_xy2 (const fpxx_t *x, const fpxx_t *y,
+                                          uint_t count);
 CR_API fpxx_t   distance_dtw (const fpxx_t *x, uint_t nx, const fpxx_t *y,
                               uint_t ny, uint_t **path CR_DEFAULT(NULL),
                               uint_t *count CR_DEFAULT(NULL));
@@ -847,6 +864,7 @@ CR_API sMATRIX2*    matrix2_set (const sMATRIX2 *m, fpxx_t v);
 CR_API sMATRIX2*    matrix2_dlg (const sMATRIX2 *m, fpxx_t v);
 CR_API sMATRIX2*    matrix2_cpy (sMATRIX2 *dm, const sMATRIX2 *sm);
 CR_API sMATRIX2*    matrix2_trn (sMATRIX2 *dm, const sMATRIX2 *sm);
+CR_API sMATRIX2*    matrix2_tra (const sMATRIX2 *m, fpxx_t *tr);
 CR_API sMATRIX2*    matrix2_sadd (const sMATRIX2 *m, fpxx_t v);
 CR_API sMATRIX2*    matrix2_smul (const sMATRIX2 *m, fpxx_t v);
 CR_API sMATRIX2*    matrix2_add2 (const sMATRIX2 *dm, const sMATRIX2 *sm);
@@ -864,6 +882,9 @@ CR_API sMATRIX2*    matrix2_det (fpxx_t *v, const sMATRIX2 *m);
 CR_API bool_t       matrix2_equ (const sMATRIX2 *m1, const sMATRIX2 *m2,
                                  fpxx_t dlt CR_DEFAULT(CR_ABITX));
 CR_API sMATRIX2*    matrix2_inv (sMATRIX2 *dm, const sMATRIX2 *sm);
+CR_API fpxx_t       matrix2_norm_l1 (const sMATRIX2 *m);
+CR_API fpxx_t       matrix2_norm_lf (const sMATRIX2 *m);
+CR_API fpxx_t       matrix2_norm_lm (const sMATRIX2 *m);
 
 /*****************************************************************************/
 /*                                   变换                                    */
