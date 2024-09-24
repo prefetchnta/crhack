@@ -556,6 +556,61 @@ distance_dtw (
     return (tt[0]);
 }
 
+/*
+=======================================
+    归一化概率分布
+=======================================
+*/
+CR_API void_t
+divergence_unique (
+  __CR_IO__ fpxx_t* p,
+  __CR_IO__ fpxx_t* q,
+  __CR_IN__ uint_t  count
+    )
+{
+    uint_t  idx;
+    fpxx_t  sum1 = 0;
+    fpxx_t  sum2 = 0;
+
+    for (idx = 0; idx < count; idx++) {
+        if (p[idx] > 0) sum1 += p[idx];
+        if (q[idx] > 0) sum2 += q[idx];
+    }
+    if (sum1 > 0) {
+        sum1 = 1 / sum1;
+        for (idx = 0; idx < count; idx++)
+            p[idx] *= sum1;
+    }
+    if (sum2 > 0) {
+        sum2 = 1 / sum2;
+        for (idx = 0; idx < count; idx++)
+            q[idx] *= sum2;
+    }
+}
+
+/*
+=======================================
+    KL 散度计算
+=======================================
+*/
+CR_API fpxx_t
+divergence_kl (
+  __CR_IN__ const fpxx_t*   p,
+  __CR_IN__ const fpxx_t*   q,
+  __CR_IN__ uint_t          count
+    )
+{
+    uint_t  idx;
+    fpxx_t  sum = 0;
+
+    for (idx = 0; idx < count; idx++) {
+        if (p[idx] <= 0 || q[idx] <= 0)
+            continue;
+        sum += p[idx] * XLOGE(p[idx] / q[idx]);
+    }
+    return (sum);
+}
+
 /*****************************************************************************/
 /* _________________________________________________________________________ */
 /* uBMAzRBoAKAHaACQD6FoAIAPqbgA/7rIA+5CM9uKw8D4Au7u7mSIJ0t18mYz0mYz9rAQZCgHc */

@@ -171,9 +171,9 @@ socket_create (
     )
 {
 #if defined(SOCK_CLOEXEC)
-    return (socket(domain, type | SOCK_CLOEXEC, protocol);
+    return (socket(domain, type | SOCK_CLOEXEC, protocol));
 #else
-    return (socket(domain, type, protocol);
+    return (socket(domain, type, protocol));
 #endif
 }
 

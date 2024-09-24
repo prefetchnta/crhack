@@ -819,6 +819,9 @@ CR_API void_t   gauss_rnd_init (sGAUSS_RND *grnd);
 CR_API fpxx_t   gauss_rnd_get (sGAUSS_RND *grnd);
 CR_API void_t   gauss_rnd_make (sGAUSS_RND *grnd, fpxx_t mean, fpxx_t sd,
                                 fpxx_t *output, leng_t count);
+/* KL 散度计算 */
+CR_API void_t   divergence_unique (fpxx_t *p, fpxx_t *q, uint_t count);
+CR_API fpxx_t   divergence_kl (const fpxx_t *p, const fpxx_t *q, uint_t count);
 
 /*****************************************************************************/
 /*                                   代数                                    */
