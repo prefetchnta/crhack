@@ -536,19 +536,25 @@
 
 /* 成员对齐相关 */
 #ifndef CR_ALIGN01
-    #define CR_ALIGN01  CR_ALIGN(1)
+    #define CR_ALIGN01  CR_ALIGN(1)     /* 8bit */
 #endif
 #ifndef CR_ALIGN02
-    #define CR_ALIGN02  CR_ALIGN(2)
+    #define CR_ALIGN02  CR_ALIGN(2)     /* 16bit */
 #endif
 #ifndef CR_ALIGN04
-    #define CR_ALIGN04  CR_ALIGN(4)
+    #define CR_ALIGN04  CR_ALIGN(4)     /* 32bit */
 #endif
 #ifndef CR_ALIGN08
-    #define CR_ALIGN08  CR_ALIGN(8)
+    #define CR_ALIGN08  CR_ALIGN(8)     /* 64bit */
 #endif
 #ifndef CR_ALIGN16
-    #define CR_ALIGN16  CR_ALIGN(16)
+    #define CR_ALIGN16  CR_ALIGN(16)    /* 128bit */
+#endif
+#ifndef CR_ALIGN32
+    #define CR_ALIGN32  CR_ALIGN(32)    /* 256bit */
+#endif
+#ifndef CR_ALIGN64
+    #define CR_ALIGN64  CR_ALIGN(64)    /* 512bit */
 #endif
 
 /*****************************************************************************/

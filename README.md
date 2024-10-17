@@ -44,6 +44,8 @@ usr/arm-none-eabi-cm0p-small-ram.bat | GCC (ARM Cortex-M0+ Small RAM)
 usr/arm-none-eabi-cm3-big-ram.bat | GCC (ARM Cortex-M3 Big RAM)
 usr/arm-none-eabi-cm4f-big-ram.bat | GCC (ARM Cortex-M4F-SP Big RAM)
 usr/arm-none-eabi-cm7f-big-ram.bat | GCC (ARM Cortex-M7F-DP Big RAM)
+usr/riscv-none-elf-rv32imac-small-ram.bat | GCC (RISC-V RV32IMAC Small RAM)
+usr/riscv-none-elf-rv32imafc-big-ram.bat | GCC (RISC-V RV32IMAFC Big RAM)
 usr/riscv-none-elf-rv32imafdc-big-ram.bat | GCC (RISC-V RV32IMAFDC Big RAM)
 
 ## 【废 话】

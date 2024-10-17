@@ -1,0 +1,35 @@
+[mcpu]
+sifive-e20
+sifive-e21
+sifive-e24
+sifive-e31
+sifive-e34
+sifive-e76
+sifive-s21
+sifive-s51
+sifive-s54
+sifive-s76
+sifive-u54
+sifive-u74
+thead-c906
+
+[march]
+rv32    32位架构
+rv64    64位架构
+    e   精简基础指令
+    i   整数基础指令
+    m   整数乘法扩展
+    a   原子指令扩展
+    f   单精度浮点类型扩展
+    d   双精度浮点类型扩展
+    g   基础及扩展指令简写
+    q   四精度浮点类型扩展
+    l   十进制浮点类型扩展
+    c   压缩指令集扩展
+    b   位操作扩展
+    j   动态翻译语言扩展
+    t   事务内存扩展
+    p   SIMD 指令扩展
+    v   向量操作扩展
+    n   用户中断扩展
+    h   虚拟机监控扩展
