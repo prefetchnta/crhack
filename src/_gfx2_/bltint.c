@@ -18,6 +18,7 @@
 /*****************************************************************************/
 
 #include "bltint.h"
+#include "memlib.h"
 #include "pixels.h"
 
 /*****************************************************************************/
@@ -40,12 +41,12 @@ pixel_cnvt01 (
 
     cnvt.val = 0UL;
     lerp = (byte_t*)(&color);
-    if (color == pal[1]) {
+    if (mem_cmp(lerp, &pal[1], 3) == 0) {
         cnvt.c08.idx = 0x01;
         cnvt.c08.lrp = lerp[3];
     }
     else
-    if (color == pal[0]) {
+    if (mem_cmp(lerp, &pal[0], 3) == 0) {
         cnvt.c08.lrp = lerp[3];
     }
     return (cnvt);
@@ -69,7 +70,7 @@ pixel_cnvt02 (
     cnvt.val = 0UL;
     lerp = (byte_t*)(&color);
     for (idx = 0; idx < 4; idx++) {
-        if (color == pal[idx]) {
+        if (mem_cmp(lerp, &pal[idx], 3) == 0) {
             cnvt.c08.idx = (byte_t)idx;
             cnvt.c08.lrp = lerp[3];
             break;
@@ -96,7 +97,7 @@ pixel_cnvt04 (
     cnvt.val = 0UL;
     lerp = (byte_t*)(&color);
     for (idx = 0; idx < 16; idx++) {
-        if (color == pal[idx]) {
+        if (mem_cmp(lerp, &pal[idx], 3) == 0) {
             cnvt.c08.idx = (byte_t)idx;
             cnvt.c08.lrp = lerp[3];
             break;
@@ -123,7 +124,7 @@ pixel_cnvt08 (
     cnvt.val = 0UL;
     lerp = (byte_t*)(&color);
     for (idx = 0; idx < 256; idx++) {
-        if (color == pal[idx]) {
+        if (mem_cmp(lerp, &pal[idx], 3) == 0) {
             cnvt.c08.idx = (byte_t)idx;
             cnvt.c08.lrp = lerp[3];
             break;
