@@ -65,6 +65,7 @@
 typedef   signed int    sint_t;
 typedef unsigned int    uint_t;
 typedef unsigned char   byte_t;
+typedef    const char*  cstr_t;
 
 /* 16/32位整数定义 */
 #if defined(_CR_SYS16_)
