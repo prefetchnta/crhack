@@ -387,6 +387,8 @@ CR_COLOR32 (
 CR_API iGFX2*   create_mem_bitmap (uint_t width, uint_t height,
                                    uint_t crh_fmt);
 
+CR_API iGFX2*   create_mem_bitmap2 (const sIMAGE *img, bool_t dcpy);
+
 /*****************************************************************************/
 /*                                 文字接口                                  */
 /*****************************************************************************/

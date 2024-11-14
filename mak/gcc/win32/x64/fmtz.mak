@@ -36,9 +36,25 @@ build_lib:
 build_dll:
 	$(RC) $(RFLAGS) -o.$(L)fmtz.res.o .$(L)fmtz.ver
 	$(CC) $(CFLAGS) -D_CR_BUILD_DLL_ $(ALL_CPPS)
+	$(LD) $(LFLAGS) $(DLL_OBJS) $(FI_OBJS) \
+          $(SDK_COFF_X64)fi$(L)FreeImage.a $(LFLAGS_1)
+	$(SP) $(SFLAGS)
+	mmvv CrH_FMTZ.dll zFreeImage.dll
 	$(LD) $(LFLAGS) $(DLL_OBJS) $(SYN_OBJS_CC) $(LFLAGS_1)
 	$(SP) $(SFLAGS)
 	mmvv CrH_FMTZ.dll zSYN.dll
+	$(LD) $(LFLAGS) $(DLL_OBJS) $(DEVIL_OBJS) \
+          $(SDK_COFF_X64)devil$(L)ResIL.a $(LFLAGS_1)
+	$(SP) $(SFLAGS)
+	mmvv CrH_FMTZ.dll zDevIL.dll
+	$(LD) $(LFLAGS) $(DLL_OBJS) $(FMOD_OBJS) \
+          $(SDK_COFF_X64)fmod$(L)fmodex64.a $(LFLAGS_1)
+	$(SP) $(SFLAGS)
+	mmvv CrH_FMTZ.dll zFMOD.dll
+	$(LD) $(LFLAGS) $(DLL_OBJS) $(RAR_OBJS) \
+          $(SDK_COFF_X64)unrar$(L)unrar64.a $(LFLAGS_1)
+	$(SP) $(SFLAGS)
+	mmvv CrH_FMTZ.dll zRAR.dll
 	$(LD) $(LFLAGS) $(DLL_OBJS) $(EXPAND_OBJS) $(LFLAGS_1)
 	$(SP) $(SFLAGS)
 	mmvv CrH_FMTZ.dll zExpand.dll

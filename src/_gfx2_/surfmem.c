@@ -22,6 +22,20 @@
 #include "pixels.h"
 #include "strlib.h"
 
+/* 内部结构 */
+typedef struct
+{
+        /* 虚函数表 */
+        const iGFX2_vtbl*   __vptr__;
+
+        /* 数据成员 */
+        sIMAGE  __back__;   /* 显示屏的后台缓冲 */
+
+        /* 个性部分 */
+        bool_t  m_rel;  /* 析构时是否释放图形数据 */
+
+} iGFX2_MEM;
+
 /*****************************************************************************/
 /*                                 离屏表面                                  */
 /*****************************************************************************/
@@ -36,7 +50,11 @@ iGFX2_MEM_release (
   __CR_IN__ iGFX2*  that
     )
 {
-    mem_free(that->__back__.data);
+    iGFX2_MEM*  real;
+
+    real = (iGFX2_MEM*)that;
+    if (real->m_rel)
+        mem_free(that->__back__.data);
     mem_free(that);
 }
 
@@ -222,7 +240,7 @@ static const iGFX2_vtbl _rom_ s_bmp32_vtbl =
 
 /*
 =======================================
-    生成 MEM 图形离屏表面
+    创建 MEM 图形离屏表面 (直接生成)
 =======================================
 */
 CR_API iGFX2*
@@ -232,26 +250,26 @@ create_mem_bitmap (
   __CR_IN__ uint_t  crh_fmt
     )
 {
-    iGFX2*  gfx2;
-    sIMAGE* image;
+    sIMAGE*     image;
+    iGFX2_MEM*  gfx2_mem;
 
-    gfx2 = struct_new(iGFX2);
-    if (gfx2 == NULL)
+    gfx2_mem = struct_new(iGFX2_MEM);
+    if (gfx2_mem == NULL)
         return (NULL);
 
     /* 仅支持 CrHack 的部分类型 */
     switch (crh_fmt)
     {
-        case CR_INDEX1:   gfx2->__vptr__ = &s_bmp01_vtbl; break;
-        case CR_INDEX2:   gfx2->__vptr__ = &s_bmp02_vtbl; break;
-        case CR_INDEX4:   gfx2->__vptr__ = &s_bmp04_vtbl; break;
-        case CR_INDEX8:   gfx2->__vptr__ = &s_bmp08_vtbl; break;
-        case CR_ARGB4444: gfx2->__vptr__ = &s_bmp12_vtbl; break;
-        case CR_ARGBX555: gfx2->__vptr__ = &s_bmp15_vtbl; break;
-        case CR_ARGB565:  gfx2->__vptr__ = &s_bmp16_vtbl; break;
-        case CR_ARGB1555: gfx2->__vptr__ = &s_bmp17_vtbl; break;
-        case CR_ARGB888:  gfx2->__vptr__ = &s_bmp24_vtbl; break;
-        case CR_ARGB8888: gfx2->__vptr__ = &s_bmp32_vtbl; break;
+        case CR_INDEX1:   gfx2_mem->__vptr__ = &s_bmp01_vtbl; break;
+        case CR_INDEX2:   gfx2_mem->__vptr__ = &s_bmp02_vtbl; break;
+        case CR_INDEX4:   gfx2_mem->__vptr__ = &s_bmp04_vtbl; break;
+        case CR_INDEX8:   gfx2_mem->__vptr__ = &s_bmp08_vtbl; break;
+        case CR_ARGB4444: gfx2_mem->__vptr__ = &s_bmp12_vtbl; break;
+        case CR_ARGBX555: gfx2_mem->__vptr__ = &s_bmp15_vtbl; break;
+        case CR_ARGB565:  gfx2_mem->__vptr__ = &s_bmp16_vtbl; break;
+        case CR_ARGB1555: gfx2_mem->__vptr__ = &s_bmp17_vtbl; break;
+        case CR_ARGB888:  gfx2_mem->__vptr__ = &s_bmp24_vtbl; break;
+        case CR_ARGB8888: gfx2_mem->__vptr__ = &s_bmp32_vtbl; break;
 
         default:
             goto _failure;
@@ -270,12 +288,63 @@ create_mem_bitmap (
     image->size -= image->bpl;
 
     /* 复制过去后释放结构 */
-    struct_cpy(&gfx2->__back__, image, sIMAGE);
+    gfx2_mem->m_rel = TRUE;
+    struct_cpy(&gfx2_mem->__back__, image, sIMAGE);
     mem_free(image);
-    return ((iGFX2*)gfx2);
+    return ((iGFX2*)gfx2_mem);
 
 _failure:
-    mem_free(gfx2);
+    mem_free(gfx2_mem);
+    return (NULL);
+}
+
+/*
+=======================================
+    创建 MEM 图形离屏表面 (从图形对象)
+=======================================
+*/
+CR_API iGFX2*
+create_mem_bitmap2 (
+  __CR_IN__ const sIMAGE*   img,
+  __CR_IN__ bool_t          dcpy
+    )
+{
+    iGFX2_MEM*  gfx2_mem;
+
+    gfx2_mem = struct_new(iGFX2_MEM);
+    if (gfx2_mem == NULL)
+        return (NULL);
+
+    /* 仅支持 CrHack 的部分类型 */
+    switch (img->fmt)
+    {
+        case CR_INDEX1:   gfx2_mem->__vptr__ = &s_bmp01_vtbl; break;
+        case CR_INDEX2:   gfx2_mem->__vptr__ = &s_bmp02_vtbl; break;
+        case CR_INDEX4:   gfx2_mem->__vptr__ = &s_bmp04_vtbl; break;
+        case CR_INDEX8:   gfx2_mem->__vptr__ = &s_bmp08_vtbl; break;
+        case CR_ARGB4444: gfx2_mem->__vptr__ = &s_bmp12_vtbl; break;
+        case CR_ARGBX555: gfx2_mem->__vptr__ = &s_bmp15_vtbl; break;
+        case CR_ARGB565:  gfx2_mem->__vptr__ = &s_bmp16_vtbl; break;
+        case CR_ARGB1555: gfx2_mem->__vptr__ = &s_bmp17_vtbl; break;
+        case CR_ARGB888:  gfx2_mem->__vptr__ = &s_bmp24_vtbl; break;
+        case CR_ARGB8888: gfx2_mem->__vptr__ = &s_bmp32_vtbl; break;
+
+        default:
+            goto _failure;
+    }
+
+    /* 浅拷贝直接复制结构析构时不释放 */
+    struct_cpy(&gfx2_mem->__back__, img, sIMAGE);
+    if (dcpy) {
+        gfx2_mem->__back__.data = mem_dup(img->data, img->size);
+        if (gfx2_mem->__back__.data == NULL)
+            goto _failure;
+    }
+    gfx2_mem->m_rel = dcpy;
+    return ((iGFX2*)gfx2_mem);
+
+_failure:
+    mem_free(gfx2_mem);
     return (NULL);
 }
 
