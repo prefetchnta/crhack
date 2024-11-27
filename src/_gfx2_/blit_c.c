@@ -319,7 +319,7 @@ blit_str08_c (
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
             if (soper.addr[0] != trans.c08.idx)
-                doper.addr[0]  = soper.addr[0];
+                doper.addr[0] = soper.addr[0];
             doper.addr += 1;
             soper.addr += 1;
         }
@@ -354,8 +354,8 @@ blit_str16_c (
     len = soper.width / 2;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
-            if (*(int16u*)soper.addr != trans.c16.clr)
-                *(int16u*)doper.addr  = *(int16u*)soper.addr;
+            if (mem_cmp(soper.addr, &trans, 2) != 0)
+                mem_cpy(doper.addr, soper.addr, 2);
             doper.addr += 2;
             soper.addr += 2;
         }
@@ -390,13 +390,8 @@ blit_str24_c (
     len = soper.width / 3;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
-            if (soper.addr[0] != trans.c32.bbb &&
-                soper.addr[1] != trans.c32.ggg &&
-                soper.addr[2] != trans.c32.rrr) {
-                doper.addr[0]  = soper.addr[0];
-                doper.addr[1]  = soper.addr[1];
-                doper.addr[2]  = soper.addr[2];
-            }
+            if (mem_cmp(soper.addr, &trans, 3) != 0)
+                mem_cpy(doper.addr, soper.addr, 3);
             doper.addr += 3;
             soper.addr += 3;
         }
@@ -431,8 +426,8 @@ blit_str32_c (
     len = soper.width / 4;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
-            if (*(int32u*)soper.addr != trans.val)
-                *(int32u*)doper.addr  = *(int32u*)soper.addr;
+            if (mem_cmp(soper.addr, &trans, 3) != 0)
+                mem_cpy(doper.addr, soper.addr, 4);
             doper.addr += 4;
             soper.addr += 4;
         }
@@ -468,7 +463,7 @@ blit_dtr08_c (
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
             if (doper.addr[0] == trans.c08.idx)
-                doper.addr[0]  = soper.addr[0];
+                doper.addr[0] = soper.addr[0];
             doper.addr += 1;
             soper.addr += 1;
         }
@@ -503,8 +498,8 @@ blit_dtr16_c (
     len = soper.width / 2;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
-            if (*(int16u*)doper.addr == trans.c16.clr)
-                *(int16u*)doper.addr  = *(int16u*)soper.addr;
+            if (mem_cmp(doper.addr, &trans, 2) == 0)
+                mem_cpy(doper.addr, soper.addr, 2);
             doper.addr += 2;
             soper.addr += 2;
         }
@@ -539,13 +534,8 @@ blit_dtr24_c (
     len = soper.width / 3;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
-            if (doper.addr[0] == trans.c32.bbb &&
-                doper.addr[1] == trans.c32.ggg &&
-                doper.addr[2] == trans.c32.rrr) {
-                doper.addr[0]  = soper.addr[0];
-                doper.addr[1]  = soper.addr[1];
-                doper.addr[2]  = soper.addr[2];
-            }
+            if (mem_cmp(doper.addr, &trans, 3) == 0)
+                mem_cpy(doper.addr, soper.addr, 3);
             doper.addr += 3;
             soper.addr += 3;
         }
@@ -580,8 +570,8 @@ blit_dtr32_c (
     len = soper.width / 4;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
-            if (*(int32u*)doper.addr == trans.val)
-                *(int32u*)doper.addr  = *(int32u*)soper.addr;
+            if (mem_cmp(doper.addr, &trans, 3) == 0)
+                mem_cpy(doper.addr, soper.addr, 4);
             doper.addr += 4;
             soper.addr += 4;
         }
@@ -1048,7 +1038,7 @@ blit_msk16_c (
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
             if (moper.addr[0] == index)
-                *(int16u*)doper.addr = *(int16u*)soper.addr;
+                mem_cpy(doper.addr, soper.addr, 2);
             doper.addr += 2;
             soper.addr += 2;
             moper.addr += 1;
@@ -1093,11 +1083,8 @@ blit_msk24_c (
     len = soper.width / 3;
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
-            if (moper.addr[0] == index) {
-                doper.addr[0] = soper.addr[0];
-                doper.addr[1] = soper.addr[1];
-                doper.addr[2] = soper.addr[2];
-            }
+            if (moper.addr[0] == index)
+                mem_cpy(doper.addr, soper.addr, 3);
             doper.addr += 3;
             soper.addr += 3;
             moper.addr += 1;
@@ -1143,7 +1130,7 @@ blit_msk32_c (
     while (soper.height-- != 0) {
         for (idx = len; idx != 0; idx--) {
             if (moper.addr[0] == index)
-                *(int32u*)doper.addr = *(int32u*)soper.addr;
+                mem_cpy(doper.addr, soper.addr, 4);
             doper.addr += 4;
             soper.addr += 4;
             moper.addr += 1;

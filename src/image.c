@@ -604,7 +604,6 @@ image_alptran32 (
   __CR_IO__ const sIMAGE*   img
     )
 {
-    int32u  temp;
     leng_t  size;
     byte_t* data;
 
@@ -613,9 +612,8 @@ image_alptran32 (
     if (img->keycolor != 0) {
         size = img->size;
         data = img->data;
-        temp = img->keycolor & CDWORD_LE(0x00FFFFFFUL);
         for (size /= 4; size != 0; size--) {
-            if (temp == (*(int32u*)data & CDWORD_LE(0x00FFFFFFUL)))
+            if (mem_cmp(data, &img->keycolor, 3) == 0)
                 data[3] = 0x00;
             data += sizeof(int32u);
         }

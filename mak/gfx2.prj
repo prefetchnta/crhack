@@ -79,6 +79,7 @@ FB_CPPS=$(SRC)frmbuf.$(C)
 OBJS=$(OBJ)blit_c.$(O) \
      $(OBJ)bltint.$(O) \
      $(OBJ)draw2d.$(O) \
+     $(OBJ)fill2d.$(O) \
      $(OBJ)pixels.$(O) \
      $(OBJ)btfont.$(O) \
      $(OBJ)ucfont.$(O) \
@@ -87,6 +88,7 @@ OBJS=$(OBJ)blit_c.$(O) \
 CPPS=$(SRC)blit_c.$(C) \
      $(SRC)bltint.$(C) \
      $(SRC)draw2d.$(C) \
+     $(SRC)fill2d.$(C) \
      $(SRC)pixels.$(C) \
      $(SRC)btfont.$(C) \
      $(SRC)ucfont.$(C) \

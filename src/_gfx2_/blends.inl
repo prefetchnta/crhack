@@ -691,7 +691,7 @@ CR_NAME_BLITZ(12_c) (
     else {
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
-                if (*(int16u*)soper.addr != trans.c16.clr)
+                if (mem_cmp(soper.addr, &trans, 2) != 0)
                     CR_BLEND_LRP_MAIN12(*(int16u*)doper.addr,
                                         *(int16u*)soper.addr)
                 doper.addr += 2;
@@ -763,7 +763,7 @@ CR_NAME_BLITZ(15_c) (
     else {
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
-                if (*(int16u*)soper.addr != trans.c16.clr)
+                if (mem_cmp(soper.addr, &trans, 2) != 0)
                     CR_BLEND_LRP_MAIN15(*(int16u*)doper.addr,
                                         *(int16u*)soper.addr)
                 doper.addr += 2;
@@ -835,7 +835,7 @@ CR_NAME_BLITZ(16_c) (
     else {
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
-                if (*(int16u*)soper.addr != trans.c16.clr)
+                if (mem_cmp(soper.addr, &trans, 2) != 0)
                     CR_BLEND_LRP_MAIN16(*(int16u*)doper.addr,
                                         *(int16u*)soper.addr)
                 doper.addr += 2;
@@ -910,9 +910,7 @@ CR_NAME_BLITZ(24_c) (
     else {
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
-                if (soper.addr[0] != trans.c32.bbb &&
-                    soper.addr[1] != trans.c32.ggg &&
-                    soper.addr[2] != trans.c32.rrr)
+                if (mem_cmp(soper.addr, &trans, 3) != 0)
                     CR_BLEND_LRP_MAIN24(doper.addr[0], doper.addr[1],
                             doper.addr[2], soper.addr[0], soper.addr[1],
                                         soper.addr[2])
@@ -986,11 +984,9 @@ CR_NAME_BLITZ(32_c) (
 #if     (CR_BLT_MODE == CR_BLT_ALP)
     }
     else {
-        trans.val &= CDWORD_LE(0x00FFFFFFUL);
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
-                if ((*(int32u*)soper.addr & CDWORD_LE(0x00FFFFFFUL)) !=
-                               trans.val)
+                if (mem_cmp(soper.addr, &trans, 3) != 0)
                     CR_BLEND_LRP_MAIN32(doper.addr[0], doper.addr[1],
                             doper.addr[2], soper.addr[0], soper.addr[1],
                                         soper.addr[2])

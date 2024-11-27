@@ -76,6 +76,28 @@ draw_rect (
 
 /*
 =======================================
+    填充方框
+=======================================
+*/
+CR_API void_t
+fill_rect (
+  __CR_IO__ const sIMAGE*   dst,
+  __CR_IN__ const sRECT*    rect,
+  __CR_IN__ cpix_t          color,
+  __CR_IN__ pixfill_t       pixel_fill
+    )
+{
+    sFILL   fill;
+
+    fill.dx = rect->x1;
+    fill.dy = rect->y1;
+    fill.dw = rect->ww;
+    fill.dh = rect->hh;
+    pixel_fill(dst, &fill, color, NULL);
+}
+
+/*
+=======================================
     画线段
 =======================================
 */
@@ -416,37 +438,49 @@ draw_circle (
 
 /*
 =======================================
-    画多边形
+    填充正圆
 =======================================
 */
 CR_API void_t
-draw_polygon (
+fill_circle (
   __CR_IO__ const sIMAGE*   dst,
-  __CR_IN__ const sPNT2*    pos,
-  __CR_IN__ uint_t          count,
-  __CR_IN__ leng_t          skip,
+  __CR_IN__ sint_t          cx,
+  __CR_IN__ sint_t          cy,
+  __CR_IN__ sint_t          radius,
   __CR_IN__ cpix_t          color,
   __CR_IN__ pixdraw_t       pixel_draw
     )
 {
-    sLINE   line;
-    sPNT2*  next;
-    sPNT2*  start;
-    uint_t  index;
+    sint_t  xx, yy, dd;
+    /* ------------- */
+    const sRECT*    clip;
 
-    if (count-- <= 2)
+    if (radius <= 0)
         return;
-    if (skip == 0)
-        skip = sizeof(sPNT2);
-    start = (sPNT2*)pos;
+    clip = &dst->clip_win;
 
-    for (index = 0; index < count; index++, pos = next) {
-        next = (sPNT2*)((byte_t*)pos + skip);
-        line_set_xy(&line, pos->x, pos->y, next->x, next->y);
-        draw_line(dst, &line, color, pixel_draw);
+    /* 安全检查, 加法溢出无碍 */
+    if ((cx > clip->x2 + radius) ||
+        (cx + radius < clip->x1) ||
+        (cy > clip->y2 + radius) ||
+        (cy + radius < clip->y1))
+        return;
+
+    yy = radius;
+    dd = 3 - radius * 2;
+
+    for (xx = 0; xx <= yy; xx++)
+    {
+        draw_lineh(dst, cx - xx, cx + xx, cy - yy, color, pixel_draw);
+        draw_lineh(dst, cx - xx, cx + xx, cy + yy, color, pixel_draw);
+        draw_lineh(dst, cx - yy, cx + yy, cy - xx, color, pixel_draw);
+        draw_lineh(dst, cx - yy, cx + yy, cy + xx, color, pixel_draw);
+
+        if (dd < 0)
+            dd += xx * 4 + 6;
+        else
+            dd += (xx - yy--) * 4 + 10;
     }
-    line_set_xy(&line, start->x, start->y, pos->x, pos->y);
-    draw_line(dst, &line, color, pixel_draw);
 }
 
 /*
@@ -563,6 +597,277 @@ draw_ellipse (
 
     if (clip_pixel(cx - yy, cy - xx, clip))
         pixel_draw(dst, cx - yy, cy - xx, color);
+}
+
+/*
+=======================================
+    填充椭圆
+=======================================
+*/
+CR_API void_t
+fill_ellipse (
+  __CR_IO__ const sIMAGE*   dst,
+  __CR_IN__ const sRECT*    rect,
+  __CR_IN__ cpix_t          color,
+  __CR_IN__ pixdraw_t       pixel_draw
+    )
+{
+    const sRECT*    clip;
+    /* --------------- */
+    sint_t  cx, cy, r1, r2, rr;
+    sint_t  xx, yy, tn, r12, r22, xmax;
+
+    r1 = (rect->ww / 2);
+    r2 = (rect->hh / 2);
+    cx = (rect->x1 + rect->x2) / 2;
+    cy = (rect->y1 + rect->y2) / 2;
+    clip = &dst->clip_win;
+
+    /* 安全检查, 加法溢出无碍 */
+    if ((cx > clip->x2 + r1) || (cx + r1 < clip->x1) ||
+        (cy > clip->y2 + r2) || (cy + r2 < clip->y1))
+        return;
+
+    xx = 0;
+    yy = r2;
+    r12 = r1 * r1;
+    r22 = r2 * r2;
+    xmax = (sint_t)((fp32_t)r12 / FSQRT((fp32_t)(r12 + r22)));
+    tn = r12 - 2 * r2 * r12;
+    while (xx <= xmax)
+    {
+        if (tn < 0 || yy == 0) {
+            tn += (4 * xx + 2) * r22;
+        }
+        else {
+            tn += (4 * xx + 2) * r22 + (1 - yy) * 4 * r12;
+            yy -= 1;
+        }
+
+        draw_lineh(dst, cx - xx, cx + xx, cy - yy, color, pixel_draw);
+        draw_lineh(dst, cx - xx, cx + xx, cy + yy, color, pixel_draw);
+        xx += 1;
+    }
+
+    draw_lineh(dst, cx - xx, cx + xx, cy - yy, color, pixel_draw);
+    draw_lineh(dst, cx - xx, cx + xx, cy + yy, color, pixel_draw);
+
+    CR_SWAP(r1, r2, rr);
+
+    xx = 0;
+    yy = r2;
+    r12 = r1 * r1;
+    r22 = r2 * r2;
+    xmax = (sint_t)((fp32_t)r12 / FSQRT((fp32_t)(r12 + r22)));
+    tn = r12 - 2 * r2 * r12;
+    while (xx <= xmax)
+    {
+        if (tn < 0 || yy == 0) {
+            tn += (4 * xx + 2) * r22;
+        }
+        else {
+            tn += (4 * xx + 2) * r22 + (1 - yy) * 4 * r12;
+            yy -= 1;
+        }
+
+        draw_lineh(dst, cx - yy, cx + yy, cy - xx, color, pixel_draw);
+        draw_lineh(dst, cx - yy, cx + yy, cy + xx, color, pixel_draw);
+        xx += 1;
+    }
+
+    draw_lineh(dst, cx - yy, cx + yy, cy - xx, color, pixel_draw);
+    draw_lineh(dst, cx - yy, cx + yy, cy + xx, color, pixel_draw);
+}
+
+/*
+=======================================
+    画多边形
+=======================================
+*/
+CR_API void_t
+draw_polygon (
+  __CR_IO__ const sIMAGE*   dst,
+  __CR_IN__ const sPNT2*    pos,
+  __CR_IN__ uint_t          count,
+  __CR_IN__ leng_t          skip,
+  __CR_IN__ cpix_t          color,
+  __CR_IN__ pixdraw_t       pixel_draw
+    )
+{
+    sLINE   line;
+    sPNT2*  next;
+    sPNT2*  start;
+    uint_t  index;
+
+    if (count-- <= 2)
+        return;
+    if (skip == 0)
+        skip = sizeof(sPNT2);
+    start = (sPNT2*)pos;
+
+    for (index = 0; index < count; index++, pos = next) {
+        next = (sPNT2*)((byte_t*)pos + skip);
+        line_set_xy(&line, pos->x, pos->y, next->x, next->y);
+        draw_line(dst, &line, color, pixel_draw);
+    }
+    line_set_xy(&line, start->x, start->y, pos->x, pos->y);
+    draw_line(dst, &line, color, pixel_draw);
+}
+
+/*
+---------------------------------------
+    填充三角形
+---------------------------------------
+*/
+static void_t
+fill_triangle (
+  __CR_IN__ const sIMAGE*   dst,
+  __CR_IN__ const sPNT2*    pos,
+  __CR_IN__ cpix_t          color,
+  __CR_IN__ pixdraw_t       pixel_draw
+    )
+{
+    sLINE   line;
+    sint_t  xinc1, xinc2, yinc1, yinc2;
+    sint_t  den, num, numadd, numpix, curpix;
+    sint_t  x_diff = pos[1].x - pos[0].x;
+    sint_t  y_diff = pos[1].y - pos[0].y;
+    sint_t  dx = CR_ABS(x_diff);
+    sint_t  dy = CR_ABS(y_diff);
+    sint_t  xx = pos[0].x;
+    sint_t  yy = pos[0].y;
+
+    if (pos[1].x >= pos[0].x)
+        xinc1 = xinc2 = 1;
+    else
+        xinc1 = xinc2 = -1;
+
+    if (pos[1].y >= pos[0].y)
+        yinc1 = yinc2 = 1;
+    else
+        yinc1 = yinc2 = -1;
+
+    if (dx >= dy) {
+        den = dx;
+        num = dx / 2;
+        numadd = dy;
+        numpix = dx;
+        xinc1 = yinc2 = 0;
+    }
+    else {
+        den = dy;
+        num = dy / 2;
+        numadd = dx;
+        numpix = dy;
+        xinc2 = yinc1 = 0;
+    }
+
+    for (curpix = 0; curpix <= numpix; curpix++) {
+        line_set_xy(&line, xx, yy, pos[2].x, pos[2].y);
+        draw_line(dst, &line, color, pixel_draw);
+        num += numadd;
+        if (num >= den) {
+            num -= den;
+            xx += xinc1;
+            yy += yinc1;
+        }
+        xx += xinc2;
+        yy += yinc2;
+    }
+}
+
+/*
+=======================================
+    填充多边形
+=======================================
+*/
+CR_API void_t
+fill_polygon (
+  __CR_IO__ const sIMAGE*   dst,
+  __CR_IN__ const sPNT2*    pos,
+  __CR_IN__ uint_t          count,
+  __CR_IN__ leng_t          skip,
+  __CR_IN__ cpix_t          color,
+  __CR_IN__ pixdraw_t       pixel_draw
+    )
+{
+    uint_t  index;
+    sPNT2*  ptr, tri[3];
+    sint_t  x1, y1, x2, y2;
+    sint_t  dx1, dy1, dx2, dy2;
+    sint_t  cx, cy, fx, fy, px, py;
+
+    if (count <= 2)
+        return;
+    if (skip == 0)
+        skip = sizeof(sPNT2);
+    ptr = (sPNT2*)pos;
+    dx1 = dx2 = ptr->x;
+    dy1 = dy2 = ptr->y;
+    ptr = (sPNT2*)((byte_t*)ptr + skip);
+    x2 = ptr->x;
+    y2 = ptr->y;
+    for (index = 1; index < count; index++) {
+        px = ptr->x;
+        if (px < dx1) dx1 = px;
+        if (px > dx2) dx2 = px;
+        py = ptr->y;
+        if (py < dy1) dy1 = py;
+        if (py > dy2) dy2 = py;
+        ptr = (sPNT2*)((byte_t*)ptr + skip);
+    }
+
+    cx = (dx1 + dx2) / 2;
+    cy = (dy1 + dy2) / 2;
+    ptr = (sPNT2*)pos;
+    fx = ptr->x;
+    fy = ptr->y;
+
+    while (--count != 0) {
+        x1 = ptr->x;
+        y1 = ptr->y;
+        ptr = (sPNT2*)((byte_t*)ptr + skip);
+        x2 = ptr->x;
+        y2 = ptr->y;
+        tri[0].x = x1;
+        tri[0].y = y1;
+        tri[1].x = x2;
+        tri[1].y = y2;
+        tri[2].x = cx;
+        tri[2].y = cy;
+        fill_triangle(dst, tri, color, pixel_draw);
+        tri[1].x = cx;
+        tri[1].y = cy;
+        tri[2].x = x2;
+        tri[2].y = y2;
+        fill_triangle(dst, tri, color, pixel_draw);
+        tri[0].x = cx;
+        tri[0].y = cy;
+        tri[1].x = x2;
+        tri[1].y = y2;
+        tri[2].x = x1;
+        tri[2].y = y1;
+        fill_triangle(dst, tri, color, pixel_draw);
+    }
+    tri[0].x = fx;
+    tri[0].y = fy;
+    tri[1].x = x2;
+    tri[1].y = y2;
+    tri[2].x = cx;
+    tri[2].y = cy;
+    fill_triangle(dst, tri, color, pixel_draw);
+    tri[1].x = cx;
+    tri[1].y = cy;
+    tri[2].x = x2;
+    tri[2].y = y2;
+    fill_triangle(dst, tri, color, pixel_draw);
+    tri[0].x = cx;
+    tri[0].y = cy;
+    tri[1].x = x2;
+    tri[1].y = y2;
+    tri[2].x = fx;
+    tri[2].y = fy;
+    fill_triangle(dst, tri, color, pixel_draw);
 }
 
 /*

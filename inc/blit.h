@@ -81,6 +81,8 @@ typedef union
 typedef cpix_t  (*pixcnvt_t) (const int32u*, cl32_t);
 typedef void_t  (*pixdraw_t) (const sIMAGE*, sint_t, sint_t, cpix_t);
 typedef void_t  (*dotdraw_t) (const sIMAGE*, fp32_t, fp32_t, cpix_t);
+typedef void_t  (*pixfill_t) (const sIMAGE*, const sFILL*, cpix_t,
+                              const sRECT*);
 
 #if !defined(_CR_SICK_INLINE_)
 /*
@@ -542,6 +544,9 @@ CR_API void_t   dot_wu_set32 (const sIMAGE *dst, fp32_t x, fp32_t y, cpix_t);
 CR_API void_t   draw_rect (const sIMAGE *dst, const sRECT *rect,
                            cpix_t color, pixdraw_t pixel_draw);
 
+CR_API void_t   fill_rect (const sIMAGE *dst, const sRECT *rect,
+                           cpix_t color, pixfill_t pixel_fill);
+
 CR_API void_t   draw_line (const sIMAGE *dst, const sLINE *pos,
                            cpix_t color, pixdraw_t pixel_draw);
 
@@ -567,10 +572,21 @@ CR_API void_t   draw_circle (const sIMAGE *dst, sint_t cx,
                              sint_t cy, sint_t radius, cpix_t color,
                              pixdraw_t pixel_draw);
 
+CR_API void_t   fill_circle (const sIMAGE *dst, sint_t cx,
+                             sint_t cy, sint_t radius, cpix_t color,
+                             pixdraw_t pixel_draw);
+
 CR_API void_t   draw_ellipse (const sIMAGE *dst, const sRECT *rect,
                               cpix_t color, pixdraw_t pixel_draw);
 
+CR_API void_t   fill_ellipse (const sIMAGE *dst, const sRECT *rect,
+                              cpix_t color, pixdraw_t pixel_draw);
+
 CR_API void_t   draw_polygon (const sIMAGE *dst, const sPNT2 *pos,
+                              uint_t count, leng_t skip, cpix_t color,
+                              pixdraw_t pixel_draw);
+
+CR_API void_t   fill_polygon (const sIMAGE *dst, const sPNT2 *pos,
                               uint_t count, leng_t skip, cpix_t color,
                               pixdraw_t pixel_draw);
 
@@ -581,6 +597,9 @@ CR_API void_t   draw_bezier (const sIMAGE *dst, const sPNT2 *pos,
 CR_API void_t   draw_curve3 (const sIMAGE *dst, const sPNT2 *pos,
                              uint_t count, uint_t step, fp32_t tension,
                              cpix_t color, pixdraw_t pixel_draw);
+
+CR_API void_t   fill_shape (const sIMAGE *dst, uint_t sx, uint_t sy,
+                            cpix_t color);
 
 /*****************************************************************************/
 /*                                 填充操作                                  */
