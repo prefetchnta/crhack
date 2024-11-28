@@ -138,7 +138,7 @@ iGFX2_FB_flip (
 #define _image_clear24  iGFX2_FB_clear24
 #define _image_clear32  iGFX2_FB_clear32
 
-#include "clear2d.inl"
+#include "soft/clear2d.inl"
 
 /*
 ---------------------------------------

@@ -85,14 +85,14 @@ OBJS=$(OBJ)blit_c.$(O) \
      $(OBJ)ucfont.$(O) \
      $(OBJ)surfmem.$(O)
 
-CPPS=$(SRC)blit_c.$(C) \
-     $(SRC)bltint.$(C) \
-     $(SRC)draw2d.$(C) \
-     $(SRC)fill2d.$(C) \
-     $(SRC)pixels.$(C) \
-     $(SRC)btfont.$(C) \
-     $(SRC)ucfont.$(C) \
-     $(SRC)surfmem.$(C)
+CPPS=$(SRC)soft$(L)blit_c.$(C) \
+     $(SRC)soft$(L)bltint.$(C) \
+     $(SRC)soft$(L)draw2d.$(C) \
+     $(SRC)soft$(L)fill2d.$(C) \
+     $(SRC)soft$(L)pixels.$(C) \
+     $(SRC)soft$(L)btfont.$(C) \
+     $(SRC)soft$(L)ucfont.$(C) \
+     $(SRC)soft$(L)surfmem.$(C)
 
 ###############################################################################
 ##                             各个编译器的配置                              ##

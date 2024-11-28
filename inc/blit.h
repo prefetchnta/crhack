@@ -776,22 +776,22 @@ CR_API void_t   blit_sub32_c (const sIMAGE *dst, const sIMAGE *src,
                               const sBLIT *blit, const sRECT *rect);
 /* 透明混合 */
 CR_API void_t   blit_lrp08_c (const sIMAGE *dst, const sIMAGE *src,
-                              const sBLIT *blit, cpix_t trans, bool_t strb,
+                              const sBLIT *blit, cpix_t trans, uint_t mode,
                               const sRECT *rect);
 CR_API void_t   blit_lrp12_c (const sIMAGE *dst, const sIMAGE *src,
-                              const sBLIT *blit, cpix_t trans, bool_t strb,
+                              const sBLIT *blit, cpix_t trans, uint_t mode,
                               const sRECT *rect);
 CR_API void_t   blit_lrp15_c (const sIMAGE *dst, const sIMAGE *src,
-                              const sBLIT *blit, cpix_t trans, bool_t strb,
+                              const sBLIT *blit, cpix_t trans, uint_t mode,
                               const sRECT *rect);
 CR_API void_t   blit_lrp16_c (const sIMAGE *dst, const sIMAGE *src,
-                              const sBLIT *blit, cpix_t trans, bool_t strb,
+                              const sBLIT *blit, cpix_t trans, uint_t mode,
                               const sRECT *rect);
 CR_API void_t   blit_lrp24_c (const sIMAGE *dst, const sIMAGE *src,
-                              const sBLIT *blit, cpix_t trans, bool_t strb,
+                              const sBLIT *blit, cpix_t trans, uint_t mode,
                               const sRECT *rect);
 CR_API void_t   blit_lrp32_c (const sIMAGE *dst, const sIMAGE *src,
-                              const sBLIT *blit, cpix_t trans, bool_t strb,
+                              const sBLIT *blit, cpix_t trans, uint_t mode,
                               const sRECT *rect);
 /* 通道插值 */
 CR_API void_t   blit_alp08_c (const sIMAGE *dst, const sIMAGE *src,

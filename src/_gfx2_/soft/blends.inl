@@ -576,7 +576,7 @@ CR_NAME_BLITZ(08_c) (
   __CR_IN__ const sBLIT*    blit,
 #if     (CR_BLT_MODE == CR_BLT_ALP)
   __CR_IN__ cpix_t          trans,
-  __CR_IN__ bool_t          strb,
+  __CR_IN__ uint_t          mode,
 #endif
   __CR_IN__ const sRECT*    rect
     )
@@ -598,7 +598,7 @@ CR_NAME_BLITZ(08_c) (
     len = soper.width;
 #if     (CR_BLT_MODE == CR_BLT_ALP)
     CR_BLEND_LRP_LOAD08(trans.c08.lrp)
-    if (!strb) {
+    if (mode == 0) {
 #endif
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
@@ -617,10 +617,23 @@ CR_NAME_BLITZ(08_c) (
         }
 #if     (CR_BLT_MODE == CR_BLT_ALP)
     }
-    else {
+    else
+    if (mode == 1) {
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
                 if (soper.addr[0] != trans.c08.idx)
+                    CR_BLEND_LRP_MAIN08(doper.addr[0], soper.addr[0])
+                doper.addr += 1;
+                soper.addr += 1;
+            }
+            doper.addr += doper.rest;
+            soper.addr += soper.rest;
+        }
+    }
+    else {
+        while (soper.height-- != 0) {
+            for (idx = len; idx != 0; idx--) {
+                if (doper.addr[0] == trans.c08.idx)
                     CR_BLEND_LRP_MAIN08(doper.addr[0], soper.addr[0])
                 doper.addr += 1;
                 soper.addr += 1;
@@ -644,7 +657,7 @@ CR_NAME_BLITZ(12_c) (
   __CR_IN__ const sBLIT*    blit,
 #if     (CR_BLT_MODE == CR_BLT_ALP)
   __CR_IN__ cpix_t          trans,
-  __CR_IN__ bool_t          strb,
+  __CR_IN__ uint_t          mode,
 #endif
   __CR_IN__ const sRECT*    rect
     )
@@ -666,7 +679,7 @@ CR_NAME_BLITZ(12_c) (
     len = soper.width / 2;
 #if     (CR_BLT_MODE == CR_BLT_ALP)
     CR_BLEND_LRP_LOAD12(trans.c16.lrp)
-    if (!strb) {
+    if (mode == 0) {
 #endif
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
@@ -688,10 +701,24 @@ CR_NAME_BLITZ(12_c) (
         }
 #if     (CR_BLT_MODE == CR_BLT_ALP)
     }
-    else {
+    else
+    if (mode == 1) {
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
                 if (mem_cmp(soper.addr, &trans, 2) != 0)
+                    CR_BLEND_LRP_MAIN12(*(int16u*)doper.addr,
+                                        *(int16u*)soper.addr)
+                doper.addr += 2;
+                soper.addr += 2;
+            }
+            doper.addr += doper.rest;
+            soper.addr += soper.rest;
+        }
+    }
+    else {
+        while (soper.height-- != 0) {
+            for (idx = len; idx != 0; idx--) {
+                if (mem_cmp(doper.addr, &trans, 2) == 0)
                     CR_BLEND_LRP_MAIN12(*(int16u*)doper.addr,
                                         *(int16u*)soper.addr)
                 doper.addr += 2;
@@ -716,7 +743,7 @@ CR_NAME_BLITZ(15_c) (
   __CR_IN__ const sBLIT*    blit,
 #if     (CR_BLT_MODE == CR_BLT_ALP)
   __CR_IN__ cpix_t          trans,
-  __CR_IN__ bool_t          strb,
+  __CR_IN__ uint_t          mode,
 #endif
   __CR_IN__ const sRECT*    rect
     )
@@ -738,7 +765,7 @@ CR_NAME_BLITZ(15_c) (
     len = soper.width / 2;
 #if     (CR_BLT_MODE == CR_BLT_ALP)
     CR_BLEND_LRP_LOAD15(trans.c16.lrp)
-    if (!strb) {
+    if (mode == 0) {
 #endif
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
@@ -760,10 +787,24 @@ CR_NAME_BLITZ(15_c) (
         }
 #if     (CR_BLT_MODE == CR_BLT_ALP)
     }
-    else {
+    else
+    if (mode == 1) {
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
                 if (mem_cmp(soper.addr, &trans, 2) != 0)
+                    CR_BLEND_LRP_MAIN15(*(int16u*)doper.addr,
+                                        *(int16u*)soper.addr)
+                doper.addr += 2;
+                soper.addr += 2;
+            }
+            doper.addr += doper.rest;
+            soper.addr += soper.rest;
+        }
+    }
+    else {
+        while (soper.height-- != 0) {
+            for (idx = len; idx != 0; idx--) {
+                if (mem_cmp(doper.addr, &trans, 2) == 0)
                     CR_BLEND_LRP_MAIN15(*(int16u*)doper.addr,
                                         *(int16u*)soper.addr)
                 doper.addr += 2;
@@ -788,7 +829,7 @@ CR_NAME_BLITZ(16_c) (
   __CR_IN__ const sBLIT*    blit,
 #if     (CR_BLT_MODE == CR_BLT_ALP)
   __CR_IN__ cpix_t          trans,
-  __CR_IN__ bool_t          strb,
+  __CR_IN__ uint_t          mode,
 #endif
   __CR_IN__ const sRECT*    rect
     )
@@ -810,7 +851,7 @@ CR_NAME_BLITZ(16_c) (
     len = soper.width / 2;
 #if     (CR_BLT_MODE == CR_BLT_ALP)
     CR_BLEND_LRP_LOAD16(trans.c16.lrp)
-    if (!strb) {
+    if (mode == 0) {
 #endif
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
@@ -832,10 +873,24 @@ CR_NAME_BLITZ(16_c) (
         }
 #if     (CR_BLT_MODE == CR_BLT_ALP)
     }
-    else {
+    else
+    if (mode == 1) {
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
                 if (mem_cmp(soper.addr, &trans, 2) != 0)
+                    CR_BLEND_LRP_MAIN16(*(int16u*)doper.addr,
+                                        *(int16u*)soper.addr)
+                doper.addr += 2;
+                soper.addr += 2;
+            }
+            doper.addr += doper.rest;
+            soper.addr += soper.rest;
+        }
+    }
+    else {
+        while (soper.height-- != 0) {
+            for (idx = len; idx != 0; idx--) {
+                if (mem_cmp(doper.addr, &trans, 2) == 0)
                     CR_BLEND_LRP_MAIN16(*(int16u*)doper.addr,
                                         *(int16u*)soper.addr)
                 doper.addr += 2;
@@ -860,7 +915,7 @@ CR_NAME_BLITZ(24_c) (
   __CR_IN__ const sBLIT*    blit,
 #if     (CR_BLT_MODE == CR_BLT_ALP)
   __CR_IN__ cpix_t          trans,
-  __CR_IN__ bool_t          strb,
+  __CR_IN__ uint_t          mode,
 #endif
   __CR_IN__ const sRECT*    rect
     )
@@ -882,7 +937,7 @@ CR_NAME_BLITZ(24_c) (
     len = soper.width / 3;
 #if     (CR_BLT_MODE == CR_BLT_ALP)
     CR_BLEND_LRP_LOAD24(trans.c32.lrp)
-    if (!strb) {
+    if (mode == 0) {
 #endif
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
@@ -907,10 +962,25 @@ CR_NAME_BLITZ(24_c) (
         }
 #if     (CR_BLT_MODE == CR_BLT_ALP)
     }
-    else {
+    else
+    if (mode == 1) {
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
                 if (mem_cmp(soper.addr, &trans, 3) != 0)
+                    CR_BLEND_LRP_MAIN24(doper.addr[0], doper.addr[1],
+                            doper.addr[2], soper.addr[0], soper.addr[1],
+                                        soper.addr[2])
+                doper.addr += 3;
+                soper.addr += 3;
+            }
+            doper.addr += doper.rest;
+            soper.addr += soper.rest;
+        }
+    }
+    else {
+        while (soper.height-- != 0) {
+            for (idx = len; idx != 0; idx--) {
+                if (mem_cmp(doper.addr, &trans, 3) == 0)
                     CR_BLEND_LRP_MAIN24(doper.addr[0], doper.addr[1],
                             doper.addr[2], soper.addr[0], soper.addr[1],
                                         soper.addr[2])
@@ -936,7 +1006,7 @@ CR_NAME_BLITZ(32_c) (
   __CR_IN__ const sBLIT*    blit,
 #if     (CR_BLT_MODE == CR_BLT_ALP)
   __CR_IN__ cpix_t          trans,
-  __CR_IN__ bool_t          strb,
+  __CR_IN__ uint_t          mode,
 #endif
   __CR_IN__ const sRECT*    rect
     )
@@ -958,7 +1028,7 @@ CR_NAME_BLITZ(32_c) (
     len = soper.width / 4;
 #if     (CR_BLT_MODE == CR_BLT_ALP)
     CR_BLEND_LRP_LOAD32(trans.c32.lrp)
-    if (!strb) {
+    if (mode == 0) {
 #endif
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
@@ -983,10 +1053,25 @@ CR_NAME_BLITZ(32_c) (
         }
 #if     (CR_BLT_MODE == CR_BLT_ALP)
     }
-    else {
+    else
+    if (mode == 1) {
         while (soper.height-- != 0) {
             for (idx = len; idx != 0; idx--) {
                 if (mem_cmp(soper.addr, &trans, 3) != 0)
+                    CR_BLEND_LRP_MAIN32(doper.addr[0], doper.addr[1],
+                            doper.addr[2], soper.addr[0], soper.addr[1],
+                                        soper.addr[2])
+                doper.addr += 4;
+                soper.addr += 4;
+            }
+            doper.addr += doper.rest;
+            soper.addr += soper.rest;
+        }
+    }
+    else {
+        while (soper.height-- != 0) {
+            for (idx = len; idx != 0; idx--) {
+                if (mem_cmp(doper.addr, &trans, 3) == 0)
                     CR_BLEND_LRP_MAIN32(doper.addr[0], doper.addr[1],
                             doper.addr[2], soper.addr[0], soper.addr[1],
                                         soper.addr[2])

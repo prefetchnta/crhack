@@ -137,7 +137,7 @@ iGFX2_GX_flip (
 #define _image_clear16  iGFX2_GX_clear16
 #define _image_clear24  iGFX2_GX_clear24
 
-#include "clear2d.inl"
+#include "soft/clear2d.inl"
 
 /*
 ---------------------------------------
