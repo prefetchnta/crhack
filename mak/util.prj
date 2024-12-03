@@ -109,59 +109,65 @@ LUA_CPPS=$(SRC)lua$(L)lapi.$(C) \
 ##                               CRHACK/UTIL                                 ##
 ###############################################################################
 
-OBJS=$(OBJ)file_md5.$(O) \
-     $(OBJ)file_crc2.$(O) \
-     $(OBJ)file_crc4.$(O) \
-     $(OBJ)chttplib.$(O) \
-     $(OBJ)cjsonlib.$(O) \
-     $(OBJ)cpage437.$(O) \
-     $(OBJ)cpage720.$(O) \
-     $(OBJ)cpage737.$(O) \
-     $(OBJ)cpage771.$(O) \
-     $(OBJ)cpage775.$(O) \
-     $(OBJ)cpage850.$(O) \
-     $(OBJ)cpage852.$(O) \
-     $(OBJ)cpage855.$(O) \
-     $(OBJ)cpage857.$(O) \
-     $(OBJ)cpage860.$(O) \
-     $(OBJ)cpage861.$(O) \
-     $(OBJ)cpage862.$(O) \
-     $(OBJ)cpage863.$(O) \
-     $(OBJ)cpage864.$(O) \
-     $(OBJ)cpage865.$(O) \
-     $(OBJ)cpage866.$(O) \
-     $(OBJ)cpage869.$(O) \
-     $(OBJ)cpage932.$(O) \
-     $(OBJ)cpage936.$(O) \
-     $(OBJ)cpage949.$(O) \
-     $(OBJ)cpage950.$(O)
+FILE_OBJS=$(OBJ)file_md5.$(O) \
+          $(OBJ)file_crc2.$(O) \
+          $(OBJ)file_crc4.$(O)
 
-CPPS=$(SRC)file_md5.$(C) \
-     $(SRC)file_crc2.$(C) \
-     $(SRC)file_crc4.$(C) \
-     $(SRC)chttplib.$(C) \
+FILE_CPPS=$(SRC)filelib$(L)file_md5.$(C) \
+          $(SRC)filelib$(L)file_crc2.$(C) \
+          $(SRC)filelib$(L)file_crc4.$(C)
+
+PAGE_OBJS=$(OBJ)cpage437.$(O) \
+          $(OBJ)cpage720.$(O) \
+          $(OBJ)cpage737.$(O) \
+          $(OBJ)cpage771.$(O) \
+          $(OBJ)cpage775.$(O) \
+          $(OBJ)cpage850.$(O) \
+          $(OBJ)cpage852.$(O) \
+          $(OBJ)cpage855.$(O) \
+          $(OBJ)cpage857.$(O) \
+          $(OBJ)cpage860.$(O) \
+          $(OBJ)cpage861.$(O) \
+          $(OBJ)cpage862.$(O) \
+          $(OBJ)cpage863.$(O) \
+          $(OBJ)cpage864.$(O) \
+          $(OBJ)cpage865.$(O) \
+          $(OBJ)cpage866.$(O) \
+          $(OBJ)cpage869.$(O) \
+          $(OBJ)cpage932.$(O) \
+          $(OBJ)cpage936.$(O) \
+          $(OBJ)cpage949.$(O) \
+          $(OBJ)cpage950.$(O)
+
+PAGE_CPPS=$(SRC)codepage$(L)cpage437.$(C) \
+          $(SRC)codepage$(L)cpage720.$(C) \
+          $(SRC)codepage$(L)cpage737.$(C) \
+          $(SRC)codepage$(L)cpage771.$(C) \
+          $(SRC)codepage$(L)cpage775.$(C) \
+          $(SRC)codepage$(L)cpage850.$(C) \
+          $(SRC)codepage$(L)cpage852.$(C) \
+          $(SRC)codepage$(L)cpage855.$(C) \
+          $(SRC)codepage$(L)cpage857.$(C) \
+          $(SRC)codepage$(L)cpage860.$(C) \
+          $(SRC)codepage$(L)cpage861.$(C) \
+          $(SRC)codepage$(L)cpage862.$(C) \
+          $(SRC)codepage$(L)cpage863.$(C) \
+          $(SRC)codepage$(L)cpage864.$(C) \
+          $(SRC)codepage$(L)cpage865.$(C) \
+          $(SRC)codepage$(L)cpage866.$(C) \
+          $(SRC)codepage$(L)cpage869.$(C) \
+          $(SRC)codepage$(L)cpage932.$(C) \
+          $(SRC)codepage$(L)cpage936.$(C) \
+          $(SRC)codepage$(L)cpage949.$(C) \
+          $(SRC)codepage$(L)cpage950.$(C)
+
+OBJS=$(OBJ)chttplib.$(O) \
+     $(OBJ)cjsonlib.$(O) \
+     $(FILE_OBJS) $(PAGE_OBJS)
+
+CPPS=$(SRC)chttplib.$(C) \
      $(SRC)cjsonlib.$(C) \
-     $(SRC)cpage437.$(C) \
-     $(SRC)cpage720.$(C) \
-     $(SRC)cpage737.$(C) \
-     $(SRC)cpage771.$(C) \
-     $(SRC)cpage775.$(C) \
-     $(SRC)cpage850.$(C) \
-     $(SRC)cpage852.$(C) \
-     $(SRC)cpage855.$(C) \
-     $(SRC)cpage857.$(C) \
-     $(SRC)cpage860.$(C) \
-     $(SRC)cpage861.$(C) \
-     $(SRC)cpage862.$(C) \
-     $(SRC)cpage863.$(C) \
-     $(SRC)cpage864.$(C) \
-     $(SRC)cpage865.$(C) \
-     $(SRC)cpage866.$(C) \
-     $(SRC)cpage869.$(C) \
-     $(SRC)cpage932.$(C) \
-     $(SRC)cpage936.$(C) \
-     $(SRC)cpage949.$(C) \
-     $(SRC)cpage950.$(C)
+     $(FILE_CPPS) $(PAGE_CPPS)
 
 ###############################################################################
 ##                             各个编译器的配置                              ##

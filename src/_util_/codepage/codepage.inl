@@ -24,7 +24,7 @@
 #include "memlib.h"
 #include "strlib.h"
 #include "util/codepage.h"
-#include "../ex3rd/fatfs/integer.h"
+#include "../../ex3rd/fatfs/integer.h"
 
 /* 根据指定编码值重映射函数 */
 #if     (FF_CODE_PAGE == 932)
@@ -161,7 +161,7 @@
 #endif
     #define str_offset  offset_ascii
 #endif
-#include "../ex3rd/fatfs/ffunicode.c"
+#include "../../ex3rd/fatfs/ffunicode.c"
 
 /*
 =======================================

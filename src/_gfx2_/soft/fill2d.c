@@ -200,9 +200,9 @@ fill_shape (
                 prm.sx = pnt.x;
                 prm.sy = nxt;
                 if (!dst->gdi)
-                    start = dst->bpl * nxt + dst->bpc * pnt.x;
+                    prm.start = dst->bpl * nxt + dst->bpc * pnt.x;
                 else
-                    start = dst->bpl * (height - nxt) + dst->bpc * pnt.x;
+                    prm.start = dst->bpl * (height - nxt) + dst->bpc * pnt.x;
                 if (!scan_left2right(dst, &prm))
                     goto _func_out2;
             }
@@ -213,9 +213,9 @@ fill_shape (
                 prm.sx = pnt.x;
                 prm.sy = nxt;
                 if (!dst->gdi)
-                    start = dst->bpl * nxt + dst->bpc * pnt.x;
+                    prm.start = dst->bpl * nxt + dst->bpc * pnt.x;
                 else
-                    start = dst->bpl * (height - nxt) + dst->bpc * pnt.x;
+                    prm.start = dst->bpl * (height - nxt) + dst->bpc * pnt.x;
                 if (!scan_left2right(dst, &prm))
                     goto _func_out2;
             }
