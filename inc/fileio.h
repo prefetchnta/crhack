@@ -44,69 +44,6 @@ typedef void_t*     fbuf_t;
 #define CR_FO_AW      3     /*   结尾添加   */
 #define CR_FO_SEQ   0x8000  /* 是否顺序读写 */
 
-/* 文件操作映射 */
-#ifndef _CR_NO_BUF_FILEIO_
-    #define file_t          fbuf_t
-    #define file_openA      file_buf_openA
-    #define file_openW      file_buf_openW
-    #define file_close      file_buf_close
-    #define file_tell       file_buf_tell
-    #define file_size       file_buf_size
-    #define file_seek       file_buf_seek
-    #define file_seek64     file_buf_seek64
-    #define file_rewind     file_buf_rewind
-    #define file_eof        file_buf_eof
-    #define file_flush      file_buf_flush
-    #define file_read       file_buf_read
-    #define file_write      file_buf_write
-    #define file_putb       file_buf_putb
-    #define file_putw       file_buf_putw
-    #define file_putd       file_buf_putd
-    #define file_putq       file_buf_putq
-    #define file_getb       file_buf_getb
-    #define file_getw       file_buf_getw
-    #define file_getd       file_buf_getd
-    #define file_getq       file_buf_getq
-    #define file_putsA      file_buf_putsA
-    #define file_putsW      file_buf_putsW
-    #define file_putw_le    file_buf_putw_le
-    #define file_putd_le    file_buf_putd_le
-    #define file_putq_le    file_buf_putq_le
-    #define file_putw_be    file_buf_putw_be
-    #define file_putd_be    file_buf_putd_be
-    #define file_putq_be    file_buf_putq_be
-#else
-    #define file_t          fraw_t
-    #define file_openA      file_raw_openA
-    #define file_openW      file_raw_openW
-    #define file_close      file_raw_close
-    #define file_tell       file_raw_tell
-    #define file_size       file_raw_size
-    #define file_seek       file_raw_seek
-    #define file_seek64     file_raw_seek64
-    #define file_rewind     file_raw_rewind
-    #define file_eof        file_raw_eof
-    #define file_flush      file_raw_flush
-    #define file_read       file_raw_read
-    #define file_write      file_raw_write
-    #define file_putb       file_raw_putb
-    #define file_putw       file_raw_putw
-    #define file_putd       file_raw_putd
-    #define file_putq       file_raw_putq
-    #define file_getb       file_raw_getb
-    #define file_getw       file_raw_getw
-    #define file_getd       file_raw_getd
-    #define file_getq       file_raw_getq
-    #define file_putsA      file_raw_putsA
-    #define file_putsW      file_raw_putsW
-    #define file_putw_le    file_raw_putw_le
-    #define file_putd_le    file_raw_putd_le
-    #define file_putq_le    file_raw_putq_le
-    #define file_putw_be    file_raw_putw_be
-    #define file_putd_be    file_raw_putd_be
-    #define file_putq_be    file_raw_putq_be
-#endif
-
 /*****************************************************************************/
 /*                      基本 I/O 操作 (不支持二级缓冲)                       */
 /*****************************************************************************/

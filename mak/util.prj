@@ -161,13 +161,19 @@ PAGE_CPPS=$(SRC)codepage$(L)cpage437.$(C) \
           $(SRC)codepage$(L)cpage949.$(C) \
           $(SRC)codepage$(L)cpage950.$(C)
 
+TCFG_OBJS=$(OBJ)cfg_errs.$(O) \
+          $(OBJ)cfg_lang.$(O)
+
+TCFG_CPPS=$(SRC)totcfg$(L)cfg_errs.$(C) \
+          $(SRC)totcfg$(L)cfg_lang.$(C)
+
 OBJS=$(OBJ)chttplib.$(O) \
      $(OBJ)cjsonlib.$(O) \
-     $(FILE_OBJS) $(PAGE_OBJS)
+     $(FILE_OBJS) $(PAGE_OBJS) $(TCFG_OBJS)
 
 CPPS=$(SRC)chttplib.$(C) \
      $(SRC)cjsonlib.$(C) \
-     $(FILE_CPPS) $(PAGE_CPPS)
+     $(FILE_CPPS) $(PAGE_CPPS) $(TCFG_CPPS)
 
 ###############################################################################
 ##                             各个编译器的配置                              ##

@@ -108,26 +108,26 @@ save_img_argb (
     leng_t  back;
     leng_t  nbpl;
     int32u  vals;
-    file_t  file;
+    fbuf_t  file;
     byte_t* line;
     sIMAGE* cnvt;
 
     /* 创建文件 */
     CR_NOUSE(argc); CR_NOUSE(argv);
-    file = file_openA(name, CR_FO_WO);
+    file = file_buf_openA(name, CR_FO_WO);
     if (file == NULL)
         return (FALSE);
 
     /* 保存文件头 */
-    if (!file_putd(mk_tag4("BGRA"), file))
+    if (!file_buf_putd(mk_tag4("BGRA"), file))
         goto _failure;
-    if (!file_putd(0x08080808UL, file))
+    if (!file_buf_putd(0x08080808UL, file))
         goto _failure;
     vals = img->position.ww;
-    if (!file_putd_le(vals, file))
+    if (!file_buf_putd_le(vals, file))
         goto _failure;
     vals = img->position.hh;
-    if (!file_putd_le(vals, file))
+    if (!file_buf_putd_le(vals, file))
         goto _failure;
 
     /* 转换格式 */
@@ -148,7 +148,7 @@ save_img_argb (
     if (cnvt->gdi)
         line += cnvt->size - cnvt->bpl;
     for (; hh != 0; hh--) {
-        back = file_write(line, nbpl, file);
+        back = file_buf_write(line, nbpl, file);
         if (back != nbpl) {
             if (cnvt != (sIMAGE*)img)
                 image_del(cnvt);
@@ -161,11 +161,11 @@ save_img_argb (
     }
     if (cnvt != (sIMAGE*)img)
         image_del(cnvt);
-    file_close(file);
+    file_buf_close(file);
     return (TRUE);
 
 _failure:
-    file_close(file);
+    file_buf_close(file);
     file_deleteA(name);
     return (FALSE);
 }

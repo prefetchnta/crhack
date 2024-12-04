@@ -29,7 +29,7 @@ typedef struct
         iDATIN  datin;
 
         /* 个性部分 */
-        file_t  m_fpp;  /* 文件句柄 */
+        fbuf_t  m_fpp;  /* 文件句柄 */
         fdist_t m_pos;  /* 指针位置 */
 
 } iDISKIN;
@@ -47,7 +47,7 @@ iDiskIN_release (
     iDISKIN*    real;
 
     real = (iDISKIN*)that;
-    file_close(real->m_fpp);
+    file_buf_close(real->m_fpp);
     mem_free(that);
 }
 
@@ -127,7 +127,7 @@ iDiskIN_seek (
     else
     if (offset_set > that->__tail__)
         offset_set = that->__tail__;
-    if (!file_seek(real->m_fpp, offset_set, SEEK_SET))
+    if (!file_buf_seek(real->m_fpp, offset_set, SEEK_SET))
         return (FALSE);
     real->m_pos = offset_set;
     return (TRUE);
@@ -160,7 +160,7 @@ iDiskIN_rewind (
 {
     iDISKIN*    real = (iDISKIN*)that;
 
-    if (!file_seek(real->m_fpp, that->__head__, SEEK_SET))
+    if (!file_buf_seek(real->m_fpp, that->__head__, SEEK_SET))
         return (FALSE);
     real->m_pos = that->__head__;
     return (TRUE);
@@ -182,11 +182,11 @@ iDiskIN_getb_no (
 
     if (real->m_pos > that->__tail__ - 1) {
         real->m_pos = that->__tail__;
-        file_seek(real->m_fpp, real->m_pos, SEEK_SET);
+        file_buf_seek(real->m_fpp, real->m_pos, SEEK_SET);
         return (FALSE);
     }
 
-    red = file_read(val, 1, real->m_fpp);
+    red = file_buf_read(val, 1, real->m_fpp);
     real->m_pos += red;
     if (red != 1)
         return (FALSE);
@@ -209,11 +209,11 @@ iDiskIN_getw_le (
 
     if (real->m_pos > that->__tail__ - 2) {
         real->m_pos = that->__tail__;
-        file_seek(real->m_fpp, real->m_pos, SEEK_SET);
+        file_buf_seek(real->m_fpp, real->m_pos, SEEK_SET);
         return (FALSE);
     }
 
-    red = file_read(val, 2, real->m_fpp);
+    red = file_buf_read(val, 2, real->m_fpp);
     real->m_pos += red;
     if (red != 2)
         return (FALSE);
@@ -237,11 +237,11 @@ iDiskIN_getd_le (
 
     if (real->m_pos > that->__tail__ - 4) {
         real->m_pos = that->__tail__;
-        file_seek(real->m_fpp, real->m_pos, SEEK_SET);
+        file_buf_seek(real->m_fpp, real->m_pos, SEEK_SET);
         return (FALSE);
     }
 
-    red = file_read(val, 4, real->m_fpp);
+    red = file_buf_read(val, 4, real->m_fpp);
     real->m_pos += red;
     if (red != 4)
         return (FALSE);
@@ -265,11 +265,11 @@ iDiskIN_getq_le (
 
     if (real->m_pos > that->__tail__ - 8) {
         real->m_pos = that->__tail__;
-        file_seek(real->m_fpp, real->m_pos, SEEK_SET);
+        file_buf_seek(real->m_fpp, real->m_pos, SEEK_SET);
         return (FALSE);
     }
 
-    red = file_read(val, 8, real->m_fpp);
+    red = file_buf_read(val, 8, real->m_fpp);
     real->m_pos += red;
     if (red != 8)
         return (FALSE);
@@ -293,11 +293,11 @@ iDiskIN_getw_be (
 
     if (real->m_pos > that->__tail__ - 2) {
         real->m_pos = that->__tail__;
-        file_seek(real->m_fpp, real->m_pos, SEEK_SET);
+        file_buf_seek(real->m_fpp, real->m_pos, SEEK_SET);
         return (FALSE);
     }
 
-    red = file_read(val, 2, real->m_fpp);
+    red = file_buf_read(val, 2, real->m_fpp);
     real->m_pos += red;
     if (red != 2)
         return (FALSE);
@@ -321,11 +321,11 @@ iDiskIN_getd_be (
 
     if (real->m_pos > that->__tail__ - 4) {
         real->m_pos = that->__tail__;
-        file_seek(real->m_fpp, real->m_pos, SEEK_SET);
+        file_buf_seek(real->m_fpp, real->m_pos, SEEK_SET);
         return (FALSE);
     }
 
-    red = file_read(val, 4, real->m_fpp);
+    red = file_buf_read(val, 4, real->m_fpp);
     real->m_pos += red;
     if (red != 4)
         return (FALSE);
@@ -349,11 +349,11 @@ iDiskIN_getq_be (
 
     if (real->m_pos > that->__tail__ - 8) {
         real->m_pos = that->__tail__;
-        file_seek(real->m_fpp, real->m_pos, SEEK_SET);
+        file_buf_seek(real->m_fpp, real->m_pos, SEEK_SET);
         return (FALSE);
     }
 
-    red = file_read(val, 8, real->m_fpp);
+    red = file_buf_read(val, 8, real->m_fpp);
     real->m_pos += red;
     if (red != 8)
         return (FALSE);
@@ -380,7 +380,7 @@ iDiskIN_read (
         real->m_pos > (fdist_t)(that->__tail__ - size))
         size = (leng_t)(that->__tail__ - real->m_pos);
 
-    temp = file_read(data, size, real->m_fpp);
+    temp = file_buf_read(data, size, real->m_fpp);
     real->m_pos += temp;
     return (temp);
 }
@@ -414,16 +414,16 @@ create_disk_inA (
     if (disk == NULL)
         return (NULL);
 
-    file = file_openA(name, CR_FO_RO);
+    file = file_buf_openA(name, CR_FO_RO);
     if (file == NULL)
+        goto _failure1;
+
+    size = file_buf_size(file);
+    if (size == CR_F_ERROR)
         goto _failure2;
 
-    size = file_size(file);
-    if (size == CR_F_ERROR)
-        goto _failure1;
-
     if ((fdist_t)size <= 0)
-        goto _failure1;
+        goto _failure2;
     disk->m_pos = 0;
     disk->m_fpp = file;
     disk->datin.__head__ = 0;
@@ -432,9 +432,9 @@ create_disk_inA (
     disk->datin.__vptr__ = &s_datin_vtbl;
     return ((iDATIN*)disk);
 
-_failure1:
-    file_close(file);
 _failure2:
+    file_buf_close(file);
+_failure1:
     mem_free(disk);
     return (NULL);
 }
@@ -459,16 +459,16 @@ create_disk_inW (
     if (disk == NULL)
         return (NULL);
 
-    file = file_openW(name, CR_FO_RO);
+    file = file_buf_openW(name, CR_FO_RO);
     if (file == NULL)
+        goto _failure1;
+
+    size = file_buf_size(file);
+    if (size == CR_F_ERROR)
         goto _failure2;
 
-    size = file_size(file);
-    if (size == CR_F_ERROR)
-        goto _failure1;
-
     if ((fdist_t)size <= 0)
-        goto _failure1;
+        goto _failure2;
     disk->m_pos = 0;
     disk->m_fpp = file;
     disk->datin.__head__ = 0;
@@ -477,9 +477,9 @@ create_disk_inW (
     disk->datin.__vptr__ = &s_datin_vtbl;
     return ((iDATIN*)disk);
 
-_failure1:
-    file_close(file);
 _failure2:
+    file_buf_close(file);
+_failure1:
     mem_free(disk);
     return (NULL);
 }

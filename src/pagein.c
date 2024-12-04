@@ -99,11 +99,11 @@ create_page_inA (
 
     data = (uchar*)file_mappingA(name, &page->m_vfile);
     if (data == NULL)
-        goto _failure2;
+        goto _failure1;
 
     size = (dist_t)page->m_vfile.size;
     if (size <= 0)
-        goto _failure1;
+        goto _failure2;
     page->memin.m_pos = 0;
     page->memin.m_rel = FALSE;
     page->memin.m_mem =  data;
@@ -117,9 +117,9 @@ create_page_inA (
     page->memin.datin.__vptr__ = &s_datin_vtbl;
     return ((iDATIN*)page);
 
-_failure1:
-    file_release(&page->m_vfile);
 _failure2:
+    file_release(&page->m_vfile);
+_failure1:
     mem_free(page);
     return (NULL);
 }
@@ -146,11 +146,11 @@ create_page_inW (
 
     data = (uchar*)file_mappingW(name, &page->m_vfile);
     if (data == NULL)
-        goto _failure2;
+        goto _failure1;
 
     size = (dist_t)page->m_vfile.size;
     if (size <= 0)
-        goto _failure1;
+        goto _failure2;
     page->memin.m_pos = 0;
     page->memin.m_rel = FALSE;
     page->memin.m_mem =  data;
@@ -164,9 +164,9 @@ create_page_inW (
     page->memin.datin.__vptr__ = &s_datin_vtbl;
     return ((iDATIN*)page);
 
-_failure1:
-    file_release(&page->m_vfile);
 _failure2:
+    file_release(&page->m_vfile);
+_failure1:
     mem_free(page);
     return (NULL);
 }

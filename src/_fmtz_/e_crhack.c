@@ -101,9 +101,9 @@ save_img_raw (
   __CR_IN__ ansi_t*         argv[]
     )
 {
-    uchar*  line;
-    file_t  file;
+    fbuf_t  file;
     uint_t  flag;
+    byte_t* line;
     sIMAGE* temp;
     sIMAGE* cnvt;
     leng_t  back, nbpl;
@@ -115,7 +115,7 @@ save_img_raw (
     const byte_t*   sln;
 
     /* 创建文件 */
-    file = file_openA(name, CR_FO_WO);
+    file = file_buf_openA(name, CR_FO_WO);
     if (file == NULL)
         return (FALSE);
     ww = img->position.ww;
@@ -126,9 +126,9 @@ save_img_raw (
     if (flag & 1)
     {
         /* 保存宽高 */
-        if (!file_putd(ww, file))
+        if (!file_buf_putd(ww, file))
             goto _failure;
-        if (!file_putd(hh, file))
+        if (!file_buf_putd(hh, file))
             goto _failure;
         flag -= 1;
     }
@@ -187,7 +187,7 @@ save_img_raw (
     if (cnvt->gdi)
         line += cnvt->size - cnvt->bpl;
     for (; hh != 0; hh--) {
-        back = file_write(line, nbpl, file);
+        back = file_buf_write(line, nbpl, file);
         if (back != nbpl) {
             if (cnvt != (sIMAGE*)img)
                 image_del(cnvt);
@@ -198,7 +198,7 @@ save_img_raw (
         else
             line += cnvt->bpl;
         for (xx = 0; xx < flag; xx++) {
-            if (!file_putb(0x00, file)) {
+            if (!file_buf_putb(0x00, file)) {
                 if (cnvt != (sIMAGE*)img)
                     image_del(cnvt);
                 goto _failure;
@@ -207,11 +207,11 @@ save_img_raw (
     }
     if (cnvt != (sIMAGE*)img)
         image_del(cnvt);
-    file_close(file);
+    file_buf_close(file);
     return (TRUE);
 
 _failure:
-    file_close(file);
+    file_buf_close(file);
     file_deleteA(name);
     return (FALSE);
 }

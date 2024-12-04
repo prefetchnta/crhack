@@ -28,7 +28,7 @@ typedef struct
         iDATOT  datot;
 
         /* 个性部分 */
-        file_t  m_fpp;  /* 文件句柄 */
+        fbuf_t  m_fpp;  /* 文件句柄 */
         fsize_t m_pos;  /* 指针位置 */
 
 } iDISKOT;
@@ -52,7 +52,7 @@ iDiskOT_release (
     iDISKOT*    real;
 
     real = (iDISKOT*)that;
-    file_close(real->m_fpp);
+    file_buf_close(real->m_fpp);
     mem_free(that);
 }
 
@@ -88,7 +88,7 @@ iDiskOT_putb_no (
     bool_t      ret = TRUE;
     iDISKOT*    real = (iDISKOT*)that;
 
-    wrt = file_write(&val, 1, real->m_fpp);
+    wrt = file_buf_write(&val, 1, real->m_fpp);
     if (wrt != 1) ret = FALSE;
     real->m_pos += wrt;
     if (that->__size__ < real->m_pos)
@@ -112,7 +112,7 @@ iDiskOT_putw_le (
     iDISKOT*    real = (iDISKOT*)that;
 
     val = WORD_LE(val);
-    wrt = file_write(&val, 2, real->m_fpp);
+    wrt = file_buf_write(&val, 2, real->m_fpp);
     if (wrt != 2) ret = FALSE;
     real->m_pos += wrt;
     if (that->__size__ < real->m_pos)
@@ -136,7 +136,7 @@ iDiskOT_putd_le (
     iDISKOT*    real = (iDISKOT*)that;
 
     val = DWORD_LE(val);
-    wrt = file_write(&val, 4, real->m_fpp);
+    wrt = file_buf_write(&val, 4, real->m_fpp);
     if (wrt != 4) ret = FALSE;
     real->m_pos += wrt;
     if (that->__size__ < real->m_pos)
@@ -160,7 +160,7 @@ iDiskOT_putq_le (
     iDISKOT*    real = (iDISKOT*)that;
 
     val = QWORD_LE(val);
-    wrt = file_write(&val, 8, real->m_fpp);
+    wrt = file_buf_write(&val, 8, real->m_fpp);
     if (wrt != 8) ret = FALSE;
     real->m_pos += wrt;
     if (that->__size__ < real->m_pos)
@@ -184,7 +184,7 @@ iDiskOT_putw_be (
     iDISKOT*    real = (iDISKOT*)that;
 
     val = WORD_BE(val);
-    wrt = file_write(&val, 2, real->m_fpp);
+    wrt = file_buf_write(&val, 2, real->m_fpp);
     if (wrt != 2) ret = FALSE;
     real->m_pos += wrt;
     if (that->__size__ < real->m_pos)
@@ -208,7 +208,7 @@ iDiskOT_putd_be (
     iDISKOT*    real = (iDISKOT*)that;
 
     val = DWORD_BE(val);
-    wrt = file_write(&val, 4, real->m_fpp);
+    wrt = file_buf_write(&val, 4, real->m_fpp);
     if (wrt != 4) ret = FALSE;
     real->m_pos += wrt;
     if (that->__size__ < real->m_pos)
@@ -232,7 +232,7 @@ iDiskOT_putq_be (
     iDISKOT*    real = (iDISKOT*)that;
 
     val = QWORD_BE(val);
-    wrt = file_write(&val, 8, real->m_fpp);
+    wrt = file_buf_write(&val, 8, real->m_fpp);
     if (wrt != 8) ret = FALSE;
     real->m_pos += wrt;
     if (that->__size__ < real->m_pos)
@@ -280,7 +280,7 @@ iDiskOT_write (
     leng_t      temp;
     iDISKOT*    real = (iDISKOT*)that;
 
-    temp = file_write(data, size, real->m_fpp);
+    temp = file_buf_write(data, size, real->m_fpp);
     real->m_pos += temp;
     if (that->__size__ < real->m_pos)
         that->__size__ = real->m_pos;
@@ -299,7 +299,7 @@ iDiskOT_flush (
 {
     iDISKOT*    real = (iDISKOT*)that;
 
-    if (!file_flush(real->m_fpp))
+    if (!file_buf_flush(real->m_fpp))
         return (NULL);
     return (real->m_fpp);
 }
@@ -319,7 +319,7 @@ iDiskOT_reput (
 
     if (offset > that->__size__)
         return (FALSE);
-    if (!file_seek(real->m_fpp, offset, SEEK_SET))
+    if (!file_buf_seek(real->m_fpp, offset, SEEK_SET))
         return (FALSE);
     real->m_pos = offset;
     return (TRUE);
@@ -352,7 +352,7 @@ create_disk_outA (
     if (disk == NULL)
         return (NULL);
 
-    file = file_openA(name, CR_FO_WO);
+    file = file_buf_openA(name, CR_FO_WO);
     if (file == NULL) {
         mem_free(disk);
         return (NULL);
@@ -383,7 +383,7 @@ create_disk_outW (
     if (disk == NULL)
         return (NULL);
 
-    file = file_openW(name, CR_FO_WO);
+    file = file_buf_openW(name, CR_FO_WO);
     if (file == NULL) {
         mem_free(disk);
         return (NULL);

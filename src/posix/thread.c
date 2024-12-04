@@ -818,8 +818,9 @@ process_lock (
     )
 {
     sint_t  fd;
-    achar*  full;
-    leng_t  len1, len2;
+    leng_t  len1;
+    leng_t  len2;
+    ansi_t* full;
 
     /* 通过文件来判断 */
     len1 = str_lenA(root);
