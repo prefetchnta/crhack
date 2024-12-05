@@ -97,7 +97,7 @@ create_page_inA (
     if (page == NULL)
         return (NULL);
 
-    data = (uchar*)file_mappingA(name, &page->m_vfile);
+    data = (byte_t*)file_mappingA(name, &page->m_vfile);
     if (data == NULL)
         goto _failure1;
 
@@ -144,7 +144,7 @@ create_page_inW (
     if (page == NULL)
         return (NULL);
 
-    data = (uchar*)file_mappingW(name, &page->m_vfile);
+    data = (byte_t*)file_mappingW(name, &page->m_vfile);
     if (data == NULL)
         goto _failure1;
 

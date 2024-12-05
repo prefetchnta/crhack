@@ -1,9 +1,0 @@
-@echo off
-start spath.bat
-start spath.bat
-start spath.bat
-start spath.bat
-start spath.bat
-start spath.bat
-start spath.bat
-start spath.bat
