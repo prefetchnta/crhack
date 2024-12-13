@@ -20,7 +20,6 @@
 #include "hash.h"
 #include "datlib.h"
 #include "fileio.h"
-#include "parser.h"
 #include "strlib.h"
 #include "util/totcfg.h"
 

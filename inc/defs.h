@@ -471,6 +471,13 @@ fmj_fzh (
 #define FALSE       0
 #define CR_FALSE    0
 
+#ifndef CR_I08
+    #define CR_I08
+#endif
+#ifndef CR_I16
+    #define CR_I16
+#endif
+
 /* printf() 文件大小修饰符 */
 #if defined(_CR_FILE32_)
     #define CR_FSZ  CR_I32

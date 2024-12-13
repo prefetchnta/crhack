@@ -162,18 +162,26 @@ PAGE_CPPS=$(SRC)codepage$(L)cpage437.$(C) \
           $(SRC)codepage$(L)cpage950.$(C)
 
 TCFG_OBJS=$(OBJ)cfg_errs.$(O) \
-          $(OBJ)cfg_lang.$(O)
+          $(OBJ)cfg_lang.$(O) \
+          $(OBJ)cfg_type.$(O)
 
 TCFG_CPPS=$(SRC)totcfg$(L)cfg_errs.$(C) \
-          $(SRC)totcfg$(L)cfg_lang.$(C)
+          $(SRC)totcfg$(L)cfg_lang.$(C) \
+          $(SRC)totcfg$(L)cfg_type.$(C)
+
+EGUI_OBJS=$(OBJ)ui_align.$(O) \
+          $(OBJ)ui_resrc.$(O)
+
+EGUI_CPPS=$(SRC)egui$(L)ui_align.$(C) \
+          $(SRC)egui$(L)ui_resrc.$(C)
 
 OBJS=$(OBJ)chttplib.$(O) \
      $(OBJ)cjsonlib.$(O) \
-     $(FILE_OBJS) $(PAGE_OBJS) $(TCFG_OBJS)
+     $(FILE_OBJS) $(PAGE_OBJS) $(TCFG_OBJS) $(EGUI_OBJS)
 
 CPPS=$(SRC)chttplib.$(C) \
      $(SRC)cjsonlib.$(C) \
-     $(FILE_CPPS) $(PAGE_CPPS) $(TCFG_CPPS)
+     $(FILE_CPPS) $(PAGE_CPPS) $(TCFG_CPPS) $(EGUI_CPPS)
 
 ###############################################################################
 ##                             各个编译器的配置                              ##

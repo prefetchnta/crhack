@@ -23,7 +23,6 @@
 #include "defs.h"
 /*-------------*/
 #include "blit.h"
-#include "egui.h"
 #include "extz.h"
 #include "fmtz.h"
 #include "gfx2.h"

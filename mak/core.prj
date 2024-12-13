@@ -215,9 +215,7 @@ OBJS=$(OBJ)defs.$(O) \
      $(OBJ)bring.$(O) \
      $(OBJ)curbead.$(O) \
      $(OBJ)curtain.$(O) \
-     $(OBJ)pltable.$(O) \
-     $(OBJ)ui_align.$(O) \
-     $(OBJ)ui_resrc.$(O)
+     $(OBJ)pltable.$(O)
 
 CPPS=$(SRC)defs.$(C) \
      $(SRC)errs.$(C) \
@@ -335,9 +333,7 @@ CPPS=$(SRC)defs.$(C) \
      $(SRC)bring.$(C) \
      $(SRC)curbead.$(C) \
      $(SRC)curtain.$(C) \
-     $(SRC)pltable.$(C) \
-     $(SRC)ui_align.$(C) \
-     $(SRC)ui_resrc.$(C)
+     $(SRC)pltable.$(C)
 
 ###############################################################################
 ##                                  WIN32                                    ##
