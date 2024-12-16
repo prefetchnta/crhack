@@ -692,6 +692,19 @@ typedef struct  _iPORT
         const iPORT_vtbl*   __vptr__;
 } iPORT;
 
+/* 进度回调结构 */
+typedef struct
+{
+        /* 附加参数 */
+        void_t* param;
+
+        /* 回调函数 */
+        void_t  (*init) (void_t *obj, leng_t max);
+        void_t  (*update) (void_t *obj, leng_t step);
+        void_t  (*finish) (void_t *obj, leng_t max);
+
+} sPROBAR;
+
 /* 对齐平台需要的头文件 */
 #if defined(_CR_ALIGN_NEEDED_)
     #include "memlib.h"

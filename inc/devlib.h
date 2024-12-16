@@ -59,6 +59,7 @@ CR_API void_t   sio_free (void_t);
 CR_API bool_t   sio_set_name (uint_t port, const ansi_t *name);
 CR_API bool_t   sio_setup (uint_t port, int32u baud, uint_t bits,
                            uint_t parity, uint_t stop);
+CR_API int32s   sio_get_baud (uint_t port);
 CR_API bool_t   sio_set_rd_timeout (uint_t port, uint_t interval,
                                     uint_t multiplier, uint_t constant);
 CR_API bool_t   sio_set_wr_timeout (uint_t port, uint_t multiplier,

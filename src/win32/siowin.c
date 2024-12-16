@@ -156,6 +156,30 @@ sio_setup (
 
 /*
 =======================================
+    获取串口波特率
+=======================================
+*/
+CR_API int32s
+sio_get_baud (
+  __CR_IN__ uint_t  port
+    )
+{
+    sCOMM*  comm;
+
+    /* 端口号 */
+    if (port >= _CR_SIO_COUNT_ ||
+        s_comm[port].hfile == NULL)
+        return (-1);
+
+    /* 获取参数 */
+    comm = &s_comm[port];
+    if (!GetCommState(comm->hfile, &comm->param))
+        return (-1);
+    return ((int32s)comm->param.BaudRate);
+}
+
+/*
+=======================================
     设置串口读取超时
 =======================================
 */

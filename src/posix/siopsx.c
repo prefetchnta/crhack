@@ -198,6 +198,19 @@ sio_setup (
         case 38400: nbps = B38400; break;
         case 57600: nbps = B57600; break;
         case 115200: nbps = B115200; break;
+        case 230400: nbps = B230400; break;
+        case 460800: nbps = B460800; break;
+        case 500000: nbps = B500000; break;
+        case 576000: nbps = B576000; break;
+        case 921600: nbps = B921600; break;
+        case 1000000: nbps = B1000000; break;
+        case 1152000: nbps = B1152000; break;
+        case 1500000: nbps = B1500000; break;
+        case 2000000: nbps = B2000000; break;
+        case 2500000: nbps = B2500000; break;
+        case 3000000: nbps = B3000000; break;
+        case 3500000: nbps = B3500000; break;
+        case 4000000: nbps = B4000000; break;
 
         default:
             return (FALSE);
@@ -211,6 +224,67 @@ sio_setup (
     }
     mem_cpy(&comm->param, &param, sizeof(param));
     return (TRUE);
+}
+
+/*
+=======================================
+    获取串口波特率
+=======================================
+*/
+CR_API int32s
+sio_get_baud (
+  __CR_IN__ uint_t  port
+    )
+{
+    sCOMM*  comm;
+    speed_t bps1, bps2;
+
+    /* 端口号 */
+    if (port >= _CR_SIO_COUNT_ ||
+        s_comm[port].hfile == 0)
+        return (-1);
+    comm = &s_comm[port];
+
+    /* 获取参数 */
+    bps1 = cfgetispeed(&comm->param);
+    bps2 = cfgetospeed(&comm->param);
+    if (bps1 != bps2)
+        return (-1);
+    switch (bps1)
+    {
+        default: break;
+        case B50: return (50);
+        case B75: return (75);
+        case B110: return (110);
+        case B134: return (134);
+        case B150: return (150);
+        case B200: return (200);
+        case B300: return (300);
+        case B600: return (600);
+        case B1200: return (1200);
+        case B1800: return (1800);
+        case B2400: return (2400);
+        case B4800: return (4800);
+        case B9600: return (9600);
+        case B19200: return (19200);
+        case B38400: return (38400);
+        case B57600: return (57600);
+        case B115200: return (115200);
+        case B230400: return (230400);
+        case B460800: return (460800);
+        case B500000: return (500000);
+        case B576000: return (576000);
+        case B921600: return (921600);
+        case B1000000: return (1000000);
+        case B1152000: return (1152000);
+        case B1500000: return (1500000);
+        case B2000000: return (2000000);
+        case B2500000: return (2500000);
+        case B3000000: return (3000000);
+        case B3500000: return (3500000);
+        case B4000000: return (4000000);
+    }
+    return (-1);
 }
 
 /*

@@ -8,11 +8,11 @@ echo SFLAGS=$(SFLAGS_NAKED) >> conf.inc
 echo ALL_OBJS=$(GCC_NAKED_ALL_OBJS) >> conf.inc
 echo ALL_CPPS=$(GCC_NAKED_ALL_CPPS) >> conf.inc
 call "..\bat\gcc_naked_all.bat" %2 %3
-make -fgcc/naked/all/core.mak
-make -fgcc/naked/all/gfx2.mak
-make -fgcc/naked/all/gfx3.mak
-make -fgcc/naked/all/math.mak
-make -fgcc/naked/all/fmtz.mak
-make -fgcc/naked/all/util.mak
+gmake -fgcc/naked/all/core.mak
+gmake -fgcc/naked/all/gfx2.mak
+gmake -fgcc/naked/all/gfx3.mak
+gmake -fgcc/naked/all/math.mak
+gmake -fgcc/naked/all/fmtz.mak
+gmake -fgcc/naked/all/util.mak
 move *.a ../bin/gcc_naked_all
 del conf.inc
