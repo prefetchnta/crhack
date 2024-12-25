@@ -5,20 +5,44 @@ Available options (* = default setting, xxx = has sub-options: use -h -X):
   -4      Generate 80386/80486 protected-mode compatible instructions
   -5      Generate Pentium instructions
   -6      Generate Pentium Pro instructions
-  -Axxx   Enable ANSI conformance
+  -A      Enable ANSI conformance
+  -AF     Use SUN Forte keywords and extensions
+  -AG     Use GNU keywords and extensions
+  -AK     Use Kernighan and Ritchie (K&R) keywords and extensions
+  -AT     Use CodeGear C++ keywords and extensions (also -A-)
+  -AU     Use UNIX System V keywords and extensions
   -B      Compile to .ASM (-S), then assemble to .OBJ
   -C      Enable nested comments
   -CP     Enable code paging (for MBCS)
   -D      -D<name> defines 'name' as a null string, or use -D<name>=<value>
   -E      Specify which assembler to use
   -G      Optimize for size/speed; use -O1 and -O2 instead
-  -Hxxx   Generate and use precompiled headers
+  -H      Generate and use precompiled headers
+  -H=     Set the name of the file to use for precompiled headers
+  -Hc     Use cached precompiled header (Must be used with -H or -H"xxx")
+* -He     Enable precompiled headers with external type files
+  -Hh=    Stop precompiling after header file xxx
+  -Hi     Include the contents of header file: -Histdio.h
+  -Hr     Replace header name: -Hrname1=name2
+* -Hs     Enable smart cached precompiled headers
+  -Hu     Use but do not generate precompiled headers
   -I      Set the include file search path
-  -Jxxx   Template generation options
+  -J      Template generation options
+  -Jgd    Generate definitions for all template instances and merge duplicates
+  -Jgx    Generate external references for all template instances
   -K      Set default character type to unsigned
   -L      Library file search path
   -M      Create a linker map file
   -O      Optimize jumps
+  -O1     Generate smallest possible code
+  -O2     Generate fastest possible code
+  -OS     Enable Pentium instruction scheduling
+  -Ob     Dead store elimination
+  -Oc     Eliminate duplicate expressions within basic blocks and functions
+  -Od     Disable all optimizations
+  -Oi     Expand common intrinsic functions
+  -Or     Use register variables
+  -Ov     Enable loop induction variable and strength reduction
   -P      Perform C++ compile regardless of source extension
   -Q      Extended compiler error information
   -R      Include browser information in generated .OBJ files
@@ -27,10 +51,67 @@ Available options (* = default setting, xxx = has sub-options: use -h -X):
   -S      Compile to assembly
   -T      Specify assembler option, e.g. -Tx
   -U      Undefine any previous definitions of name
-  -Vxxx   Compatibility options
-  -Wxxx   Target is a Windows application
+  -V      Compatibility options
+  -V0     External C++ virtual tables
+  -V1     Public C++ virtual tables
+* -VA     Generate all global functions in their own virtual/weak segment
+  -VC     Do not mangle calling convention into symbols
+  -VF     MFC compatibility
+  -VF3    Support MFC 3.2
+  -VF4    Support MFC 4.0
+* -VI     Use Microsoft search algorithm to locate header files
+  -VM     Microsoft Visual C++ compatibility
+  -Va     Support old-style class arguments
+  -Vb     Enable backward compatability with older versions of Bcc
+  -Vbe    Allow old-style explicit template specialization
+  -Vbn    Allow calling of non-const or non-volatile member function for a const or volatile object
+  -Vbo    Use old Borland overload resolution rules
+  -Vbr    Allow non-const reference binding
+  -Vbs    Treat string literals as non-const
+  -Vbx    Allow explicit template specialization as a member function
+  -Vc     Support constructor displacements
+  -Vd     Use old C++ for-statement scoping rules
+  -Ve     Zero-length empty base classes
+  -Vg     Disable lexical digraph scanner
+  -Vi     Use old 8.3 search algorithm to locate header files
+  -Vl     Use old Borland class layout
+  -Vm     Member pointer options
+  -Vmd    Use the smallest possible representation for member pointers
+  -Vmm    Support multiple inheritance for member pointers
+  -Vmp    Honor declared precision of member pointers
+  -Vms    Support single inheritance for member pointers
+  -Vmv    Place no restrictions on where member pointers can point
+  -Vn     Enable new operator names: and, or, and_eq, bitand, etc.
+  -Vo     Set (almost) all compatibility flags; used with old code
+  -Vp     Push 'this' first, as does Pascal
+  -Vr     Reverse order for Multi-character constant
+  -Vs     Use old-style virdef generation
+  -Vt     Put virtual table pointer at front of object layout
+  -Vv     Use 'slow' virtual base pointers
+  -Vw     Emit native code instead of Unicode for multi-byte character
+  -Vx     Zero-length empty class member functions
+  -W      Target is a Windows application
+  -WC     Target is a console application
+  -WCD    Target is a console .DLL
+  -WCDR   Target is a console .DLL that uses the dynamic RTL
+  -WCDV   ... that uses the VCL
+  -WCR    Target is a console application that uses the dynamic RTL
+  -WCV    ... that uses the VCL
+  -WD     Target is a .DLL, or dynamic link library
+  -WDR    Target is a Windows .DLL that uses the dynamic RTL
+  -WDV    ... that uses the VCL
+  -WM     Target is a 32-bit multi-threaded target
+  -WP     Target is an application that uses Delphi packages
+  -WR     Target uses the dynamic RTL
+  -WU     Generate a Unicode application
+  -WV     Target uses the VCL GUI framework
   -X      Disable compiler autodependency output
-  -axxx   Set data alignment boundary.  Default is -a8; -a- means -a1
+  -a      Set data alignment boundary.  Default is -a8; -a- means -a1
+  -a1     Align data on one byte boundaries
+  -a16    Align data on sixteen byte (paragraph) boundaries
+  -a2     Align data on two byte (word) boundaries
+  -a4     Align data on four byte (double word) boundaries
+  -a8     Align data on eight byte (quad word) boundaries
 * -b      Make enums integer-sized (-b- makes them short as possible)
   -c      Compile to object file only, do not link
   -d      Merge duplicate strings
@@ -52,16 +133,164 @@ Available options (* = default setting, xxx = has sub-options: use -h -X):
   -mo     Specify the output file for dependency info
   -n      Set output directory for object files
   -o      Set output filename (-o<filename> or -o <filename> supported)
-  -pxxx   Use Pascal calling convention
+  -p      Use Pascal calling convention
+  -pc     Use C calling convention (the default)
+  -pm     Functions without an explicit calling convention to use __msfastcall
+  -pr     Use fastcall calling convention for passing parameters in registers
+  -ps     Use stdcall calling convention
   -q      Suppress compiler identification banner
   -r      Use register variables
   -rd     Use register variables only when register keyword is employed
   -s      Link using the system's non-incremental linker
-  -txxx   An alternate name for the -Wxxx switches; there is no difference
+  -t      An alternate name for the -Wxxx switches; there is no difference
+  -tC     Target is a console application
+  -tCD    Target is a console .DLL
+  -tCDR   Target is a console .DLL that uses the dynamic RTL
+  -tCDV   ... that uses the VCL
+  -tCR    Target is a console application that uses the dynamic RTL
+  -tCV    ... that uses the VCL
+  -tW     Target is a Windows application
+  -tWC    Target is a console application
+  -tWCD   Target is a console .DLL
+  -tWCDR  Target is a console .DLL that uses the dynamic RTL
+  -tWCDV  ... that uses the VCL
+  -tWCR   Target is a console application that uses the dynamic RTL
+  -tWCV   ... that uses the VCL
+  -tWD    Target is a .DLL, or dynamic link library
+  -tWDR   Target is a Windows .DLL that uses the dynamic RTL
+  -tWDV   ... that uses the VCL
+  -tWM    Target is a 32-bit multi-threaded target
+  -tWP    Target is an application that uses Delphi packages
+  -tWR    Target uses the dynamic RTL
+  -tWU    Generate a Unicode application
+  -tWV    Target uses the VCL GUI framework
 * -u      Generate underscores on symbol names
-  -vxxx   Turn on source debugging
+  -v      Turn on source debugging
+  -v4     Generate CodeView4 compatible debug info
+  -vG     All Codeguard options on
+  -vG0    Codeguard level 0
+  -vG1    Codeguard level 1
+  -vG2    Codeguard level 2
+  -vG3    Codeguard level 3
+  -vGc    Monitor inline pointer access
+  -vGd    Monitor global and stack data accesses
+  -vGt    Monitor 'this' pointer on member function entry
+* -vi     Generate inline functions inline (use -vi- for out-of-line)
+  -vu     Do not prefix underbars to exported symbol names
   -w      Display all warnings
   -w!     Return non-zero from compiler on warnings
-  -xxxx   Enable exception handling
+  -wamb   8000 Ambiguous operators need parentheses
+  -wamp   8001 Superfluous & with function
+* -wasc   8002 Restarting compile using assembly
+  -wasm   8003 Unknown assembler instruction
+* -waus   8004 '%s' is assigned a value that is never used
+* -wali   8086 Incorrect use of #pragma alias "aliasName"="substituteName"
+* -watr   8100 '%s' attribute directive ignored
+  -wbbf   8005 Bit fields must be signed or unsigned int
+* -wbei   8006 Initializing %s with %s
+* -wbig   8007 Hexadecimal value contains too many digits
+* -wccc   8008 Condition is always %s
+  -wcln   8009 Constant is long
+* -wcom   8010 Continuation character \ found in // comment
+* -wcpt   8011 Nonportable pointer comparison
+* -wcsu   8012 Comparing signed and unsigned values
+* -wcod   8093 Incorrect use of #pragma codeseg [seg_name] ["seg_class"] [group]
+  -wdef   8013 Possible use of '%s' before definition
+* -wdig   8014 Declaration ignored
+* -wdpu   8015 Declare '%s' prior to use in prototype
+* -wdsz   8016 Array size for 'delete' ignored
+* -wdup   8017 Redefinition of '%s' is not identical
+* -weas   8018 Assigning %s to %s
+* -weff   8019 Code has no effect
+* -wext   8020 '%s' is declared as both external and static
+  -wexc   8101 Extern C linkage ignored
+* -whch   8021 Handler for '%s' hidden by previous handler for '%s'
+* -whid   8022 '%s' hides virtual function '%s'
+* -wias   8023 Array variable '%s' is near
+* -wibc   8024 Base class '%s' is also a base class of '%s'
+* -will   8025 Ill-formed pragma
+  -winl   8026 Functions %s are not expanded inline
+  -winl   8027 Functions containing %s are not expanded inline
+* -wifr   8085 Function '%s' redefined as non-inline
+  -wimp   8102 Implicit conversion of '%s' to '%s'
+* -wlin   8028 Temporary used to initialize '%s'
+* -wlvc   8029 Temporary used for parameter '%s'
+* -wlvc   8030 Temporary used for parameter '%s' in call to '%s'
+* -wlvc   8031 Temporary used for parameter %d
+* -wlvc   8032 Temporary used for parameter %d in call to '%s'
+* -wmpc   8033 Conversion to '%s' will fail for members of virtual base '%s'
+* -wmpd   8034 Maximum precision used for member pointer type '%s'
+* -wmsg   8035 %s
+* -wmes   8095 Incorrect use of #pragma message( "string" )
+* -wmcs   8096 Incorrect use of #pragma code_seg(["seg_name"[,"seg_class"]])
+* -wmcc   8098 Multi-character character constant
+* -wmls   8104 not used
+* -wmnc   8105 %s member '%s' in class without constructors
+  -wnak   8036 Non-ANSI keyword used: '%s'
+* -wncf   8037 Non-const function %s called for const object
+* -wnci   8038 Constant member '%s' is not initialized
+* -wncl   8039 Constructor initializer list ignored
+* -wnfd   8040 Function body ignored
+* -wngu   8041 Negating unsigned value
+* -wnin   8042 Initializer for object '%s' ignored
+* -wnma   8043 Macro definition ignored
+* -wnmu   8044 #undef directive ignored
+  -wnod   8045 No declaration for function '%s'
+* -wnop   8046 Pragma option pop with no matching option push
+* -wnsf   8047 Declaration of static function '%s(...)' ignored
+* -wnst   8048 Use qualified name to access member type '%s'
+* -wntd   8049 Use '> >' for nested templates instead of '>>'
+* -wnto   8050 No type OBJ file present.  Disabling external types option.
+* -wnvf   8051 Non-volatile function %s called for volatile object
+* -wnpp   8083 Pragma pack pop with no matching pack push
+* -wobi   8052 Base initialization without a class name is now obsolete
+* -wobs   8053 '%s' is obsolete
+* -wofp   8054 Style of function definition is now obsolete
+* -wosh   8055 Possible overflow in shift operation
+* -wovf   8056 Integer arithmetic overflow
+* -wonr   8097 Not all options can be restored at this time
+* -wpar   8057 Parameter '%s' is never used
+* -wpch   8058 Cannot create pre-compiled header: %s
+* -wpck   8059 Structure packing size has changed
+* -wpia   8060 Possibly incorrect assignment
+  -wpin   8061 Initialization is only partially bracketed
+* -wpow   8062 Previous options and warnings not restored
+* -wpre   8063 Overloaded prefix 'operator %s' used as a postfix operator
+* -wpro   8064 Call to function with no prototype
+* -wpro   8065 Call to function '%s' with no prototype
+  -wprc   8084 Suggest parentheses to clarify precedence
+* -wpcm   8094 Incorrect use of #pragma comment( <type> [,"string"] )
+* -wpsb   8099 Static `main' is not treated as an entry point
+* -wptl   8103 Path '%s' and filename '%s' exceed maximum size of %d
+* -wrch   8066 Unreachable code
+* -wret   8067 Both return and return with a value used
+* -wrng   8068 Constant out of range in comparison
+* -wrpt   8069 Nonportable pointer conversion
+* -wrvl   8070 Function should return a value
+  -wsig   8071 Conversion may lose significant digits
+* -wspa   8072 Suspicious pointer arithmetic
+  -wstu   8073 Undefined structure '%s'
+  -wstv   8074 Structure passed by value
+* -wsus   8075 Suspicious pointer conversion
+  -wstl   8087 '%s::operator==' must be publicly visible to be contained by a '%s'
+  -wstl   8089 '%s::operator<' must be publicly visible to be contained by a '%s'
+  -wstl   8090 '%s::operator<' must be publicly visible to be used with '%s'
+  -wstl   8091 %s argument %s passed to '%s' is a %s iterator: %s iterator required
+  -wstl   8092 %s argument %s passed to '%s' is not an iterator: %s iterator required
+* -wtai   8076 Template instance '%s' is already instantiated
+* -wtes   8077 Explicitly specializing an explicitly specialized class member makes no sense
+* -wthr   8078 Throw expression violates exception specification
+  -wucp   8079 Mixing pointers to different 'char' types
+  -wuse   8080 '%s' is declared but never used
+* -wvoi   8081 void functions may not return a value
+* -wzdi   8082 Division by zero
+  -x      Enable exception handling
+  -xd     Enable destructor cleanup
+  -xdg    Use global destructor count (compatibility flag)
+  -xds    No DLL or multi-threaded destructor cleanup
+  -xf     Enable fast exception prologs
+  -xp     Enable exception location information
+  -xs     Enable slow exception epilogues
+  -xv     Hide exception variables
   -y      Debug line numbers on
   -z      Options for redefining standard segment names
