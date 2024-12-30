@@ -229,7 +229,7 @@ static const byte_t _rom_ s_cstep_pal[60] =
     返回颜色常数表
 =======================================
 */
-CR_API void_t
+CR_API uint_t
 color_step_pal (
   __CR_OT__ int32u* pal,
   __CR_IN__ uint_t  count
@@ -238,6 +238,7 @@ color_step_pal (
     if (count > 15 || count == 0)
         count = 15;
     mem_cpy(pal, s_cstep_pal, count * 4);
+    return (count);
 }
 
 /* 内部使用的结构 */
