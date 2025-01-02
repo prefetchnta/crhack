@@ -99,10 +99,10 @@ rect_merge (
             area1 *= dest->hh;
             area2  = srce->ww;
             area2 *= srce->hh;
-            if (area1 < area2)
-                area2 = area1;
+            area2 += area1;
             area1  =  temp.ww;
             area1 *=  temp.hh;
+            area2 -= area1;
 
             /* 相交面积大于一定比例合并矩形 */
             if ((fp32_t)area1 < (fp32_t)area2 * param->merge)
@@ -453,7 +453,7 @@ rect_area_bound (
   __CR_IN__ byte_t          type
     )
 {
-    uchar*  line;
+    byte_t  *line;
     sint_t  min_x, min_y;
     sint_t  max_x, max_y;
     sint_t  xx, yy, ww, hh;

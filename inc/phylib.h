@@ -368,6 +368,15 @@ CR_API uint_t   line_hough_max (const sLINE_HOUGH *hough);
 /* 释放 Hough 变换结果 */
 CR_API void_t   line_hough_free (sLINE_HOUGH *hough);
 
+/* 物体矩形描述结构 */
+typedef struct
+{
+        sRECT   rect;   /* 物体的位置 */
+        sint_t  type;   /* 物体标签号 */
+        fp32_t  prop;   /* 物体可能性 */
+
+} sRECT_OBJECT;
+
 /* 矩形过滤参数结构 */
 typedef struct
 {
