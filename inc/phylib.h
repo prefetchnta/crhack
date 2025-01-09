@@ -373,7 +373,7 @@ typedef struct
 {
         sRECT   rect;   /* 物体的位置 */
         sint_t  type;   /* 物体标签号 */
-        fp32_t  prop;   /* 物体可能性 */
+        fp32_t  prob;   /* 物体可能性 */
 
 } sRECT_OBJECT;
 
@@ -414,6 +414,10 @@ CR_API leng_t   rect_get_focus (sPNT2 *pnt, const sIMAGE *img,
 CR_API byte_t   rect_area_marks (const sIMAGE *img);
 CR_API bool_t   rect_area_bound (sRECT *bound, const sIMAGE *img,
                                  byte_t type);
+/* 矩形目标 NMS 操作 */
+CR_API leng_t*  rect_sort_nms (sRECT_OBJECT *objects, leng_t count,
+                               bool_t agnostic, leng_t *selected,
+                               fp32_t gate);
 
 /*****************************************************************************/
 /*                                   纹理                                    */

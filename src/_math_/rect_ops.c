@@ -17,6 +17,7 @@
 /*  =======================================================================  */
 /*****************************************************************************/
 
+#include "msclib.h"
 #include "phylib.h"
 
 /*
@@ -489,6 +490,95 @@ rect_area_bound (
         return (FALSE);
     rect_set_xy(bound, min_x, min_y, max_x, max_y);
     return (TRUE);
+}
+
+/*
+---------------------------------------
+    置信度排序比较
+---------------------------------------
+*/
+static sint_t
+prob_comp (
+  __CR_IN__ const void_t*   elem1,
+  __CR_IN__ const void_t*   elem2
+    )
+{
+    fp32_t  val1 = ((sRECT_OBJECT*)elem1)->prob;
+    fp32_t  val2 = ((sRECT_OBJECT*)elem2)->prob;
+
+    /* 降序 */
+    if (val1 < val2) return ( 1);
+    if (val1 > val2) return (-1);
+    return (0);
+}
+
+
+/*
+=======================================
+    矩形目标 NMS 操作
+=======================================
+*/
+CR_API leng_t*
+rect_sort_nms (
+  __CR_IO__ sRECT_OBJECT*   objects,
+  __CR_IN__ leng_t          count,
+  __CR_IN__ bool_t          agnostic,
+  __CR_OT__ leng_t*         selected,
+  __CR_IN__ fp32_t          gate
+    )
+{
+    sRECT   temp;
+    bool_t  keep;
+    leng_t  ii, jj, sz, *pick;
+    fp32_t  intr, unon, *area;
+    /* -------------------- */
+    sRECT_OBJECT    *aa, *bb;
+
+    /* 分配选择列表和面积缓存 */
+    pick = mem_talloc(count, leng_t);
+    if (pick == NULL)
+        return (NULL);
+    area = mem_talloc(count, fp32_t);
+    if (area == NULL) {
+        mem_free(pick);
+        return (NULL);
+    }
+
+    /* 根据置信度降序排序 */
+    quick_sort(objects, count, sizeof(sRECT_OBJECT), prob_comp);
+
+    /* 先计算好所有的面积 */
+    for (ii = 0; ii < count; ii++) {
+        area[ii]  = (fp32_t)(objects[ii].rect.ww);
+        area[ii] *= (fp32_t)(objects[ii].rect.hh);
+    }
+
+    /* 执行 NMS 操作 */
+    for (sz = ii = 0; ii < count; ii++) {
+        aa = &objects[ii];
+        keep = TRUE;
+        for (jj = 0; jj < sz; jj++) {
+            bb = &objects[pick[jj]];
+            if (!agnostic && aa->type != bb->type)
+                continue;
+            if (!clip_rect(&temp, &aa->rect, &bb->rect))
+                continue;
+            intr = ((fp32_t)temp.ww) * temp.hh;
+            unon = area[ii] + area[pick[jj]] - intr;
+            if (intr / unon > gate) {
+                keep = FALSE;
+                break;
+            }
+        }
+        if (keep)
+            pick[sz++] = ii;
+    }
+    mem_free(area);
+    if (selected != NULL)
+        *selected = sz;
+    if (sz < count)
+        pick[sz] = count;
+    return (pick);
 }
 
 /*****************************************************************************/
