@@ -308,6 +308,54 @@ cjson_fp64 (
 
 /*
 =======================================
+    获取 JSON 浮点矢量
+=======================================
+*/
+CR_API bool_t
+cjson_fvec (
+  __CR_IN__ cJSON*          node,
+  __CR_IN__ const ansi_t*   name,
+  __CR_OT__ fp32_t*         vec,
+  __CR_IN__ uint_t          dim,
+  __CR_IN__ const ansi_t*   hrb
+    )
+{
+    cJSON*  obj;
+
+    obj = cJSON_GetObjectItem(node, name);
+    if (!cJSON_IsString(obj))
+        return (FALSE);
+    if (str2vecA((fp32_t*)vec, dim, obj->valuestring, hrb) == NULL)
+        return (FALSE);
+    return (TRUE);
+}
+
+/*
+=======================================
+    获取 JSON 整数矢量
+=======================================
+*/
+CR_API bool_t
+cjson_ivec (
+  __CR_IN__ cJSON*          node,
+  __CR_IN__ const ansi_t*   name,
+  __CR_OT__ sint_t*         vec,
+  __CR_IN__ uint_t          dim,
+  __CR_IN__ const ansi_t*   hrb
+    )
+{
+    cJSON*  obj;
+
+    obj = cJSON_GetObjectItem(node, name);
+    if (!cJSON_IsString(obj))
+        return (FALSE);
+    if (str2lstA((uint_t*)vec, dim, obj->valuestring, hrb) == NULL)
+        return (FALSE);
+    return (TRUE);
+}
+
+/*
+=======================================
     获取 JSON 16进制数组字段 (定长)
 =======================================
 */

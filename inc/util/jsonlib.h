@@ -39,6 +39,10 @@ CR_API bool_t   cjson_int64 (cJSON *node, const ansi_t *name, int64s *numb);
 CR_API bool_t   cjson_real (cJSON *node, const ansi_t *name, real_t *numb);
 CR_API bool_t   cjson_fp32 (cJSON *node, const ansi_t *name, fp32_t *numb);
 CR_API bool_t   cjson_fp64 (cJSON *node, const ansi_t *name, fp64_t *numb);
+CR_API bool_t   cjson_fvec (cJSON *node, const ansi_t *name, fp32_t *vec,
+                            uint_t dim, const ansi_t *hrb CR_DEFAULT("[],"));
+CR_API bool_t   cjson_ivec (cJSON *node, const ansi_t *name, sint_t *vec,
+                            uint_t dim, const ansi_t *hrb CR_DEFAULT("[],"));
 CR_API bool_t   cjson_hex_dat (cJSON *node, const ansi_t *name, void_t *data,
                                leng_t size);
 CR_API bool_t   cjson_hex_dat2 (cJSON *node, const ansi_t *name, void_t *data,
