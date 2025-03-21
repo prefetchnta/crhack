@@ -104,7 +104,7 @@ covariance (
     if (pxy != NULL) {
         sdx *= sdy;
         if (sdx <= CR_ABITX)
-            *pxy = (XABS(exy) <= CR_ABITX) ? 1 : 0;
+            *pxy = 0;
         else
             *pxy = exy / XSQRT(sdx);
     }
