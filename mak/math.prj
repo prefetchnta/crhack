@@ -75,6 +75,7 @@ OBJS=$(OBJ)math.$(O) \
      $(OBJ)radar_cfar.$(O) \
      $(OBJ)radar_fmcw.$(O) \
      $(OBJ)earth.$(O) \
+     $(OBJ)attitude.$(O) \
      $(OBJ)vmaggeo.$(O) \
      $(OBJ)ctl_pid.$(O) \
      $(OBJ)kalman.$(O) \
@@ -134,6 +135,7 @@ CPPS=$(SRC)math.$(C) \
      $(SRC)radar_cfar.$(C) \
      $(SRC)radar_fmcw.$(C) \
      $(SRC)earth.$(C) \
+     $(SRC)attitude.$(C) \
      $(SRC)vmaggeo.$(C) \
      $(SRC)ctl_pid.$(C) \
      $(SRC)kalman.$(C) \

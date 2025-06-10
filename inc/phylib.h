@@ -992,6 +992,48 @@ CR_API bool_t   radar_cfar_os (fpxx_t *cut_lst, const sFMCW *input,
                                sint_t guard_len, sint_t noise_len,
                                fp32_t select, fpxx_t *buffer);
 
+/*****************************************************************************/
+/*                                   姿态                                    */
+/*****************************************************************************/
+
+/* 一阶互补滤波上下文 */
+typedef struct
+{
+        fp32_t  T;      /* 输入: 时间间隔 */
+        fp32_t  K;      /* 输入: 互补参数 */
+        fp32_t  a[3];   /* 输出: 三个角度 */
+
+} sFLT_O1ST;
+
+/* 二阶互补滤波上下文 */
+typedef struct
+{
+        fp32_t  T;      /* 输入: 时间间隔 */
+        fp32_t  K;      /* 输入: 互补参数 */
+        fp32_t  a[3];   /* 输出: 三个角度 */
+        fp32_t  y[3];
+
+} sFLT_O2ND;
+
+/* 卡尔曼滤波上下文 */
+typedef struct
+{
+        fp32_t  T;      /* 输入: 时间间隔 */
+        fp32_t  Ra;     /* 输入: 角度测量误差 */
+        fp32_t  Qa;     /* 输入: 角度过程误差 */
+        fp32_t  Qg;     /* 输入: 加速度过程误差 */
+        fp32_t  a[3];   /* 输出: 三个角度 */
+        fp32_t  p00[3], p01[3], p10[3], p11[3], qbx[3];
+
+} sFLT_KLMN;
+
+CR_API void_t   attitude_order1st (sFLT_O1ST *ctx, const fp32_t aac_xyz[3],
+                                                   const fp32_t gyro_xyz[3]);
+CR_API void_t   attitude_order2nd (sFLT_O2ND *ctx, const fp32_t aac_xyz[3],
+                                                   const fp32_t gyro_xyz[3]);
+CR_API void_t   attitude_f_kalman (sFLT_KLMN *ctx, const fp32_t aac_xyz[3],
+                                                   const fp32_t gyro_xyz[3]);
+
 #endif  /* !__CR_PHYLIB_H__ */
 
 /*****************************************************************************/
