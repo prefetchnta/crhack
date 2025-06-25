@@ -15,9 +15,9 @@
 /GF 启用只读字符串池                    /Gm[-] 启用最小重新生成
 /Gy[-] 分隔链接器函数                   /GS[-] 启用安全检查
 /GR[-] 启用 C++ RTTI                    /GX[-] 启用 C++ EH (与 /EHsc 相同)
-/guard:cf[-] 启用 CFG (控制流保护)      /EHs 启用 C++ EH (没有 SEH 异常)
-/EHa 启用 C++ EH (w/ SEH 异常)          /EHc 外部 "C" 默认为 nothrow
-/EHr 始终生成 noexcept 运行时终止检查   
+/guard:cf[-] 启用 CFG (控制流保护)      /guard:ehcont[-] 启用 EH 继续元数据(CET)
+/EHs 启用 C++ EH (没有 SEH 异常)        /EHa 启用 C++ EH (w/ SEH 异常)
+/EHc 外部 "C" 默认为 nothrow            /EHr 始终生成 noexcept 运行时终止检查
 /fp:<except[-]|fast|precise|strict> 选择浮点模型:
   except[-] - 在生成代码时考虑浮点异常  
   fast - "fast" 浮点模型；结果可预测性比较低
@@ -33,6 +33,7 @@
 /GL[-] 启用链接时代码生成               /volatile:<iso|ms> 选择可变模型:
     iso - Acquire/release 语义对可变访问不一定有效
     ms - Acquire/release 语义对可变访问一定有效
+/guard:signret[-] 启用已签名的返回指令生成
 
                -输出文件-
 
@@ -44,7 +45,7 @@
 /Fd: <file> 命名 .PDB 文件              /Fe: <file> 命名可执行文件
 /Fm: <file> 命名映射文件                /Fo: <file> 命名对象文件
 /Fp: <file> 命名 .PCH 文件              /FR: <file> 命名扩展 .SBR 文件
-/Fi: <file> 命名预处理的文件            
+/Fi: <file> 命名预处理的文件            /Ft<dir> 为 #import 生成的头文件的地址
 
                -预处理器-
 
@@ -55,6 +56,7 @@
 /FI<file> 命名强制包含文件              /U<name> 移除预定义的宏
 /u 移除所有预定义的宏                   /I<dir> 添加到包含搜索路径
 /X 忽略“标准位置”                     /PH 在预处理时生成 #pragma file_hash
+/PD 打印所有宏定义                      
 
                 -语言-
 
@@ -77,7 +79,7 @@
 threadSafeInit[-]   启用线程安全的本地静态初始化
   inline[-]             如果是 COMDAT，则删除未引用的函数或数据
                         或仅使用内部链接(默认关闭)
-  sizedDealloc[-]       启用 C++14 全局大小释放
+  sizedDealloc[-]       启用 C++14 全局大小解除分配
                         函数(默认开启)
   throwingNew[-]        假设运算符 new 在故障时引发(默认关闭)
   referenceBinding[-]   临时引用不会绑定到非常数
@@ -90,7 +92,9 @@ threadSafeInit[-]   启用线程安全的本地静态初始化
   externC[-]            强制实施外部 "C" 函数的标准 C++ 规则(/permissive- 所隐含)
   lambda[-]             使用更新的 lambda 处理器提供更好的 lambda 支持(默认为关闭)
   tlsGuards[-]          生成 TLS 变量初始化的运行时检查(默认情况下启用)
-/await 启用可恢复函数扩展               
+  zeroSizeArrayNew[-]   针对大小为零的对象数组的调用对象 new/delete (默认启用)
+/await 启用可恢复函数扩展
+/await:strict 启用使用早期语言版本的标准 C++20 协同例程支持
 /constexpr:depth<N>     constexpr 评估的递归深度限制(默认值: 512)
 /constexpr:backtrace<N> 在诊断中显示 N constexpr 评估(默认值: 10)
 /constexpr:steps<N>     在 N 个步骤后终止 constexpr 评估(默认值: 100000)
@@ -99,6 +103,9 @@ threadSafeInit[-]   启用线程安全的本地静态初始化
 /ZH:[MD5|SHA1|SHA_256] 用于计算调试信息中的文件校验和的哈希算法(默认值: MD5)
 /Zp[n] 在 n 字节边界上包装结构          /Zl 省略 .OBJ 中的默认库名
 /vd{0|1|2} 禁用/启用 vtordisp           /vm<x> 指向成员的指针类型
+/std:<c11|c17> C 标准版本
+    c11 - ISO/IEC 9899:2011
+    c17 - ISO/IEC 9899:2018
 
                - 杂项 -
 
@@ -122,6 +129,8 @@ threadSafeInit[-]   启用线程安全的本地静态初始化
 /utf-8 集源和到 UTF-8 的执行字符集      
 /validate-charset[-] 验证 UTF-8 文件是否只有合法字符
 /fastfail[-] 启用 fast-fail 模式        /JMC[-] 启用本机“仅我的代码”
+/presetPadding[-] 将基于堆栈的类类型的填充初始化为零
+/volatileMetadata[-] 对易失存储器访问生成元数据
 
                 -链接-
 

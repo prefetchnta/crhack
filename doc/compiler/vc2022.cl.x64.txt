@@ -9,25 +9,25 @@
 /Os 优选代码空间                        /Ot 优选代码速度
 /Ox 优化(优选速度)                      
 /favor:<blend|AMD64|INTEL64|ATOM> 选择优化所针对的处理器，为以下值之一:
-  blend - 针对几种不同 x64 处理器的优化组合
-  AMD64 - 64 位 AMD 处理器                 
-  INTEL64 - Intel(R)64 架构处理器       
-ATOM - Intel(R) Atom(TM) 处理器              
+   blend - 针对几种不同 x64 处理器的优化组合
+   AMD64 - 64 位 AMD 处理器
+   INTEL64 - Intel(R)64 架构处理器
+   ATOM - Intel(R) Atom(TM) 处理器
 
                -代码生成-
 
 /Gu[-] 确保 distinct 函数具有非重复地址 /Gw[-] 分隔链接器的全局变量
-/GF 启用只读字符串池                    /Gm[-] 启用最小重新生成
-/Gy[-] 分隔链接器函数                   /GS[-] 启用安全检查
-/GR[-] 启用 C++ RTTI                    /GX[-] 启用 C++ EH (与 /EHsc 相同)
+/GF 启用只读字符串池                    /Gy[-] 分隔链接器函数
+/GS[-] 启用安全检查                     /GR[-] 启用 C++ RTTI
 /guard:cf[-] 启用 CFG (控制流保护)      /guard:ehcont[-] 启用 EH 继续元数据(CET)
 /EHs 启用 C++ EH (没有 SEH 异常)        /EHa 启用 C++ EH (w/ SEH 异常)
 /EHc 外部 "C" 默认为 nothrow            /EHr 始终生成 noexcept 运行时终止检查
 /fp:<contract|except[-]|fast|precise|strict> 选择浮点模型:
-    协定 - 生成代码时考虑浮点收缩         except[-] - 在生成代码时考虑浮点异常
-  fast - "fast" 浮点模型；结果可预测性比较低
-  precise - "precise" 浮点模型；结果可预测
-  strict - "strict" 浮点模型(意味着 /fp:except)
+   协定 - 生成代码时考虑浮点收缩
+   except[-] - 在生成代码时考虑浮点异常
+   fast - "fast" 浮点模型；结果可预测性比较低
+   precise - "precise" 浮点模型；结果可预测
+   strict - "strict" 浮点模型(意味着 /fp:except)
 即使使用 /fp:except，/Qfast_transcendentals 也生成内联内部 FP
 /Qspectre[-] 对 CVE 2017-5753 启用缓解措施
 /Qpar[-] 启用并行代码生成               
@@ -35,36 +35,50 @@ ATOM - Intel(R) Atom(TM) 处理器
 /Qpar-report:2 自动并行化诊断；指示未并行化循环
 /Qvec-report:1 自动向量化诊断；指示已向量化循环
 /Qvec-report:2 自动向量化诊断；指示未向量化循环
-/GL[-] 启用链接时代码生成               /volatile:<iso|ms> 选择可变模型:
-    iso - Acquire/release 语义对可变访问不一定有效
-    ms - Acquire/release 语义对可变访问一定有效
+/GL[-] 启用链接时代码生成               
+/volatile:<iso|ms> 选择可变模型:
+   iso - Acquire/release 语义对可变访问不一定有效
+   ms - Acquire/release 语义对可变访问一定有效
 /GA 为 Windows 应用程序进行优化         /Ge 对所有函数强制堆栈检查
 /Gs[num] 控制堆栈检查调用               /Gh 启用 _penter 函数调用
 /GH 启用 _pexit 函数调用                /GT 生成纤程安全 TLS 访问
 /RTC1 启用快速检查(/RTCsu)              /RTCc 转换为较小的类型检查
 /RTCs 堆栈帧运行时检查                  /RTCu 未初始化的局部用法检查
-/clr[:option] 为公共语言运行时编译，其中 option 是:
-    pure : 生成仅包含 IL 的输出文件(没有本机可执行代码)
-    safe : 生成只包含 IL 的可验证输出文件
-    netcore : 生成以 .NET Core 运行时为目标的程序集
-    noAssembly : 不生成程序集           
-    nostdlib : 搜索程序集时忽略系统 .NET Framework 目录
-    nostdimport : 不隐式导入任何必需的程序集
-    initialAppDomain : 启用 Visual C++ 2002 的初始 AppDomain 行为
-    implicitKeepAlive- : 关闭 System::GC::KeepAlive(this)的隐式值
+/clr[：option] 编译公共语言运行时，其中选项为：
+    pure ： 生成仅 IL 的输出文件 (没有本机可执行代码)
+    安全 ： 生成仅 IL 可验证的输出文件
+    netcore ： 生成面向 .NET Core 运行时的程序集
+    noAssembly ： 不生成程序集
+    nostdlib ： 搜索程序集时忽略系统 .NET Framework 目录
+    nostdimport ： 不隐式导入任何必需的程序集
+    initialAppDomain ： 启用 Visual C++ 2002 的初始 AppDomain 行为
+    implicitKeepAlive- ： 关闭 System：：GC：：KeepAlive 的隐式发出(此)
+    char_t- ： 关闭对char8_t、char16_t和char32_t的元数据支持
+    ECMAParamArray ： 对参数数组的重载使用 ECMA-372/372/14.6 中指定的规则 (/clr)
+    ECMAParamArray- 使用带有参数数组的新规则，(/clr：netcore)
 /fsanitize=解决启用地址消毒代码生成     
 /homeparams 强制将传入寄存器的参数写入到堆栈中
 /GZ 启用堆栈检查(/RTCs)                 /Gv __vectorcall 调用约定
-/arch:<AVX|AVX2|AVX512> 最小 CPU 架构要求，以下之一:
-  AVX - 允许使用支持 AVX 的 CPU 可用的指令
-  AVX2 - 允许使用支持 AVX2 的 CPU 可用的指令
-  AVX512 - 允许使用支持 AVX-512 的 CPU 可用的指令
+(预览版)/dynamicdeopt 启用动态调试；放置取消优化的断点，并通过按需函数取消优化随时随地单步执行
+(预览) /dynamicdeopt:suffix <suffix> 用于去优化输出的文件扩展名后缀(默认值: .alt)
+(预览) /dynamicdeopt:sync 在生成优化输出后生成去优化输出，而不是并行生成
+/arch:<SSE2|SSE4.2|AVX|AVX2|AVX512|AVX10.x> 最低 CPU 体系结构要求，以下之一:
+   SSE2 - (默认)允许使用通过支持 SSE2 的 CPU 提供的指令
+   SSE4.2 - 允许使用通过支持 SSE4.2 的 CPU 提供的指令
+   AVX - 允许使用通过支持 AVX 的 CPU 提供的指令
+   AVX2 - 允许使用通过支持 AVX2 的 CPU 提供的指令
+   AVX512 - 允许使用通过支持 AVX-512 的 CPU 提供的指令
+   AVX - 允许使用通过支持 AVX10.x 的 CPU 提供的指令。x 的有效值为 1
 /QIntel-jcc-erratum 为 Intel JCC Erratum 启用缓解措施
 /Qspectre-load 对加载内存的所有指令启用 spectre 缓解措施
 /Qspectre-load-cf 对加载内存的所有控制流指令启用 spectre 缓解措施
 /Qspectre-jmp[-] 为无条件跳转指令启用 Spectre 缓解
-/fpcvt:<IA|BC> 无符号整数转换兼容性为 FP   IA - 与 VCVTTSD2USI 指令兼容的结果
-   BC - 与 VS2017 及更低版本的编译器兼容的结果
+/fpcvt:<IA|BC> 无符号整数转换兼容性为 FP
+  IA - 与 VCVTTSD2USI 指令兼容的结果
+  BC - 与 VS2017 及更低版本的编译器兼容的结果
+/jumptablerdata 在 .rdata 部分中放置 switch case 语句的跳转表
+/vlen=<256|512> 为自动代码生成选择 256 或 512 的矢量长度
+/vlen 根据 /arch 设置选择默认矢量长度   
 
                -输出文件-
 
@@ -81,7 +95,8 @@ ATOM - Intel(R) Atom(TM) 处理器
 
                -预处理器-
 
-/AI<dir> 添加到程序集搜索路径           /FU<file> 强制使用程序集/模块 
+/AI<dir> 添加到程序集搜索路径           /FU<file> 导入 .NET 程序集/模块
+/FU:asFriend<file> 将 .NET 程序集/模块导入为友元
 /C 不抽出注释                           /D<name>{=|#}<text> 定义宏
 /E 预处理到 stdout                      /EP 预处理到 stdout，无行号
 /P 预处理到文件                         /Fx 将插入的代码合并到文件中
@@ -97,52 +112,72 @@ ATOM - Intel(R) Atom(TM) 处理器
     c++17 - ISO/IEC 14882:2017
     c++20 - ISO/IEC 14882:2020
     c++latest - 最新草案标准(功能集可能更改)
-/permissive[-] 使某些非符合代码可编译(功能集可更改)(默认开启)
-/Ze 启用扩展(默认)                      /Za 禁用扩展
-/ZW 启用 WinRT 语言扩展                 /Zs 只进行语法检查
-/Zc:arg1[,arg2] C++ 语言合规性，这里的参数可以是:
- forScope[-]      对范围规则强制使用标准 C++
- wchar_t[-]      wchar_t 是本机类型，不是 typedef
-  auto[-]               对 auto 强制使用新的标准 C++ 含义
-  trigraphs[-]          启用三元祖(默认关闭)
- rvalueCast[-]     强制实施标准 C++ 显式类型转换规则
- strictStrings[-]   禁用从字符串文本到 [char|wchar_t]*
-                        的转换(默认关闭)
- implicitNoexcept[-]  在必需的函数上启用隐式 noexcept
-threadSafeInit[-]   启用线程安全的本地静态初始化
-  inline[-]             如果是 COMDAT，则删除未引用的函数或数据
-                        或仅使用内部链接(默认关闭)
-  sizedDealloc[-]       启用 C++14 全局大小解除分配
-                        函数(默认开启)
-  throwingNew[-]        假设运算符 new 在故障时引发(默认关闭)
-  referenceBinding[-]   临时引用不会绑定到非常数
-                        lvalue 引用(默认关闭)
-  twoPhase-             禁用两阶段名称查找
-  ternary[-]            对条件运算符强制使用 C++11 规则(默认关闭)
-  noexceptTypes[-]      强制执行 C++17 noexcept 规则(在 C++17 或更高版本中默认开启)
-  alignedNew[-]         对动态分配的对象启用 C++17 对齐方式(默认开启)
-  hiddenFriend[-]       强制实施标准 C++ 隐藏好友规则(/permissive- 所隐含)
-  externC[-]            强制实施外部 "C" 函数的标准 C++ 规则(/permissive- 所隐含)
-  lambda[-]             使用更新的 lambda 处理器提供更好的 lambda 支持(默认为关闭)
-  tlsGuards[-]          生成 TLS 变量初始化的运行时检查(默认情况下启用)
-  zeroSizeArrayNew[-]   针对大小为零的对象数组的调用对象 new/delete (默认启用)
-  static_assert[-] 严格处理 "static_assert" (由 /permissive- 隐含)
-  gotoScope[-]          无法跳过变量的初始化(由 /permissive- 暗示)
-  __STDC__在 C 中将 __STDC__ 定义为 1   
-  enumTypes[-]          启用标准 C++ 基础枚举类型(默认情况下关闭)
+/std:<c11|c17|clatest> C 标准版本
+   c11 - ISO/IEC 9899:2011
+   c17 - ISO/IEC 9899:2018
+   clatest - 最新草稿标准(功能集可能会更改)
+/permissive[-] 启用一些不符合格式的代码进行编译
+              (功能集可能会更改)(在 C++20 及更高版本中默认关闭)
+/Za 禁用扩展(不建议用于 C++)            /ZW 启用 WinRT 语言扩展
+/Zs 只进行语法检查                      
 /await 启用可恢复函数扩展
 /await:strict 启用使用早期语言版本的标准 C++20 协同例程支持
 /constexpr:depth<N>     constexpr 评估的递归深度限制(默认值: 512)
 /constexpr:backtrace<N> 在诊断中显示 N constexpr 评估(默认值: 10)
-/constexpr:steps<N>     在 N 个步骤后终止 constexpr 评估(默认值: 100000)
+/constexpr:steps<N>     在 N 个步骤后终止 constexpr 评估(默认值: 1048576)
 /Zi 启用调试信息                        /Z7 启用旧式调试信息
 /Zo[-] 为优化的代码生成更丰富的调试信息(默认开启)
 /ZH:[MD5|SHA1|SHA_256] 哈希算法，用于在调试信息中计算文件校验和(默认值: SHA_256)
 /Zp[n] 在 n 字节边界上包装结构          /Zl 省略 .OBJ 中的默认库名
 /vd{0|1|2} 禁用/启用 vtordisp           /vm<x> 指向成员的指针类型
-/std:<c11|c17> C 标准版本
-    c11 - ISO/IEC 9899:2011
-    c17 - ISO/IEC 9899:2018
+/Zc:arg1[,arg2] 语言一致性，这里的参数可以是:
+ forScope[-]      对范围规则强制使用标准 C++
+ wchar_t[-]      wchar_t 是本机类型，不是 typedef
+ auto[-]               对 auto 强制使用新的标准 C++ 含义
+ trigraphs[-]          启用三元祖(默认关闭)
+ rvalueCast[-]     强制实施标准 C++ 显式类型转换规则
+                       (在 C++20 或更高版本中默认启用，由 /permissive-隐含)
+ strictStrings[-]      禁用字符串文本到 [char|wchar_t]*
+                       转换(在 C++20 或更高版本中默认启用，由 /permissive-隐含)
+ implicitNoexcept[-]  在必需的函数上启用隐式 noexcept
+ threadSafeInit[-]   启用线程安全的本地静态初始化
+ inline[-]             删除未引用的函数或数据，如果其为
+                       COMDAT 或仅具有内部链接(默认情况下关闭)
+ sizedDealloc[-]       启用 C++14 全局大小的解除分配
+                       函数(默认启用)
+ throwingNew[-]        假设运算符 new 在故障时引发(默认关闭)
+ referenceBinding[-]   临时，不会绑定到非常量
+                       值引用(默认情况下为 C++20 或更高版本，由 /permissive-隐含)
+ twoPhase-             禁用两阶段名称查找
+ ternary[-]            对条件运算符强制执行 C++11 规则
+                       (在 C++20 或更高版本中默认启用，由 /permissive-隐含)
+ noexceptTypes[-]      强制执行 C++17 noexcept 规则(在 C++17 或更高版本中默认开启)
+ alignedNew[-]         对动态分配的对象启用 C++17 对齐方式(默认开启)
+ hiddenFriend[-]       强制执行标准 C++ 隐藏友元规则
+                       (在 C++20 或更高版本中默认启用，由 /permissive-隐含)
+ externC[-]            对 'extern "C"' 函数强制执行标准 C++ 规则
+                       (在 C++20 或更高版本中默认启用，由 /permissive-隐含)
+ lambda[-]             使用更新的 lambda 处理器提供更好的 lambda 支持
+                       (在 C++20 或更高版本中默认启用，由 /permissive-隐含)
+ tlsGuards[-]          生成 TLS 变量初始化的运行时检查(默认情况下启用)
+ zeroSizeArrayNew[-]   针对大小为零的对象数组的调用对象 new/delete (默认启用)
+ static_assert[-]      严格处理 "static_assert" (在 C++20 或更高版本中默认处于打开状态，
+                       由 /permissive- 隐含)
+ gotoScope[-]          无法跳过变量的初始化(由 /permissive- 暗示)
+ templateScope[-]      强制执行标准 C++ 模板参数阴影规则
+ enumTypes[-]          启用标准 C++ 基础枚举类型(默认情况下关闭)
+ checkGwOdr[-]         强制实施标准 C++ 一个定义规则违反
+                       启用 /Gw 时(默认关闭)
+ nrvo[-]               启用可选复制和移动消除(在 C++20 或更高版本中默认开启，
+                       由 /permissive 或 /O2 隐含)
+ __STDC__在 C 中将 __STDC__ 定义为 1
+ __cplusplus[-]        __cplusplus 宏报告支持的 C++ 标准(默认关闭)
+ char8_t[-]            将 C++20 本机`u8`文本支持启用为`const char8_t`
+                       (默认情况下为 C++20 或更高版本)
+ externConstexpr[-]    为 C++ 中的 constexpr 变量启用外部链接
+                       (在 C++20 或更高版本中默认启用，由 /permissive-隐含)
+ preprocessor[-]       在 C/C++ 中启用标准一致性预处理器
+                       (默认情况下为 C11 或更高版本)
 /ZI 启用“编辑并继续”调试信息          /openmp 启用 OpenMP 2.0 语言扩展
 /openmp:experimental 会启用 OpenMP 2.0 语言扩展并选择 OpenMP 3.0+ 语言扩展
 使用 LLVM 运行时 /openmp:llvm OpenMP 语言扩展
@@ -151,19 +186,15 @@ threadSafeInit[-]   启用线程安全的本地静态初始化
 
 @<file> 选项响应文件                    /?, /help 打印此帮助消息
 /bigobj 生成扩展的对象格式              /c 只编译，不链接
-/errorReport:option 已弃用。请将内部编译器错误报告给 Microsoft
-    none - 不发送报告                       prompt - 提示立即发送报告
-    queue - 在下一次管理员登录时，提示发送报告(默认)
-    send - 自动发送报告                 /FC 诊断中使用完整路径名
-/H<num> 最大外部名称长度                /J 默认 char 类型是 unsigned
-/MP[n] 最多使用“n”个进程进行编译      /nologo 取消显示版权信息
-/showIncludes 显示包含文件名            /Tc<source file> 将文件编译为 .c
-/Tp<source file> 将文件编译为 .cpp      /TC 将所有文件编译为 .c
-/TP 将所有文件编译为 .cpp               /V<string> 设置版本字符串
-/Yc[file] 创建 .PCH 文件                /Yd 将调试信息放在每个 .OBJ 中
-/Yl[sym] 为调试库插入 .PCH 引用         /Yu[file] 使用 .PCH 文件
-/Y- 禁用所有 PCH 选项                   /Zm<n> 最大内存分配(默认值的百分比)
-/FS 强制使用 MSPDBSRV.EXE               
+/FC 诊断中使用完整路径名                /H<num> 最大外部名称长度
+/J 默认 char 类型是 unsigned            /MP[n] 最多使用“n”个进程进行编译
+/nologo 取消显示版权信息                /showIncludes 显示包含文件名
+/Tc<source file> 将文件编译为 .c        /Tp<source file> 将文件编译为 .cpp
+/TC 将所有文件编译为 .c                 /TP 将所有文件编译为 .cpp
+/V<string> 设置版本字符串               /Yc[file] 创建 .PCH 文件
+/Yd 将调试信息放在每个 .OBJ 中          /Yl[sym] 为调试库插入 .PCH 引用
+/Yu[file] 使用 .PCH 文件                /Y- 禁用所有 PCH 选项
+/Zm<n> 最大内存分配(默认值的百分比)     /FS 强制使用 MSPDBSRV.EXE
 /source-charset:<iana-name>|.nnnn 集源字符集
 /execution-charset:<iana-name>|.nnnn 集执行字符集
 /utf-8 集源和到 UTF-8 的执行字符集      
