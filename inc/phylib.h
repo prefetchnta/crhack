@@ -377,6 +377,16 @@ typedef struct
 
 } sRECT_OBJECT;
 
+/* 物体矩形描述结构 (带描述) */
+typedef struct
+{
+        sRECT   rect;       /* 物体的位置 */
+        sint_t  type;       /* 物体标签号 */
+        fp32_t  prob;       /* 物体可能性 */
+        ansi_t  desc[224];  /* 物体的描述 */
+
+} sRECT_OBJECT_DESC;
+
 /* 矩形过滤参数结构 */
 typedef struct
 {
