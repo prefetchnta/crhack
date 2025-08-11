@@ -21,7 +21,10 @@
 #include "memlib.h"
 #include "morder.h"
 #include "strlib.h"
-
+#if defined(_CR_OS_LINUX_)
+    #define __USE_GNU
+    #define _GNU_SOURCE
+#endif
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/ioctl.h>
