@@ -375,7 +375,7 @@ static cJSON_bool parse_number(cJSON * const item, parse_buffer * const input_bu
     }
 loop_end:
     /* malloc for temporary buffer, add 1 for '\0' */
-    number_c_string = (unsigned char *) input_buffer->hooks.allocate(number_string_length + 1);
+    number_c_string = (char *) input_buffer->hooks.allocate(number_string_length + 1);
     if (number_c_string == NULL)
     {
         return false; /* allocation failure */
