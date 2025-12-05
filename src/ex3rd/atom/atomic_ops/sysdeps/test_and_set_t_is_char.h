@@ -20,11 +20,19 @@
  * SOFTWARE.
  */
 
+#if !defined(AO_ATOMIC_OPS_H) || defined(AO_ATOMIC_OPS_INCLUDED)
+# error This file should not be included directly.
+#endif
+
 /*
  * These are common definitions for architectures on which test_and_set
  * operates on byte sized quantities, the "clear" value contains
  * all zeroes, and the "set" value contains all ones typically.
  */
+
+#if defined(AO_TS_VAL_t) && !defined(CPPCHECK)
+# error test_and_set_t_is_ao_t.h or test_and_set_t_is_char.h already included.
+#endif
 
 #ifndef AO_GCC_ATOMIC_TEST_AND_SET
 # define AO_TS_SET_TRUEVAL 0xff

@@ -49,12 +49,18 @@ AO_API int AO_stack_is_lock_free(void)
 # endif
 }
 
-AO_API AO_t *AO_stack_head_ptr(const AO_stack_t *list)
+AO_API AO_uintptr_t *AO_stack_head_ptr(const AO_stack_t *list)
 {
   return AO_REAL_HEAD_PTR(*list);
 }
 
-AO_API AO_t *AO_stack_next_ptr(AO_t next)
+AO_API AO_uintptr_t *AO_stack_next_ptr_d(const AO_uintptr_t *pnext)
+{
+  return AO_REAL_NEXT_PTR(*pnext);
+}
+
+/* Deprecated.  */
+AO_API AO_uintptr_t *AO_stack_next_ptr(AO_uintptr_t next)
 {
   return AO_REAL_NEXT_PTR(next);
 }
@@ -63,7 +69,8 @@ AO_API AO_t *AO_stack_next_ptr(AO_t next)
 /* designating the condition of the loop (see the use cases below).     */
 #ifdef AO_THREAD_SANITIZER
   AO_ATTR_NO_SANITIZE_THREAD
-  static void store_before_cas(AO_t *addr, AO_t value)
+  static void store_before_cas(AO_internal_ptr_t *addr,
+                               AO_internal_ptr_t value)
   {
     *addr = value;
   }
@@ -88,6 +95,36 @@ AO_API AO_t *AO_stack_next_ptr(AO_t next)
 #   define AO_EXPECT_FALSE(expr) (expr)
 # endif
 
+  /* These AO_cptr_... primitives are not a part of the API.    */
+# if defined(AO_FAT_POINTER) || defined(AO_STACK_USE_CPTR)
+    AO_INLINE int
+    AO_cptr_compare_and_swap_acquire(AO_internal_ptr_t volatile *addr,
+                        AO_internal_ptr_t old_val, AO_internal_ptr_t new_val)
+    {
+      return (int)__atomic_compare_exchange_n(addr, &old_val, new_val, 0,
+                        __ATOMIC_ACQUIRE, __ATOMIC_ACQUIRE);
+    }
+
+    AO_INLINE int
+    AO_cptr_compare_and_swap_release(AO_internal_ptr_t volatile *addr,
+                        AO_internal_ptr_t old_val, AO_internal_ptr_t new_val)
+    {
+      return (int)__atomic_compare_exchange_n(addr, &old_val, new_val, 0,
+                        __ATOMIC_RELEASE, __ATOMIC_RELAXED /* on fail */);
+    }
+
+#   define AO_cptr_load(p) __atomic_load_n(p, __ATOMIC_RELAXED)
+#   define AO_cptr_load_acquire(p) __atomic_load_n(p, __ATOMIC_ACQUIRE)
+#   define AO_cptr_store_release(p, v) \
+                __atomic_store_n(p, v, __ATOMIC_RELEASE)
+# else
+#   define AO_cptr_compare_and_swap_acquire AO_compare_and_swap_acquire
+#   define AO_cptr_compare_and_swap_release AO_compare_and_swap_release
+#   define AO_cptr_load          AO_load
+#   define AO_cptr_load_acquire  AO_load_acquire
+#   define AO_cptr_store_release AO_store_release
+# endif
+
   /* LIFO linked lists based on compare-and-swap.  We need to avoid     */
   /* the case of a node deletion and reinsertion while I'm deleting     */
   /* it, since that may cause my CAS to succeed eventhough the next     */
@@ -108,42 +145,46 @@ AO_API AO_t *AO_stack_next_ptr(AO_t next)
   /* to be inserted.                                                    */
   /* Both list headers and link fields contain "perturbed" pointers,    */
   /* i.e. pointers with extra bits or'ed into the low order bits.       */
-  AO_API void AO_stack_push_explicit_aux_release(volatile AO_t *list, AO_t *x,
+  AO_API void AO_stack_push_explicit_aux_release(volatile AO_uintptr_t *list,
+                                                 AO_uintptr_t *x,
                                                  AO_stack_aux *a)
   {
-    AO_t x_bits = (AO_t)x;
-    AO_t next;
+    AO_internal_ptr_t x_bits = (AO_internal_ptr_t)x;
+    AO_internal_ptr_t next;
 
     /* No deletions of x can start here, since x is not         */
     /* currently in the list.                                   */
   retry:
     do {
-      next = AO_load_acquire(list);
-      store_before_cas(x, next);
+      next = AO_cptr_load_acquire((AO_internal_ptr_t volatile *)list);
+      store_before_cas((AO_internal_ptr_t *)x, next);
+
       {
 #     if AO_BL_SIZE == 2
         /* Start all loads as close to concurrently as possible.        */
-        AO_t entry1 = AO_load(&a->AO_stack_bl[0]);
-        AO_t entry2 = AO_load(&a->AO_stack_bl[1]);
+        AO_internal_ptr_t entry1 = AO_cptr_load(&a->AO_stack_bl[0]);
+        AO_internal_ptr_t entry2 = AO_cptr_load(&a->AO_stack_bl[1]);
+
         if (AO_EXPECT_FALSE(entry1 == x_bits || entry2 == x_bits))
 #     else
         int i;
+
         for (i = 0; i < AO_BL_SIZE; ++i)
-          if (AO_EXPECT_FALSE(AO_load(&a->AO_stack_bl[i]) == x_bits))
+          if (AO_EXPECT_FALSE(AO_cptr_load(&a->AO_stack_bl[i]) == x_bits))
 #     endif
         {
           /* Entry is currently being removed.  Change it a little.     */
           ++x_bits;
-          if ((x_bits & AO_BIT_MASK) == 0)
+          if (((AO_uintptr_t)x_bits & AO_BIT_MASK) == 0)
             /* Version count overflowed; EXTREMELY unlikely, but possible. */
-            x_bits = (AO_t)x;
+            x_bits = (AO_internal_ptr_t)x;
           goto retry;
         }
       }
 
       /* x_bits value is not currently being deleted.   */
-    } while (AO_EXPECT_FALSE(!AO_compare_and_swap_release(list, next,
-                                                          x_bits)));
+    } while (AO_EXPECT_FALSE(!AO_cptr_compare_and_swap_release(
+                        (AO_internal_ptr_t volatile *)list, next, x_bits)));
   }
 
   /* I concluded experimentally that checking a value first before      */
@@ -165,7 +206,8 @@ AO_API AO_t *AO_stack_next_ptr(AO_t next)
   /* data race (reported by TSan) is OK because it results in a retry.  */
 # ifdef AO_THREAD_SANITIZER
     AO_ATTR_NO_SANITIZE_THREAD
-    static AO_t AO_load_next(const volatile AO_t *first_ptr)
+    static AO_internal_ptr_t load_next(
+                                AO_internal_ptr_t const volatile *first_ptr)
     {
       /* Assuming an architecture on which loads of word type are       */
       /* atomic.  AO_load cannot be used here because it cannot be      */
@@ -173,37 +215,37 @@ AO_API AO_t *AO_stack_next_ptr(AO_t next)
       return *first_ptr;
     }
 # else
-#   define AO_load_next AO_load
+#   define load_next AO_cptr_load
 # endif
 
-  AO_API AO_t *AO_stack_pop_explicit_aux_acquire(volatile AO_t *list,
-                                                 AO_stack_aux *a)
+  AO_API AO_uintptr_t *AO_stack_pop_explicit_aux_acquire(
+                                                volatile AO_uintptr_t *list,
+                                                AO_stack_aux *a)
   {
     unsigned i;
     int j = 0;
-    AO_t first;
-    AO_t * first_ptr;
-    AO_t next;
+    AO_internal_ptr_t first, next;
+    AO_internal_ptr_t *first_ptr;
 
   retry:
-    first = AO_load(list);
-    if (0 == first) return 0;
+    first = AO_cptr_load((AO_internal_ptr_t volatile *)list);
+    if (0 == first) return NULL;
     /* Insert first into aux black list.                                */
     /* This may spin if more than AO_BL_SIZE removals using auxiliary   */
     /* structure a are currently in progress.                           */
     for (i = 0; ; )
       {
-        if (PRECHECK(a -> AO_stack_bl[i])
-            AO_compare_and_swap_acquire(a->AO_stack_bl+i, 0, first))
+        if (PRECHECK(a->AO_stack_bl[i])
+            AO_cptr_compare_and_swap_acquire(a->AO_stack_bl+i, 0, first))
           break;
         if (++i >= AO_BL_SIZE)
           {
             i = 0;
-            AO_pause(++j);
+            AO_pause(++j); /* overflow is not possible in practice */
           }
       }
 #   ifndef AO_THREAD_SANITIZER
-      assert(a -> AO_stack_bl[i] == first);
+      assert(a->AO_stack_bl[i] == first);
                                 /* No actual race with the above CAS.   */
 #   endif
     /* first is on the auxiliary black list.  It may be removed by      */
@@ -212,23 +254,27 @@ AO_API AO_t *AO_stack_next_ptr(AO_t next)
     /* list.  We need to make sure that first is still the first entry  */
     /* on the list.  Otherwise it is possible that a reinsertion of it  */
     /* was already started before we added the black list entry.        */
-    if (AO_EXPECT_FALSE(first != AO_load_acquire(list)))
+    if (AO_EXPECT_FALSE(first != AO_cptr_load_acquire(
+                                        (AO_internal_ptr_t volatile *)list)))
                         /* Workaround test failure on AIX, at least, by */
                         /* using acquire ordering semantics for this    */
                         /* load.  Probably, it is not the right fix.    */
     {
-      AO_store_release(a->AO_stack_bl+i, 0);
+      AO_cptr_store_release(a->AO_stack_bl+i, 0);
       goto retry;
     }
-    first_ptr = AO_REAL_NEXT_PTR(first);
-    next = AO_load_next(first_ptr);
-    if (AO_EXPECT_FALSE(!AO_compare_and_swap_release(list, first, next)))
+    first_ptr = (AO_internal_ptr_t *)AO_REAL_NEXT_PTR(*(AO_uintptr_t *)&first);
+    next = load_next(first_ptr);
+    if (AO_EXPECT_FALSE(!AO_cptr_compare_and_swap_release(
+                                        (AO_internal_ptr_t volatile *)list,
+                                        first, next)))
     {
-      AO_store_release(a->AO_stack_bl+i, 0);
+      AO_cptr_store_release(a->AO_stack_bl+i, 0);
       goto retry;
     }
 #   ifndef AO_THREAD_SANITIZER
-      assert(*list != first); /* No actual race with the above CAS.     */
+      assert(*(AO_internal_ptr_t *)list != first);
+                                /* no actual race with the above CAS */
 #   endif
     /* Since we never insert an entry on the black list, this cannot    */
     /* have succeeded unless first remained on the list while we were   */
@@ -239,29 +285,30 @@ AO_API AO_t *AO_stack_next_ptr(AO_t next)
     /* since the part of the list following first must have remained    */
     /* unchanged, and first must again have been at the head of the     */
     /* list when the compare_and_swap succeeded.                        */
-    AO_store_release(a->AO_stack_bl+i, 0);
-    return first_ptr;
+    AO_cptr_store_release(a->AO_stack_bl+i, 0);
+    return (AO_uintptr_t *)first_ptr;
   }
 
-  AO_API void AO_stack_push_release(AO_stack_t *list, AO_t *x)
+  AO_API void AO_stack_push_release(AO_stack_t *list, AO_uintptr_t *x)
   {
-    AO_stack_push_explicit_aux_release(&list->AO_pa.AO_ptr, x,
-                                       &list->AO_pa.AO_aux);
+    AO_stack_push_explicit_aux_release(
+                                (volatile AO_uintptr_t *)&list->AO_pa.AO_ptr,
+                                x, &list->AO_pa.AO_aux);
   }
 
-  AO_API AO_t *AO_stack_pop_acquire(AO_stack_t *list)
+  AO_API AO_uintptr_t *AO_stack_pop_acquire(AO_stack_t *list)
   {
-    return AO_stack_pop_explicit_aux_acquire(&list->AO_pa.AO_ptr,
-                                             &list->AO_pa.AO_aux);
+    return AO_stack_pop_explicit_aux_acquire(
+                                (volatile AO_uintptr_t *)&list->AO_pa.AO_ptr,
+                                &list->AO_pa.AO_aux);
   }
 
 #else /* !AO_USE_ALMOST_LOCK_FREE */
 
-  /* The functionality is the same as of AO_load_next but the atomicity */
+  /* The functionality is the same as of load_next but the atomicity    */
   /* is not needed.  The usage is similar to that of store_before_cas.  */
 # if defined(AO_THREAD_SANITIZER) \
-     && (defined(AO_HAVE_compare_and_swap_double) \
-         || defined(AO_HAVE_compare_double_and_swap_double))
+     && defined(AO_HAVE_compare_double_and_swap_double)
     /* TODO: If compiled by Clang (as of clang-4.0) with -O3 flag,      */
     /* no_sanitize attribute is ignored unless the argument is volatile.*/
 #   if defined(__clang__)
@@ -282,98 +329,53 @@ AO_API AO_t *AO_stack_next_ptr(AO_t next)
 # define version AO_vp.AO_val1
 # define ptr AO_vp.AO_val2
 
-# if defined(AO_HAVE_compare_double_and_swap_double) \
-     && !(defined(AO_STACK_PREFER_CAS_DOUBLE) \
-          && defined(AO_HAVE_compare_and_swap_double))
+# ifdef LINT2
+    volatile /* non-static */ AO_t AO_noop_sink;
+# endif
 
+  AO_API void AO_stack_push_release(AO_stack_t *list, AO_uintptr_t *element)
+  {
+    AO_t next;
+
+    do {
+      next = AO_load(&list->ptr);
+      store_before_cas(element, next);
+    } while (AO_EXPECT_FALSE(!AO_compare_and_swap_release(&list->ptr, next,
+                                                          (AO_t)element)));
+    /* This uses a narrow CAS here, an old optimization suggested   */
+    /* by Treiber.  Pop is still safe, since we run into the ABA    */
+    /* problem only if there were both intervening pops and pushes. */
+    /* In that case we still see a change in the version number.    */
 #   ifdef LINT2
-      volatile /* non-static */ AO_t AO_noop_sink;
+      /* Instruct static analyzer that element is not lost.     */
+      AO_noop_sink = (AO_t)element;
 #   endif
+  }
 
-    AO_API void AO_stack_push_release(AO_stack_t *list, AO_t *element)
-    {
-      AO_t next;
+  AO_API AO_uintptr_t *AO_stack_pop_acquire(AO_stack_t *list)
+  {
+#   if defined(__clang__) && !AO_CLANG_PREREQ(3, 5)
+      AO_t *volatile cptr;
+                /* Use volatile to workaround a bug in              */
+                /* clang-1.1/x86 causing test_stack failure.        */
+#   else
+      AO_t *cptr;
+#   endif
+    AO_t next;
+    AO_t cversion;
 
-      do {
-        next = AO_load(&list->ptr);
-        store_before_cas(element, next);
-      } while (AO_EXPECT_FALSE(!AO_compare_and_swap_release(&list->ptr, next,
-                                                            (AO_t)element)));
-      /* This uses a narrow CAS here, an old optimization suggested     */
-      /* by Treiber.  Pop is still safe, since we run into the ABA      */
-      /* problem only if there were both intervening pops and pushes.   */
-      /* In that case we still see a change in the version number.      */
-#     ifdef LINT2
-        /* Instruct static analyzer that element is not lost.   */
-        AO_noop_sink = (AO_t)element;
-#     endif
-    }
-
-    AO_API AO_t *AO_stack_pop_acquire(AO_stack_t *list)
-    {
-#     if defined(__clang__) && !AO_CLANG_PREREQ(3, 5)
-        AO_t *volatile cptr;
-                        /* Use volatile to workaround a bug in          */
-                        /* clang-1.1/x86 causing test_stack failure.    */
-#     else
-        AO_t *cptr;
-#     endif
-      AO_t next;
-      AO_t cversion;
-
-      do {
-        /* Version must be loaded first.    */
-        cversion = AO_load_acquire(&list->version);
-        cptr = (AO_t *)AO_load(&list->ptr);
-        if (NULL == cptr)
-          return NULL;
-        next = load_before_cas((/* no volatile */ AO_t *)cptr);
-      } while (AO_EXPECT_FALSE(!AO_compare_double_and_swap_double_release(
+    do {
+      /* Version must be loaded first.  */
+      cversion = AO_load_acquire(&list->version);
+      cptr = (AO_t *)AO_load(&list->ptr);
+      if (NULL == cptr)
+        break;
+      next = load_before_cas((/* no volatile */ AO_t *)cptr);
+    } while (AO_EXPECT_FALSE(!AO_compare_double_and_swap_double_release(
                                         &list->AO_vp, cversion, (AO_t)cptr,
                                         cversion+1, next)));
-      return cptr;
-    }
-
-# elif defined(AO_HAVE_compare_and_swap_double)
-
-    /* Needed for future IA64 processors.  No current clients?  */
-    /* TODO: Not tested thoroughly. */
-
-    /* We have a wide CAS, but only does an AO_t-wide comparison.       */
-    /* We cannot use the Treiber optimization, since we only check      */
-    /* for an unchanged version number, not an unchanged pointer.       */
-    AO_API void AO_stack_push_release(AO_stack_t *list, AO_t *element)
-    {
-      AO_t cversion;
-
-      do {
-        AO_t next_ptr;
-
-        /* Again version must be loaded first, for different reason.    */
-        cversion = AO_load_acquire(&list->version);
-        next_ptr = AO_load(&list->ptr);
-        store_before_cas(element, next_ptr);
-      } while (!AO_compare_and_swap_double_release(&list->AO_vp, cversion,
-                                                   cversion+1, (AO_t)element));
-    }
-
-    AO_API AO_t *AO_stack_pop_acquire(AO_stack_t *list)
-    {
-      AO_t *cptr;
-      AO_t next;
-      AO_t cversion;
-
-      do {
-        cversion = AO_load_acquire(&list->version);
-        cptr = (AO_t *)AO_load(&list->ptr);
-        if (NULL == cptr)
-          return NULL;
-        next = load_before_cas(cptr);
-      } while (!AO_compare_double_and_swap_double_release(&list->AO_vp,
-                                cversion, (AO_t)cptr, cversion+1, next));
-      return cptr;
-    }
-# endif /* AO_HAVE_compare_and_swap_double */
+    return (AO_uintptr_t *)cptr;
+  }
 
 # undef ptr
 # undef version

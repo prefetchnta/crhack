@@ -43,16 +43,18 @@
 
 #ifdef AO_USE_ALMOST_LOCK_FREE
   /* Use the almost-non-blocking implementation regardless of the       */
-  /* double-word CAS availability.                                      */
-#elif !defined(AO_HAVE_compare_double_and_swap_double) \
-      && !defined(AO_HAVE_compare_and_swap_double) \
-      && defined(AO_HAVE_compare_and_swap)
-# define AO_USE_ALMOST_LOCK_FREE
-#else
-  /* If we have no compare-and-swap operation defined, we assume        */
-  /* that we will actually be using CAS emulation.  If we do that,      */
-  /* it's cheaper to use the version-based implementation.              */
+  /* compare-and-swap availability.                                     */
+#elif defined(AO_HAVE_compare_double_and_swap_double) \
+      && !defined(AO_FAT_POINTER) && !defined(AO_STACK_USE_CPTR)
 # define AO_STACK_IS_LOCK_FREE
+#elif !defined(AO_HAVE_compare_and_swap)
+  /* If we have no compare-and-swap operation at all, we assume that we */
+  /* will actually be emulating it.                                     */
+# define AO_STACK_IS_LOCK_FREE
+#else
+# define AO_USE_ALMOST_LOCK_FREE
+  /* If we do have a real compare-and-swap operation, it is cheaper to  */
+  /* use the version-based implementation.                              */
 #endif
 
 /*
@@ -70,10 +72,9 @@
  * with the same AO_list_aux structure.
  *
  * We make some machine-dependent assumptions:
- *   - We have a compare-and-swap operation.
- *   - At least AO_N_BITS low order bits in pointers are
+ *   - we have a compare-and-swap operation;
+ *   - at least AO_N_BITS low order bits in pointers are
  *     zero and normally unused.
- *   - size_t and pointers have the same size.
  *
  * We do use a fully lock-free implementation if double-width
  * compare-and-swap operations are available.
@@ -88,7 +89,10 @@
 
 /* The number of low order pointer bits we can use for a small          */
 /* version number.                                                      */
-#if defined(__LP64__) || defined(_LP64) || defined(_WIN64)
+#if defined(AO_FAT_POINTER) && defined(__LP64__)
+# define AO_N_BITS 4
+#elif defined(__LP64__) || defined(_LP64) || defined(_WIN64) \
+      || defined(AO_FAT_POINTER)
 # define AO_N_BITS 3
 #else
 # define AO_N_BITS 2
@@ -106,12 +110,12 @@
   /* A workaround for almost-lock-free push/pop test failures           */
   /* on aarch64, at least.                                              */
 # if AO_BL_SIZE == 1
-    /* AO_vp is double-word aligned, so no extra align of AO_pa is needed.  */
+    /* AO_vp is double-pointer aligned, no extra align of AO_pa is needed.  */
 #   define AO_STACK_ATTR_ALLIGNED /* empty */
 # elif AO_GNUC_PREREQ(3, 1)
 #   define AO_STACK_LOG_BL_SZP1 (AO_BL_SIZE > 7 ? 4 : AO_BL_SIZE > 3 ? 3 : 2)
 #   define AO_STACK_ATTR_ALLIGNED \
-        __attribute__((__aligned__(sizeof(AO_t) << AO_STACK_LOG_BL_SZP1)))
+        __attribute__((__aligned__(sizeof(void*) << AO_STACK_LOG_BL_SZP1)))
 # elif defined(_MSC_VER) && _MSC_VER >= 1400 /* Visual Studio 2005+ */
     /* MS compiler accepts only a literal number in align, not expression.  */
     /* AO_STACK_ALLIGN_N is 1 << (AO_N_BITS + AO_STACK_LOG_BL_SZP1).        */
@@ -130,12 +134,23 @@
 # endif
 #endif /* !AO_STACK_ATTR_ALLIGNED */
 
+#if defined(__e2k__) && defined(AO_FAT_POINTER) || defined(AO_STACK_USE_CPTR)
+  /* A workaround because the platform does not allow conversion from   */
+  /* a numeric type (128-bit one) to a pointer.                         */
+  typedef char *AO_internal_ptr_t;
+# ifndef AO_STACK_USE_CPTR
+#   define AO_STACK_USE_CPTR
+# endif
+#else
+  typedef AO_uintptr_t AO_internal_ptr_t;
+#endif
+
 typedef struct AO__stack_aux {
-  volatile AO_t AO_stack_bl[AO_BL_SIZE];
+  AO_internal_ptr_t volatile AO_stack_bl[AO_BL_SIZE];
 } AO_stack_aux;
 
 struct AO__stack_ptr_aux {
-  volatile AO_t AO_ptr;
+  AO_internal_ptr_t volatile AO_ptr;
   AO_stack_aux AO_aux;
 };
 
@@ -156,52 +171,70 @@ typedef union AO__stack {
   /* We make them visible here for the rare cases in which it makes     */
   /* sense to share the AO_stack_aux between stacks.                    */
 
-  AO_API void
-  AO_stack_push_explicit_aux_release(volatile AO_t *list, AO_t *new_element,
-                                     AO_stack_aux *);
+  AO_API void AO_stack_push_explicit_aux_release(
+                                        volatile AO_uintptr_t * /* list */,
+                                        AO_uintptr_t * /* new_element */,
+                                        AO_stack_aux *);
 
-  AO_API AO_t *
-  AO_stack_pop_explicit_aux_acquire(volatile AO_t *list, AO_stack_aux *);
+  AO_API AO_uintptr_t *AO_stack_pop_explicit_aux_acquire(
+                                        volatile AO_uintptr_t * /* list */,
+                                        AO_stack_aux *);
 #endif /* AO_USE_ALMOST_LOCK_FREE */
 
 #ifndef AO_REAL_PTR_AS_MACRO
   /* The stack implementation knows only about the location of  */
   /* link fields in nodes, and nothing about the rest of the    */
-  /* stack elements.  Link fields hold an AO_t, which is not    */
-  /* necessarily a real pointer.  This converts the AO_t to a   */
-  /* real (AO_t *) which is either NULL, or points at the link  */
-  /* field in the next node.                                    */
-# define AO_REAL_NEXT_PTR(x) AO_stack_next_ptr(x)
+  /* stack elements.  Link fields hold an AO_uintptr_t, which   */
+  /* is not necessarily a real pointer.  This converts the      */
+  /* AO_uintptr_t value to a real AO_uintptr_t* which is either */
+  /* NULL, or points at the link field in the next node.        */
+# define AO_REAL_NEXT_PTR(x) AO_stack_next_ptr_d(&(x))
 
   /* Convert an AO_stack_t to a pointer to the link field in    */
   /* the first element.                                         */
 # define AO_REAL_HEAD_PTR(x) AO_stack_head_ptr(&(x))
 
 #elif defined(AO_USE_ALMOST_LOCK_FREE)
-# define AO_REAL_NEXT_PTR(x) (AO_t *)((x) & ~AO_BIT_MASK)
-# define AO_REAL_HEAD_PTR(x) AO_REAL_NEXT_PTR((x).AO_pa.AO_ptr)
+# ifdef AO_STACK_USE_CPTR
+#   define AO_REAL_NEXT_PTR(x) \
+        ((AO_uintptr_t *)AO_real_next_ptr_i(*(const AO_internal_ptr_t *)&(x)))
+    /* Implemented as an inline function because the argument is used twice. */
+    AO_INLINE AO_internal_ptr_t
+    AO_real_next_ptr_i(AO_internal_ptr_t next)
+    {
+      return next - ((unsigned)(AO_uintptr_t)next & AO_BIT_MASK);
+    }
+# else
+#   define AO_REAL_NEXT_PTR(x) \
+            (AO_uintptr_t *)((x) & ~(AO_uintptr_t)AO_BIT_MASK)
+# endif
+# define AO_REAL_HEAD_PTR(x) \
+            AO_REAL_NEXT_PTR(*(volatile AO_uintptr_t *)&(&(x))->AO_pa.AO_ptr)
 #else
-# define AO_REAL_NEXT_PTR(x) (AO_t *)(x)
-# define AO_REAL_HEAD_PTR(x) (AO_t *)((x).AO_vp.AO_val2 /* ptr */)
+# define AO_REAL_NEXT_PTR(x) ((AO_t *)*(&(x)))
+# define AO_REAL_HEAD_PTR(x) (AO_t *)((&(x))->AO_vp.AO_val2 /* ptr */)
 #endif /* AO_REAL_PTR_AS_MACRO && !AO_USE_ALMOST_LOCK_FREE */
 
-AO_API void AO_stack_push_release(AO_stack_t *list, AO_t *new_element);
+AO_API void AO_stack_push_release(AO_stack_t *,
+                                  AO_uintptr_t * /* new_element */);
 #define AO_HAVE_stack_push_release
 
 #define AO_stack_push(l, e) AO_stack_push_release(l, e)
 #define AO_HAVE_stack_push
 
-AO_API AO_t *AO_stack_pop_acquire(AO_stack_t *list);
+AO_API AO_uintptr_t *AO_stack_pop_acquire(AO_stack_t *);
 #define AO_HAVE_stack_pop_acquire
 
 #define AO_stack_pop(l) AO_stack_pop_acquire(l)
 #define AO_HAVE_stack_pop
 
-AO_API void AO_stack_init(AO_stack_t *list);
+AO_API void AO_stack_init(AO_stack_t *);
 AO_API int AO_stack_is_lock_free(void);
 
-AO_API AO_t *AO_stack_head_ptr(const AO_stack_t *list);
-AO_API AO_t *AO_stack_next_ptr(AO_t /* next */);
+/* These primitives should not be used directly.        */
+AO_API AO_uintptr_t *AO_stack_head_ptr(const AO_stack_t *);
+AO_API AO_uintptr_t *AO_stack_next_ptr(AO_uintptr_t); /* deprecated */
+AO_API AO_uintptr_t *AO_stack_next_ptr_d(const AO_uintptr_t * /* pnext */);
 
 #ifdef __cplusplus
   } /* extern "C" */

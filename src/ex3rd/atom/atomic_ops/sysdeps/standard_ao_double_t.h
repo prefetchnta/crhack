@@ -21,10 +21,15 @@
  * SOFTWARE.
  */
 
-/* For 64-bit systems, we expect the double type to hold two int64's.   */
+#if !defined(AO_ATOMIC_OPS_H) || defined(AO_HAVE_double_t)
+# error This file should not be included directly (mostly).
+#endif
 
-#if ((defined(__x86_64__) && defined(AO_GCC_ATOMIC_TEST_AND_SET)) \
-     || defined(__aarch64__)) && !defined(__ILP32__)
+/* We expect AO_double_t to hold two AO_t's.    */
+
+#if (((defined(__x86_64__) && defined(AO_GCC_ATOMIC_TEST_AND_SET)) \
+      || defined(__aarch64__)) && !defined(__ILP32__)) \
+    || ((defined(__e2k__) || defined(__riscv)) && __SIZEOF_SIZE_T__ == 8)
   /* x86-64: __m128 is not applicable to atomic intrinsics.     */
 # if AO_GNUC_PREREQ(4, 7) || AO_CLANG_PREREQ(3, 6)
 #   pragma GCC diagnostic push

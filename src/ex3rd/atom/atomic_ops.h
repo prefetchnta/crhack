@@ -153,7 +153,29 @@
 /* atomic_ops/generalize.h.                                     */
 
 /* Some common defaults.  Overridden for some architectures.    */
+
 #define AO_t size_t
+
+#if defined(__SIZEOF_POINTER__) \
+    && (__SIZEOF_POINTER__ == 2 * __SIZEOF_SIZE_T__)
+  /* Pointers are twice bigger than the machine word.   */
+# define AO_FAT_POINTER
+#endif
+
+#ifndef AO_FAT_POINTER
+# define AO_uintptr_t AO_t
+#elif defined(__e2k__)
+  /* For some reason uintptr_t is 64-bit on E2K in the protected mode.  */
+  typedef unsigned __int128 AO_uintptr_t;
+#else
+# include <inttypes.h>
+# define AO_uintptr_t uintptr_t
+#endif
+
+/* A compile-time assertion for AO_uintptr_t size.      */
+struct AO_uintptr_t_size_static_assert {
+  char dummy[sizeof(AO_uintptr_t) == sizeof(void *) ? 1 : -1];
+};
 
 /* The test_and_set primitive returns an AO_TS_VAL_t value.     */
 /* AO_TS_t is the type of an in-memory test-and-set location.   */
@@ -219,9 +241,10 @@
 # ifndef AO_MEMORY_SANITIZER
 #   define AO_ATTR_NO_SANITIZE_MEMORY /* empty */
 # elif AO_CLANG_PREREQ(3, 8)
-#   define AO_ATTR_NO_SANITIZE_MEMORY __attribute__((no_sanitize("memory")))
+#   define AO_ATTR_NO_SANITIZE_MEMORY \
+            __attribute__((__no_sanitize__("memory")))
 # else
-#   define AO_ATTR_NO_SANITIZE_MEMORY __attribute__((no_sanitize_memory))
+#   define AO_ATTR_NO_SANITIZE_MEMORY __attribute__((__no_sanitize_memory__))
 # endif
 #endif /* !AO_ATTR_NO_SANITIZE_MEMORY */
 
@@ -229,9 +252,10 @@
 # ifndef AO_THREAD_SANITIZER
 #   define AO_ATTR_NO_SANITIZE_THREAD /* empty */
 # elif AO_CLANG_PREREQ(3, 8)
-#   define AO_ATTR_NO_SANITIZE_THREAD __attribute__((no_sanitize("thread")))
+#   define AO_ATTR_NO_SANITIZE_THREAD \
+            __attribute__((__no_sanitize__("thread")))
 # else
-#   define AO_ATTR_NO_SANITIZE_THREAD __attribute__((no_sanitize_thread))
+#   define AO_ATTR_NO_SANITIZE_THREAD __attribute__((__no_sanitize_thread__))
 # endif
 #endif /* !AO_ATTR_NO_SANITIZE_THREAD */
 
@@ -265,10 +289,10 @@
 
 #ifdef AO_ALIGNOF_SUPPORTED
 # define AO_ASSERT_ADDR_ALIGNED(addr) \
-    assert(((size_t)(addr) & (__alignof__(*(addr)) - 1)) == 0)
+    assert(((AO_uintptr_t)(addr) & (__alignof__(*(addr)) - 1)) == 0)
 #else
 # define AO_ASSERT_ADDR_ALIGNED(addr) \
-    assert(((size_t)(addr) & (sizeof(*(addr)) - 1)) == 0)
+    assert(((AO_uintptr_t)(addr) & (sizeof(*(addr)) - 1)) == 0)
 #endif /* !AO_ALIGNOF_SUPPORTED */
 
 #if defined(__GNUC__) && !defined(__INTEL_COMPILER)
@@ -285,6 +309,9 @@
 #   define AO_compiler_barrier() _ReadWriteBarrier()
         /* We assume this does not generate a fence instruction.        */
         /* The documentation is a bit unclear.                          */
+# elif defined(AO_NO_ASM_XCHG)
+    static volatile int AO_barrier_dummy;
+#   define AO_compiler_barrier() (void)(AO_barrier_dummy++)
 # else
 #   define AO_compiler_barrier() __asm { }
         /* The preceding implementation may be preferable here too.     */
@@ -343,7 +370,7 @@
 #   define AO_GENERALIZE_TWICE
 # elif defined(__s390__)
 #   include "atomic_ops/sysdeps/gcc/s390.h"
-# elif defined(__sparc__)
+# elif defined(__sparc)
 #   include "atomic_ops/sysdeps/gcc/sparc.h"
 #   define AO_CAN_EMUL_CAS
 # elif defined(__m68k__)
@@ -510,4 +537,5 @@
 #define AO_T AO_t
 #define AO_TS_VAL AO_TS_VAL_t
 
+#define AO_ATOMIC_OPS_INCLUDED
 #endif /* !AO_ATOMIC_OPS_H */

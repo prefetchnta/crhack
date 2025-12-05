@@ -21,7 +21,7 @@
  * SOFTWARE.
  */
 
-#ifndef AO_ATOMIC_OPS_H
+#if !defined(AO_ATOMIC_OPS_H) || defined(AO_ATOMIC_OPS_INCLUDED)
 # error This file should not be included directly.
 #endif
 
@@ -34,5 +34,5 @@
 
 /* The version here should match that in configure.ac and README.       */
 #define AO_VERSION_MAJOR 7
-#define AO_VERSION_MINOR 8
-#define AO_VERSION_MICRO 4 /* 7.8.4 */
+#define AO_VERSION_MINOR 10
+#define AO_VERSION_MICRO 0 /* 7.10.0 */
