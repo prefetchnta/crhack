@@ -160,7 +160,7 @@ SFLAGS_LINUX=--strip-unneeded $(BIN_NAME)
 ##=====================================
 ##
 CFLAGS_NAKED=-c -O2 -fshort-wchar -Wall -ffunction-sections \
-             -fdata-sections -fsigned-char -I. -I../inc -fPIC $(C_ADDONS)
+             -fdata-sections -fsigned-char -I. -I../inc $(C_ADDONS)
 
 ##
 ##=====================================
