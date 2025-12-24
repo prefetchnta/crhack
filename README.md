@@ -47,6 +47,16 @@ usr/arm-none-eabi-cm7f-big-ram.bat | GCC (ARM Cortex-M7F-DP Big RAM)
 usr/riscv-none-elf-rv32imac-small-ram.bat | GCC (RISC-V RV32IMAC Small RAM)
 usr/riscv-none-elf-rv32imafc-big-ram.bat | GCC (RISC-V RV32IMAFC Big RAM)
 usr/riscv-none-elf-rv32imafdc-big-ram.bat | GCC (RISC-V RV32IMAFDC Big RAM)
+usr/riscv-none-embed-qingke_v2a-small-ram.bat | GCC (RISC-V 青稞 V2A Small RAM)
+usr/riscv-none-embed-qingke_v2c-small-ram.bat | GCC (RISC-V 青稞 V2C Small RAM)
+usr/riscv-none-embed-qingke_v3a_v4a-big-ram.bat | GCC (RISC-V 青稞 V3A V4A Big RAM)
+usr/riscv-none-embed-qingke_v3bc_v4bcj-big-ram.bat | GCC (RISC-V 青稞 V3B V3C V4B V4C V4J Big RAM)
+usr/riscv-none-embed-qingke_v3f_v4f_v5f-big-ram.bat | GCC (RISC-V 青稞 V3F V4F V5F Big RAM)
+usr/riscv-wch-elf-qingke_v2a-small-ram.bat | GCC (RISC-V 青稞 V2A Small RAM)
+usr/riscv-wch-elf-qingke_v2c-small-ram.bat | GCC (RISC-V 青稞 V2C Small RAM)
+usr/riscv-wch-elf-qingke_v3a_v4a-big-ram.bat | GCC (RISC-V 青稞 V3A V4A Big RAM)
+usr/riscv-wch-elf-qingke_v3bc_v4bcj-big-ram.bat | GCC (RISC-V 青稞 V3B V3C V4B V4C V4J Big RAM)
+usr/riscv-wch-elf-qingke_v3f_v4f_v5f-big-ram.bat | GCC (RISC-V 青稞 V3F V4F V5F Big RAM)
 
 ## 【废 话】
 　　这是一个近乎脑残的项目，试图用一套 **C** 代码支持所有的编译器平台。结果发现，维护这么一套代码的精力投入，要远大于分开独立的项目。可见，真正的跨平台就是浮云。纯粹用 **C** 来写所有东西，而且要照顾到很多变态的编译器，也是一件十分痛苦的事（有些东西根本不该包括进来的也包括进来了）。所以这个是一个失败的项目。但木已成舟，这个项目还将继续，不过不会是主要的项目了。走出自己给自己设下的笼子，是很重要的（从一个笼子换到另一个笼子，人生就是如此）。

@@ -25,7 +25,6 @@
     #define _WIN32_DCOM
 #endif
 
-#include <tchar.h>
 #include <windows.h>
 #include <objbase.h>
 #include <mmsystem.h>

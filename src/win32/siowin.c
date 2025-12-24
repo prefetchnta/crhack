@@ -20,7 +20,6 @@
 #include "devlib.h"
 #include "memlib.h"
 
-#include <tchar.h>
 #include <windows.h>
 
 /* 串口内部结构 */
@@ -254,7 +253,7 @@ sio_open (
     HANDLE          hfile;
     DCB             param;
     COMMTIMEOUTS    timeout;
-    TCHAR           name[16];
+    xchar_t         name[16];
 
     /* 端口号 */
     if (port >= _CR_SIO_COUNT_ ||
@@ -269,9 +268,9 @@ sio_open (
     }
     else {
 #if defined(_CR_OS_WINCE_)
-        wsprintf(name, _T("COM%u:"), port);
+        wsprintf(name, L"COM%u:", port);
 #else
-        wsprintf(name, _T("\\\\.\\COM%u"), port);
+        wsprintf(name, _CR_TS("\\\\.\\COM%u"), port);
 #endif
         hfile = CreateFile(name, GENERIC_READ | GENERIC_WRITE,
                            FILE_SHARE_READ | FILE_SHARE_WRITE, NULL,

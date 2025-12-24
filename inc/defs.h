@@ -449,6 +449,16 @@ fmj_fzh (
     #define CR_AS(s)    ((const ansi_t*)(   s))
     #define CR_WS(s)    ((const wide_t*)(L##s))
 #endif
+#if defined(_CR_OS_WINCE_) || \
+    defined(UNICODE) || defined(_UNICODE)
+    #define _CR_USE_WIDE_
+    typedef wide_t  xchar_t;
+    #define _CR_TS(s)   ((const wide_t*)(L##s))
+#else
+    #define _CR_USE_ANSI_
+    typedef ansi_t  xchar_t;
+    #define _CR_TS(s)   ((const ansi_t*)(s))
+#endif
 
 /*****************************************************************************/
 /*                               有用的宏定义                                */

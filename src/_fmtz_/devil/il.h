@@ -99,9 +99,9 @@ typedef long long unsigned int ILuint64;
 
 #include <limits.h>
 #ifdef _UNICODE
-	#ifndef _WIN32_WCE
-		#include <wchar.h>
-	#endif
+	//#ifndef _WIN32_WCE
+		//#include <wchar.h>
+	//#endif
 	//if we use a define instead of a typedef,
 	//ILconst_string works as intended
 	#define ILchar wchar_t

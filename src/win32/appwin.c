@@ -30,7 +30,6 @@
     #include <stdio.h>
 #endif
 
-#include <tchar.h>
 #include <windows.h>
 
 /* CUI 输出句柄 */
@@ -147,7 +146,7 @@ set_app_mode (
 #else
     HWND    task;
 
-    task = FindWindow(_T("Shell_TrayWnd"), NULL);
+    task = FindWindow(_CR_TS("Shell_TrayWnd"), NULL);
     if (task == NULL)
         return (FALSE);
     ShowWindow(task, param);
