@@ -20,7 +20,7 @@
 #ifndef __CR_EXTZ_H__
 #define __CR_EXTZ_H__
 
-#include "defs.h"
+#include "gfx2.h"
 
 /*****************************************************************************/
 /*                               CUI 输出控制                                */
@@ -182,6 +182,9 @@ CR_API dispmode_t   disp_mode_get (void_t);
 CR_API bool_t       disp_mode_set (dispmode_t mode, uint_t width,
                                    uint_t height, uint_t bpp);
 CR_API void_t       disp_mode_del (dispmode_t mode);
+
+/* 屏幕截图 */
+CR_API sIMAGE*  desktop_capture (void_t);
 
 /* 调用 Shell 命令 */
 CR_API bool_t   shell_cmd (const ansi_t *cmd, sint_t *retc);

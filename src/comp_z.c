@@ -24,8 +24,8 @@
 uLong ZEXPORT compressBound (uLong sourceLen);
 int ZEXPORT compress2 (Bytef *dest, uLongf *destLen, const Bytef *source,
                        uLong sourceLen, int level, int isRaw);
-int ZEXPORT uncompress (Bytef *dest, uLongf *destLen, const Bytef *source,
-                        uLong sourceLen, int isRaw);
+int ZEXPORT uncompress2 (Bytef *dest, uLongf *destLen, const Bytef *source,
+                         uLong *sourceLen, int isRaw);
 /*
 =======================================
     ZLib 压缩
@@ -45,13 +45,12 @@ compr_zlib (
     ssize = (uLong)srclen;
     if (ssize != srclen)
         return (0);
-
-    if (dst == NULL)
-        return (compressBound(ssize));
-
     dsize = (uLong)dstlen;
     if (dsize != dstlen)
         return (0);
+
+    if (dst == NULL)
+        return (compressBound(ssize));
 
     if (compress2((Bytef*)dst, &dsize, (const Bytef*)src,
                     ssize, level, FALSE) != Z_OK)
@@ -81,8 +80,8 @@ uncompr_zlib (
     if (dsize != dstlen)
         return (0);
 
-    if (uncompress((Bytef*)dst, &dsize, (const Bytef*)src,
-                    ssize, FALSE) != Z_OK)
+    if (uncompress2((Bytef*)dst, &dsize, (const Bytef*)src,
+                     &ssize, FALSE) != Z_OK)
         return (0);
     return (dsize);
 }
@@ -106,13 +105,12 @@ compr_flate (
     ssize = (uLong)srclen;
     if (ssize != srclen)
         return (0);
-
-    if (dst == NULL)
-        return (compressBound(ssize));
-
     dsize = (uLong)dstlen;
     if (dsize != dstlen)
         return (0);
+
+    if (dst == NULL)
+        return (compressBound(ssize));
 
     if (compress2((Bytef*)dst, &dsize, (const Bytef*)src,
                     ssize, level, TRUE) != Z_OK)
@@ -142,8 +140,8 @@ uncompr_flate (
     if (dsize != dstlen)
         return (0);
 
-    if (uncompress((Bytef*)dst, &dsize, (const Bytef*)src,
-                    ssize, TRUE) != Z_OK)
+    if (uncompress2((Bytef*)dst, &dsize, (const Bytef*)src,
+                     &ssize, TRUE) != Z_OK)
         return (0);
     return (dsize);
 }

@@ -42,6 +42,8 @@ typedef struct
         HDC         m_back;     /* 后台表面 hDC */
         HWND        m_hwnd;     /* 主窗口的句柄 */
         HBITMAP     m_hbmp;     /* 后台位图句柄 */
+        HGDIOBJ     m_obmp;     /* 老的位图句柄 */
+        HGDIOBJ     m_ofnt;     /* 老的字体句柄 */
 
 } iGFX2_GDI;
 

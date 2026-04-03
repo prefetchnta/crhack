@@ -62,6 +62,9 @@ iGFX2_GDI_release (
     iGFX2_GDI*  real;
 
     real = (iGFX2_GDI*)that;
+    if (real->m_ofnt != NULL)
+        SelectObject(real->m_back, real->m_ofnt);
+    SelectObject(real->m_back, real->m_obmp);
     DeleteObject(real->m_hbmp);
     DeleteDC(real->m_back);
 
@@ -112,12 +115,17 @@ iGFX2_GDI_reset (
         next = create_gdi_bitmap(rect.right, rect.bottom, CR_UNKNOWN);
         if (next == NULL)
             return (FALSE);
+        if (real->m_ofnt != NULL)
+            SelectObject(real->m_back, real->m_ofnt);
+        SelectObject(real->m_back, real->m_obmp);
         DeleteObject(real->m_hbmp);
         DeleteDC(real->m_back);
 
         /* 复制新的数据后释放新结构 */
         real->m_back = next->m_back;
         real->m_hbmp = next->m_hbmp;
+        real->m_obmp = next->m_obmp;
+        real->m_ofnt = next->m_ofnt;
         struct_cpy(&real->__back__, &next->__back__, sIMAGE);
         mem_free(next);
     }
@@ -519,32 +527,37 @@ create_gdi_bitmap (
         goto _failure3;
 
     surface->m_hbmp = CreateDIBSection(surface->m_back, bmpinfo,
-                                       DIB_RGB_COLORS, &bmpdata, NULL, 0);
+                                       DIB_RGB_COLORS, &bmpdata,
+                                       NULL, 0);
     if (surface->m_hbmp == NULL)
         goto _failure4;
 
     /* hDC 选入位图 */
-    if (SelectObject(surface->m_back, surface->m_hbmp) == HGDI_ERROR)
+    surface->m_obmp = SelectObject(surface->m_back, surface->m_hbmp);
+    if (surface->m_obmp == HGDI_ERROR)
         goto _failure5;
 
     /* 设置 sIMAGE 结构 */
     if (!image_set(&surface->__back__, bmpdata, (leng_t)(-1L),
                    0, 0, width, height, crh_fmt, TRUE, 4))
-        goto _failure5;
+        goto _failure6;
 
     /* 获取调色板数据 (如果需要的话) */
     if (isCrTypeIndex(crh_fmt)) {
         if (GetDIBColorTable(surface->m_back, 0, pal_num, (RGBQUAD*)
                                 (&surface->__back__.pal)) != pal_num)
-            goto _failure5;
+            goto _failure6;
     }
     surface->m_main = NULL;
     surface->m_hwnd = NULL;
+    surface->m_ofnt = NULL;
     surface->__vptr__ = &s_bitmap_vtbl;
     mem_free(bmpinfo);
     ReleaseDC(GetDesktopWindow(), desktop);
     return (surface);
 
+_failure6:
+    SelectObject(surface->m_back, surface->m_obmp);
 _failure5:
     DeleteObject(surface->m_hbmp);
 _failure4:
@@ -855,6 +868,7 @@ iFONT_GDI_bind (
   __CR_IN__ iGFX2*  gfx2
     )
 {
+    HGDIOBJ     fnto;
     iFONT_GDI*  real;
     iGFX2_GDI*  gfx2_gdi;
 
@@ -864,8 +878,11 @@ iFONT_GDI_bind (
     real = (iFONT_GDI*)that;
 
     /* 字体选入位图 */
-    if (SelectObject(gfx2_gdi->m_back, real->m_font) == HGDI_ERROR)
+    fnto = SelectObject(gfx2_gdi->m_back, real->m_font);
+    if (fnto == HGDI_ERROR)
         return (FALSE);
+    if (gfx2_gdi->m_ofnt == NULL)
+        gfx2_gdi->m_ofnt = fnto;
     real->m_draw = gfx2_gdi->m_back;
     return (TRUE);
 }

@@ -22,6 +22,17 @@
 
 #include <windows.h>
 
+/* 老系统没有这个宏 */
+#ifndef CAPTUREBLT
+    #define CAPTUREBLT  0
+#endif
+
+/* 64位下会报 int 到 HANDLE 的警告 */
+#if defined(_CR_OS_WIN64_)
+    #undef  HGDI_ERROR
+    #define HGDI_ERROR  (LongToHandle(0xFFFFFFFFL))
+#endif
+
 /* 简化常数的宏 */
 #if defined(_CR_OS_WINCE_)
     #define WINGUI_STYLE    (CS_DBLCLKS | \
@@ -476,6 +487,73 @@ disp_mode_del (
     )
 {
     mem_free(mode);
+}
+
+/*
+=======================================
+    屏幕截图
+=======================================
+*/
+CR_API sIMAGE*
+desktop_capture (void_t)
+{
+    HDC         deskdc;
+    HDC         captdc;
+    sint_t      sw, sh;
+    sIMAGE*     retimg;
+    HBITMAP     capbmp;
+    HGDIOBJ     oldbmp;
+    BITMAPINFO  bminfo;
+
+    deskdc = GetDC(GetDesktopWindow());
+    if (deskdc == NULL)
+        return (NULL);
+    captdc = CreateCompatibleDC(deskdc);
+    if (captdc == NULL)
+        goto _failure1;
+    sw = GetSystemMetrics(SM_CXSCREEN);
+    sh = GetSystemMetrics(SM_CYSCREEN);
+    capbmp = CreateCompatibleBitmap(deskdc, sw, sh);
+    if (capbmp == NULL)
+        goto _failure2;
+    oldbmp = SelectObject(captdc, capbmp);
+    if (oldbmp == HGDI_ERROR)
+        goto _failure3;
+    if (!BitBlt(captdc, 0, 0, sw, sh, deskdc, 0, 0, SRCCOPY | CAPTUREBLT))
+        goto _failure4;
+    struct_zero(&bminfo, BITMAPINFO);
+    bminfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+    bminfo.bmiHeader.biWidth = sw;
+    bminfo.bmiHeader.biHeight = sh;
+    bminfo.bmiHeader.biPlanes = 1;
+    bminfo.bmiHeader.biBitCount = 32;
+    bminfo.bmiHeader.biCompression = BI_RGB;
+    if (!GetDIBits(captdc, capbmp, 0, sh, NULL, &bminfo, DIB_RGB_COLORS))
+        goto _failure4;
+    retimg = image_new(0, 0, sw, sh, CR_ARGB8888, TRUE, 4);
+    if (retimg == NULL)
+        goto _failure4;
+    if (!GetDIBits(captdc, capbmp, 0, sh, retimg->data,
+                            &bminfo, DIB_RGB_COLORS))
+        goto _failure5;
+    SelectObject(captdc, oldbmp);
+    DeleteObject(capbmp);
+    DeleteDC(captdc);
+    ReleaseDC(GetDesktopWindow(), deskdc);
+    image_flp(retimg, TRUE);
+    return (retimg);
+
+_failure5:
+    image_del(retimg);
+_failure4:
+    SelectObject(captdc, oldbmp);
+_failure3:
+    DeleteObject(capbmp);
+_failure2:
+    DeleteDC(captdc);
+_failure1:
+    ReleaseDC(GetDesktopWindow(), deskdc);
+    return (NULL);
 }
 
 #endif  /* !_CR_OS_WINCE_ */
