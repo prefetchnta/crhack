@@ -699,6 +699,98 @@ image_indexed (
 
 /*
 =======================================
+    生成1张颜色掩码图
+=======================================
+*/
+CR_API sIMAGE*
+image_masked (
+  __CR_IN__ const sIMAGE*   img,
+  __CR_IN__ int32u          color
+    )
+{
+    MASKED_IO   mio;
+
+    mio.fcolor = color;
+    mio.masked = NULL;
+    if (!image_masked2(img, &mio, 1))
+        return (NULL);
+    return (mio.masked);
+}
+
+/*
+=======================================
+    生成N张颜色掩码图
+=======================================
+*/
+CR_API bool_t
+image_masked2 (
+  __CR_IN__ const sIMAGE*   img,
+  __CR_IO__ MASKED_IO*      mio,
+  __CR_IN__ uint_t          count
+    )
+{
+    byte_t* ptr;
+    byte_t* sline;
+    leng_t  dline;
+    int32u  maskp;
+    int32u  value;
+    uint_t  ii, jj;
+    uint_t  xx, hh;
+
+    /* 参数检查 */
+    if (img->bpc == 0 || img->bpc > 4)
+        return (FALSE);
+    switch (img->fmt)
+    {
+        default: return (FALSE);
+        case CR_INDEX8: maskp = 0xFF; break;
+        case CR_ARGB565: maskp = 0xFFFF; break;
+        case CR_ARGB888: maskp = 0xFFFFFF; break;
+        case CR_ARGB4444: maskp = 0xFFF; break;
+        case CR_ARGBX555: maskp = 0x7FFF; break;
+        case CR_ARGB1555: maskp = 0x7FFF; break;
+        case CR_ARGB8888: maskp = 0xFFFFFF; break;
+    }
+
+    /* 创建结果掩码图 */
+    for (ii = 0; ii < count; ii++) {
+        mio[ii].masked = image_new(0, 0, img->position.ww, img->position.hh,
+                                        CR_INDEX8, FALSE, sizeof(int32u));
+        if (mio[ii].masked == NULL) {
+            for (jj = 0; jj < ii; jj++)
+                image_del(mio[jj].masked);
+            return (FALSE);
+        }
+        mio[ii].fcolor &= maskp;
+        pal_set_gray8(mio[ii].masked->pal, 256);
+        mem_zero(mio[ii].masked->data, mio[ii].masked->size);
+    }
+
+    /* 逐像素匹配颜色设置掩码 */
+    dline = 0;
+    sline = img->data;
+    for (hh = img->position.hh; hh != 0; hh--) {
+        ptr = sline;
+        for (xx = 0; xx < img->position.ww; xx++) {
+            mem_cpy(&value, ptr, img->bpc);
+            value &= maskp;
+            for (ii = 0; ii < count; ii++) {
+                if (mio[ii].fcolor == value)
+                {
+                    /* 颜色匹配置位 */
+                    mio[ii].masked->data[dline + xx] = 0xFF;
+                }
+            }
+            ptr += img->bpc;
+        }
+        dline += mio->masked->bpl;
+        sline += img->bpl;
+    }
+    return (TRUE);
+}
+
+/*
+=======================================
     灰度图二值化 (单一值)
 =======================================
 */

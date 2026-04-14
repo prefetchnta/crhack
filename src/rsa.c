@@ -21,8 +21,8 @@
 #include "memlib.h"
 
 /* 默认和最大支持的密钥位数 */
-#define RSA_DEF_BITS    1024
-#define RSA_MAX_BITS    2048
+#define RSA_DEF_BITS    (CR_BIGINT_CNT / 4)
+#define RSA_MAX_BITS    (CR_BIGINT_CNT / 2)
 
 /*
 =======================================

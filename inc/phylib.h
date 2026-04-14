@@ -238,6 +238,17 @@ typedef byte_t  (*idx_bgr_t) (void_t*, uint_t, uint_t, const byte_t*);
 
 CR_API sIMAGE*  image_indexed (const sIMAGE *img, idx_bgr_t dopix,
                          const byte_t *pal, leng_t num, void_t *param);
+/* 颜色匹配转换 */
+typedef struct
+{
+        int32u  fcolor;     /* 查找的颜色 */
+        sIMAGE* masked;     /* 返回的掩码 */
+
+} MASKED_IO;
+
+CR_API sIMAGE*  image_masked (const sIMAGE *img, int32u color);
+CR_API bool_t   image_masked2 (const sIMAGE *img, MASKED_IO *mio,
+                               uint_t count);
 /* 灰度直方图计算 */
 CR_API bool_t   image_histo (leng_t tab[256], const sIMAGE *gray);
 
