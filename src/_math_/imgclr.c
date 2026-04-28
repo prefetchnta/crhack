@@ -719,6 +719,74 @@ image_masked (
 
 /*
 =======================================
+    生成1张颜色掩码图 (多个颜色)
+=======================================
+*/
+CR_API sIMAGE*
+image_masked1 (
+  __CR_IN__ const sIMAGE*   img,
+  __CR_IO__ int32u*         color,
+  __CR_IN__ uint_t          count
+    )
+{
+    sIMAGE* msk;
+    byte_t* ptr;
+    byte_t* sline;
+    byte_t* dline;
+    uint_t  ii, xx, hh;
+    int32u  maskp, value;
+
+    /* 参数检查 */
+    if (img->bpc == 0 || img->bpc > 4)
+        return (NULL);
+    switch (img->fmt)
+    {
+        default: return (NULL);
+        case CR_INDEX8: maskp = 0xFF; break;
+        case CR_ARGB565: maskp = 0xFFFF; break;
+        case CR_ARGB888: maskp = 0xFFFFFF; break;
+        case CR_ARGB4444: maskp = 0xFFF; break;
+        case CR_ARGBX555: maskp = 0x7FFF; break;
+        case CR_ARGB1555: maskp = 0x7FFF; break;
+        case CR_ARGB8888: maskp = 0xFFFFFF; break;
+    }
+
+    /* 创建结果掩码图 */
+    msk = image_new(0, 0, img->position.ww, img->position.hh,
+                        CR_INDEX8, FALSE, sizeof(int32u));
+    if (msk == NULL)
+        return (NULL);
+    for (ii = 0; ii < count; ii++)
+        color[ii] &= maskp;
+    pal_set_gray8(msk->pal, 256);
+    mem_zero(msk->data, msk->size);
+
+    /* 逐像素匹配颜色设置掩码 */
+    dline = msk->data;
+    sline = img->data;
+    for (hh = img->position.hh; hh != 0; hh--) {
+        ptr = sline;
+        for (xx = 0; xx < img->position.ww; xx++) {
+            mem_cpy(&value, ptr, img->bpc);
+            value &= maskp;
+            for (ii = 0; ii < count; ii++) {
+                if (color[ii] == value)
+                {
+                    /* 颜色匹配置位 */
+                    dline[xx] = 0xFF;
+                    break;
+                }
+            }
+            ptr += img->bpc;
+        }
+        dline += msk->bpl;
+        sline += img->bpl;
+    }
+    return (msk);
+}
+
+/*
+=======================================
     生成N张颜色掩码图
 =======================================
 */
@@ -779,6 +847,7 @@ image_masked2 (
                 {
                     /* 颜色匹配置位 */
                     mio[ii].masked->data[dline + xx] = 0xFF;
+                    break;
                 }
             }
             ptr += img->bpc;

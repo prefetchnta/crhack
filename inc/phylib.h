@@ -247,6 +247,8 @@ typedef struct
 } MASKED_IO;
 
 CR_API sIMAGE*  image_masked (const sIMAGE *img, int32u color);
+CR_API sIMAGE*  image_masked1 (const sIMAGE *img, int32u *color,
+                               uint_t count);
 CR_API bool_t   image_masked2 (const sIMAGE *img, MASKED_IO *mio,
                                uint_t count);
 /* 灰度直方图计算 */
