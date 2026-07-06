@@ -22,6 +22,16 @@
 #include "memlib.h"
 #include "mtplib.h"
 
+/* 参数安全检查 */
+#if _CR_MEM_ALIGN_ < 4
+    #undef  _CR_MEM_ALIGN_
+    #define _CR_MEM_ALIGN_  4
+#endif
+#if _CR_MEM_ALIGN_ > 64
+    #undef  _CR_MEM_ALIGN_
+    #define _CR_MEM_ALIGN_  64
+#endif
+
 /* 内存的分配器 */
 static cr_malloc_t  s_alloc = NULL;
 static cr_free_t    s_mfree = NULL;
@@ -121,9 +131,9 @@ mem_malloc (
         return (NULL);
 
     /* 保存原始分配大小 */
-    /* 头数据 + 16B 对齐 */
+    /* 头数据 + 对齐填充 + 尾部填充 */
     off = size;
-    size += sizeof(ffunc) + 16;
+    size += sizeof(ffunc) + _CR_MEM_ALIGN_ + _CR_MEM_TAILS_;
 
     /* 分配内存 */
     hdr = (ffunc*)s_alloc(size);
@@ -143,9 +153,9 @@ mem_malloc (
         s_dbg_tots = s_dbg_size;
     splock_release(&s_dbg_lock);
 #endif
-    /* 16B 对齐计算 */
+    /* 地址对齐计算 */
     buf = (uchar*)(&hdr[1]);
-    off = (leng_t)CR_EXTEND(buf, 16);
+    off = (leng_t)CR_EXTEND(buf, _CR_MEM_ALIGN_);
     buf += off;
 
     /* 存放偏移数据 */
@@ -175,7 +185,7 @@ mem_free (
         return;
     off = *((uchar*)ptr - 1);
     *((uchar*)ptr - 1) = 0xFF;
-    if (off <= sizeof(ffunc) || off > 16 + sizeof(ffunc)) {
+    if (off <= sizeof(ffunc) || off > _CR_MEM_ALIGN_ + sizeof(ffunc)) {
         msg_stopA("invalid memory chunk", "crhack");
         return;
     }
@@ -190,7 +200,7 @@ mem_free (
     splock_acquire(&s_dbg_lock);
     s_dbg_cnts--;
     s_dbg_size -= hdr->alloc_size;
-    s_dbg_size -= sizeof(ffunc) + 16;
+    s_dbg_size -= sizeof(ffunc) + _CR_MEM_ALIGN_ + _CR_MEM_TAILS_;
     splock_release(&s_dbg_lock);
 #endif
     /* 释放内存 */
@@ -214,7 +224,7 @@ mem_size (
     if (ptr == NULL)
         return (NULL);
     off = *((uchar*)ptr - 1);
-    if (off <= sizeof(ffunc) || off > 16 + sizeof(ffunc))
+    if (off <= sizeof(ffunc) || off > _CR_MEM_ALIGN_ + sizeof(ffunc))
         return (NULL);
     hdr = (ffunc*)((uchar*)ptr - off);
     if (hdr->alloc_size != ~hdr->check_sums)
@@ -332,7 +342,7 @@ mem_realloc (
 
     /* 安全检查 */
     off = *((uchar*)ptr - 1);
-    if (off <= sizeof(ffunc) || off > 16 + sizeof(ffunc)) {
+    if (off <= sizeof(ffunc) || off > _CR_MEM_ALIGN_ + sizeof(ffunc)) {
         msg_stopA("invalid memory chunk", "crhack");
         return (NULL);
     }

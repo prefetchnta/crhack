@@ -156,6 +156,7 @@ fill_shape (
         case CR_ARGB1555: mask = 0x7FFF; break;
         case CR_ARGB8888: mask = 0xFFFFFF; break;
     }
+    mask = DWORD_LE(mask);
     width  = (sint_t)dst->clip_win.ww;
     height = (sint_t)dst->clip_win.hh;
 

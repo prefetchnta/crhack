@@ -752,6 +752,7 @@ image_masked1 (
     }
 
     /* 创建结果掩码图 */
+    maskp = DWORD_LE(maskp);
     msk = image_new(0, 0, img->position.ww, img->position.hh,
                         CR_INDEX8, FALSE, sizeof(int32u));
     if (msk == NULL)
@@ -821,6 +822,7 @@ image_masked2 (
     }
 
     /* 创建结果掩码图 */
+    maskp = DWORD_LE(maskp);
     for (ii = 0; ii < count; ii++) {
         mio[ii].masked = image_new(0, 0, img->position.ww, img->position.hh,
                                         CR_INDEX8, FALSE, sizeof(int32u));
@@ -856,6 +858,161 @@ image_masked2 (
         sline += img->bpl;
     }
     return (TRUE);
+}
+
+/*
+---------------------------------------
+    颜色节点查找
+---------------------------------------
+*/
+static uint_t
+color_count_find (
+  __CR_IN__ const void_t*   key
+    )
+{
+    return ((uint_t)(*(int32u*)key));
+}
+
+/*
+---------------------------------------
+    颜色节点比较
+---------------------------------------
+*/
+static bool_t
+color_count_comp (
+  __CR_IN__ const void_t*   key,
+  __CR_IN__ const void_t*   obj
+    )
+{
+    if (*(int32u*)key == *(int32u*)obj)
+        return (TRUE);
+    return (FALSE);
+}
+
+/*
+=======================================
+    统计颜色的数量
+=======================================
+*/
+CR_API int32u
+image_color_count (
+  __CR_IN__ const sIMAGE*   img,
+  __CR_OT__ int32u**        colors
+    )
+{
+    byte_t* ptr;
+    byte_t* line;
+    int32u* list;
+    int32u* clrs;
+    int32u  count;
+    int32u  maskp;
+    int32u  value;
+    uint_t  xx, hh;
+    byte_t  tab[256];
+    /* ----------- */
+    sLIST*      slst;
+    sLST_UNIT*  node;
+    sCURBEAD    hash;
+
+    /* 参数检查 */
+    if (img->bpc == 0 || img->bpc > 4)
+        return (0);
+    count = 0;
+    if (img->fmt == CR_INDEX8)
+    {
+        /* 索引图不用哈希表 */
+        mem_zero(tab, sizeof(tab));
+
+        /* 扫描整个图片 */
+        line = img->data;
+        for (hh = img->position.hh; hh != 0; hh--) {
+            for (xx = 0; xx < img->position.ww; xx++)
+                tab[line[xx]] = 1;
+            line += img->bpl;
+        }
+
+        /* 统计颜色的数量 */
+        for (xx = 0; xx < 256; xx++)
+            count += tab[xx];
+
+        /* 返回颜色列表 */
+        if (colors != NULL) {
+            list = mem_talloc32(count, int32u);
+            if (list != NULL) {
+                for (hh = xx = 0; xx < 256; xx++) {
+                    if (tab[xx])
+                        list[hh++] = (int32u)xx;
+                }
+            }
+            *colors = list;
+        }
+    }
+    else
+    {
+        /* 色彩数太多需要用哈希表 */
+        switch (img->fmt)
+        {
+            default: return (0);
+            case CR_ARGB565: maskp = 0xFFFF; break;
+            case CR_ARGB888: maskp = 0xFFFFFF; break;
+            case CR_ARGB4444: maskp = 0xFFF; break;
+            case CR_ARGBX555: maskp = 0x7FFF; break;
+            case CR_ARGB1555: maskp = 0x7FFF; break;
+            case CR_ARGB8888: maskp = 0xFFFFFF; break;
+        }
+        if (!curbead_initT(&hash, int32u, img->position.ww +
+                                          img->position.hh))
+            return (0);
+        maskp = DWORD_LE(maskp);
+        hash.find = color_count_find;
+        hash.comp = color_count_comp;
+
+        /* 扫描整个图片 */
+        line = img->data;
+        for (hh = img->position.hh; hh != 0; hh--) {
+            ptr = line;
+            for (xx = img->position.ww; xx != 0; xx--, ptr += img->bpc)
+            {
+                /* 统一使用 RGB 的值 */
+                mem_cpy(&value, ptr, img->bpc);
+                value &= maskp;
+                if (curbead_findT(&hash, int32u, &value) != NULL)
+                    continue;
+
+                /* 发现一个新颜色, 插入表格 */
+                hash.comp = NULL;
+                if (curbead_insertT(&hash, int32u, &value, &value) == NULL) {
+                    curbead_freeT(&hash, int32u);
+                    return (0);
+                }
+                hash.comp = color_count_comp;
+                count++;
+            }
+            line += img->bpl;
+        }
+
+        /* 返回颜色列表 */
+        if (colors != NULL) {
+            list = mem_talloc32(count, int32u);
+            if (list != NULL) {
+                value = 0;
+                for (xx = 0; xx < hash.__size__; xx++) {
+                    slst = &hash.__list__[xx];
+                    if (slst->__size__ == 0)
+                        continue;
+                    node = slst->__head__;
+                    do {
+                        clrs = slist_get_dataT(node, int32u);
+                        list[value++] = *clrs;
+                        node = node->next;
+                    } while (node != NULL);
+                }
+            }
+            *colors = list;
+        }
+        curbead_freeT(&hash, int32u);
+    }
+    return (count);
 }
 
 /*

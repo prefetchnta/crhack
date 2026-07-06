@@ -579,6 +579,32 @@
 #undef  _CR_NO_STDC_
     */
 
+/* 内存分配对齐及尾部填充
+   默认: 根据平台类型设置
+    */
+#if     defined(_CR_SYS64_)
+    #ifndef _CR_MEM_ALIGN_
+        #define _CR_MEM_ALIGN_  64
+    #endif
+    #ifndef _CR_MEM_TAILS_
+        #define _CR_MEM_TAILS_  64
+    #endif
+#elif   defined(_CR_SYS32_)
+    #ifndef _CR_MEM_ALIGN_
+        #define _CR_MEM_ALIGN_  16
+    #endif
+    #ifndef _CR_MEM_TAILS_
+        #define _CR_MEM_TAILS_  16
+    #endif
+#else
+    #ifndef _CR_MEM_ALIGN_
+        #define _CR_MEM_ALIGN_  4
+    #endif
+    #ifndef _CR_MEM_TAILS_
+        #define _CR_MEM_TAILS_  0
+    #endif
+#endif
+
 /* 关闭内存分配调试计数
    默认: 不关闭 */
     /*

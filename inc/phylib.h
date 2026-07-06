@@ -251,6 +251,9 @@ CR_API sIMAGE*  image_masked1 (const sIMAGE *img, int32u *color,
                                uint_t count);
 CR_API bool_t   image_masked2 (const sIMAGE *img, MASKED_IO *mio,
                                uint_t count);
+/* 统计颜色的数量 */
+CR_API int32u   image_color_count (const sIMAGE *img, int32u **colors);
+
 /* 灰度直方图计算 */
 CR_API bool_t   image_histo (leng_t tab[256], const sIMAGE *gray);
 
