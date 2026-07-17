@@ -259,7 +259,7 @@ create_gx_canvas (
     }
 
     /* 创建后台缓冲 */
-    rett->__back__.data = (byte_t*)mem_malloc(rett->__back__.size + 16);
+    rett->__back__.data = (byte_t*)mem_malloc(rett->__back__.size);
     if (rett->__back__.data == NULL)
         goto _failure2;
 

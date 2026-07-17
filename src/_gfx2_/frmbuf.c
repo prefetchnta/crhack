@@ -308,7 +308,7 @@ create_fb_canvas (
     else {
         goto _failure;
     }
-    rett->__back__.data = (byte_t*)mem_malloc(rett->__back__.size + 64);
+    rett->__back__.data = (byte_t*)mem_malloc(rett->__back__.size);
     if (rett->__back__.data == NULL)
         goto _failure;
     mem_zero(rett->__back__.data, rett->__back__.size);
