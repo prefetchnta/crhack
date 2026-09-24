@@ -12,6 +12,7 @@ mak/mdk40_16.bat | Keil MDK 4.0 ARMCC (Naked-THUMB) [base]
 mak/mdk40_32.bat | Keil MDK 4.0 ARMCC (Naked-ARM32) [base]
 mak/mdk50_16.bat | Keil MDK 5.0 ARMCC (Naked-THUMB) [base]
 mak/mdk50_32.bat | Keil MDK 5.0 ARMCC (Naked-ARM32) [base]
+mak/mdk50_ac6.bat | Keil MDK 5.0 ARMCLANG (Naked-ARM) [base]
 mak/ndk-gcc.bat | Android NDK GCC (Android-ALL) [base]
 mak/mingw32.bat | MinGW32 (Win32-X86)
 mak/mingw64.bat | MinGW64 (Win32-X64)
@@ -39,11 +40,18 @@ usr/armcc-cm0p-small-ram.bat | Keil MDK 5.0 ARMCC (ARM Cortex-M0+ Small RAM)
 usr/armcc-cm3-big-ram.bat | Keil MDK 5.0 ARMCC (ARM Cortex-M3 Big RAM)
 usr/armcc-cm4f-big-ram.bat | Keil MDK 5.0 ARMCC (ARM Cortex-M4F-SP Big RAM)
 usr/armcc-cm7f-big-ram.bat | Keil MDK 5.0 ARMCC (ARM Cortex-M7F-DP Big RAM)
+usr/armclang6-cm0-small-ram.bat | Keil MDK 5.0 ARMCLANG (ARM Cortex-M0 Small RAM)
+usr/armclang6-cm0p-small-ram.bat | Keil MDK 5.0 ARMCLANG (ARM Cortex-M0+ Small RAM)
+usr/armclang6-cm3-big-ram.bat | Keil MDK 5.0 ARMCLANG (ARM Cortex-M3 Big RAM)
+usr/armclang6-cm4f-big-ram.bat | Keil MDK 5.0 ARMCLANG (ARM Cortex-M4F-SP Big RAM)
+usr/armclang6-cm7f-big-ram.bat | Keil MDK 5.0 ARMCLANG (ARM Cortex-M7F-DP Big RAM)
+usr/armclang6-cm33f-big-ram.bat | Keil MDK 5.0 ARMCLANG (ARM Cortex-M33F-SP Big RAM)
 usr/arm-none-eabi-cm0-small-ram.bat | GCC (ARM Cortex-M0 Small RAM)
 usr/arm-none-eabi-cm0p-small-ram.bat | GCC (ARM Cortex-M0+ Small RAM)
 usr/arm-none-eabi-cm3-big-ram.bat | GCC (ARM Cortex-M3 Big RAM)
 usr/arm-none-eabi-cm4f-big-ram.bat | GCC (ARM Cortex-M4F-SP Big RAM)
 usr/arm-none-eabi-cm7f-big-ram.bat | GCC (ARM Cortex-M7F-DP Big RAM)
+usr/arm-none-eabi-cm33f-big-ram.bat | GCC (ARM Cortex-M33F-SP Big RAM)
 usr/riscv-none-elf-rv32imac-small-ram.bat | GCC (RISC-V RV32IMAC Small RAM)
 usr/riscv-none-elf-rv32imafc-big-ram.bat | GCC (RISC-V RV32IMAFC Big RAM)
 usr/riscv-none-elf-rv32imafdc-big-ram.bat | GCC (RISC-V RV32IMAFDC Big RAM)

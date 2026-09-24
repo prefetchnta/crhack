@@ -88,7 +88,7 @@
 #endif
 #endif
 #if !defined(LZO_CFG_NO_DISABLE_WUNDEF)
-#if defined(__ARMCC_VERSION)
+#if defined(__CC_ARM)
 #  pragma diag_suppress 193
 #elif defined(__clang__) && defined(__clang_minor__)
 #  pragma clang diagnostic ignored "-Wundef"

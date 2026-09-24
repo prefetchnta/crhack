@@ -105,18 +105,14 @@ int ZEXPORT uncompress(Bytef *dest, uLongf *destLen, const Bytef *source,
 
 /* ===========================================================================
  */
-voidpf ZLIB_INTERNAL zcalloc (opaque, items, size)
-    voidpf opaque;
-    unsigned items;
-    unsigned size;
+voidpf ZLIB_INTERNAL zcalloc(voidpf opaque, unsigned items,
+                             unsigned size)
 {
     (void)opaque;
     return (voidpf)mem_calloc(items, size);
 }
 
-void ZLIB_INTERNAL zcfree (opaque, ptr)
-    voidpf opaque;
-    voidpf ptr;
+void ZLIB_INTERNAL zcfree(voidpf opaque, voidpf ptr)
 {
     (void)opaque;
     mem_free(ptr);

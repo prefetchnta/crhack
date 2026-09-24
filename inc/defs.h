@@ -102,12 +102,12 @@ typedef unsigned char   ufast_t;
 #endif
 
 /* 美观用的类型 */
-#define void_t  void
 typedef byte_t  uchar;
 typedef int16u  wchar;
 typedef  char   achar;
 typedef achar   ansi_t;
 typedef wchar   wide_t;
+typedef  void   void_t;
 typedef ubit_t  retc_t;
 typedef ufast_t bool_t;
 

@@ -1,0 +1,1 @@
+@set PATH=%DEV_ROOT%\Keil5\ARM\ARMCLANG\bin;%PATH%

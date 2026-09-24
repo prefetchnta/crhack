@@ -113,9 +113,9 @@
 
     /* 编译器浮点配置 */
     #undef  _CR_NO_FLT32_
-    #if defined(_CR_CC_XC8_)
+    #if     defined(_CR_CC_XC8_)
         #define _CR_NO_FLT64_
-    #else
+    #elif   defined(_CR_CC_XC16_)
         #define _CR_DOUBLE32_
     #endif
     /*------------------------------------------------*/

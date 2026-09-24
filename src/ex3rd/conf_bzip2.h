@@ -62,6 +62,9 @@ bz_internal_error (
     #pragma diag_suppress 111
     #pragma diag_suppress 550
 
+#elif   defined(_CR_CC_CLANG_)
+    #pragma clang diagnostic ignored "-Wunused-but-set-variable"
+
 #endif  /* CC TYPE predefines */
 
 #endif  /* !__CR_CONF_BZIP2_H__ */

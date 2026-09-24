@@ -97,13 +97,12 @@
 #define isnan(d) (d != d)
 #endif
 
-#ifndef NAN
-#define NAN *((double*)(&s_NaN))
 #if defined(_CR_DOUBLE32_)
-static int32u s_NaN = CR_UL(0xFFC00000);
+static float  s_cjson_nan;
+static int32u s_NaN = CR_UL(0x7FC00000);
 #else
-static int64u s_NaN = CR_ULL(0xFFF8000000000000);
-#endif
+static double s_cjson_nan;
+static int64u s_NaN = CR_ULL(0x7FF8000000000000);
 #endif
 
 typedef struct {
@@ -131,7 +130,8 @@ CJSON_PUBLIC(double) cJSON_GetNumberValue(const cJSON * const item)
 {
     if (!cJSON_IsNumber(item))
     {
-        return (double) NAN;
+        memcpy(&s_cjson_nan, &s_NaN, sizeof(s_NaN));
+        return (double) s_cjson_nan;
     }
 
     return item->valuedouble;
